@@ -1,0 +1,1613 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>ChatsApp</title>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            font-family: "Inter", sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at 15% 20%,
+                    #253b6e 0%,
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 85% 80%,
+                    #34205d 0%,
+                    transparent 35%
+                ),
+                #080b14;
+
+            color: white;
+
+            overflow-x: hidden;
+        }
+
+
+        /* =========================================
+           FLOATING EMOJIS
+        ========================================= */
+
+        .floating-emojis {
+            position: fixed;
+            inset: 0;
+
+            pointer-events: none;
+
+            overflow: hidden;
+
+            z-index: 0;
+        }
+
+
+        .floating-emojis span {
+            position: absolute;
+
+            font-size: 25px;
+
+            opacity: 0.10;
+
+            animation: floatEmoji 12s linear infinite;
+        }
+
+
+        .emoji1 {
+            left: 8%;
+            top: 15%;
+            animation-delay: 0s;
+        }
+
+        .emoji2 {
+            left: 82%;
+            top: 12%;
+            animation-delay: 3s;
+        }
+
+        .emoji3 {
+            left: 20%;
+            top: 75%;
+            animation-delay: 5s;
+        }
+
+        .emoji4 {
+            left: 72%;
+            top: 70%;
+            animation-delay: 1s;
+        }
+
+        .emoji5 {
+            left: 48%;
+            top: 25%;
+            animation-delay: 7s;
+        }
+
+        .emoji6 {
+            left: 90%;
+            top: 48%;
+            animation-delay: 4s;
+        }
+
+
+        @keyframes floatEmoji {
+
+            0% {
+                transform: translateY(20px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-25px) rotate(8deg);
+            }
+
+            100% {
+                transform: translateY(20px) rotate(0deg);
+            }
+
+        }
+
+
+        /* =========================================
+           AUTH SCREEN
+        ========================================= */
+
+        .auth-screen {
+
+            min-height: 100vh;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 20px;
+
+            position: relative;
+
+            z-index: 1;
+        }
+
+
+        .auth-box {
+
+            width: 100%;
+
+            max-width: 440px;
+
+            padding: 42px;
+
+            border-radius: 25px;
+
+            background: rgba(18, 22, 38, 0.88);
+
+            border: 1px solid rgba(255,255,255,0.1);
+
+            box-shadow:
+                0 30px 80px rgba(0,0,0,0.55),
+                inset 0 1px rgba(255,255,255,0.06);
+
+            backdrop-filter: blur(20px);
+
+            text-align: center;
+        }
+
+
+        /* =========================================
+           LOGO
+        ========================================= */
+
+        .logo {
+
+            width: 70px;
+            height: 70px;
+
+            margin: 0 auto 20px;
+
+            border-radius: 22px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 32px;
+
+            font-weight: 800;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #5b8cff,
+                    #8d5cff
+                );
+
+            box-shadow:
+                0 10px 30px rgba(91,140,255,0.35);
+        }
+
+
+        .auth-box h1 {
+
+            margin: 0;
+
+            font-size: 32px;
+
+            letter-spacing: -1px;
+        }
+
+
+        .subtitle {
+
+            color: #8d96ad;
+
+            margin: 10px 0 30px;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =========================================
+           INPUTS
+        ========================================= */
+
+        .input-group {
+
+            text-align: left;
+
+            margin-bottom: 15px;
+        }
+
+
+        .input-group label {
+
+            display: block;
+
+            margin-bottom: 7px;
+
+            color: #9ca5ba;
+
+            font-size: 13px;
+
+            font-weight: 600;
+        }
+
+
+        input {
+
+            width: 100%;
+
+            padding: 15px 17px;
+
+            border-radius: 13px;
+
+            border: 1px solid #2c3348;
+
+            background: #0e1220;
+
+            color: white;
+
+            outline: none;
+
+            font-size: 15px;
+
+            transition: 0.2s;
+        }
+
+
+        input:focus {
+
+            border-color: #638cff;
+
+            box-shadow:
+                0 0 0 3px rgba(99,140,255,0.1);
+        }
+
+
+        /* =========================================
+           BUTTON
+        ========================================= */
+
+        .primary {
+
+            width: 100%;
+
+            padding: 15px;
+
+            border: none;
+
+            border-radius: 13px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #5b8cff,
+                    #795cff
+                );
+
+            color: white;
+
+            font-weight: 700;
+
+            font-size: 15px;
+
+            cursor: pointer;
+
+            margin-top: 8px;
+
+            transition: 0.2s;
+        }
+
+
+        .primary:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 10px 30px rgba(91,140,255,0.3);
+        }
+
+
+        .primary:disabled {
+
+            opacity: 0.6;
+
+            cursor: not-allowed;
+
+            transform: none;
+        }
+
+
+        /* =========================================
+           SWITCH
+        ========================================= */
+
+        .switch {
+
+            margin-top: 22px;
+
+            color: #7f89a2;
+
+            font-size: 14px;
+        }
+
+
+        .switch span {
+
+            color: #7097ff;
+
+            cursor: pointer;
+
+            font-weight: 600;
+        }
+
+
+        .switch span:hover {
+
+            text-decoration: underline;
+        }
+
+
+        /* =========================================
+           MESSAGE
+        ========================================= */
+
+        .message {
+
+            display: none;
+
+            margin-bottom: 18px;
+
+            padding: 12px 15px;
+
+            border-radius: 11px;
+
+            font-size: 13px;
+
+            line-height: 1.4;
+        }
+
+
+        .message.error {
+
+            display: block;
+
+            background: rgba(255,75,75,0.1);
+
+            border: 1px solid rgba(255,75,75,0.25);
+
+            color: #ff8585;
+        }
+
+
+        .message.success {
+
+            display: block;
+
+            background: rgba(70,210,130,0.1);
+
+            border: 1px solid rgba(70,210,130,0.25);
+
+            color: #71e0a0;
+        }
+
+
+        /* =========================================
+           APP
+        ========================================= */
+
+        .app {
+
+            display: none;
+
+            min-height: 100vh;
+
+            grid-template-columns: 260px 1fr;
+
+            position: relative;
+
+            z-index: 1;
+        }
+
+
+        /* =========================================
+           SIDEBAR
+        ========================================= */
+
+        .sidebar {
+
+            background: rgba(10,13,23,0.94);
+
+            border-right: 1px solid #202638;
+
+            padding: 25px 16px;
+
+            display: flex;
+
+            flex-direction: column;
+        }
+
+
+        .brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 5px 12px 30px;
+        }
+
+
+        .brand-icon {
+
+            width: 42px;
+            height: 42px;
+
+            border-radius: 13px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #5b8cff,
+                    #795cff
+                );
+
+            font-weight: 800;
+        }
+
+
+        .brand-name {
+
+            font-size: 20px;
+
+            font-weight: 800;
+        }
+
+
+        .nav-title {
+
+            color: #525b72;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            letter-spacing: 1.5px;
+
+            padding: 10px 13px;
+        }
+
+
+        .nav-btn {
+
+            width: 100%;
+
+            padding: 13px;
+
+            margin: 3px 0;
+
+            border: none;
+
+            border-radius: 12px;
+
+            background: transparent;
+
+            color: #8d96ad;
+
+            text-align: left;
+
+            font-size: 14px;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+
+        .nav-btn:hover,
+        .nav-btn.active {
+
+            background: #1b2235;
+
+            color: white;
+        }
+
+
+        .nav-icon {
+
+            display: inline-block;
+
+            width: 25px;
+        }
+
+
+        .profile {
+
+            margin-top: auto;
+
+            background: #151a2a;
+
+            border: 1px solid #252c40;
+
+            border-radius: 15px;
+
+            padding: 13px;
+        }
+
+
+        .profile-name {
+
+            font-weight: 600;
+
+            font-size: 14px;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+        }
+
+
+        .profile-status {
+
+            color: #55d88a;
+
+            font-size: 11px;
+
+            margin-top: 4px;
+        }
+
+
+        /* =========================================
+           MAIN
+        ========================================= */
+
+        .main {
+
+            padding: 35px;
+
+            overflow-y: auto;
+        }
+
+
+        .topbar {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 35px;
+        }
+
+
+        .topbar h1 {
+
+            margin: 0;
+
+            font-size: 30px;
+
+            letter-spacing: -1px;
+        }
+
+
+        .topbar p {
+
+            margin: 7px 0 0;
+
+            color: #747e96;
+        }
+
+
+        .avatar {
+
+            width: 45px;
+            height: 45px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #5b8cff,
+                    #9c5cff
+                );
+
+            font-weight: 700;
+        }
+
+
+        /* =========================================
+           CARDS
+        ========================================= */
+
+        .cards {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(230px, 1fr)
+                );
+
+            gap: 20px;
+        }
+
+
+        .card {
+
+            min-height: 180px;
+
+            padding: 25px;
+
+            border-radius: 20px;
+
+            background: rgba(18,23,38,0.85);
+
+            border: 1px solid #242b3e;
+
+            cursor: pointer;
+
+            transition: 0.25s;
+        }
+
+
+        .card:hover {
+
+            transform: translateY(-5px);
+
+            border-color: #3c4b70;
+
+            box-shadow:
+                0 15px 40px rgba(0,0,0,0.25);
+        }
+
+
+        .card-icon {
+
+            font-size: 30px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .card h2 {
+
+            margin: 0 0 8px;
+
+            font-size: 19px;
+        }
+
+
+        .card p {
+
+            margin: 0;
+
+            color: #78829a;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+
+        .welcome {
+
+            margin-top: 25px;
+
+            padding: 25px;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(91,140,255,0.15),
+                    rgba(121,92,255,0.08)
+                );
+
+            border: 1px solid rgba(91,140,255,0.2);
+        }
+
+
+        .welcome h2 {
+
+            margin-top: 0;
+        }
+
+
+        /* =========================================
+           MOBILE
+        ========================================= */
+
+        @media(max-width:800px) {
+
+            .app {
+
+                grid-template-columns: 75px 1fr;
+            }
+
+
+            .brand-name,
+            .nav-title,
+            .nav-btn span,
+            .profile {
+
+                display: none;
+            }
+
+
+            .brand {
+
+                justify-content: center;
+            }
+
+
+            .nav-btn {
+
+                text-align: center;
+            }
+
+
+            .nav-icon {
+
+                width: auto;
+            }
+
+
+            .main {
+
+                padding: 22px;
+            }
+
+
+            .auth-box {
+
+                padding: 30px 22px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     FLOATING BACKGROUND EMOJIS
+========================================= -->
+
+<div class="floating-emojis">
+
+    <span class="emoji1">💬</span>
+
+    <span class="emoji2">😊</span>
+
+    <span class="emoji3">📱</span>
+
+    <span class="emoji4">😂</span>
+
+    <span class="emoji5">✉️</span>
+
+    <span class="emoji6">💭</span>
+
+</div>
+
+
+<!-- =========================================
+     LOGIN / SIGN UP
+========================================= -->
+
+<div class="auth-screen" id="authScreen">
+
+    <div class="auth-box">
+
+
+        <!-- LOGO -->
+
+        <div class="logo">
+            C
+        </div>
+
+
+        <!-- TITLE -->
+
+        <h1 id="authTitle">
+            Welcome to ChatsApp
+        </h1>
+
+
+        <p class="subtitle" id="authSubtitle">
+            Your conversations. Your world.
+        </p>
+
+
+        <!-- MESSAGE -->
+
+        <div
+            id="message"
+            class="message">
+        </div>
+
+
+        <!-- EMAIL -->
+
+        <div class="input-group">
+
+            <label>
+                Email
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter your email"
+                autocomplete="email"
+            >
+
+        </div>
+
+
+        <!-- PASSWORD -->
+
+        <div class="input-group">
+
+            <label>
+                Password
+            </label>
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Enter your password"
+                autocomplete="current-password"
+            >
+
+        </div>
+
+
+        <!-- CONFIRM PASSWORD -->
+
+        <div
+            class="input-group"
+            id="confirmGroup"
+            style="display:none;"
+        >
+
+            <label>
+                Confirm Password
+            </label>
+
+            <input
+                type="password"
+                id="confirmPassword"
+                placeholder="Enter your password again"
+                autocomplete="new-password"
+            >
+
+        </div>
+
+
+        <!-- MAIN BUTTON -->
+
+        <button
+            class="primary"
+            id="mainButton"
+            onclick="handleAuth()"
+        >
+            Log In
+        </button>
+
+
+        <!-- SWITCH -->
+
+        <div class="switch">
+
+            <span
+                id="switchText"
+                onclick="toggleAuth()"
+            >
+                Don't have an account? Sign up
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================
+     MAIN CHATsAPP
+========================================= -->
+
+<div class="app" id="app">
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                C
+            </div>
+
+            <div class="brand-name">
+                ChatsApp
+            </div>
+
+        </div>
+
+
+        <div class="nav-title">
+            COMMUNICATION
+        </div>
+
+
+        <button class="nav-btn active">
+
+            <span class="nav-icon">
+                ⌂
+            </span>
+
+            <span>
+                Home
+            </span>
+
+        </button>
+
+
+        <button class="nav-btn">
+
+            <span class="nav-icon">
+                🌎
+            </span>
+
+            <span>
+                Global Chat
+            </span>
+
+        </button>
+
+
+        <button class="nav-btn">
+
+            <span class="nav-icon">
+                💬
+            </span>
+
+            <span>
+                Private Chats
+            </span>
+
+        </button>
+
+
+        <button class="nav-btn">
+
+            <span class="nav-icon">
+                ✉
+            </span>
+
+            <span>
+                Mail
+            </span>
+
+        </button>
+
+
+        <div class="nav-title">
+            ACCOUNT
+        </div>
+
+
+        <button class="nav-btn">
+
+            <span class="nav-icon">
+                ●
+            </span>
+
+            <span>
+                My Profile
+            </span>
+
+        </button>
+
+
+        <div class="profile">
+
+            <div
+                class="profile-name"
+                id="profileName"
+            >
+                User
+            </div>
+
+            <div class="profile-status">
+                ● Online
+            </div>
+
+        </div>
+
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+
+        <div class="topbar">
+
+            <div>
+
+                <h1>
+                    Welcome back 👋
+                </h1>
+
+                <p>
+                    What would you like to do?
+                </p>
+
+            </div>
+
+
+            <div
+                class="avatar"
+                id="avatar"
+            >
+                U
+            </div>
+
+        </div>
+
+
+        <!-- CARDS -->
+
+        <div class="cards">
+
+
+            <div class="card">
+
+                <div class="card-icon">
+                    🌎
+                </div>
+
+                <h2>
+                    Global Chat
+                </h2>
+
+                <p>
+                    Talk with everyone on ChatsApp.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-icon">
+                    💬
+                </div>
+
+                <h2>
+                    Private Chats
+                </h2>
+
+                <p>
+                    Message people using their username.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-icon">
+                    ✉️
+                </div>
+
+                <h2>
+                    Mail
+                </h2>
+
+                <p>
+                    Send and receive longer messages.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-icon">
+                    👤
+                </div>
+
+                <h2>
+                    Your Profile
+                </h2>
+
+                <p>
+                    Manage your ChatsApp identity.
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- WELCOME -->
+
+        <div class="welcome">
+
+            <h2>
+                ChatsApp
+            </h2>
+
+            <p>
+                A new place to chat, connect and
+                keep in touch.
+            </p>
+
+        </div>
+
+
+    </main>
+
+</div>
+
+
+<script>
+
+
+/* =========================================
+   SUPABASE
+========================================= */
+
+const SUPABASE_URL =
+    "https://kopzrnpporfdwauwlhni.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_bbxmPB71ADnIqe3oPB3MuQ_EWa4n_Ph";
+
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+/* =========================================
+   AUTH MODE
+========================================= */
+
+let signupMode = false;
+
+
+/* =========================================
+   SWITCH LOGIN / SIGNUP
+========================================= */
+
+function toggleAuth() {
+
+    signupMode = !signupMode;
+
+
+    const title =
+        document.getElementById("authTitle");
+
+    const subtitle =
+        document.getElementById("authSubtitle");
+
+    const button =
+        document.getElementById("mainButton");
+
+    const switchText =
+        document.getElementById("switchText");
+
+    const confirmGroup =
+        document.getElementById("confirmGroup");
+
+
+    clearMessage();
+
+
+    if (signupMode) {
+
+        title.innerText =
+            "Create your ChatsApp";
+
+        subtitle.innerText =
+            "Create your account and join the conversation.";
+
+        button.innerText =
+            "Create Account";
+
+        switchText.innerText =
+            "Already have an account? Log in";
+
+        confirmGroup.style.display =
+            "block";
+
+    }
+
+    else {
+
+        title.innerText =
+            "Welcome to ChatsApp";
+
+        subtitle.innerText =
+            "Your conversations. Your world.";
+
+        button.innerText =
+            "Log In";
+
+        switchText.innerText =
+            "Don't have an account? Sign up";
+
+        confirmGroup.style.display =
+            "none";
+
+    }
+
+}
+
+
+/* =========================================
+   MESSAGE
+========================================= */
+
+function showMessage(text, type) {
+
+    const message =
+        document.getElementById("message");
+
+
+    message.innerText = text;
+
+
+    message.className =
+        "message " + type;
+
+}
+
+
+function clearMessage() {
+
+    const message =
+        document.getElementById("message");
+
+
+    message.innerText = "";
+
+
+    message.className =
+        "message";
+
+}
+
+
+/* =========================================
+   SHOW APP
+========================================= */
+
+function showApp(user) {
+
+    document.getElementById("authScreen")
+        .style.display = "none";
+
+
+    document.getElementById("app")
+        .style.display = "grid";
+
+
+    const profileName =
+        document.getElementById("profileName");
+
+    const avatar =
+        document.getElementById("avatar");
+
+
+    const email =
+        user.email || "User";
+
+
+    profileName.innerText =
+        email;
+
+
+    avatar.innerText =
+        email.charAt(0).toUpperCase();
+
+}
+
+
+/* =========================================
+   AUTH BUTTON
+========================================= */
+
+async function handleAuth() {
+
+    clearMessage();
+
+
+    const email =
+        document.getElementById("email")
+        .value
+        .trim();
+
+
+    const password =
+        document.getElementById("password")
+        .value;
+
+
+    const confirmPassword =
+        document.getElementById("confirmPassword")
+        .value;
+
+
+    /* EMAIL CHECK */
+
+    if (email === "") {
+
+        showMessage(
+            "Please enter your email.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    /* PASSWORD CHECK */
+
+    if (password === "") {
+
+        showMessage(
+            "Please enter a password.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    /* =========================================
+       SIGN UP
+    ========================================= */
+
+    if (signupMode) {
+
+
+        if (password.length < 6) {
+
+            showMessage(
+                "Password must be at least 6 characters.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        if (password !== confirmPassword) {
+
+            showMessage(
+                "Passwords do not match.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient.auth.signUp({
+
+                email: email,
+
+                password: password
+
+            });
+
+
+        if (error) {
+
+            showMessage(
+                error.message,
+                "error"
+            );
+
+            return;
+        }
+
+
+        showMessage(
+            "Account created successfully! 🎉",
+            "success"
+        );
+
+
+        /*
+        If email confirmation is disabled,
+        Supabase gives us a session immediately.
+        */
+
+        if (data.session && data.user) {
+
+            setTimeout(function() {
+
+                showApp(data.user);
+
+            }, 700);
+
+        }
+
+        else {
+
+            showMessage(
+                "Account created! Check your email if confirmation is required. 📧",
+                "success"
+            );
+
+        }
+
+
+        return;
+    }
+
+
+    /* =========================================
+       LOGIN
+    ========================================= */
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient.auth.signInWithPassword({
+
+            email: email,
+
+            password: password
+
+        });
+
+
+    if (error) {
+
+        showMessage(
+            "Invalid email or password.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if (data.user) {
+
+        showApp(data.user);
+
+    }
+
+}
+
+
+/* =========================================
+   CHECK EXISTING LOGIN
+========================================= */
+
+async function checkExistingSession() {
+
+    const {
+        data
+    } =
+        await supabaseClient.auth.getSession();
+
+
+    if (
+        data.session &&
+        data.session.user
+    ) {
+
+        showApp(
+            data.session.user
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   ENTER KEY
+========================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key === "Enter" &&
+            document.getElementById("authScreen")
+                .style.display !== "none"
+        ) {
+
+            handleAuth();
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   START
+========================================= */
+
+checkExistingSession();
+
+
+</script>
+
+
+</body>
+
+</html>
