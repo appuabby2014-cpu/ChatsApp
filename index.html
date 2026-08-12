@@ -3,814 +3,749 @@
 
 <head>
 
-    <meta charset="UTF-8">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>ChatsApp</title>
+<title>ChatsApp</title>
 
-    <!-- Supabase -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
 
-    <!-- Font -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet"
-    >
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-    <style>
+* {
+    box-sizing: border-box;
+}
 
-        * {
-            box-sizing: border-box;
-        }
+body {
+    margin: 0;
+    min-height: 100vh;
 
+    font-family: "Inter", sans-serif;
 
-        body {
-            margin: 0;
-            min-height: 100vh;
+    background:
+        radial-gradient(circle at 15% 20%, #253b6e 0%, transparent 35%),
+        radial-gradient(circle at 85% 80%, #34205d 0%, transparent 35%),
+        #080b14;
 
-            font-family: "Inter", sans-serif;
+    color: white;
 
-            background:
-                radial-gradient(
-                    circle at 15% 20%,
-                    #253b6e 0%,
-                    transparent 35%
-                ),
-                radial-gradient(
-                    circle at 85% 80%,
-                    #34205d 0%,
-                    transparent 35%
-                ),
-                #080b14;
+    overflow-x: hidden;
+}
 
-            color: white;
 
-            overflow-x: hidden;
-        }
+/* =========================
+   FLOATING EMOJIS
+========================= */
 
+.floating-emojis {
+    position: fixed;
 
-        /* =========================================
-           FLOATING EMOJIS
-        ========================================= */
+    inset: 0;
 
-        .floating-emojis {
-            position: fixed;
-            inset: 0;
+    pointer-events: none;
 
-            pointer-events: none;
+    overflow: hidden;
 
-            overflow: hidden;
+    z-index: 0;
+}
 
-            z-index: 0;
-        }
+.floating-emojis span {
+    position: absolute;
 
+    font-size: 28px;
 
-        .floating-emojis span {
-            position: absolute;
+    opacity: 0.13;
 
-            font-size: 25px;
+    animation: floatEmoji 12s linear infinite;
+}
 
-            opacity: 0.10;
+.floating-emojis span:nth-child(1) {
+    left: 12%;
+    top: 15%;
+}
 
-            animation: floatEmoji 12s linear infinite;
-        }
+.floating-emojis span:nth-child(2) {
+    left: 80%;
+    top: 20%;
 
+    animation-delay: 2s;
+}
 
-        .emoji1 {
-            left: 8%;
-            top: 15%;
-            animation-delay: 0s;
-        }
+.floating-emojis span:nth-child(3) {
+    left: 25%;
+    top: 75%;
 
-        .emoji2 {
-            left: 82%;
-            top: 12%;
-            animation-delay: 3s;
-        }
+    animation-delay: 4s;
+}
 
-        .emoji3 {
-            left: 20%;
-            top: 75%;
-            animation-delay: 5s;
-        }
+.floating-emojis span:nth-child(4) {
+    left: 70%;
+    top: 70%;
 
-        .emoji4 {
-            left: 72%;
-            top: 70%;
-            animation-delay: 1s;
-        }
+    animation-delay: 6s;
+}
 
-        .emoji5 {
-            left: 48%;
-            top: 25%;
-            animation-delay: 7s;
-        }
+.floating-emojis span:nth-child(5) {
+    left: 50%;
+    top: 10%;
 
-        .emoji6 {
-            left: 90%;
-            top: 48%;
-            animation-delay: 4s;
-        }
+    animation-delay: 8s;
+}
 
+@keyframes floatEmoji {
 
-        @keyframes floatEmoji {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
 
-            0% {
-                transform: translateY(20px) rotate(0deg);
-            }
+    50% {
+        transform: translateY(-25px) rotate(8deg);
+    }
 
-            50% {
-                transform: translateY(-25px) rotate(8deg);
-            }
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
 
-            100% {
-                transform: translateY(20px) rotate(0deg);
-            }
+}
 
-        }
 
+/* =========================
+   AUTH SCREEN
+========================= */
 
-        /* =========================================
-           AUTH SCREEN
-        ========================================= */
+.auth-screen {
+    min-height: 100vh;
 
-        .auth-screen {
+    display: flex;
 
-            min-height: 100vh;
+    align-items: center;
 
-            display: flex;
+    justify-content: center;
 
-            align-items: center;
+    padding: 20px;
 
-            justify-content: center;
+    position: relative;
 
-            padding: 20px;
+    z-index: 1;
+}
 
-            position: relative;
 
-            z-index: 1;
-        }
+/* AUTH BOX */
 
+.auth-box {
 
-        .auth-box {
+    width: 100%;
 
-            width: 100%;
+    max-width: 440px;
 
-            max-width: 440px;
+    padding: 42px;
 
-            padding: 42px;
+    border-radius: 25px;
 
-            border-radius: 25px;
+    background: rgba(18, 22, 38, 0.88);
 
-            background: rgba(18, 22, 38, 0.88);
+    border: 1px solid rgba(255,255,255,0.1);
 
-            border: 1px solid rgba(255,255,255,0.1);
+    box-shadow:
+        0 30px 80px rgba(0,0,0,0.55),
+        inset 0 1px rgba(255,255,255,0.06);
 
-            box-shadow:
-                0 30px 80px rgba(0,0,0,0.55),
-                inset 0 1px rgba(255,255,255,0.06);
+    backdrop-filter: blur(20px);
 
-            backdrop-filter: blur(20px);
+    text-align: center;
+}
 
-            text-align: center;
-        }
 
+/* LOGO */
 
-        /* =========================================
-           LOGO
-        ========================================= */
+.logo {
 
-        .logo {
+    width: 70px;
 
-            width: 70px;
-            height: 70px;
+    height: 70px;
 
-            margin: 0 auto 20px;
+    margin: 0 auto 20px;
 
-            border-radius: 22px;
+    border-radius: 22px;
 
-            display: flex;
+    display: flex;
 
-            align-items: center;
+    align-items: center;
 
-            justify-content: center;
+    justify-content: center;
 
-            font-size: 32px;
+    font-size: 32px;
 
-            font-weight: 800;
+    font-weight: 800;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #5b8cff,
-                    #8d5cff
-                );
+    background: linear-gradient(
+        135deg,
+        #5b8cff,
+        #8d5cff
+    );
 
-            box-shadow:
-                0 10px 30px rgba(91,140,255,0.35);
-        }
+    box-shadow:
+        0 10px 30px rgba(91,140,255,0.35);
+}
 
 
-        .auth-box h1 {
+/* TITLE */
 
-            margin: 0;
+.auth-box h1 {
 
-            font-size: 32px;
+    margin: 0;
 
-            letter-spacing: -1px;
-        }
+    font-size: 32px;
 
+    letter-spacing: -1px;
+}
 
-        .subtitle {
 
-            color: #8d96ad;
+.subtitle {
 
-            margin: 10px 0 30px;
+    color: #8d96ad;
 
-            font-size: 14px;
+    margin: 10px 0 30px;
 
-            line-height: 1.5;
-        }
+    font-size: 14px;
 
+    line-height: 1.5;
+}
 
-        /* =========================================
-           INPUTS
-        ========================================= */
 
-        .input-group {
+/* INPUTS */
 
-            text-align: left;
+.input-group {
 
-            margin-bottom: 15px;
-        }
+    text-align: left;
 
+    margin-bottom: 15px;
+}
 
-        .input-group label {
+.input-group label {
 
-            display: block;
+    display: block;
 
-            margin-bottom: 7px;
+    margin-bottom: 7px;
 
-            color: #9ca5ba;
+    color: #9ca5ba;
 
-            font-size: 13px;
+    font-size: 13px;
 
-            font-weight: 600;
-        }
+    font-weight: 600;
+}
 
+input {
 
-        input {
+    width: 100%;
 
-            width: 100%;
+    padding: 15px 17px;
 
-            padding: 15px 17px;
+    border-radius: 13px;
 
-            border-radius: 13px;
+    border: 1px solid #2c3348;
 
-            border: 1px solid #2c3348;
+    background: #0e1220;
 
-            background: #0e1220;
+    color: white;
 
-            color: white;
+    outline: none;
 
-            outline: none;
+    font-size: 15px;
 
-            font-size: 15px;
+    transition: 0.2s;
+}
 
-            transition: 0.2s;
-        }
+input:focus {
 
+    border-color: #638cff;
 
-        input:focus {
+    box-shadow:
+        0 0 0 3px rgba(99,140,255,0.1);
+}
 
-            border-color: #638cff;
 
-            box-shadow:
-                0 0 0 3px rgba(99,140,255,0.1);
-        }
+/* BUTTON */
 
+.primary {
 
-        /* =========================================
-           BUTTON
-        ========================================= */
+    width: 100%;
 
-        .primary {
+    padding: 15px;
 
-            width: 100%;
+    border: none;
 
-            padding: 15px;
+    border-radius: 13px;
 
-            border: none;
+    background: linear-gradient(
+        135deg,
+        #5b8cff,
+        #795cff
+    );
 
-            border-radius: 13px;
+    color: white;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #5b8cff,
-                    #795cff
-                );
+    font-weight: 700;
 
-            color: white;
+    font-size: 15px;
 
-            font-weight: 700;
+    cursor: pointer;
 
-            font-size: 15px;
+    margin-top: 8px;
 
-            cursor: pointer;
+    transition: 0.2s;
+}
 
-            margin-top: 8px;
+.primary:hover {
 
-            transition: 0.2s;
-        }
+    transform: translateY(-2px);
 
+    box-shadow:
+        0 10px 30px rgba(91,140,255,0.3);
+}
 
-        .primary:hover {
 
-            transform: translateY(-2px);
+/* SWITCH */
 
-            box-shadow:
-                0 10px 30px rgba(91,140,255,0.3);
-        }
+.switch {
 
+    margin-top: 22px;
 
-        .primary:disabled {
+    color: #7f89a2;
 
-            opacity: 0.6;
+    font-size: 14px;
+}
 
-            cursor: not-allowed;
+.switch span {
 
-            transform: none;
-        }
+    color: #7097ff;
 
+    cursor: pointer;
 
-        /* =========================================
-           SWITCH
-        ========================================= */
+    font-weight: 600;
+}
 
-        .switch {
+.switch span:hover {
 
-            margin-top: 22px;
+    text-decoration: underline;
+}
 
-            color: #7f89a2;
 
-            font-size: 14px;
-        }
+/* MESSAGE */
 
+.message {
 
-        .switch span {
+    display: none;
 
-            color: #7097ff;
+    margin-bottom: 18px;
 
-            cursor: pointer;
+    padding: 12px 15px;
 
-            font-weight: 600;
-        }
+    border-radius: 11px;
 
+    font-size: 13px;
 
-        .switch span:hover {
+    line-height: 1.4;
+}
 
-            text-decoration: underline;
-        }
+.message.error {
 
+    display: block;
 
-        /* =========================================
-           MESSAGE
-        ========================================= */
+    background: rgba(255,75,75,0.1);
 
-        .message {
+    border: 1px solid rgba(255,75,75,0.25);
 
-            display: none;
+    color: #ff8585;
+}
 
-            margin-bottom: 18px;
+.message.success {
 
-            padding: 12px 15px;
+    display: block;
 
-            border-radius: 11px;
+    background: rgba(70,210,130,0.1);
 
-            font-size: 13px;
+    border: 1px solid rgba(70,210,130,0.25);
 
-            line-height: 1.4;
-        }
+    color: #71e0a0;
+}
 
 
-        .message.error {
+/* =========================
+   APP
+========================= */
 
-            display: block;
+.app {
 
-            background: rgba(255,75,75,0.1);
+    display: none;
 
-            border: 1px solid rgba(255,75,75,0.25);
+    min-height: 100vh;
 
-            color: #ff8585;
-        }
+    grid-template-columns: 260px 1fr;
 
+    position: relative;
 
-        .message.success {
+    z-index: 1;
+}
 
-            display: block;
 
-            background: rgba(70,210,130,0.1);
+/* SIDEBAR */
 
-            border: 1px solid rgba(70,210,130,0.25);
+.sidebar {
 
-            color: #71e0a0;
-        }
+    background: rgba(10,13,23,0.94);
 
+    border-right: 1px solid #202638;
 
-        /* =========================================
-           APP
-        ========================================= */
+    padding: 25px 16px;
 
-        .app {
+    display: flex;
 
-            display: none;
+    flex-direction: column;
+}
 
-            min-height: 100vh;
 
-            grid-template-columns: 260px 1fr;
+.brand {
 
-            position: relative;
+    display: flex;
 
-            z-index: 1;
-        }
+    align-items: center;
 
+    gap: 12px;
 
-        /* =========================================
-           SIDEBAR
-        ========================================= */
+    padding: 5px 12px 30px;
+}
 
-        .sidebar {
 
-            background: rgba(10,13,23,0.94);
+.brand-icon {
 
-            border-right: 1px solid #202638;
+    width: 42px;
 
-            padding: 25px 16px;
+    height: 42px;
 
-            display: flex;
+    border-radius: 13px;
 
-            flex-direction: column;
-        }
+    display: flex;
 
+    align-items: center;
 
-        .brand {
+    justify-content: center;
 
-            display: flex;
+    background: linear-gradient(
+        135deg,
+        #5b8cff,
+        #795cff
+    );
 
-            align-items: center;
+    font-weight: 800;
+}
 
-            gap: 12px;
 
-            padding: 5px 12px 30px;
-        }
+.brand-name {
 
+    font-size: 20px;
 
-        .brand-icon {
+    font-weight: 800;
+}
 
-            width: 42px;
-            height: 42px;
 
-            border-radius: 13px;
+.nav-title {
 
-            display: flex;
+    color: #525b72;
 
-            align-items: center;
+    font-size: 11px;
 
-            justify-content: center;
+    font-weight: 700;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #5b8cff,
-                    #795cff
-                );
+    letter-spacing: 1.5px;
 
-            font-weight: 800;
-        }
+    padding: 10px 13px;
+}
 
 
-        .brand-name {
+.nav-btn {
 
-            font-size: 20px;
+    width: 100%;
 
-            font-weight: 800;
-        }
+    padding: 13px;
 
+    margin: 3px 0;
 
-        .nav-title {
+    border: none;
 
-            color: #525b72;
+    border-radius: 12px;
 
-            font-size: 11px;
+    background: transparent;
 
-            font-weight: 700;
+    color: #8d96ad;
 
-            letter-spacing: 1.5px;
+    text-align: left;
 
-            padding: 10px 13px;
-        }
+    font-size: 14px;
 
+    cursor: pointer;
 
-        .nav-btn {
+    transition: 0.2s;
+}
 
-            width: 100%;
 
-            padding: 13px;
+.nav-btn:hover,
+.nav-btn.active {
 
-            margin: 3px 0;
+    background: #1b2235;
 
-            border: none;
+    color: white;
+}
 
-            border-radius: 12px;
 
-            background: transparent;
+.nav-icon {
 
-            color: #8d96ad;
+    display: inline-block;
 
-            text-align: left;
+    width: 25px;
+}
 
-            font-size: 14px;
 
-            cursor: pointer;
+.profile {
 
-            transition: 0.2s;
-        }
+    margin-top: auto;
 
+    background: #151a2a;
 
-        .nav-btn:hover,
-        .nav-btn.active {
+    border: 1px solid #252c40;
 
-            background: #1b2235;
+    border-radius: 15px;
 
-            color: white;
-        }
+    padding: 13px;
+}
 
 
-        .nav-icon {
+.profile-name {
 
-            display: inline-block;
+    font-weight: 600;
 
-            width: 25px;
-        }
+    font-size: 14px;
 
+    word-break: break-word;
+}
 
-        .profile {
 
-            margin-top: auto;
+.profile-status {
 
-            background: #151a2a;
+    color: #55d88a;
 
-            border: 1px solid #252c40;
+    font-size: 11px;
 
-            border-radius: 15px;
+    margin-top: 4px;
+}
 
-            padding: 13px;
-        }
 
+/* MAIN */
 
-        .profile-name {
+.main {
 
-            font-weight: 600;
+    padding: 35px;
 
-            font-size: 14px;
+    overflow-y: auto;
+}
 
-            overflow: hidden;
 
-            text-overflow: ellipsis;
-        }
+.topbar {
 
+    display: flex;
 
-        .profile-status {
+    align-items: center;
 
-            color: #55d88a;
+    justify-content: space-between;
 
-            font-size: 11px;
+    margin-bottom: 35px;
+}
 
-            margin-top: 4px;
-        }
 
+.topbar h1 {
 
-        /* =========================================
-           MAIN
-        ========================================= */
+    margin: 0;
 
-        .main {
+    font-size: 30px;
 
-            padding: 35px;
+    letter-spacing: -1px;
+}
 
-            overflow-y: auto;
-        }
 
+.topbar p {
 
-        .topbar {
+    margin: 7px 0 0;
 
-            display: flex;
+    color: #747e96;
+}
 
-            align-items: center;
 
-            justify-content: space-between;
+.avatar {
 
-            margin-bottom: 35px;
-        }
+    width: 45px;
 
+    height: 45px;
 
-        .topbar h1 {
+    border-radius: 50%;
 
-            margin: 0;
+    display: flex;
 
-            font-size: 30px;
+    align-items: center;
 
-            letter-spacing: -1px;
-        }
+    justify-content: center;
 
+    background: linear-gradient(
+        135deg,
+        #5b8cff,
+        #9c5cff
+    );
 
-        .topbar p {
+    font-weight: 700;
+}
 
-            margin: 7px 0 0;
 
-            color: #747e96;
-        }
+/* DASHBOARD */
 
+.cards {
 
-        .avatar {
+    display: grid;
 
-            width: 45px;
-            height: 45px;
+    grid-template-columns:
+        repeat(auto-fit, minmax(230px, 1fr));
 
-            border-radius: 50%;
+    gap: 20px;
+}
 
-            display: flex;
 
-            align-items: center;
+.card {
 
-            justify-content: center;
+    min-height: 180px;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #5b8cff,
-                    #9c5cff
-                );
+    padding: 25px;
 
-            font-weight: 700;
-        }
+    border-radius: 20px;
 
+    background: rgba(18,23,38,0.85);
 
-        /* =========================================
-           CARDS
-        ========================================= */
+    border: 1px solid #242b3e;
 
-        .cards {
+    cursor: pointer;
 
-            display: grid;
+    transition: 0.25s;
+}
 
-            grid-template-columns:
-                repeat(
-                    auto-fit,
-                    minmax(230px, 1fr)
-                );
 
-            gap: 20px;
-        }
+.card:hover {
 
+    transform: translateY(-5px);
 
-        .card {
+    border-color: #3c4b70;
 
-            min-height: 180px;
+    box-shadow:
+        0 15px 40px rgba(0,0,0,0.25);
+}
 
-            padding: 25px;
 
-            border-radius: 20px;
+.card-icon {
 
-            background: rgba(18,23,38,0.85);
+    font-size: 30px;
 
-            border: 1px solid #242b3e;
+    margin-bottom: 20px;
+}
 
-            cursor: pointer;
 
-            transition: 0.25s;
-        }
+.card h2 {
 
+    margin: 0 0 8px;
 
-        .card:hover {
+    font-size: 19px;
+}
 
-            transform: translateY(-5px);
 
-            border-color: #3c4b70;
+.card p {
 
-            box-shadow:
-                0 15px 40px rgba(0,0,0,0.25);
-        }
+    margin: 0;
 
+    color: #78829a;
 
-        .card-icon {
+    font-size: 13px;
 
-            font-size: 30px;
+    line-height: 1.5;
+}
 
-            margin-bottom: 20px;
-        }
 
+.welcome {
 
-        .card h2 {
+    margin-top: 25px;
 
-            margin: 0 0 8px;
+    padding: 25px;
 
-            font-size: 19px;
-        }
+    border-radius: 20px;
 
+    background:
+        linear-gradient(
+            135deg,
+            rgba(91,140,255,0.15),
+            rgba(121,92,255,0.08)
+        );
 
-        .card p {
+    border: 1px solid rgba(91,140,255,0.2);
+}
 
-            margin: 0;
 
-            color: #78829a;
+.welcome h2 {
 
-            font-size: 13px;
+    margin-top: 0;
+}
 
-            line-height: 1.5;
-        }
 
+/* MOBILE */
 
-        .welcome {
+@media(max-width:800px) {
 
-            margin-top: 25px;
+    .app {
 
-            padding: 25px;
+        grid-template-columns: 75px 1fr;
+    }
 
-            border-radius: 20px;
+    .brand-name,
+    .nav-title,
+    .nav-btn span,
+    .profile {
 
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(91,140,255,0.15),
-                    rgba(121,92,255,0.08)
-                );
+        display: none;
+    }
 
-            border: 1px solid rgba(91,140,255,0.2);
-        }
+    .brand {
 
+        justify-content: center;
+    }
 
-        .welcome h2 {
+    .nav-btn {
 
-            margin-top: 0;
-        }
+        text-align: center;
+    }
 
+    .nav-icon {
 
-        /* =========================================
-           MOBILE
-        ========================================= */
+        width: auto;
+    }
 
-        @media(max-width:800px) {
+    .main {
 
-            .app {
+        padding: 22px;
+    }
 
-                grid-template-columns: 75px 1fr;
-            }
+    .auth-box {
 
+        padding: 30px 22px;
+    }
 
-            .brand-name,
-            .nav-title,
-            .nav-btn span,
-            .profile {
+}
 
-                display: none;
-            }
-
-
-            .brand {
-
-                justify-content: center;
-            }
-
-
-            .nav-btn {
-
-                text-align: center;
-            }
-
-
-            .nav-icon {
-
-                width: auto;
-            }
-
-
-            .main {
-
-                padding: 22px;
-            }
-
-
-            .auth-box {
-
-                padding: 30px 22px;
-            }
-        }
-
-    </style>
+</style>
 
 </head>
 
@@ -818,30 +753,23 @@
 <body>
 
 
-<!-- =========================================
-     FLOATING BACKGROUND EMOJIS
-========================================= -->
+<!-- FLOATING BACKGROUND EMOJIS -->
 
 <div class="floating-emojis">
 
-    <span class="emoji1">💬</span>
-
-    <span class="emoji2">😊</span>
-
-    <span class="emoji3">📱</span>
-
-    <span class="emoji4">😂</span>
-
-    <span class="emoji5">✉️</span>
-
-    <span class="emoji6">💭</span>
+    <span>💬</span>
+    <span>😊</span>
+    <span>❤️</span>
+    <span>😂</span>
+    <span>📱</span>
 
 </div>
 
 
-<!-- =========================================
+
+<!-- ==================================================
      LOGIN / SIGN UP
-========================================= -->
+================================================== -->
 
 <div class="auth-screen" id="authScreen">
 
@@ -877,7 +805,10 @@
 
         <!-- EMAIL -->
 
-        <div class="input-group">
+        <div
+            class="input-group"
+            id="emailGroup"
+        >
 
             <label>
                 Email
@@ -962,14 +893,13 @@
 </div>
 
 
-<!-- =========================================
+
+<!-- ==================================================
      MAIN CHATsAPP
-========================================= -->
+================================================== -->
 
 <div class="app" id="app">
 
-
-    <!-- SIDEBAR -->
 
     <aside class="sidebar">
 
@@ -1081,7 +1011,6 @@
     </aside>
 
 
-    <!-- MAIN -->
 
     <main class="main">
 
@@ -1110,8 +1039,6 @@
 
         </div>
 
-
-        <!-- CARDS -->
 
         <div class="cards">
 
@@ -1187,8 +1114,6 @@
         </div>
 
 
-        <!-- WELCOME -->
-
         <div class="welcome">
 
             <h2>
@@ -1208,8 +1133,8 @@
 </div>
 
 
-<script>
 
+<script>
 
 /* =========================================
    SUPABASE
@@ -1220,7 +1145,6 @@ const SUPABASE_URL =
 
 const SUPABASE_KEY =
     "sb_publishable_bbxmPB71ADnIqe3oPB3MuQ_EWa4n_Ph";
-
 
 const supabaseClient =
     window.supabase.createClient(
@@ -1237,13 +1161,12 @@ let signupMode = false;
 
 
 /* =========================================
-   SWITCH LOGIN / SIGNUP
+   SWITCH LOGIN / SIGN UP
 ========================================= */
 
 function toggleAuth() {
 
     signupMode = !signupMode;
-
 
     const title =
         document.getElementById("authTitle");
@@ -1259,7 +1182,6 @@ function toggleAuth() {
 
     const confirmGroup =
         document.getElementById("confirmGroup");
-
 
     clearMessage();
 
@@ -1314,9 +1236,8 @@ function showMessage(text, type) {
     const message =
         document.getElementById("message");
 
-
-    message.innerText = text;
-
+    message.innerText =
+        text;
 
     message.className =
         "message " + type;
@@ -1329,9 +1250,8 @@ function clearMessage() {
     const message =
         document.getElementById("message");
 
-
-    message.innerText = "";
-
+    message.innerText =
+        "";
 
     message.className =
         "message";
@@ -1340,42 +1260,7 @@ function clearMessage() {
 
 
 /* =========================================
-   SHOW APP
-========================================= */
-
-function showApp(user) {
-
-    document.getElementById("authScreen")
-        .style.display = "none";
-
-
-    document.getElementById("app")
-        .style.display = "grid";
-
-
-    const profileName =
-        document.getElementById("profileName");
-
-    const avatar =
-        document.getElementById("avatar");
-
-
-    const email =
-        user.email || "User";
-
-
-    profileName.innerText =
-        email;
-
-
-    avatar.innerText =
-        email.charAt(0).toUpperCase();
-
-}
-
-
-/* =========================================
-   AUTH BUTTON
+   AUTH
 ========================================= */
 
 async function handleAuth() {
@@ -1388,23 +1273,21 @@ async function handleAuth() {
         .value
         .trim();
 
-
     const password =
         document.getElementById("password")
         .value;
-
 
     const confirmPassword =
         document.getElementById("confirmPassword")
         .value;
 
 
-    /* EMAIL CHECK */
+    /* EMAIL */
 
     if (email === "") {
 
         showMessage(
-            "Please enter your email.",
+            "Please enter your email address.",
             "error"
         );
 
@@ -1412,12 +1295,25 @@ async function handleAuth() {
     }
 
 
-    /* PASSWORD CHECK */
+    if (
+        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+    ) {
+
+        showMessage(
+            "Please enter a valid email address.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    /* PASSWORD */
 
     if (password === "") {
 
         showMessage(
-            "Please enter a password.",
+            "Please enter your password.",
             "error"
         );
 
@@ -1425,12 +1321,11 @@ async function handleAuth() {
     }
 
 
-    /* =========================================
+    /* =====================================
        SIGN UP
-    ========================================= */
+    ===================================== */
 
     if (signupMode) {
-
 
         if (password.length < 6) {
 
@@ -1452,6 +1347,12 @@ async function handleAuth() {
 
             return;
         }
+
+
+        showMessage(
+            "Creating your account...",
+            "success"
+        );
 
 
         const {
@@ -1478,44 +1379,48 @@ async function handleAuth() {
         }
 
 
+        if (
+            data.user &&
+            !data.session
+        ) {
+
+            showMessage(
+                "Account created! 🎉 Check your email to confirm your account.",
+                "success"
+            );
+
+            return;
+        }
+
+
+        if (data.session) {
+
+            showApp(
+                data.user.email
+            );
+
+            return;
+        }
+
+
         showMessage(
             "Account created successfully! 🎉",
             "success"
         );
 
-
-        /*
-        If email confirmation is disabled,
-        Supabase gives us a session immediately.
-        */
-
-        if (data.session && data.user) {
-
-            setTimeout(function() {
-
-                showApp(data.user);
-
-            }, 700);
-
-        }
-
-        else {
-
-            showMessage(
-                "Account created! Check your email if confirmation is required. 📧",
-                "success"
-            );
-
-        }
-
-
         return;
     }
 
 
-    /* =========================================
+    /* =====================================
        LOGIN
-    ========================================= */
+    ===================================== */
+
+    showMessage(
+        "Logging in...",
+        "success"
+    );
+
 
     const {
         data,
@@ -1543,7 +1448,9 @@ async function handleAuth() {
 
     if (data.user) {
 
-        showApp(data.user);
+        showApp(
+            data.user.email
+        );
 
     }
 
@@ -1551,10 +1458,47 @@ async function handleAuth() {
 
 
 /* =========================================
-   CHECK EXISTING LOGIN
+   SHOW APP
 ========================================= */
 
-async function checkExistingSession() {
+function showApp(email) {
+
+    const authScreen =
+        document.getElementById("authScreen");
+
+    const app =
+        document.getElementById("app");
+
+    const profileName =
+        document.getElementById("profileName");
+
+    const avatar =
+        document.getElementById("avatar");
+
+
+    authScreen.style.display =
+        "none";
+
+    app.style.display =
+        "grid";
+
+
+    profileName.innerText =
+        email;
+
+    avatar.innerText =
+        email
+        .charAt(0)
+        .toUpperCase();
+
+}
+
+
+/* =========================================
+   CHECK SESSION
+========================================= */
+
+async function checkSession() {
 
     const {
         data
@@ -1563,12 +1507,13 @@ async function checkExistingSession() {
 
 
     if (
+        data &&
         data.session &&
         data.session.user
     ) {
 
         showApp(
-            data.session.user
+            data.session.user.email
         );
 
     }
@@ -1585,9 +1530,7 @@ document.addEventListener(
     function(event) {
 
         if (
-            event.key === "Enter" &&
-            document.getElementById("authScreen")
-                .style.display !== "none"
+            event.key === "Enter"
         ) {
 
             handleAuth();
@@ -1602,8 +1545,7 @@ document.addEventListener(
    START
 ========================================= */
 
-checkExistingSession();
-
+checkSession();
 
 </script>
 
