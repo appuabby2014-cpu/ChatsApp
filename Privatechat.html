@@ -111,7 +111,6 @@ body {
 
 .add-button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(91,140,255,0.3);
 }
 
 .chat-list {
@@ -153,8 +152,10 @@ body {
     background: rgba(18,23,38,0.9);
     border: 1px solid #242b3e;
     border-radius: 20px;
+
     display: flex;
     flex-direction: column;
+
     overflow: hidden;
 }
 
@@ -185,6 +186,7 @@ body {
     max-width: 70%;
     padding: 11px 14px;
     margin-bottom: 10px;
+
     border-radius: 14px;
     background: #171d2d;
     border: 1px solid #252c40;
@@ -251,10 +253,10 @@ body {
 .new-chat-overlay {
     position: fixed;
     inset: 0;
+
     background: rgba(0,0,0,0.65);
 
     display: none;
-
     align-items: center;
     justify-content: center;
 
@@ -265,6 +267,7 @@ body {
 .new-chat-box {
     width: 100%;
     max-width: 450px;
+
     padding: 30px;
     border-radius: 20px;
 
@@ -390,9 +393,7 @@ body {
 
         <div class="header-left">
 
-            <h1>
-                💬 Private Chats
-            </h1>
+            <h1>💬 Private Chats</h1>
 
             <p>
                 Chat privately with another ChatsApp user.
@@ -412,6 +413,9 @@ body {
 
     <div class="chat-layout">
 
+
+        <!-- SIDEBAR -->
+
         <aside class="chat-sidebar">
 
             <div class="sidebar-title">
@@ -428,6 +432,7 @@ body {
                 </button>
 
             </div>
+
 
             <div
                 id="chatList"
@@ -459,7 +464,10 @@ body {
         </aside>
 
 
+        <!-- CHAT AREA -->
+
         <section class="chat-area">
+
 
             <div
                 id="emptyChat"
@@ -510,8 +518,7 @@ body {
                 <div
                     id="messages"
                     class="messages"
-                >
-                </div>
+                ></div>
 
 
                 <div class="message-input">
@@ -541,6 +548,8 @@ body {
 </div>
 
 
+<!-- NEW PRIVATE CHAT -->
+
 <div
     id="newChatOverlay"
     class="new-chat-overlay"
@@ -567,8 +576,7 @@ body {
         <div
             id="chatError"
             class="error"
-        >
-        </div>
+        ></div>
 
         <div class="modal-buttons">
 
@@ -619,8 +627,43 @@ const supabaseClient =
 let currentUsername =
     localStorage.getItem("chatsapp_username");
 
-let currentConversationId =
-    null;
+
+/*
+   IMPORTANT:
+
+   We DO NOT redirect to index.html.
+
+   If the username isn't stored,
+   we simply ask for it.
+*/
+
+if (!currentUsername) {
+
+    currentUsername =
+        prompt(
+            "Enter your ChatsApp username:"
+        );
+
+    if (currentUsername) {
+
+        currentUsername =
+            currentUsername.trim();
+
+        localStorage.setItem(
+            "chatsapp_username",
+            currentUsername
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   CURRENT CHAT
+========================================= */
+
+let currentConversationId = null;
 
 
 /* =========================================
@@ -679,25 +722,20 @@ async function createPrivateChat() {
             "targetUsername"
         ).value.trim();
 
+
     const errorBox =
         document.getElementById(
             "chatError"
         );
 
+
     errorBox.innerText = "";
-
-
-    /*
-       IMPORTANT:
-       We are NOT redirecting to index.html.
-       Private Chats can open directly.
-    */
 
 
     if (!currentUsername) {
 
         errorBox.innerText =
-            "Enter your ChatsApp username first.";
+            "Please enter your username first.";
 
         return;
 
@@ -741,7 +779,14 @@ async function createPrivateChat() {
     }
 
 
-    const { data, error } =
+    /*
+       Create conversation
+    */
+
+    const {
+        data,
+        error
+    } =
         await supabaseClient
         .from("conversations")
         .insert({
@@ -772,6 +817,12 @@ async function createPrivateChat() {
     closeNewChat();
 
 
+    addChatToSidebar(
+        targetUsername,
+        currentConversationId
+    );
+
+
     openConversation(
         currentConversationId,
         targetUsername
@@ -781,7 +832,77 @@ async function createPrivateChat() {
 
 
 /* =========================================
-   OPEN CONVERSATION
+   SIDEBAR CHAT
+========================================= */
+
+function addChatToSidebar(
+    username,
+    conversationId
+) {
+
+    const chatList =
+        document.getElementById(
+            "chatList"
+        );
+
+
+    const empty =
+        chatList.querySelector(
+            ".empty-chat"
+        );
+
+
+    if (empty) {
+
+        empty.remove();
+
+    }
+
+
+    const item =
+        document.createElement(
+            "div"
+        );
+
+
+    item.className =
+        "chat-item";
+
+
+    item.dataset.conversationId =
+        conversationId;
+
+
+    item.innerHTML = `
+
+        <div class="chat-item-name">
+            ${escapeHTML(username)}
+        </div>
+
+        <div class="chat-item-status">
+            Private Chat
+        </div>
+
+    `;
+
+
+    item.onclick = function() {
+
+        openConversation(
+            conversationId,
+            username
+        );
+
+    };
+
+
+    chatList.appendChild(item);
+
+}
+
+
+/* =========================================
+   OPEN CHAT
 ========================================= */
 
 async function openConversation(
@@ -875,6 +996,10 @@ async function loadMessages() {
         displayMessage
     );
 
+
+    messages.scrollTop =
+        messages.scrollHeight;
+
 }
 
 
@@ -912,33 +1037,58 @@ function displayMessage(message) {
     }
 
 
-    div.innerHTML = `
+    const user =
+        document.createElement(
+            "div"
+        );
 
-        <div class="message-user">
-            ${escapeHTML(message.username || "User")}
-        </div>
+    user.className =
+        "message-user";
 
-        <div class="message-text">
-            ${escapeHTML(message.message || "")}
-        </div>
+    user.innerText =
+        message.username || "User";
 
-        <span class="message-time">
-            ${
+
+    const text =
+        document.createElement(
+            "div"
+        );
+
+    text.className =
+        "message-text";
+
+    text.innerText =
+        message.message || "";
+
+
+    const time =
+        document.createElement(
+            "span"
+        );
+
+    time.className =
+        "message-time";
+
+
+    if (message.created_at) {
+
+        time.innerText =
+            new Date(
                 message.created_at
-                ? new Date(
-                    message.created_at
-                  ).toLocaleTimeString(
-                    [],
-                    {
-                        hour: "2-digit",
-                        minute: "2-digit"
-                    }
-                  )
-                : ""
-            }
-        </span>
+            ).toLocaleTimeString(
+                [],
+                {
+                    hour: "2-digit",
+                    minute: "2-digit"
+                }
+            );
 
-    `;
+    }
+
+
+    div.appendChild(user);
+    div.appendChild(text);
+    div.appendChild(time);
 
 
     messages.appendChild(div);
@@ -972,17 +1122,34 @@ async function sendMessage() {
 
 
     if (!currentConversationId) {
+
+        alert(
+            "Start or select a private chat first."
+        );
+
         return;
+
     }
 
 
     if (!currentUsername) {
 
-        alert(
-            "Enter your ChatsApp username first."
-        );
+        currentUsername =
+            prompt(
+                "Enter your ChatsApp username:"
+            );
 
-        return;
+        if (!currentUsername) {
+            return;
+        }
+
+        currentUsername =
+            currentUsername.trim();
+
+        localStorage.setItem(
+            "chatsapp_username",
+            currentUsername
+        );
 
     }
 
@@ -1100,7 +1267,9 @@ document.addEventListener(
 function escapeHTML(text) {
 
     const div =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
     div.innerText =
         text;
@@ -1108,16 +1277,6 @@ function escapeHTML(text) {
     return div.innerHTML;
 
 }
-
-
-/* =========================================
-   START
-========================================= */
-
-/*
-   NO LOGIN REDIRECT HERE.
-   Privatechat.html can open directly.
-*/
 
 </script>
 
