@@ -1313,7 +1313,7 @@ input:focus {
                 </div>
 
 
-                <div class="card">
+                <div class="card" onclick="openPrivateChats()">
 
                     <div class="card-icon">
                         💬
@@ -2203,6 +2203,10 @@ document.addEventListener(
 /* =========================================
    START
 ========================================= */
+
+function openPrivateChats() {
+    window.location.href = "Privatechat.html";
+}
 
 checkSession();
 
