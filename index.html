@@ -1235,126 +1235,125 @@ input:focus {
             </div>
 
 
-            <div class="welcome">
+          <div class="welcome">
 
-                <h2>
-                    ChatsApp
-                </h2>
+    <h2>
+        ChatsApp
+    </h2>
 
-                <p>
-                    A new place to chat, connect and
-                    keep in touch.
-                </p>
+    <p>
+        A new place to chat, connect and
+        keep in touch.
+    </p>
 
-            </div>
+</div>
+
+</div>
+
+
+<!-- =========================================
+     GLOBAL CHAT
+========================================= -->
+
+<div
+    id="globalChat"
+    class="global-chat"
+>
+
+    <div class="chat-header">
+
+        <div>
+
+            <h1>
+                🌎 Global Chat
+            </h1>
+
+            <p id="onlineCount">
+                🟢 Global Chat
+            </p>
 
         </div>
 
+        <button
+            class="chat-back"
+            onclick="showHome()"
+        >
+            ← Home
+        </button>
 
-        <!-- =========================================
-             GLOBAL CHAT
-        ========================================= -->
+    </div>
 
-        <div
-            id="globalChat"
-            class="global-chat"
+
+    <div
+        id="usernameBox"
+        class="username-box"
+    >
+
+        <h2>
+            Choose your username
+        </h2>
+
+        <p>
+            Your main ChatsApp username will be used.
+        </p>
+
+        <input
+            type="text"
+            id="chatUsername"
+            placeholder="Enter username..."
+            maxlength="20"
         >
 
-            <div class="chat-header">
+        <button
+            class="primary"
+            onclick="joinGlobalChat()"
+        >
+            Join Global Chat
+        </button>
 
-                <div>
-
-                    <h1>
-                        🌎 Global Chat
-                    </h1>
-
-                    <p id="onlineCount">
-                        🟢 Global Chat
-                    </p>
-
-                </div>
-
-                <button
-                    class="chat-back"
-                    onclick="showHome()"
-                >
-                    ← Home
-                </button>
-
-            </div>
+    </div>
 
 
-            <div
-                id="usernameBox"
-                class="username-box"
+    <div
+        id="chatArea"
+        style="display:none;"
+    >
+
+        <div
+            id="messages"
+            class="messages"
+        >
+        </div>
+
+        <div class="chat-input">
+
+            <input
+                type="text"
+                id="chatMessage"
+                placeholder="Type a message..."
+                maxlength="500"
             >
 
-                <h2>
-                    Choose your username
-                </h2>
-
-                <p>
-                    Your main ChatsApp username will be used.
-                </p>
-
-                <input
-                    type="text"
-                    id="chatUsername"
-                    placeholder="Enter username..."
-                    maxlength="20"
-                >
-
-                <button
-                    class="primary"
-                    onclick="joinGlobalChat()"
-                >
-                    Join Global Chat
-                </button>
-
-            </div>
-
-
-            <div
-                id="chatArea"
-                style="display:none;"
+            <button
+                class="primary"
+                onclick="sendGlobalMessage()"
             >
-
-                <div
-                    id="messages"
-                    class="messages"
-                >
-                </div>
-
-                <div class="chat-input">
-
-                    <input
-                        type="text"
-                        id="chatMessage"
-                        placeholder="Type a message..."
-                        maxlength="500"
-                    >
-
-                    <button
-                        class="primary"
-                        onclick="sendGlobalMessage()"
-                    >
-                        Send
-                    </button>
-
-                </div>
-
-            </div>
+                Send
+            </button>
 
         </div>
 
+    </div>
 
-    </main>
+</div>
+
+
+</main>
 
 </div>
 
 
 <script>
-
 
 /* =========================================
    SUPABASE
@@ -1776,7 +1775,7 @@ function showHome() {
 function openPrivateChats() {
 
     window.location.href =
-        "PrivateChats.html";
+        "Privatechat.html";
 
 }
 
@@ -1920,11 +1919,6 @@ async function joinGlobalChat() {
         return;
     }
 
-
-    /*
-       IMPORTANT:
-       Keep the real main username.
-    */
 
     currentUsername = username;
 
