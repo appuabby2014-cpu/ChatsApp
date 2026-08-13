@@ -815,691 +815,17 @@ body {
         onclick="openNewChat()"
     >
         +
-    </button>
-
-</div>
-
-
-<!-- =========================================
-     INVITATIONS
-========================================= -->
-
-<div class="invitation-section">
-
-    <div class="invitation-title">
-        📩 Invitations
-    </div>
-
-    <div id="invitations">
-
-        <div style="color:#69748c;font-size:12px;">
-            No invitations.
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- =========================================
-     CHATS
-========================================= -->
-
-<div
-    id="chatList"
-    class="chat-list"
->
-
-    <div
-        id="noChats"
-        style="color:#69748c;font-size:12px;padding:10px;"
-    >
-        No private chats yet.<br><br>
-        Press + to start one.
-    </div>
-
-</div>
-
-
-</aside>
-
-
-<section class="chat-area">
-
-
-<div
-    id="emptyChat"
-    class="empty-chat"
->
-
-    <div>
-
-        <div class="empty-chat-icon">
-            💬
-        </div>
-
-        <h2>
-            Your Private Chats
-        </h2>
-
-        <p>
-            Select a chat from the sidebar
-            or press + to start a new private chat.
-        </p>
-
-    </div>
-
-</div>
-
-
-<div
-    id="activeChat"
-    style="display:none;height:100%;flex-direction:column;"
->
-
-
-<div
-    class="chat-area-header"
-    id="chatHeader"
->
-
-    <h2>
-        Private Chat
-    </h2>
-
-    <p>
-        Private conversation
-    </p>
-
-</div>
-
-
-<div
-    id="messages"
-    class="messages"
->
-</div>
-
-
-<div class="message-input">
-
-    <input
-        id="messageInput"
-        type="text"
-        maxlength="500"
-        placeholder="Type a message..."
-    >
-
-    <button
-        class="send-button"
-        onclick="sendMessage()"
-    >
-        Send
-    </button>
-
-</div>
-
-
-</div>
-
-
-</section>
-
-</div>
-
-</div>
-
-
-<!-- =========================================
-     NEW CHAT MODAL
-========================================= -->
-
-<div
-    id="newChatOverlay"
-    class="new-chat-overlay"
->
-
-<div class="new-chat-box">
-
-    <h2>
-        💬 Start a Private Chat
-    </h2>
-
-    <p>
-        Enter the <strong>MAIN ChatsApp username</strong>
-        of the person you want to chat with.
-    </p>
-
-    <input
-        id="targetUsername"
-        type="text"
-        maxlength="20"
-        placeholder="Enter username..."
-    >
-
-    <div
-        id="chatError"
-        class="error"
-    ></div>
-
-    <div
-        id="chatSuccess"
-        class="success"
-    ></div>
-
-    <div class="modal-buttons">
-
-        <button
-            class="cancel-button"
-            onclick="closeNewChat()"
-        >
-            Cancel
-        </button>
-
-        <button
-            class="create-button"
-            onclick="createPrivateChat()"
-        >
-            Send Invitation
-        </button>
-
-    </div>
-
-</div>
-
-</div>
-
-
-<script>
-
-
-/* =========================================
-   SUPABASE
-========================================= */
-
-const SUPABASE_URL =
-    "https://kopzrnpporfdwauwlhni.supabase.co";
-
-const SUPABASE_KEY =
-    "sb_publishable_bbxmPB71ADnIqe3oPB3MuQ_EWa4n_Ph";
-
-const supabaseClient =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-    );
-
-
-/* =========================================
-   VARIABLES
-========================================= */
-
-let currentUser = null;
-
-let currentUsername = null;
-
-let currentConversationId = null;
-
-let privateChatChannel = null;
-
-let invitationChannel = null;
-
-
-/* =========================================
-   GET CURRENT USER
-========================================= */
-
-async function getCurrentUser() {
-
-    const {
-        data,
-        error
-    } =
-        await supabaseClient.auth.getUser();
-
-
-    if (
-        error ||
-        !data ||
-        !data.user
-    ) {
-
-        return false;
-
-    }
-
-
-    currentUser =
-        data.user;
-
-
-    currentUsername =
-        currentUser.user_metadata?.username;
-
-
-    if (!currentUsername) {
-
-        const {
-            data: profile,
-            error: profileError
-        } =
-            await supabaseClient
-            .from("profiles")
-            .select("username")
-            .eq(
-                "id",
-                currentUser.id
-            )
-            .maybeSingle();
-
-
-        if (
-            profileError ||
-            !profile
-        ) {
-
-            return false;
-
-        }
-
-
-        currentUsername =
-            profile.username;
-
-    }
-
-
-    return true;
-
-}
-
-
-/* =========================================
-   HOME
-========================================= */
-
-function goHome() {
-
-    window.location.href =
-        "index.html";
-
-}
-
-
-/* =========================================
-   NEW CHAT
-========================================= */
-
-function openNewChat() {
-
-    document.getElementById(
-        "newChatOverlay"
-    ).style.display = "flex";
-
-    document.getElementById(
-        "chatError"
-    ).innerText = "";
-
-    document.getElementById(
-        "chatSuccess"
-    ).innerText = "";
-
-    document.getElementById(
-        "targetUsername"
-    ).focus();
-
-}
-
-
-function closeNewChat() {
-
-    document.getElementById(
-        "newChatOverlay"
-    ).style.display = "none";
-
-    document.getElementById(
-        "targetUsername"
-    ).value = "";
-
-    document.getElementById(
-        "chatError"
-    ).innerText = "";
-
-    document.getElementById(
-        "chatSuccess"
-    ).innerText = "";
-
-}
-
-
-/* =========================================
-   SEND INVITATION
-========================================= */
-
-async function createPrivateChat() {
-
-    const targetUsername =
-        document.getElementById(
-            "targetUsername"
-        )
-        .value
-        .trim();
-
-
-    const errorBox =
-        document.getElementById(
-            "chatError"
-        );
-
-
-    const successBox =
-        document.getElementById(
-            "chatSuccess"
-        );
-
-
-    errorBox.innerText = "";
-
-    successBox.innerText = "";
-
-
-    if (!currentUser) {
-
-        const loggedIn =
-            await getCurrentUser();
-
-        if (!loggedIn) {
-
-            errorBox.innerText =
-                "Please log in to ChatsApp first.";
-
-            return;
-
-        }
-
-    }
-
-
-    if (!targetUsername) {
-
-        errorBox.innerText =
-            "Enter a username.";
-
-        return;
-
-    }
-
-
-    if (
-        !/^[a-zA-Z0-9_]{3,20}$/.test(
-            targetUsername
-        )
-    ) {
-
-        errorBox.innerText =
-            "Invalid username.";
-
-        return;
-
-    }
-
-
-    if (
-        targetUsername.toLowerCase() ===
-        currentUsername.toLowerCase()
-    ) {
-
-        errorBox.innerText =
-            "You can't chat with yourself.";
-
-        return;
-
-    }
-
-
-    const {
-        data: targetProfile,
-        error: targetError
-    } =
-        await supabaseClient
-        .from("profiles")
-        .select("id, username")
-        .ilike(
-            "username",
-            targetUsername
-        )
-        .maybeSingle();
-
-
-    if (targetError) {
-
-        console.error(
-            targetError
-        );
-
-        errorBox.innerText =
-            "Couldn't search for that username.";
-
-        return;
-
-    }
-
-
-    if (!targetProfile) {
-
-        errorBox.innerText =
-            "That ChatsApp username doesn't exist.";
-
-        return;
-
-    }
-
-
-    /* CHECK FOR EXISTING INVITATION */
-
-    const {
-        data: existingInvitation
-    } =
-        await supabaseClient
-        .from("chat_invitations")
-        .select("id,status")
-        .eq(
-            "from_username",
-            currentUsername
-        )
-        .eq(
-            "to_username",
-            targetProfile.username
-        )
-        .eq(
-            "status",
-            "pending"
-        )
-        .maybeSingle();
-
-
-    if (existingInvitation) {
-
-        errorBox.innerText =
-            "You already sent an invitation to this user.";
-
-        return;
-
-    }
-
-
-    /* INSERT INVITATION */
-
-    const {
-        error: invitationError
-    } =
-        await supabaseClient
-        .from("chat_invitations")
-        .insert({
-
-            from_username:
-                currentUsername,
-
-            to_username:
-                targetProfile.username,
-
-            status:
-                "pending"
-
-        });
-
-
-    if (invitationError) {
-
-        console.error(
-            "Invitation error:",
-            invitationError
-        );
-
-        errorBox.innerText =
-            "Couldn't send the invitation.";
-
-        return;
-
-    }
-
-
-    successBox.innerText =
-        "Invitation sent! 📩";
-
-    document.getElementById(
-        "targetUsername"
-    ).value = "";
-
-}
-
-
-/* =========================================
-   LOAD INVITATIONS
-========================================= */
-
-async function loadInvitations() {
-
-    if (!currentUsername) {
-        return;
-    }
-
-
-    const {
-        data,
-        error
-    } =
-        await supabaseClient
-        .from("chat_invitations")
-        .select("*")
-        .eq(
-            "to_username",
-            currentUsername
-        )
-        .eq(
-            "status",
-            "pending"
-        )
-        .order(
-            "created_at",
-            {
-                ascending: false
-            }
-        );
-
-
-    if (error) {
-
-        console.error(
-            "Invitation loading error:",
-            error
-        );
-
-        return;
-
-    }
-
-
-    const box =
-        document.getElementById(
-            "invitations"
-        );
-
-
-    box.innerHTML = "";
-
-
-    if (!data || data.length === 0) {
-
-        box.innerHTML = `
-            <div style="color:#69748c;font-size:12px;">
-                No invitations.
-            </div>
-        `;
-
-        return;
-
-    }
-
-
-    data.forEach(
-        invitation => {
-
-            const div =
-                document.createElement(
-                    "div"
-                );
-
-
-            div.className =
-                "invitation-item";
-
-
-            div.innerHTML = `
-
-                <div class="invitation-name">
-                    💬 ${escapeHTML(
-                        invitation.from_username
-                    )}
-                    wants to chat!
-                </div>
-
-                <div class="invitation-buttons">
-
-                    <button
-                        class="accept-button"
-                        onclick="acceptInvitation('${invitation.id}')"
-                    >
-                        ✓ Accept
-                    </button>
-
-                    <button
-                        class="decline-button"
-                        onclick="declineInvitation('${invitation.id}')"
-                    >
-                        ✕ Decline
-                    </button>
-
-                </div>
-
-            `;
-
-
-            box.appendChild(div);
-
-        }
-    );
-
-}
-
-
-/* =========================================
+   /* =========================================
    ACCEPT INVITATION
 ========================================= */
 
 async function acceptInvitation(
     invitationId
 ) {
+
+    /* =========================================
+       GET INVITATION
+    ========================================= */
 
     const {
         data: invitation,
@@ -1520,6 +846,11 @@ async function acceptInvitation(
         !invitation
     ) {
 
+        console.error(
+            "Invitation error:",
+            invitationError
+        );
+
         alert(
             "Invitation could not be found."
         );
@@ -1529,7 +860,34 @@ async function acceptInvitation(
     }
 
 
-    /* CREATE CONVERSATION */
+    /* =========================================
+       GET USERNAMES
+    ========================================= */
+
+    const fromUsername =
+        invitation.from_text;
+
+    const toUsername =
+        invitation.to_username;
+
+
+    if (
+        !fromUsername ||
+        !toUsername
+    ) {
+
+        alert(
+            "This invitation is missing a username."
+        );
+
+        return;
+
+    }
+
+
+    /* =========================================
+       CREATE CONVERSATION
+    ========================================= */
 
     const {
         data: conversation,
@@ -1539,11 +897,13 @@ async function acceptInvitation(
         .from("conversations")
         .insert({
 
-            user1_username:
-                invitation.from_username,
+            type:
+                "private",
 
-            user2_username:
-                invitation.to_username
+            name:
+                fromUsername +
+                " & " +
+                toUsername
 
         })
         .select()
@@ -1566,7 +926,57 @@ async function acceptInvitation(
     }
 
 
-    /* MARK INVITATION ACCEPTED */
+    /* =========================================
+       ADD BOTH USERS
+       TO CONVERSATION
+    ========================================= */
+
+    const {
+        error: membersError
+    } =
+        await supabaseClient
+        .from("conversation_members")
+        .insert([
+
+            {
+                conversation_id:
+                    conversation.id,
+
+                username:
+                    fromUsername
+            },
+
+            {
+                conversation_id:
+                    conversation.id,
+
+                username:
+                    toUsername
+            }
+
+        ]);
+
+
+    if (membersError) {
+
+        console.error(
+            "Conversation members error:",
+            membersError
+        );
+
+        alert(
+            "Couldn't add the users to the private chat."
+        );
+
+        return;
+
+    }
+
+
+    /* =========================================
+       SAVE CONVERSATION ID
+       INTO INVITATION
+    ========================================= */
 
     const {
         error: updateError
@@ -1576,7 +986,10 @@ async function acceptInvitation(
         .update({
 
             status:
-                "accepted"
+                "accepted",
+
+            conversation_id:
+                conversation.id
 
         })
         .eq(
@@ -1588,7 +1001,12 @@ async function acceptInvitation(
     if (updateError) {
 
         console.error(
+            "Invitation update error:",
             updateError
+        );
+
+        alert(
+            "Chat was created, but the invitation could not be updated."
         );
 
         return;
@@ -1596,14 +1014,31 @@ async function acceptInvitation(
     }
 
 
+    /* =========================================
+       SUCCESS
+    ========================================= */
+
+    alert(
+        "Private chat created! 💬🎉"
+    );
+
+
+    /* =========================================
+       RELOAD SIDEBAR
+    ========================================= */
+
     await loadInvitations();
 
     await loadConversations();
 
 
+    /* =========================================
+       OPEN CHAT
+    ========================================= */
+
     openConversation(
         conversation.id,
-        invitation.from_username
+        fromUsername
     );
 
 }
@@ -1637,6 +1072,7 @@ async function declineInvitation(
     if (error) {
 
         console.error(
+            "Decline invitation error:",
             error
         );
 
@@ -1661,27 +1097,34 @@ async function declineInvitation(
 async function loadConversations() {
 
     if (!currentUsername) {
+
         return;
+
     }
 
 
+    /* =========================================
+       GET CONVERSATION MEMBERS
+    ========================================= */
+
     const {
-        data,
-        error
+        data: memberships,
+        error: membershipError
     } =
         await supabaseClient
-        .from("conversations")
+        .from("conversation_members")
         .select("*")
-        .or(
-            `user1_username.eq.${currentUsername},user2_username.eq.${currentUsername}`
+        .eq(
+            "username",
+            currentUsername
         );
 
 
-    if (error) {
+    if (membershipError) {
 
         console.error(
-            "Conversation loading error:",
-            error
+            "Conversation membership error:",
+            membershipError
         );
 
         return;
@@ -1698,16 +1141,25 @@ async function loadConversations() {
     chatList.innerHTML = "";
 
 
-    if (!data || data.length === 0) {
+    if (
+        !memberships ||
+        memberships.length === 0
+    ) {
 
         chatList.innerHTML = `
+
             <div
                 id="noChats"
                 style="color:#69748c;font-size:12px;padding:10px;"
             >
-                No private chats yet.<br><br>
+
+                No private chats yet.
+                <br>
+                <br>
                 Press + to start one.
+
             </div>
+
         `;
 
         return;
@@ -1715,21 +1167,48 @@ async function loadConversations() {
     }
 
 
-    data.forEach(
+    /* =========================================
+       GET CONVERSATIONS
+    ========================================= */
+
+    const conversationIds =
+        memberships.map(
+            membership =>
+                membership.conversation_id
+        );
+
+
+    const {
+        data: conversations,
+        error: conversationError
+    } =
+        await supabaseClient
+        .from("conversations")
+        .select("*")
+        .in(
+            "id",
+            conversationIds
+        );
+
+
+    if (conversationError) {
+
+        console.error(
+            "Conversation loading error:",
+            conversationError
+        );
+
+        return;
+
+    }
+
+
+    /* =========================================
+       CREATE CHAT ITEMS
+    ========================================= */
+
+    conversations.forEach(
         conversation => {
-
-            const otherUsername =
-                conversation.user1_username ===
-                currentUsername
-
-                ?
-
-                conversation.user2_username
-
-                :
-
-                conversation.user1_username;
-
 
             const div =
                 document.createElement(
@@ -1741,16 +1220,42 @@ async function loadConversations() {
                 "chat-item";
 
 
+            /* =====================================
+               FIND OTHER USER
+            ===================================== */
+
+            const otherMembership =
+                memberships.find(
+                    membership =>
+                        membership.conversation_id ===
+                        conversation.id &&
+                        membership.username !==
+                        currentUsername
+                );
+
+
+            const otherUsername =
+                otherMembership
+                ?
+                otherMembership.username
+                :
+                conversation.name;
+
+
             div.innerHTML = `
 
                 <div class="chat-item-name">
+
                     💬 ${escapeHTML(
                         otherUsername
                     )}
+
                 </div>
 
                 <div class="chat-item-status">
+
                     Private conversation
+
                 </div>
 
             `;
@@ -1805,13 +1310,17 @@ async function openConversation(
     ).innerHTML = `
 
         <h2>
+
             💬 ${escapeHTML(
                 otherUsername
             )}
+
         </h2>
 
         <p>
+
             Private conversation
+
         </p>
 
     `;
@@ -1829,7 +1338,9 @@ async function openConversation(
 async function loadMessages() {
 
     if (!currentConversationId) {
+
         return;
+
     }
 
 
@@ -1948,8 +1459,11 @@ function displayMessage(
                 ).toLocaleTimeString(
                     [],
                     {
-                        hour: "2-digit",
-                        minute: "2-digit"
+                        hour:
+                            "2-digit",
+
+                        minute:
+                            "2-digit"
                     }
                 )
 
@@ -1964,7 +1478,9 @@ function displayMessage(
     `;
 
 
-    messages.appendChild(div);
+    messages.appendChild(
+        div
+    );
 
 
     messages.scrollTop =
@@ -1990,12 +1506,16 @@ async function sendMessage() {
 
 
     if (!text) {
+
         return;
+
     }
 
 
     if (!currentConversationId) {
+
         return;
+
     }
 
 
@@ -2063,10 +1583,16 @@ function subscribeToPrivateMessages() {
         .on(
             "postgres_changes",
             {
-                event: "INSERT",
-                schema: "public",
-                table: "conversation_messages"
+                event:
+                    "INSERT",
+
+                schema:
+                    "public",
+
+                table:
+                    "conversation_messages"
             },
+
             function(payload) {
 
                 if (
@@ -2081,6 +1607,7 @@ function subscribeToPrivateMessages() {
                 }
 
             }
+
         )
         .subscribe();
 
@@ -2111,15 +1638,23 @@ function subscribeToInvitations() {
         .on(
             "postgres_changes",
             {
-                event: "INSERT",
-                schema: "public",
-                table: "chat_invitations"
+                event:
+                    "INSERT",
+
+                schema:
+                    "public",
+
+                table:
+                    "chat_invitations"
             },
+
             function(payload) {
 
                 if (
-                    payload.new.to_username?.toLowerCase() ===
-                    currentUsername?.toLowerCase()
+                    payload.new.to_username
+                    ?.toLowerCase() ===
+                    currentUsername
+                    ?.toLowerCase()
                 ) {
 
                     loadInvitations();
@@ -2127,6 +1662,7 @@ function subscribeToInvitations() {
                 }
 
             }
+
         )
         .subscribe();
 
@@ -2218,9 +1754,3 @@ async function startPrivateChats() {
 
 
 startPrivateChats();
-
-</script>
-
-</body>
-
-</html>
