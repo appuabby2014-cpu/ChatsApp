@@ -37,16 +37,10 @@ body {
     color: white;
 }
 
-
-/* PAGE */
-
 .page {
     min-height: 100vh;
     padding: 35px;
 }
-
-
-/* HEADER */
 
 .header {
     display: flex;
@@ -75,17 +69,11 @@ body {
     cursor: pointer;
 }
 
-
-/* LAYOUT */
-
 .mail-layout {
     display: grid;
     grid-template-columns: 250px 1fr;
     gap: 20px;
 }
-
-
-/* SIDEBAR */
 
 .sidebar {
     background: rgba(18,23,38,0.85);
@@ -126,9 +114,6 @@ body {
     text-align: center !important;
 }
 
-
-/* MAIN */
-
 .mail-main {
     background: rgba(18,23,38,0.85);
     border: 1px solid #242b3e;
@@ -136,9 +121,6 @@ body {
     min-height: 600px;
     overflow: hidden;
 }
-
-
-/* TOP */
 
 .mail-top {
     padding: 20px;
@@ -148,9 +130,6 @@ body {
 .mail-top h2 {
     margin: 0;
 }
-
-
-/* MAIL LIST */
 
 .mail-list {
     padding: 10px;
@@ -191,9 +170,6 @@ body {
     font-size: 11px;
 }
 
-
-/* EMPTY */
-
 .empty {
     min-height: 500px;
     display: flex;
@@ -207,9 +183,6 @@ body {
     font-size: 55px;
     margin-bottom: 15px;
 }
-
-
-/* COMPOSE */
 
 .compose {
     display: none;
@@ -237,6 +210,12 @@ body {
     font-family: Arial, sans-serif;
 }
 
+.compose input:focus,
+.compose textarea:focus {
+    border-color: #638cff;
+    box-shadow: 0 0 0 3px rgba(99,140,255,.1);
+}
+
 .compose textarea {
     min-height: 250px;
     resize: vertical;
@@ -259,6 +238,11 @@ body {
     cursor: pointer;
 }
 
+.send-mail-button:disabled {
+    opacity: .6;
+    cursor: wait;
+}
+
 .cancel-button {
     padding: 13px 22px;
     margin-left: 8px;
@@ -271,9 +255,6 @@ body {
 
     cursor: pointer;
 }
-
-
-/* READER */
 
 .reader {
     display: none;
@@ -310,8 +291,19 @@ body {
     cursor: pointer;
 }
 
+.status-success {
+    color: #55d88a;
+    font-weight: 700;
+}
 
-/* MOBILE */
+.status-error {
+    color: #ff6b7a;
+    font-weight: 700;
+}
+
+.status-info {
+    color: #7899ff;
+}
 
 @media(max-width:800px) {
 
@@ -329,12 +321,9 @@ body {
 
 </head>
 
-
 <body>
 
-
 <div class="page">
-
 
 <div class="header">
 
@@ -348,18 +337,14 @@ body {
 
     </div>
 
-
     <button
         class="back-button"
         onclick="goHome()"
     >
-
         ← Home
-
     </button>
 
 </div>
-
 
 
 <div class="mail-layout">
@@ -369,39 +354,29 @@ body {
 
 <aside class="sidebar">
 
-
 <button
     id="inboxButton"
     class="active"
     onclick="showInbox()"
 >
-
     📥 Inbox
-
 </button>
-
 
 <button
+    id="sentButton"
     onclick="showSent()"
 >
-
     📤 Sent
-
 </button>
-
 
 <button
     class="compose-button"
     onclick="showCompose()"
 >
-
     ✏️ Compose Mail
-
 </button>
 
-
 </aside>
-
 
 
 <!-- MAIN -->
@@ -413,7 +388,6 @@ body {
 
 <div id="mailListView">
 
-
 <div class="mail-top">
 
     <h2 id="mailTitle">
@@ -422,12 +396,10 @@ body {
 
 </div>
 
-
 <div
     id="mailList"
     class="mail-list"
 >
-
 
 <div class="empty">
 
@@ -443,12 +415,9 @@ body {
 
 </div>
 
-
 </div>
 
-
 </div>
-
 
 
 <!-- COMPOSE -->
@@ -458,16 +427,13 @@ body {
     class="compose"
 >
 
-
 <h2>
     ✏️ Compose Mail
 </h2>
 
-
 <label>
     Send to username
 </label>
-
 
 <input
     id="recipient"
@@ -476,11 +442,9 @@ body {
     placeholder="Enter ChatsApp username..."
 >
 
-
 <label>
     Message
 </label>
-
 
 <textarea
     id="mailMessage"
@@ -488,35 +452,27 @@ body {
     placeholder="Write your message..."
 ></textarea>
 
-
 <div
     id="composeStatus"
     style="margin-bottom:15px;"
 ></div>
 
-
 <button
+    id="sendMailButton"
     class="send-mail-button"
     onclick="sendMail()"
 >
-
     📧 Send Mail
-
 </button>
-
 
 <button
     class="cancel-button"
     onclick="showInbox()"
 >
-
     Cancel
-
 </button>
 
-
 </div>
-
 
 
 <!-- READER -->
@@ -526,61 +482,44 @@ body {
     class="reader"
 >
 
-
 <h2 id="readerTitle">
     📧 Mail
 </h2>
 
-
 <div
     id="readerFrom"
     class="reader-from"
->
-</div>
-
+></div>
 
 <div
     id="readerMessage"
     class="reader-message"
->
-</div>
-
+></div>
 
 <button
     id="deleteButton"
     class="delete-button"
 >
-
     🗑️ Delete Mail
-
 </button>
-
 
 <button
     class="cancel-button"
     onclick="showInbox()"
 >
-
     ← Back
-
 </button>
 
-
 </div>
-
 
 </section>
 
-
 </div>
 
-
 </div>
-
 
 
 <script>
-
 
 /* =========================================
    SUPABASE
@@ -589,10 +528,8 @@ body {
 const SUPABASE_URL =
     "https://kopzrnpporfdwauwlhni.supabase.co";
 
-
 const SUPABASE_KEY =
     "sb_publishable_bbxmPB71ADnIqe3oPB3MuQ_EWa4n_Ph";
-
 
 const supabaseClient =
     window.supabase.createClient(
@@ -606,11 +543,8 @@ const supabaseClient =
 ========================================= */
 
 let currentUser = null;
-
 let currentUsername = null;
-
 let currentMailId = null;
-
 let mailChannel = null;
 
 
@@ -626,25 +560,40 @@ async function getCurrentUser() {
     } =
         await supabaseClient.auth.getUser();
 
-
     if (
         error ||
         !data ||
         !data.user
     ) {
 
+        console.error(
+            "AUTH ERROR:",
+            error
+        );
+
         return false;
 
     }
 
-
     currentUser =
         data.user;
 
+    /*
+       First try username from
+       Supabase Auth metadata.
+    */
 
     currentUsername =
-        currentUser.user_metadata?.username;
+        currentUser
+        .user_metadata
+        ?.username
+        ?.trim();
 
+
+    /*
+       If it isn't there,
+       look inside profiles.
+    */
 
     if (!currentUsername) {
 
@@ -667,15 +616,38 @@ async function getCurrentUser() {
             !profile
         ) {
 
+            console.error(
+                "PROFILE ERROR:",
+                profileError
+            );
+
             return false;
 
         }
 
 
         currentUsername =
-            profile.username;
+            profile.username
+            ?.trim();
 
     }
+
+
+    if (!currentUsername) {
+
+        console.error(
+            "No username found for logged-in user."
+        );
+
+        return false;
+
+    }
+
+
+    console.log(
+        "ChatsApp Mail user:",
+        currentUsername
+    );
 
 
     return true;
@@ -703,17 +675,18 @@ function hideViews() {
 
     document.getElementById(
         "mailListView"
-    ).style.display = "none";
-
+    ).style.display =
+        "none";
 
     document.getElementById(
         "composeView"
-    ).style.display = "none";
-
+    ).style.display =
+        "none";
 
     document.getElementById(
         "readerView"
-    ).style.display = "none";
+    ).style.display =
+        "none";
 
 }
 
@@ -724,14 +697,25 @@ function showInbox() {
 
     document.getElementById(
         "mailListView"
-    ).style.display = "block";
-
+    ).style.display =
+        "block";
 
     document.getElementById(
         "mailTitle"
     ).innerText =
         "📥 Inbox";
 
+    document.getElementById(
+        "inboxButton"
+    ).classList.add(
+        "active"
+    );
+
+    document.getElementById(
+        "sentButton"
+    ).classList.remove(
+        "active"
+    );
 
     loadInbox();
 
@@ -744,14 +728,25 @@ function showSent() {
 
     document.getElementById(
         "mailListView"
-    ).style.display = "block";
-
+    ).style.display =
+        "block";
 
     document.getElementById(
         "mailTitle"
     ).innerText =
         "📤 Sent";
 
+    document.getElementById(
+        "sentButton"
+    ).classList.add(
+        "active"
+    );
+
+    document.getElementById(
+        "inboxButton"
+    ).classList.remove(
+        "active"
+    );
 
     loadSent();
 
@@ -764,8 +759,8 @@ function showCompose() {
 
     document.getElementById(
         "composeView"
-    ).style.display = "block";
-
+    ).style.display =
+        "block";
 
     document.getElementById(
         "recipient"
@@ -780,50 +775,89 @@ function showCompose() {
 
 async function sendMail() {
 
-    const recipient =
+    const recipientInput =
         document.getElementById(
             "recipient"
-        )
-        .value
-        .trim();
+        );
 
-
-    const message =
+    const messageInput =
         document.getElementById(
             "mailMessage"
-        )
-        .value
-        .trim();
-
+        );
 
     const status =
         document.getElementById(
             "composeStatus"
         );
 
+    const sendButton =
+        document.getElementById(
+            "sendMailButton"
+        );
+
+
+    const recipient =
+        recipientInput
+        .value
+        .trim();
+
+
+    const message =
+        messageInput
+        .value
+        .trim();
+
 
     status.innerText = "";
+    status.className = "";
 
+
+    /* CHECK USER */
+
+    if (!currentUsername) {
+
+        status.innerText =
+            "❌ You are not logged in.";
+
+        status.className =
+            "status-error";
+
+        return;
+
+    }
+
+
+    /* CHECK RECIPIENT */
 
     if (!recipient) {
 
         status.innerText =
             "❌ Enter a username.";
 
+        status.className =
+            "status-error";
+
         return;
 
     }
 
+
+    /* CHECK MESSAGE */
 
     if (!message) {
 
         status.innerText =
             "❌ Write a message.";
 
+        status.className =
+            "status-error";
+
         return;
 
     }
 
+
+    /* PREVENT SELF MAIL */
 
     if (
         recipient.toLowerCase() ===
@@ -833,102 +867,177 @@ async function sendMail() {
         status.innerText =
             "❌ You can't mail yourself.";
 
-        return;
-
-    }
-
-
-    /* FIND USER */
-
-    const {
-        data: target,
-        error: targetError
-    } =
-        await supabaseClient
-        .from("profiles")
-        .select("username")
-        .ilike(
-            "username",
-            recipient
-        )
-        .maybeSingle();
-
-
-    if (targetError) {
-
-        console.error(
-            targetError
-        );
-
-        status.innerText =
-            "❌ Couldn't find that user.";
+        status.className =
+            "status-error";
 
         return;
 
     }
 
 
-    if (!target) {
+    sendButton.disabled = true;
 
-        status.innerText =
-            "❌ That username doesn't exist.";
-
-        return;
-
-    }
-
-
-    /* INSERT MAIL */
-
-    const {
-        error
-    } =
-        await supabaseClient
-        .from("mail")
-        .insert({
-
-            sender_username:
-                currentUsername,
-
-            recipient_username:
-                target.username,
-
-            message:
-                message,
-
-            is_read:
-                false
-
-        });
-
-
-    if (error) {
-
-        console.error(
-            "MAIL ERROR:",
-            error
-        );
-
-        status.innerText =
-            "❌ Couldn't send mail.";
-
-        return;
-
-    }
+    sendButton.innerText =
+        "Sending...";
 
 
     status.innerText =
-        "✅ Mail sent!";
+        "🔎 Finding user...";
+
+    status.className =
+        "status-info";
 
 
-    document.getElementById(
-        "recipient"
-    ).value = "";
+    try {
+
+        /* =================================
+           FIND RECIPIENT
+        ================================= */
+
+        const {
+            data: target,
+            error: targetError
+        } =
+            await supabaseClient
+            .from("profiles")
+            .select("username")
+            .ilike(
+                "username",
+                recipient
+            )
+            .maybeSingle();
 
 
-    document.getElementById(
-        "mailMessage"
-    ).value = "";
+        if (targetError) {
+
+            console.error(
+                "RECIPIENT LOOKUP ERROR:",
+                targetError
+            );
+
+            throw new Error(
+                "Could not search for that username: " +
+                targetError.message
+            );
+
+        }
+
+
+        if (!target) {
+
+            throw new Error(
+                "That ChatsApp username does not exist."
+            );
+
+        }
+
+
+        status.innerText =
+            "📨 Sending mail...";
+
+
+        /* =================================
+           INSERT MAIL
+        ================================= */
+
+        const {
+            data: newMail,
+            error: insertError
+        } =
+            await supabaseClient
+            .from("mail")
+            .insert({
+
+                sender_username:
+                    currentUsername,
+
+                recipient_username:
+                    target.username,
+
+                message:
+                    message,
+
+                is_read:
+                    false
+
+            })
+            .select()
+            .single();
+
+
+        if (insertError) {
+
+            console.error(
+                "MAIL INSERT ERROR:",
+                insertError
+            );
+
+            /*
+               THIS IS IMPORTANT:
+               It shows the actual Supabase
+               error instead of just
+               "Couldn't send mail."
+            */
+
+            throw new Error(
+                "Supabase rejected the mail: " +
+                insertError.message
+            );
+
+        }
+
+
+        console.log(
+            "MAIL SENT:",
+            newMail
+        );
+
+
+        /* =================================
+           SUCCESS
+        ================================= */
+
+        status.innerText =
+            "✅ Mail sent successfully!";
+
+        status.className =
+            "status-success";
+
+
+        recipientInput.value = "";
+
+        messageInput.value = "";
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "SEND MAIL ERROR:",
+            error
+        );
+
+
+        status.innerText =
+            "❌ " +
+            error.message;
+
+        status.className =
+            "status-error";
+
+    }
+
+
+    finally {
+
+        sendButton.disabled =
+            false;
+
+        sendButton.innerText =
+            "📧 Send Mail";
+
+    }
 
 }
 
@@ -946,7 +1055,12 @@ async function loadInbox() {
 
 
     list.innerHTML =
-        "Loading mail...";
+        `<div class="empty">
+            <div>
+                <div class="empty-icon">📬</div>
+                Loading mail...
+            </div>
+        </div>`;
 
 
     const {
@@ -971,12 +1085,19 @@ async function loadInbox() {
     if (error) {
 
         console.error(
-            "Inbox error:",
+            "INBOX ERROR:",
             error
         );
 
         list.innerHTML =
-            "❌ Couldn't load mail.";
+            `<div class="empty">
+                <div>
+                    <div class="empty-icon">❌</div>
+                    Couldn't load mail.
+                    <br><br>
+                    ${escapeHTML(error.message)}
+                </div>
+            </div>`;
 
         return;
 
@@ -1004,7 +1125,12 @@ async function loadSent() {
 
 
     list.innerHTML =
-        "Loading mail...";
+        `<div class="empty">
+            <div>
+                <div class="empty-icon">📤</div>
+                Loading sent mail...
+            </div>
+        </div>`;
 
 
     const {
@@ -1029,12 +1155,19 @@ async function loadSent() {
     if (error) {
 
         console.error(
-            "Sent mail error:",
+            "SENT ERROR:",
             error
         );
 
         list.innerHTML =
-            "❌ Couldn't load sent mail.";
+            `<div class="empty">
+                <div>
+                    <div class="empty-icon">❌</div>
+                    Couldn't load sent mail.
+                    <br><br>
+                    ${escapeHTML(error.message)}
+                </div>
+            </div>`;
 
         return;
 
@@ -1248,6 +1381,12 @@ async function openMail(
     document.getElementById(
         "readerFrom"
     ).innerText =
+        mail.sender_username ===
+        currentUsername
+        ?
+        "To: " +
+        mail.recipient_username
+        :
         "From: " +
         mail.sender_username;
 
@@ -1264,7 +1403,10 @@ async function openMail(
         !mail.is_read
     ) {
 
-        await supabaseClient
+        const {
+            error
+        } =
+            await supabaseClient
             .from("mail")
             .update({
 
@@ -1276,6 +1418,16 @@ async function openMail(
                 "id",
                 mail.id
             );
+
+
+        if (error) {
+
+            console.error(
+                "READ ERROR:",
+                error
+            );
+
+        }
 
     }
 
@@ -1317,12 +1469,13 @@ async function deleteMail(
     if (error) {
 
         console.error(
-            "Delete mail error:",
+            "DELETE ERROR:",
             error
         );
 
         alert(
-            "Couldn't delete mail."
+            "Couldn't delete mail: " +
+            error.message
         );
 
         return;
@@ -1345,10 +1498,21 @@ async function deleteMail(
 
 function subscribeToMail() {
 
+    if (mailChannel) {
+
+        supabaseClient
+        .removeChannel(
+            mailChannel
+        );
+
+    }
+
+
     mailChannel =
         supabaseClient
         .channel(
-            "mail-notifications"
+            "mail-notifications-" +
+            currentUsername
         )
         .on(
             "postgres_changes",
@@ -1367,11 +1531,20 @@ function subscribeToMail() {
 
             function(payload) {
 
-                if (
-                    payload.new.recipient_username
-                    ?.toLowerCase() ===
+                const recipient =
+                    payload.new
+                    .recipient_username
+                    ?.toLowerCase();
+
+
+                const me =
                     currentUsername
-                    ?.toLowerCase()
+                    ?.toLowerCase();
+
+
+                if (
+                    recipient ===
+                    me
                 ) {
 
                     playNotification();
@@ -1380,13 +1553,47 @@ function subscribeToMail() {
                         payload.new
                     );
 
-                    loadInbox();
+                    /*
+                       Only refresh inbox if
+                       we're currently viewing it.
+                    */
+
+                    const inboxVisible =
+                        document.getElementById(
+                            "mailListView"
+                        ).style.display !==
+                        "none";
+
+
+                    const title =
+                        document.getElementById(
+                            "mailTitle"
+                        ).innerText;
+
+
+                    if (
+                        inboxVisible &&
+                        title.includes("Inbox")
+                    ) {
+
+                        loadInbox();
+
+                    }
 
                 }
 
             }
         )
-        .subscribe();
+        .subscribe(
+            status => {
+
+                console.log(
+                    "Mail realtime:",
+                    status
+                );
+
+            }
+        );
 
 }
 
@@ -1487,7 +1694,7 @@ function playNotification() {
     catch (error) {
 
         console.log(
-            "Notification error:",
+            "Notification sound error:",
             error
         );
 
@@ -1557,6 +1764,7 @@ async function showMailNotification(
         catch (error) {
 
             console.log(
+                "Browser notification error:",
                 error
             );
 
@@ -1652,7 +1860,6 @@ async function startMail() {
 
 
     await loadInbox();
-
 
     subscribeToMail();
 
