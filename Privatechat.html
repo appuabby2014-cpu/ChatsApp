@@ -1558,9 +1558,13 @@ async function loadInvitations() {
    ACCEPT INVITATION
 ========================================= */
 
-async function acceptInvitation(
-    invitationId
-) {
+async function acceptInvitation(invitationId) {
+
+    console.log(
+        "Accepting invitation:",
+        invitationId
+    );
+
 
     /* =========================================
        GET INVITATION
@@ -1580,15 +1584,24 @@ async function acceptInvitation(
         .maybeSingle();
 
 
-    if (
-        invitationError ||
-        !invitation
-    ) {
+    if (invitationError) {
 
         console.error(
             "Invitation error:",
             invitationError
         );
+
+        alert(
+            "Invitation error:\n\n" +
+            invitationError.message
+        );
+
+        return;
+
+    }
+
+
+    if (!invitation) {
 
         alert(
             "Invitation could not be found."
@@ -1599,6 +1612,12 @@ async function acceptInvitation(
     }
 
 
+    console.log(
+        "Invitation received:",
+        invitation
+    );
+
+
     /* =========================================
        GET USERNAMES
     ========================================= */
@@ -1606,9 +1625,19 @@ async function acceptInvitation(
     const fromUsername =
         invitation.from_username;
 
-
     const toUsername =
         invitation.to_username;
+
+
+    console.log(
+        "FROM USERNAME:",
+        fromUsername
+    );
+
+    console.log(
+        "TO USERNAME:",
+        toUsername
+    );
 
 
     if (
@@ -1617,7 +1646,12 @@ async function acceptInvitation(
     ) {
 
         alert(
-            "This invitation is missing a username."
+            "Username error!\n\n" +
+            "from_username = " +
+            fromUsername +
+            "\n" +
+            "to_username = " +
+            toUsername
         );
 
         return;
@@ -1628,6 +1662,11 @@ async function acceptInvitation(
     /* =========================================
        CREATE CONVERSATION
     ========================================= */
+
+    console.log(
+        "Creating private conversation..."
+    );
+
 
     const {
         data: conversation,
@@ -1653,12 +1692,15 @@ async function acceptInvitation(
     if (conversationError) {
 
         console.error(
-            "FULL CONVERSATION ERROR:",
+            "CONVERSATION CREATION ERROR:",
             conversationError
         );
 
         alert(
-            "Couldn't create the private chat."
+            "CONVERSATION ERROR:\n\n" +
+            conversationError.message +
+            "\n\nError code: " +
+            conversationError.code
         );
 
         return;
@@ -1666,35 +1708,55 @@ async function acceptInvitation(
     }
 
 
+    console.log(
+        "Conversation created:",
+        conversation
+    );
+
+
     /* =========================================
-       ADD FIRST USER
+       ADD BOTH USERS
+       TO CONVERSATION
     ========================================= */
 
     const {
-        error: firstMemberError
+        error: membersError
     } =
         await supabaseClient
         .from("conversation_members")
-        .insert({
+        .insert([
 
-            conversation_id:
-                conversation.id,
+            {
+                conversation_id:
+                    conversation.id,
 
-            username:
-                fromUsername
+                username:
+                    fromUsername
+            },
 
-        });
+            {
+                conversation_id:
+                    conversation.id,
+
+                username:
+                    toUsername
+            }
+
+        ]);
 
 
-    if (firstMemberError) {
+    if (membersError) {
 
         console.error(
-            "First member error:",
-            firstMemberError
+            "CONVERSATION MEMBERS ERROR:",
+            membersError
         );
 
         alert(
-            "Couldn't add the first user to the chat."
+            "MEMBERS ERROR:\n\n" +
+            membersError.message +
+            "\n\nError code: " +
+            membersError.code
         );
 
         return;
@@ -1702,45 +1764,13 @@ async function acceptInvitation(
     }
 
 
-    /* =========================================
-       ADD SECOND USER
-    ========================================= */
-
-    const {
-        error: secondMemberError
-    } =
-        await supabaseClient
-        .from("conversation_members")
-        .insert({
-
-            conversation_id:
-                conversation.id,
-
-            username:
-                toUsername
-
-        });
-
-
-    if (secondMemberError) {
-
-        console.error(
-            "Second member error:",
-            secondMemberError
-        );
-
-        alert(
-            "Couldn't add the second user to the chat."
-        );
-
-        return;
-
-    }
+    console.log(
+        "Both users added to conversation."
+    );
 
 
     /* =========================================
-       SAVE CONVERSATION ID
-       AND ACCEPT INVITATION
+       MARK INVITATION AS ACCEPTED
     ========================================= */
 
     const {
@@ -1766,12 +1796,15 @@ async function acceptInvitation(
     if (updateError) {
 
         console.error(
-            "Invitation update error:",
+            "INVITATION UPDATE ERROR:",
             updateError
         );
 
         alert(
-            "Chat was created, but the invitation could not be updated."
+            "INVITATION UPDATE ERROR:\n\n" +
+            updateError.message +
+            "\n\nError code: " +
+            updateError.code
         );
 
         return;
@@ -1783,18 +1816,32 @@ async function acceptInvitation(
        SUCCESS
     ========================================= */
 
+    console.log(
+        "Private chat successfully created!"
+    );
+
+
     alert(
         "Private chat created! 💬🎉"
     );
 
 
+    /* =========================================
+       RELOAD INVITATIONS
+    ========================================= */
+
     await loadInvitations();
+
+
+    /* =========================================
+       RELOAD CONVERSATIONS
+    ========================================= */
 
     await loadConversations();
 
 
     /* =========================================
-       OPEN CHAT
+       OPEN NEW CHAT
     ========================================= */
 
     openConversation(
@@ -1865,7 +1912,7 @@ async function loadConversations() {
 
 
     /* =========================================
-       GET MEMBERSHIPS
+       GET CONVERSATION MEMBERS
     ========================================= */
 
     const {
@@ -1899,6 +1946,13 @@ async function loadConversations() {
         );
 
 
+    if (!chatList) {
+
+        return;
+
+    }
+
+
     chatList.innerHTML = "";
 
 
@@ -1915,10 +1969,8 @@ async function loadConversations() {
             >
 
                 No private chats yet.
-
                 <br>
                 <br>
-
                 Press + to start one.
 
             </div>
@@ -1931,7 +1983,7 @@ async function loadConversations() {
 
 
     /* =========================================
-       GET CONVERSATION IDS
+       GET CONVERSATIONS
     ========================================= */
 
     const conversationIds =
@@ -1940,10 +1992,6 @@ async function loadConversations() {
                 membership.conversation_id
         );
 
-
-    /* =========================================
-       GET CONVERSATIONS
-    ========================================= */
 
     const {
         data: conversations,
@@ -1970,6 +2018,16 @@ async function loadConversations() {
     }
 
 
+    if (
+        !conversations ||
+        conversations.length === 0
+    ) {
+
+        return;
+
+    }
+
+
     /* =========================================
        CREATE CHAT ITEMS
     ========================================= */
@@ -1988,7 +2046,7 @@ async function loadConversations() {
 
 
             /* =====================================
-               FIND OTHER MEMBER
+               FIND OTHER USER
             ===================================== */
 
             const otherMembership =
@@ -2018,7 +2076,6 @@ async function loadConversations() {
                     )}
 
                 </div>
-
 
                 <div class="chat-item-status">
 
@@ -2063,36 +2120,61 @@ async function openConversation(
         conversationId;
 
 
-    document.getElementById(
-        "emptyChat"
-    ).style.display = "none";
+    const emptyChat =
+        document.getElementById(
+            "emptyChat"
+        );
 
 
-    document.getElementById(
-        "activeChat"
-    ).style.display = "flex";
+    const activeChat =
+        document.getElementById(
+            "activeChat"
+        );
 
 
-    document.getElementById(
-        "chatHeader"
-    ).innerHTML = `
+    if (emptyChat) {
 
-        <h2>
+        emptyChat.style.display =
+            "none";
 
-            💬 ${escapeHTML(
-                otherUsername
-            )}
-
-        </h2>
+    }
 
 
-        <p>
+    if (activeChat) {
 
-            Private conversation
+        activeChat.style.display =
+            "flex";
 
-        </p>
+    }
 
-    `;
+
+    const chatHeader =
+        document.getElementById(
+            "chatHeader"
+        );
+
+
+    if (chatHeader) {
+
+        chatHeader.innerHTML = `
+
+            <h2>
+
+                💬 ${escapeHTML(
+                    otherUsername
+                )}
+
+            </h2>
+
+            <p>
+
+                Private conversation
+
+            </p>
+
+        `;
+
+    }
 
 
     await loadMessages();
@@ -2150,6 +2232,13 @@ async function loadMessages() {
         );
 
 
+    if (!messages) {
+
+        return;
+
+    }
+
+
     messages.innerHTML = "";
 
 
@@ -2179,6 +2268,13 @@ function displayMessage(
         document.getElementById(
             "messages"
         );
+
+
+    if (!messages) {
+
+        return;
+
+    }
 
 
     const div =
@@ -2214,7 +2310,6 @@ function displayMessage(
 
         </div>
 
-
         <div class="message-text">
 
             ${escapeHTML(
@@ -2224,14 +2319,11 @@ function displayMessage(
 
         </div>
 
-
         <span class="message-time">
 
             ${
                 message.created_at
-
                 ?
-
                 new Date(
                     message.created_at
                 ).toLocaleTimeString(
@@ -2244,11 +2336,8 @@ function displayMessage(
                             "2-digit"
                     }
                 )
-
                 :
-
                 ""
-
             }
 
         </span>
@@ -2279,6 +2368,13 @@ async function sendMessage() {
         );
 
 
+    if (!input) {
+
+        return;
+
+    }
+
+
     const text =
         input.value.trim();
 
@@ -2291,6 +2387,10 @@ async function sendMessage() {
 
 
     if (!currentConversationId) {
+
+        alert(
+            "Open a private chat first."
+        );
 
         return;
 
@@ -2385,7 +2485,6 @@ function subscribeToPrivateMessages() {
                 }
 
             }
-
         )
         .subscribe();
 
@@ -2440,7 +2539,6 @@ function subscribeToInvitations() {
                 }
 
             }
-
         )
         .subscribe();
 
