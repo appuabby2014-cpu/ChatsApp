@@ -1050,6 +1050,164 @@ let invitationChannel = null;
 
 
 /* =========================================
+   🔊 MESSAGE NOTIFICATION SOUND
+========================================= */
+
+let notificationAudioContext = null;
+
+function unlockNotificationSound() {
+
+    try {
+
+        if (!notificationAudioContext) {
+
+            notificationAudioContext =
+                new (
+                    window.AudioContext ||
+                    window.webkitAudioContext
+                )();
+
+        }
+
+        if (
+            notificationAudioContext.state ===
+            "suspended"
+        ) {
+
+            notificationAudioContext.resume();
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Audio unlock error:",
+            error
+        );
+
+    }
+
+}
+
+
+function playNotificationSound() {
+
+    try {
+
+        if (!notificationAudioContext) {
+
+            notificationAudioContext =
+                new (
+                    window.AudioContext ||
+                    window.webkitAudioContext
+                )();
+
+        }
+
+
+        if (
+            notificationAudioContext.state ===
+            "suspended"
+        ) {
+
+            notificationAudioContext.resume();
+
+        }
+
+
+        const ctx =
+            notificationAudioContext;
+
+
+        const oscillator =
+            ctx.createOscillator();
+
+
+        const gain =
+            ctx.createGain();
+
+
+        oscillator.type =
+            "sine";
+
+
+        oscillator.frequency.setValueAtTime(
+            880,
+            ctx.currentTime
+        );
+
+
+        oscillator.frequency.setValueAtTime(
+            660,
+            ctx.currentTime + 0.10
+        );
+
+
+        gain.gain.setValueAtTime(
+            0.0001,
+            ctx.currentTime
+        );
+
+
+        gain.gain.exponentialRampToValueAtTime(
+            0.18,
+            ctx.currentTime + 0.01
+        );
+
+
+        gain.gain.exponentialRampToValueAtTime(
+            0.0001,
+            ctx.currentTime + 0.25
+        );
+
+
+        oscillator.connect(
+            gain
+        );
+
+
+        gain.connect(
+            ctx.destination
+        );
+
+
+        oscillator.start(
+            ctx.currentTime
+        );
+
+
+        oscillator.stop(
+            ctx.currentTime + 0.25
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Notification sound error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   UNLOCK AUDIO AFTER USER INTERACTION
+========================================= */
+
+document.addEventListener(
+    "click",
+    unlockNotificationSound
+);
+
+document.addEventListener(
+    "keydown",
+    unlockNotificationSound
+);
+
+
+/* =========================================
    GET CURRENT USER
 ========================================= */
 
@@ -1266,10 +1424,6 @@ async function createPrivateChat() {
     }
 
 
-    /* =========================================
-       FIND TARGET USER
-    ========================================= */
-
     const {
         data: targetProfile,
         error: targetError
@@ -1308,10 +1462,6 @@ async function createPrivateChat() {
 
     }
 
-
-    /* =========================================
-       CHECK EXISTING INVITATION
-    ========================================= */
 
     const {
         data: existingInvitation,
@@ -1354,10 +1504,6 @@ async function createPrivateChat() {
 
     }
 
-
-    /* =========================================
-       SEND INVITATION
-    ========================================= */
 
     const {
         data: newInvitation,
@@ -1566,10 +1712,6 @@ async function acceptInvitation(invitationId) {
     );
 
 
-    /* =========================================
-       GET INVITATION
-    ========================================= */
-
     const {
         data: invitation,
         error: invitationError
@@ -1618,10 +1760,6 @@ async function acceptInvitation(invitationId) {
     );
 
 
-    /* =========================================
-       GET USERNAMES
-    ========================================= */
-
     const fromUsername =
         invitation.from_username;
 
@@ -1658,10 +1796,6 @@ async function acceptInvitation(invitationId) {
 
     }
 
-
-    /* =========================================
-       CREATE CONVERSATION
-    ========================================= */
 
     console.log(
         "Creating private conversation..."
@@ -1718,11 +1852,6 @@ async function acceptInvitation(invitationId) {
     );
 
 
-    /* =========================================
-       ADD BOTH USERS
-       TO CONVERSATION
-    ========================================= */
-
     const {
         error: membersError
     } =
@@ -1773,10 +1902,6 @@ async function acceptInvitation(invitationId) {
     );
 
 
-    /* =========================================
-       MARK INVITATION AS ACCEPTED
-    ========================================= */
-
     const {
         error: updateError
     } =
@@ -1816,10 +1941,6 @@ async function acceptInvitation(invitationId) {
     }
 
 
-    /* =========================================
-       SUCCESS
-    ========================================= */
-
     console.log(
         "Private chat successfully created!"
     );
@@ -1830,23 +1951,10 @@ async function acceptInvitation(invitationId) {
     );
 
 
-    /* =========================================
-       RELOAD INVITATIONS
-    ========================================= */
-
     await loadInvitations();
-
-
-    /* =========================================
-       RELOAD CONVERSATIONS
-    ========================================= */
 
     await loadConversations();
 
-
-    /* =========================================
-       OPEN NEW CHAT
-    ========================================= */
 
     openConversation(
         conversation.id,
@@ -1915,10 +2023,6 @@ async function loadConversations() {
     }
 
 
-    /* =========================================
-       GET CONVERSATION MEMBERS
-    ========================================= */
-
     const {
         data: memberships,
         error: membershipError
@@ -1986,10 +2090,6 @@ async function loadConversations() {
     }
 
 
-    /* =========================================
-       GET CONVERSATIONS
-    ========================================= */
-
     const conversationIds =
         memberships.map(
             membership =>
@@ -2032,10 +2132,6 @@ async function loadConversations() {
     }
 
 
-    /* =========================================
-       CREATE CHAT ITEMS
-    ========================================= */
-
     conversations.forEach(
         conversation => {
 
@@ -2048,10 +2144,6 @@ async function loadConversations() {
             div.className =
                 "chat-item";
 
-
-            /* =====================================
-               FIND OTHER USER
-            ===================================== */
 
             const otherMembership =
                 memberships.find(
@@ -2366,6 +2458,9 @@ function displayMessage(
 
 async function sendMessage() {
 
+    unlockNotificationSound();
+
+
     const input =
         document.getElementById(
             "messageInput"
@@ -2442,80 +2537,6 @@ async function sendMessage() {
 
 
 /* =========================================
-   MESSAGE NOTIFICATION SOUND
-========================================= */
-
-function playMessageNotification() {
-
-    try {
-
-        const audioContext =
-            new (
-                window.AudioContext ||
-                window.webkitAudioContext
-            )();
-
-        const oscillator =
-            audioContext.createOscillator();
-
-        const gainNode =
-            audioContext.createGain();
-
-        oscillator.type =
-            "sine";
-
-        oscillator.frequency.setValueAtTime(
-            700,
-            audioContext.currentTime
-        );
-
-        oscillator.frequency.setValueAtTime(
-            900,
-            audioContext.currentTime + 0.12
-        );
-
-        gainNode.gain.setValueAtTime(
-            0.001,
-            audioContext.currentTime
-        );
-
-        gainNode.gain.exponentialRampToValueAtTime(
-            0.15,
-            audioContext.currentTime + 0.02
-        );
-
-        gainNode.gain.exponentialRampToValueAtTime(
-            0.001,
-            audioContext.currentTime + 0.25
-        );
-
-        oscillator.connect(
-            gainNode
-        );
-
-        gainNode.connect(
-            audioContext.destination
-        );
-
-        oscillator.start();
-
-        oscillator.stop(
-            audioContext.currentTime + 0.25
-        );
-
-    } catch (error) {
-
-        console.log(
-            "Notification sound unavailable:",
-            error
-        );
-
-    }
-
-}
-
-
-/* =========================================
    REALTIME PRIVATE MESSAGES
 ========================================= */
 
@@ -2561,16 +2582,16 @@ function subscribeToPrivateMessages() {
                     );
 
 
-                    /* =====================================
-                       PLAY SOUND FOR OTHER USER'S MESSAGE
-                    ===================================== */
+                    /* =================================
+                       🔊 SOUND ONLY FOR INCOMING MESSAGE
+                       ================================= */
 
                     if (
                         payload.new.username !==
                         currentUsername
                     ) {
 
-                        playMessageNotification();
+                        playNotificationSound();
 
                     }
 
