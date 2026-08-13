@@ -1,0 +1,1668 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ChatsApp Mail</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            #253b6e 0%,
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 85% 80%,
+            #34205d 0%,
+            transparent 35%
+        ),
+        #080b14;
+
+    color: white;
+}
+
+
+/* PAGE */
+
+.page {
+    min-height: 100vh;
+    padding: 35px;
+}
+
+
+/* HEADER */
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+.header p {
+    margin: 8px 0 0;
+    color: #747e96;
+    font-size: 14px;
+}
+
+.back-button {
+    padding: 12px 18px;
+    border-radius: 12px;
+    border: 1px solid #30384f;
+    background: #151a2a;
+    color: white;
+    cursor: pointer;
+}
+
+
+/* LAYOUT */
+
+.mail-layout {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 20px;
+}
+
+
+/* SIDEBAR */
+
+.sidebar {
+    background: rgba(18,23,38,0.85);
+    border: 1px solid #242b3e;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.sidebar button {
+    width: 100%;
+    padding: 13px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 12px;
+    background: transparent;
+    color: white;
+    text-align: left;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.sidebar button:hover {
+    background: #171d2d;
+}
+
+.sidebar button.active {
+    background: #273866;
+}
+
+.compose-button {
+    background:
+        linear-gradient(
+            135deg,
+            #5b8cff,
+            #795cff
+        ) !important;
+
+    text-align: center !important;
+}
+
+
+/* MAIN */
+
+.mail-main {
+    background: rgba(18,23,38,0.85);
+    border: 1px solid #242b3e;
+    border-radius: 20px;
+    min-height: 600px;
+    overflow: hidden;
+}
+
+
+/* TOP */
+
+.mail-top {
+    padding: 20px;
+    border-bottom: 1px solid #242b3e;
+}
+
+.mail-top h2 {
+    margin: 0;
+}
+
+
+/* MAIL LIST */
+
+.mail-list {
+    padding: 10px;
+}
+
+.mail-item {
+    padding: 16px;
+    border-radius: 14px;
+    margin-bottom: 8px;
+    background: #111726;
+    border: 1px solid #252c40;
+    cursor: pointer;
+}
+
+.mail-item:hover {
+    background: #171d2d;
+}
+
+.mail-item.unread {
+    border-color: #5b8cff;
+    background: #18213a;
+}
+
+.mail-from {
+    font-weight: 700;
+    color: #7899ff;
+}
+
+.mail-preview {
+    margin-top: 6px;
+    color: #c5cbe0;
+    font-size: 14px;
+}
+
+.mail-time {
+    margin-top: 7px;
+    color: #69748c;
+    font-size: 11px;
+}
+
+
+/* EMPTY */
+
+.empty {
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #69748c;
+}
+
+.empty-icon {
+    font-size: 55px;
+    margin-bottom: 15px;
+}
+
+
+/* COMPOSE */
+
+.compose {
+    display: none;
+    padding: 25px;
+}
+
+.compose h2 {
+    margin-top: 0;
+}
+
+.compose input,
+.compose textarea {
+    width: 100%;
+    padding: 14px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+
+    border-radius: 12px;
+    border: 1px solid #30384f;
+
+    background: #0e1220;
+    color: white;
+
+    outline: none;
+    font-family: Arial, sans-serif;
+}
+
+.compose textarea {
+    min-height: 250px;
+    resize: vertical;
+}
+
+.send-mail-button {
+    padding: 13px 22px;
+    border: none;
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #5b8cff,
+            #795cff
+        );
+
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.cancel-button {
+    padding: 13px 22px;
+    margin-left: 8px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: #202638;
+    color: white;
+
+    cursor: pointer;
+}
+
+
+/* READER */
+
+.reader {
+    display: none;
+    padding: 25px;
+}
+
+.reader h2 {
+    margin-top: 0;
+}
+
+.reader-from {
+    color: #7899ff;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.reader-message {
+    padding: 20px;
+    border-radius: 14px;
+    background: #111726;
+    border: 1px solid #252c40;
+
+    white-space: pre-wrap;
+    line-height: 1.6;
+}
+
+.delete-button {
+    margin-top: 20px;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #963d4a;
+    color: white;
+    cursor: pointer;
+}
+
+
+/* MOBILE */
+
+@media(max-width:800px) {
+
+    .page {
+        padding: 15px;
+    }
+
+    .mail-layout {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="page">
+
+
+<div class="header">
+
+    <div>
+
+        <h1>📧 ChatsApp Mail</h1>
+
+        <p>
+            Send a quick message to another ChatsApp user.
+        </p>
+
+    </div>
+
+
+    <button
+        class="back-button"
+        onclick="goHome()"
+    >
+
+        ← Home
+
+    </button>
+
+</div>
+
+
+
+<div class="mail-layout">
+
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+
+<button
+    id="inboxButton"
+    class="active"
+    onclick="showInbox()"
+>
+
+    📥 Inbox
+
+</button>
+
+
+<button
+    onclick="showSent()"
+>
+
+    📤 Sent
+
+</button>
+
+
+<button
+    class="compose-button"
+    onclick="showCompose()"
+>
+
+    ✏️ Compose Mail
+
+</button>
+
+
+</aside>
+
+
+
+<!-- MAIN -->
+
+<section class="mail-main">
+
+
+<!-- MAIL LIST -->
+
+<div id="mailListView">
+
+
+<div class="mail-top">
+
+    <h2 id="mailTitle">
+        📥 Inbox
+    </h2>
+
+</div>
+
+
+<div
+    id="mailList"
+    class="mail-list"
+>
+
+
+<div class="empty">
+
+    <div>
+
+        <div class="empty-icon">
+            📭
+        </div>
+
+        Loading mail...
+
+    </div>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+<!-- COMPOSE -->
+
+<div
+    id="composeView"
+    class="compose"
+>
+
+
+<h2>
+    ✏️ Compose Mail
+</h2>
+
+
+<label>
+    Send to username
+</label>
+
+
+<input
+    id="recipient"
+    type="text"
+    maxlength="20"
+    placeholder="Enter ChatsApp username..."
+>
+
+
+<label>
+    Message
+</label>
+
+
+<textarea
+    id="mailMessage"
+    maxlength="2000"
+    placeholder="Write your message..."
+></textarea>
+
+
+<div
+    id="composeStatus"
+    style="margin-bottom:15px;"
+></div>
+
+
+<button
+    class="send-mail-button"
+    onclick="sendMail()"
+>
+
+    📧 Send Mail
+
+</button>
+
+
+<button
+    class="cancel-button"
+    onclick="showInbox()"
+>
+
+    Cancel
+
+</button>
+
+
+</div>
+
+
+
+<!-- READER -->
+
+<div
+    id="readerView"
+    class="reader"
+>
+
+
+<h2 id="readerTitle">
+    📧 Mail
+</h2>
+
+
+<div
+    id="readerFrom"
+    class="reader-from"
+>
+</div>
+
+
+<div
+    id="readerMessage"
+    class="reader-message"
+>
+</div>
+
+
+<button
+    id="deleteButton"
+    class="delete-button"
+>
+
+    🗑️ Delete Mail
+
+</button>
+
+
+<button
+    class="cancel-button"
+    onclick="showInbox()"
+>
+
+    ← Back
+
+</button>
+
+
+</div>
+
+
+</section>
+
+
+</div>
+
+
+</div>
+
+
+
+<script>
+
+
+/* =========================================
+   SUPABASE
+========================================= */
+
+const SUPABASE_URL =
+    "https://kopzrnpporfdwauwlhni.supabase.co";
+
+
+const SUPABASE_KEY =
+    "sb_publishable_bbxmPB71ADnIqe3oPB3MuQ_EWa4n_Ph";
+
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+/* =========================================
+   VARIABLES
+========================================= */
+
+let currentUser = null;
+
+let currentUsername = null;
+
+let currentMailId = null;
+
+let mailChannel = null;
+
+
+/* =========================================
+   GET CURRENT USER
+========================================= */
+
+async function getCurrentUser() {
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient.auth.getUser();
+
+
+    if (
+        error ||
+        !data ||
+        !data.user
+    ) {
+
+        return false;
+
+    }
+
+
+    currentUser =
+        data.user;
+
+
+    currentUsername =
+        currentUser.user_metadata?.username;
+
+
+    if (!currentUsername) {
+
+        const {
+            data: profile,
+            error: profileError
+        } =
+            await supabaseClient
+            .from("profiles")
+            .select("username")
+            .eq(
+                "id",
+                currentUser.id
+            )
+            .maybeSingle();
+
+
+        if (
+            profileError ||
+            !profile
+        ) {
+
+            return false;
+
+        }
+
+
+        currentUsername =
+            profile.username;
+
+    }
+
+
+    return true;
+
+}
+
+
+/* =========================================
+   HOME
+========================================= */
+
+function goHome() {
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+/* =========================================
+   VIEWS
+========================================= */
+
+function hideViews() {
+
+    document.getElementById(
+        "mailListView"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "composeView"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "readerView"
+    ).style.display = "none";
+
+}
+
+
+function showInbox() {
+
+    hideViews();
+
+    document.getElementById(
+        "mailListView"
+    ).style.display = "block";
+
+
+    document.getElementById(
+        "mailTitle"
+    ).innerText =
+        "📥 Inbox";
+
+
+    loadInbox();
+
+}
+
+
+function showSent() {
+
+    hideViews();
+
+    document.getElementById(
+        "mailListView"
+    ).style.display = "block";
+
+
+    document.getElementById(
+        "mailTitle"
+    ).innerText =
+        "📤 Sent";
+
+
+    loadSent();
+
+}
+
+
+function showCompose() {
+
+    hideViews();
+
+    document.getElementById(
+        "composeView"
+    ).style.display = "block";
+
+
+    document.getElementById(
+        "recipient"
+    ).focus();
+
+}
+
+
+/* =========================================
+   SEND MAIL
+========================================= */
+
+async function sendMail() {
+
+    const recipient =
+        document.getElementById(
+            "recipient"
+        )
+        .value
+        .trim();
+
+
+    const message =
+        document.getElementById(
+            "mailMessage"
+        )
+        .value
+        .trim();
+
+
+    const status =
+        document.getElementById(
+            "composeStatus"
+        );
+
+
+    status.innerText = "";
+
+
+    if (!recipient) {
+
+        status.innerText =
+            "❌ Enter a username.";
+
+        return;
+
+    }
+
+
+    if (!message) {
+
+        status.innerText =
+            "❌ Write a message.";
+
+        return;
+
+    }
+
+
+    if (
+        recipient.toLowerCase() ===
+        currentUsername.toLowerCase()
+    ) {
+
+        status.innerText =
+            "❌ You can't mail yourself.";
+
+        return;
+
+    }
+
+
+    /* FIND USER */
+
+    const {
+        data: target,
+        error: targetError
+    } =
+        await supabaseClient
+        .from("profiles")
+        .select("username")
+        .ilike(
+            "username",
+            recipient
+        )
+        .maybeSingle();
+
+
+    if (targetError) {
+
+        console.error(
+            targetError
+        );
+
+        status.innerText =
+            "❌ Couldn't find that user.";
+
+        return;
+
+    }
+
+
+    if (!target) {
+
+        status.innerText =
+            "❌ That username doesn't exist.";
+
+        return;
+
+    }
+
+
+    /* INSERT MAIL */
+
+    const {
+        error
+    } =
+        await supabaseClient
+        .from("mail")
+        .insert({
+
+            sender_username:
+                currentUsername,
+
+            recipient_username:
+                target.username,
+
+            message:
+                message,
+
+            is_read:
+                false
+
+        });
+
+
+    if (error) {
+
+        console.error(
+            "MAIL ERROR:",
+            error
+        );
+
+        status.innerText =
+            "❌ Couldn't send mail.";
+
+        return;
+
+    }
+
+
+    status.innerText =
+        "✅ Mail sent!";
+
+
+    document.getElementById(
+        "recipient"
+    ).value = "";
+
+
+    document.getElementById(
+        "mailMessage"
+    ).value = "";
+
+}
+
+
+/* =========================================
+   INBOX
+========================================= */
+
+async function loadInbox() {
+
+    const list =
+        document.getElementById(
+            "mailList"
+        );
+
+
+    list.innerHTML =
+        "Loading mail...";
+
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+        .from("mail")
+        .select("*")
+        .eq(
+            "recipient_username",
+            currentUsername
+        )
+        .order(
+            "created_at",
+            {
+                ascending: false
+            }
+        );
+
+
+    if (error) {
+
+        console.error(
+            "Inbox error:",
+            error
+        );
+
+        list.innerHTML =
+            "❌ Couldn't load mail.";
+
+        return;
+
+    }
+
+
+    displayMailList(
+        data || [],
+        false
+    );
+
+}
+
+
+/* =========================================
+   SENT
+========================================= */
+
+async function loadSent() {
+
+    const list =
+        document.getElementById(
+            "mailList"
+        );
+
+
+    list.innerHTML =
+        "Loading mail...";
+
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+        .from("mail")
+        .select("*")
+        .eq(
+            "sender_username",
+            currentUsername
+        )
+        .order(
+            "created_at",
+            {
+                ascending: false
+            }
+        );
+
+
+    if (error) {
+
+        console.error(
+            "Sent mail error:",
+            error
+        );
+
+        list.innerHTML =
+            "❌ Couldn't load sent mail.";
+
+        return;
+
+    }
+
+
+    displayMailList(
+        data || [],
+        true
+    );
+
+}
+
+
+/* =========================================
+   DISPLAY MAIL
+========================================= */
+
+function displayMailList(
+    data,
+    sent
+) {
+
+    const list =
+        document.getElementById(
+            "mailList"
+        );
+
+
+    list.innerHTML = "";
+
+
+    if (
+        !data ||
+        data.length === 0
+    ) {
+
+        list.innerHTML = `
+
+            <div class="empty">
+
+                <div>
+
+                    <div class="empty-icon">
+
+                        ${
+                            sent
+                            ? "📤"
+                            : "📭"
+                        }
+
+                    </div>
+
+                    <h2>
+
+                        ${
+                            sent
+                            ? "No sent mail"
+                            : "No mail yet"
+                        }
+
+                    </h2>
+
+                    <p>
+
+                        ${
+                            sent
+                            ? "Messages you send will appear here."
+                            : "Your inbox is empty."
+                        }
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    data.forEach(
+        mail => {
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.className =
+                "mail-item";
+
+
+            if (
+                !sent &&
+                !mail.is_read
+            ) {
+
+                div.classList.add(
+                    "unread"
+                );
+
+            }
+
+
+            const person =
+                sent
+                ?
+                mail.recipient_username
+                :
+                mail.sender_username;
+
+
+            div.innerHTML = `
+
+                <div class="mail-from">
+
+                    ${
+                        sent
+                        ? "📤 To: "
+                        : "📩 From: "
+                    }
+
+                    ${escapeHTML(
+                        person
+                    )}
+
+                </div>
+
+
+                <div class="mail-preview">
+
+                    ${escapeHTML(
+                        mail.message
+                    )}
+
+                </div>
+
+
+                <div class="mail-time">
+
+                    ${formatDate(
+                        mail.created_at
+                    )}
+
+                    ${
+                        !sent &&
+                        !mail.is_read
+                        ?
+                        " • 🔴 UNREAD"
+                        :
+                        ""
+                    }
+
+                </div>
+
+            `;
+
+
+            div.onclick =
+                function() {
+
+                    openMail(
+                        mail
+                    );
+
+                };
+
+
+            list.appendChild(
+                div
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   OPEN MAIL
+========================================= */
+
+async function openMail(
+    mail
+) {
+
+    currentMailId =
+        mail.id;
+
+
+    hideViews();
+
+
+    document.getElementById(
+        "readerView"
+    ).style.display =
+        "block";
+
+
+    document.getElementById(
+        "readerTitle"
+    ).innerText =
+        "📧 Mail";
+
+
+    document.getElementById(
+        "readerFrom"
+    ).innerText =
+        "From: " +
+        mail.sender_username;
+
+
+    document.getElementById(
+        "readerMessage"
+    ).innerText =
+        mail.message;
+
+
+    if (
+        mail.recipient_username ===
+        currentUsername &&
+        !mail.is_read
+    ) {
+
+        await supabaseClient
+            .from("mail")
+            .update({
+
+                is_read:
+                    true
+
+            })
+            .eq(
+                "id",
+                mail.id
+            );
+
+    }
+
+
+    document.getElementById(
+        "deleteButton"
+    ).onclick =
+        function() {
+
+            deleteMail(
+                mail.id
+            );
+
+        };
+
+}
+
+
+/* =========================================
+   DELETE
+========================================= */
+
+async function deleteMail(
+    mailId
+) {
+
+    const {
+        error
+    } =
+        await supabaseClient
+        .from("mail")
+        .delete()
+        .eq(
+            "id",
+            mailId
+        );
+
+
+    if (error) {
+
+        console.error(
+            "Delete mail error:",
+            error
+        );
+
+        alert(
+            "Couldn't delete mail."
+        );
+
+        return;
+
+    }
+
+
+    currentMailId =
+        null;
+
+
+    showInbox();
+
+}
+
+
+/* =========================================
+   REALTIME MAIL
+========================================= */
+
+function subscribeToMail() {
+
+    mailChannel =
+        supabaseClient
+        .channel(
+            "mail-notifications"
+        )
+        .on(
+            "postgres_changes",
+            {
+
+                event:
+                    "INSERT",
+
+                schema:
+                    "public",
+
+                table:
+                    "mail"
+
+            },
+
+            function(payload) {
+
+                if (
+                    payload.new.recipient_username
+                    ?.toLowerCase() ===
+                    currentUsername
+                    ?.toLowerCase()
+                ) {
+
+                    playNotification();
+
+                    showMailNotification(
+                        payload.new
+                    );
+
+                    loadInbox();
+
+                }
+
+            }
+        )
+        .subscribe();
+
+}
+
+
+/* =========================================
+   NOTIFICATION SOUND
+========================================= */
+
+let audioContext = null;
+
+
+function playNotification() {
+
+    try {
+
+        if (!audioContext) {
+
+            audioContext =
+                new (
+                    window.AudioContext ||
+                    window.webkitAudioContext
+                )();
+
+        }
+
+
+        if (
+            audioContext.state ===
+            "suspended"
+        ) {
+
+            audioContext.resume();
+
+        }
+
+
+        const oscillator =
+            audioContext.createOscillator();
+
+
+        const gain =
+            audioContext.createGain();
+
+
+        oscillator.type =
+            "sine";
+
+
+        oscillator.frequency.setValueAtTime(
+            880,
+            audioContext.currentTime
+        );
+
+
+        oscillator.frequency.setValueAtTime(
+            1175,
+            audioContext.currentTime + 0.12
+        );
+
+
+        gain.gain.setValueAtTime(
+            0.0001,
+            audioContext.currentTime
+        );
+
+
+        gain.gain.exponentialRampToValueAtTime(
+            0.8,
+            audioContext.currentTime + 0.02
+        );
+
+
+        gain.gain.exponentialRampToValueAtTime(
+            0.0001,
+            audioContext.currentTime + 0.5
+        );
+
+
+        oscillator.connect(
+            gain
+        );
+
+
+        gain.connect(
+            audioContext.destination
+        );
+
+
+        oscillator.start();
+
+
+        oscillator.stop(
+            audioContext.currentTime + 0.5
+        );
+
+    }
+
+    catch (error) {
+
+        console.log(
+            "Notification error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   BROWSER NOTIFICATION
+========================================= */
+
+async function showMailNotification(
+    mail
+) {
+
+    if (
+        !("Notification" in window)
+    ) {
+
+        return;
+
+    }
+
+
+    if (
+        Notification.permission ===
+        "default"
+    ) {
+
+        try {
+
+            await Notification.requestPermission();
+
+        }
+
+        catch (error) {
+
+            return;
+
+        }
+
+    }
+
+
+    if (
+        Notification.permission ===
+        "granted"
+    ) {
+
+        try {
+
+            new Notification(
+                "📧 New ChatsApp Mail",
+                {
+
+                    body:
+                        mail.sender_username +
+                        ": " +
+                        mail.message
+
+                }
+            );
+
+        }
+
+        catch (error) {
+
+            console.log(
+                error
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =========================================
+   HELPERS
+========================================= */
+
+function escapeHTML(
+    text
+) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.innerText =
+        text || "";
+
+
+    return div.innerHTML;
+
+}
+
+
+function formatDate(
+    date
+) {
+
+    if (!date) {
+
+        return "";
+
+    }
+
+
+    return new Date(
+        date
+    ).toLocaleString(
+        [],
+        {
+
+            day:
+                "2-digit",
+
+            month:
+                "short",
+
+            hour:
+                "2-digit",
+
+            minute:
+                "2-digit"
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   START
+========================================= */
+
+async function startMail() {
+
+    const loggedIn =
+        await getCurrentUser();
+
+
+    if (!loggedIn) {
+
+        window.location.href =
+            "index.html";
+
+        return;
+
+    }
+
+
+    console.log(
+        "ChatsApp Mail logged in as:",
+        currentUsername
+    );
+
+
+    await loadInbox();
+
+
+    subscribeToMail();
+
+}
+
+
+startMail();
+
+</script>
+
+</body>
+
+</html>
