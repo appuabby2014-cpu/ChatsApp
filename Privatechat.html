@@ -22,24 +22,13 @@ body {
     font-family: Arial, sans-serif;
 
     background:
-        radial-gradient(
-            circle at 15% 20%,
-            #253b6e 0%,
-            transparent 35%
-        ),
-        radial-gradient(
-            circle at 85% 80%,
-            #34205d 0%,
-            transparent 35%
-        ),
+        radial-gradient(circle at 15% 20%, #253b6e 0%, transparent 35%),
+        radial-gradient(circle at 85% 80%, #34205d 0%, transparent 35%),
         #080b14;
 
     color: white;
     overflow-x: hidden;
 }
-
-
-/* FLOATING EMOJIS */
 
 .floating-emojis {
     position: fixed;
@@ -86,23 +75,10 @@ body {
 }
 
 @keyframes floatEmoji {
-
-    0% {
-        transform: translateY(20px) rotate(0deg);
-    }
-
-    50% {
-        transform: translateY(-30px) rotate(10deg);
-    }
-
-    100% {
-        transform: translateY(20px) rotate(0deg);
-    }
-
+    0% { transform: translateY(20px) rotate(0deg); }
+    50% { transform: translateY(-30px) rotate(10deg); }
+    100% { transform: translateY(20px) rotate(0deg); }
 }
-
-
-/* PAGE */
 
 .page {
     min-height: 100vh;
@@ -110,9 +86,6 @@ body {
     position: relative;
     z-index: 1;
 }
-
-
-/* HEADER */
 
 .header {
     display: flex;
@@ -146,18 +119,12 @@ body {
     background: #20283c;
 }
 
-
-/* LAYOUT */
-
 .chat-layout {
     display: grid;
     grid-template-columns: 300px 1fr;
     gap: 20px;
     min-height: 70vh;
 }
-
-
-/* SIDEBAR */
 
 .chat-sidebar {
     background: rgba(18,23,38,0.85);
@@ -184,14 +151,7 @@ body {
     height: 40px;
     border: none;
     border-radius: 12px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #5b8cff,
-            #795cff
-        );
-
+    background: linear-gradient(135deg, #5b8cff, #795cff);
     color: white;
     font-size: 22px;
     cursor: pointer;
@@ -200,9 +160,6 @@ body {
 .add-button:hover {
     transform: translateY(-2px);
 }
-
-
-/* INVITATIONS */
 
 .invitation-section {
     margin-bottom: 20px;
@@ -255,9 +212,6 @@ body {
     background: #963d4a;
 }
 
-
-/* CHAT LIST */
-
 .chat-list {
     display: flex;
     flex-direction: column;
@@ -293,9 +247,6 @@ body {
     margin-top: 4px;
 }
 
-
-/* CHAT AREA */
-
 .chat-area {
     background: rgba(18,23,38,0.85);
     border: 1px solid #242b3e;
@@ -321,9 +272,6 @@ body {
     color: #69748c;
     font-size: 12px;
 }
-
-
-/* MESSAGES */
 
 .messages {
     flex: 1;
@@ -366,9 +314,6 @@ body {
     color: #69748c;
 }
 
-
-/* INPUT */
-
 .message-input {
     display: flex;
     gap: 10px;
@@ -391,21 +336,11 @@ body {
     padding: 0 22px;
     border: none;
     border-radius: 12px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #5b8cff,
-            #795cff
-        );
-
+    background: linear-gradient(135deg, #5b8cff, #795cff);
     color: white;
     font-weight: 700;
     cursor: pointer;
 }
-
-
-/* MODAL */
 
 .new-chat-overlay {
     position: fixed;
@@ -465,13 +400,7 @@ body {
 }
 
 .create-button {
-    background:
-        linear-gradient(
-            135deg,
-            #5b8cff,
-            #795cff
-        );
-
+    background: linear-gradient(135deg, #5b8cff, #795cff);
     color: white;
 }
 
@@ -491,9 +420,6 @@ body {
     font-size: 12px;
     margin-top: 10px;
 }
-
-
-/* EMPTY */
 
 .empty-chat {
     height: 100%;
@@ -517,9 +443,6 @@ body {
 .empty-chat h2 {
     color: white;
 }
-
-
-/* MOBILE */
 
 @media(max-width:800px) {
 
@@ -553,9 +476,7 @@ body {
 
 </head>
 
-
 <body>
-
 
 <div class="floating-emojis">
 
@@ -567,9 +488,7 @@ body {
 
 </div>
 
-
 <div class="page">
-
 
 <div class="header">
 
@@ -583,35 +502,25 @@ body {
 
     </div>
 
-    <button
-        class="back-button"
-        onclick="goHome()"
-    >
+    <button class="back-button" onclick="goHome()">
         ← Home
     </button>
 
 </div>
 
-
 <div class="chat-layout">
 
-
 <aside class="chat-sidebar">
-
 
 <div class="sidebar-title">
 
     <h2>Your Chats</h2>
 
-    <button
-        class="add-button"
-        onclick="openNewChat()"
-    >
+    <button class="add-button" onclick="openNewChat()">
         +
     </button>
 
 </div>
-
 
 <div class="invitation-section">
 
@@ -629,11 +538,7 @@ body {
 
 </div>
 
-
-<div
-    id="chatList"
-    class="chat-list"
->
+<div id="chatList" class="chat-list">
 
     <div
         id="noChats"
@@ -649,17 +554,11 @@ body {
 
 </div>
 
-
 </aside>
-
 
 <section class="chat-area">
 
-
-<div
-    id="emptyChat"
-    class="empty-chat"
->
+<div id="emptyChat" class="empty-chat">
 
     <div>
 
@@ -680,17 +579,12 @@ body {
 
 </div>
 
-
 <div
     id="activeChat"
     style="display:none;height:100%;flex-direction:column;"
 >
 
-
-<div
-    class="chat-area-header"
-    id="chatHeader"
->
+<div class="chat-area-header" id="chatHeader">
 
     <h2>
         Private Chat
@@ -702,13 +596,7 @@ body {
 
 </div>
 
-
-<div
-    id="messages"
-    class="messages"
->
-</div>
-
+<div id="messages" class="messages"></div>
 
 <div class="message-input">
 
@@ -728,9 +616,7 @@ body {
 
 </div>
 
-
 </div>
-
 
 </section>
 
@@ -738,11 +624,7 @@ body {
 
 </div>
 
-
-<div
-    id="newChatOverlay"
-    class="new-chat-overlay"
->
+<div id="newChatOverlay" class="new-chat-overlay">
 
 <div class="new-chat-box">
 
@@ -762,15 +644,9 @@ body {
         placeholder="Enter username..."
     >
 
-    <div
-        id="chatError"
-        class="error"
-    ></div>
+    <div id="chatError" class="error"></div>
 
-    <div
-        id="chatSuccess"
-        class="success"
-    ></div>
+    <div id="chatSuccess" class="success"></div>
 
     <div class="modal-buttons">
 
@@ -794,9 +670,7 @@ body {
 
 </div>
 
-
 <script>
-
 
 /* =========================================
    SUPABASE
@@ -820,96 +694,164 @@ const supabaseClient =
 ========================================= */
 
 let currentUser = null;
-
 let currentUsername = null;
-
 let currentConversationId = null;
 
 let privateChatChannel = null;
-
 let invitationChannel = null;
+
+let notificationAudioContext = null;
 
 
 /* =========================================
-   BROWSER NOTIFICATION
+   🔔 NOTIFICATION SOUND
+   ONLY CALLED FOR BRAND-NEW MESSAGES
 ========================================= */
 
-async function showMessageNotification(
-    message
-) {
+function playMessageNotification() {
 
-    /* NEVER notify for YOUR OWN message */
+    try {
+
+        if (!notificationAudioContext) {
+
+            notificationAudioContext =
+                new (
+                    window.AudioContext ||
+                    window.webkitAudioContext
+                )();
+
+        }
+
+        if (
+            notificationAudioContext.state ===
+            "suspended"
+        ) {
+
+            notificationAudioContext.resume();
+
+        }
+
+        const oscillator =
+            notificationAudioContext.createOscillator();
+
+        const gain =
+            notificationAudioContext.createGain();
+
+        oscillator.type = "sine";
+
+        oscillator.frequency.setValueAtTime(
+            880,
+            notificationAudioContext.currentTime
+        );
+
+        oscillator.frequency.setValueAtTime(
+            1175,
+            notificationAudioContext.currentTime + 0.12
+        );
+
+        gain.gain.setValueAtTime(
+            0.0001,
+            notificationAudioContext.currentTime
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+            0.85,
+            notificationAudioContext.currentTime + 0.02
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+            0.0001,
+            notificationAudioContext.currentTime + 0.5
+        );
+
+        oscillator.connect(gain);
+
+        gain.connect(
+            notificationAudioContext.destination
+        );
+
+        oscillator.start();
+
+        oscillator.stop(
+            notificationAudioContext.currentTime + 0.5
+        );
+
+    }
+
+    catch (error) {
+
+        console.log(
+            "Notification sound error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   🔔 BROWSER NOTIFICATION
+========================================= */
+
+async function showBrowserNotification(message) {
+
+    if (!("Notification" in window)) {
+        return;
+    }
+
+    if (Notification.permission === "default") {
+
+        try {
+
+            await Notification.requestPermission();
+
+        }
+
+        catch (error) {
+
+            console.log(
+                "Notification permission error:",
+                error
+            );
+
+            return;
+
+        }
+
+    }
 
     if (
-        message.username ===
-        currentUsername
+        Notification.permission !==
+        "granted"
     ) {
 
         return;
 
     }
 
+    try {
 
-    /* BROWSER NOTIFICATION */
+        new Notification(
+            "💬 New Private Message",
+            {
 
-    if (
-        "Notification" in window
-    ) {
-
-        if (
-            Notification.permission ===
-            "default"
-        ) {
-
-            try {
-
-                await Notification.requestPermission();
+                body:
+                    message.username +
+                    ": " +
+                    message.message
 
             }
+        );
 
-            catch (error) {
+    }
 
-                console.log(
-                    "Notification permission error:",
-                    error
-                );
+    catch (error) {
 
-            }
-
-        }
-
-
-        if (
-            Notification.permission ===
-            "granted"
-        ) {
-
-            try {
-
-                new Notification(
-                    "💬 New Private Message",
-                    {
-
-                        body:
-                            message.username +
-                            ": " +
-                            message.message
-
-                    }
-                );
-
-            }
-
-            catch (error) {
-
-                console.log(
-                    "Browser notification error:",
-                    error
-                );
-
-            }
-
-        }
+        console.log(
+            "Browser notification error:",
+            error
+        );
 
     }
 
@@ -928,7 +870,6 @@ async function getCurrentUser() {
     } =
         await supabaseClient.auth.getUser();
 
-
     if (
         error ||
         !data ||
@@ -939,14 +880,10 @@ async function getCurrentUser() {
 
     }
 
-
-    currentUser =
-        data.user;
-
+    currentUser = data.user;
 
     currentUsername =
         currentUser.user_metadata?.username;
-
 
     if (!currentUsername) {
 
@@ -957,12 +894,8 @@ async function getCurrentUser() {
             await supabaseClient
             .from("profiles")
             .select("username")
-            .eq(
-                "id",
-                currentUser.id
-            )
+            .eq("id", currentUser.id)
             .maybeSingle();
-
 
         if (
             profileError ||
@@ -978,12 +911,10 @@ async function getCurrentUser() {
 
         }
 
-
         currentUsername =
             profile.username;
 
     }
-
 
     return true;
 
@@ -996,8 +927,7 @@ async function getCurrentUser() {
 
 function goHome() {
 
-    window.location.href =
-        "index.html";
+    window.location.href = "index.html";
 
 }
 
@@ -1012,16 +942,13 @@ function openNewChat() {
         "newChatOverlay"
     ).style.display = "flex";
 
-
     document.getElementById(
         "chatError"
     ).innerText = "";
 
-
     document.getElementById(
         "chatSuccess"
     ).innerText = "";
-
 
     document.getElementById(
         "targetUsername"
@@ -1036,16 +963,13 @@ function closeNewChat() {
         "newChatOverlay"
     ).style.display = "none";
 
-
     document.getElementById(
         "targetUsername"
     ).value = "";
 
-
     document.getElementById(
         "chatError"
     ).innerText = "";
-
 
     document.getElementById(
         "chatSuccess"
@@ -1063,33 +987,25 @@ async function createPrivateChat() {
     const targetUsername =
         document.getElementById(
             "targetUsername"
-        )
-        .value
-        .trim();
-
+        ).value.trim();
 
     const errorBox =
         document.getElementById(
             "chatError"
         );
 
-
     const successBox =
         document.getElementById(
             "chatSuccess"
         );
 
-
     errorBox.innerText = "";
-
     successBox.innerText = "";
-
 
     if (!currentUser) {
 
         const loggedIn =
             await getCurrentUser();
-
 
         if (!loggedIn) {
 
@@ -1102,7 +1018,6 @@ async function createPrivateChat() {
 
     }
 
-
     if (!targetUsername) {
 
         errorBox.innerText =
@@ -1111,7 +1026,6 @@ async function createPrivateChat() {
         return;
 
     }
-
 
     if (
         !/^[a-zA-Z0-9_]{3,20}$/.test(
@@ -1126,7 +1040,6 @@ async function createPrivateChat() {
 
     }
 
-
     if (
         targetUsername.toLowerCase() ===
         currentUsername.toLowerCase()
@@ -1139,7 +1052,6 @@ async function createPrivateChat() {
 
     }
 
-
     const {
         data: targetProfile,
         error: targetError
@@ -1147,12 +1059,8 @@ async function createPrivateChat() {
         await supabaseClient
         .from("profiles")
         .select("id, username")
-        .ilike(
-            "username",
-            targetUsername
-        )
+        .ilike("username", targetUsername)
         .maybeSingle();
-
 
     if (targetError) {
 
@@ -1168,7 +1076,6 @@ async function createPrivateChat() {
 
     }
 
-
     if (!targetProfile) {
 
         errorBox.innerText =
@@ -1178,38 +1085,16 @@ async function createPrivateChat() {
 
     }
 
-
     const {
-        data: existingInvitation,
-        error: existingError
+        data: existingInvitation
     } =
         await supabaseClient
         .from("chat_invitations")
         .select("id, status")
-        .eq(
-            "from_username",
-            currentUsername
-        )
-        .eq(
-            "to_username",
-            targetProfile.username
-        )
-        .eq(
-            "status",
-            "pending"
-        )
+        .eq("from_username", currentUsername)
+        .eq("to_username", targetProfile.username)
+        .eq("status", "pending")
         .maybeSingle();
-
-
-    if (existingError) {
-
-        console.error(
-            "Existing invitation error:",
-            existingError
-        );
-
-    }
-
 
     if (existingInvitation) {
 
@@ -1219,7 +1104,6 @@ async function createPrivateChat() {
         return;
 
     }
-
 
     const {
         data: newInvitation,
@@ -1242,7 +1126,6 @@ async function createPrivateChat() {
         .select()
         .single();
 
-
     if (invitationError) {
 
         console.error(
@@ -1257,16 +1140,13 @@ async function createPrivateChat() {
 
     }
 
-
     console.log(
         "Invitation sent:",
         newInvitation
     );
 
-
     successBox.innerText =
         "Invitation sent! 📩";
-
 
     document.getElementById(
         "targetUsername"
@@ -1282,11 +1162,8 @@ async function createPrivateChat() {
 async function loadInvitations() {
 
     if (!currentUsername) {
-
         return;
-
     }
-
 
     const {
         data,
@@ -1295,21 +1172,11 @@ async function loadInvitations() {
         await supabaseClient
         .from("chat_invitations")
         .select("*")
-        .eq(
-            "to_username",
-            currentUsername
-        )
-        .eq(
-            "status",
-            "pending"
-        )
-        .order(
-            "created_at",
-            {
-                ascending: false
-            }
-        );
-
+        .eq("to_username", currentUsername)
+        .eq("status", "pending")
+        .order("created_at", {
+            ascending: false
+        });
 
     if (error) {
 
@@ -1322,96 +1189,68 @@ async function loadInvitations() {
 
     }
 
-
     const box =
         document.getElementById(
             "invitations"
         );
 
-
     box.innerHTML = "";
 
-
-    if (
-        !data ||
-        data.length === 0
-    ) {
+    if (!data || data.length === 0) {
 
         box.innerHTML = `
-
-            <div
-                style="color:#69748c;font-size:12px;"
-            >
-
+            <div style="color:#69748c;font-size:12px;">
                 No invitations.
-
             </div>
-
         `;
 
         return;
 
     }
 
+    data.forEach(invitation => {
 
-    data.forEach(
-        invitation => {
+        const div =
+            document.createElement("div");
 
-            const div =
-                document.createElement(
-                    "div"
-                );
+        div.className =
+            "invitation-item";
 
+        div.innerHTML = `
 
-            div.className =
-                "invitation-item";
+            <div class="invitation-name">
 
+                💬 ${escapeHTML(
+                    invitation.from_username
+                )}
 
-            div.innerHTML = `
+                wants to chat!
 
-                <div class="invitation-name">
+            </div>
 
-                    💬 ${escapeHTML(
-                        invitation.from_username
-                    )}
+            <div class="invitation-buttons">
 
-                    wants to chat!
+                <button
+                    class="accept-button"
+                    onclick="acceptInvitation('${invitation.id}')"
+                >
+                    ✓ Accept
+                </button>
 
-                </div>
+                <button
+                    class="decline-button"
+                    onclick="declineInvitation('${invitation.id}')"
+                >
+                    ✕ Decline
+                </button>
 
+            </div>
 
-                <div class="invitation-buttons">
+        `;
 
-                    <button
-                        class="accept-button"
-                        onclick="acceptInvitation('${invitation.id}')"
-                    >
+        box.appendChild(div);
 
-                        ✓ Accept
-
-                    </button>
-
-
-                    <button
-                        class="decline-button"
-                        onclick="declineInvitation('${invitation.id}')"
-                    >
-
-                        ✕ Decline
-
-                    </button>
-
-                </div>
-
-            `;
-
-
-            box.appendChild(
-                div
-            );
-
-        }
-    );
+    });
 
 }
 
@@ -1420,15 +1259,7 @@ async function loadInvitations() {
    ACCEPT INVITATION
 ========================================= */
 
-async function acceptInvitation(
-    invitationId
-) {
-
-    console.log(
-        "Accepting invitation:",
-        invitationId
-    );
-
+async function acceptInvitation(invitationId) {
 
     const {
         data: invitation,
@@ -1437,31 +1268,10 @@ async function acceptInvitation(
         await supabaseClient
         .from("chat_invitations")
         .select("*")
-        .eq(
-            "id",
-            invitationId
-        )
+        .eq("id", invitationId)
         .maybeSingle();
 
-
-    if (invitationError) {
-
-        console.error(
-            "Invitation error:",
-            invitationError
-        );
-
-        alert(
-            "Invitation error:\n\n" +
-            invitationError.message
-        );
-
-        return;
-
-    }
-
-
-    if (!invitation) {
+    if (invitationError || !invitation) {
 
         alert(
             "Invitation could not be found."
@@ -1471,33 +1281,11 @@ async function acceptInvitation(
 
     }
 
-
     const fromUsername =
         invitation.from_username;
 
-
     const toUsername =
         invitation.to_username;
-
-
-    if (
-        !fromUsername ||
-        !toUsername
-    ) {
-
-        alert(
-            "Username error!"
-        );
-
-        return;
-
-    }
-
-
-    console.log(
-        "Creating private conversation..."
-    );
-
 
     const {
         data: conversation,
@@ -1507,8 +1295,7 @@ async function acceptInvitation(
         .from("conversations")
         .insert({
 
-            type:
-                "private",
+            type: "private",
 
             name:
                 fromUsername +
@@ -1519,29 +1306,16 @@ async function acceptInvitation(
         .select()
         .single();
 
-
     if (conversationError) {
-
-        console.error(
-            "CONVERSATION CREATION ERROR:",
-            JSON.stringify(
-                conversationError,
-                null,
-                2
-            )
-        );
 
         alert(
             "CONVERSATION ERROR:\n\n" +
-            conversationError.message +
-            "\n\nError code: " +
-            conversationError.code
+            conversationError.message
         );
 
         return;
 
     }
-
 
     const {
         error: membersError
@@ -1568,13 +1342,7 @@ async function acceptInvitation(
 
         ]);
 
-
     if (membersError) {
-
-        console.error(
-            "CONVERSATION MEMBERS ERROR:",
-            membersError
-        );
 
         alert(
             "MEMBERS ERROR:\n\n" +
@@ -1585,7 +1353,6 @@ async function acceptInvitation(
 
     }
 
-
     const {
         error: updateError
     } =
@@ -1593,25 +1360,15 @@ async function acceptInvitation(
         .from("chat_invitations")
         .update({
 
-            status:
-                "accepted",
+            status: "accepted",
 
             conversation_id:
                 conversation.id
 
         })
-        .eq(
-            "id",
-            invitationId
-        );
-
+        .eq("id", invitationId);
 
     if (updateError) {
-
-        console.error(
-            "INVITATION UPDATE ERROR:",
-            updateError
-        );
 
         alert(
             "INVITATION UPDATE ERROR:\n\n" +
@@ -1622,16 +1379,12 @@ async function acceptInvitation(
 
     }
 
-
     alert(
         "Private chat created! 💬🎉"
     );
 
-
     await loadInvitations();
-
     await loadConversations();
-
 
     openConversation(
         conversation.id,
@@ -1645,26 +1398,15 @@ async function acceptInvitation(
    DECLINE INVITATION
 ========================================= */
 
-async function declineInvitation(
-    invitationId
-) {
+async function declineInvitation(invitationId) {
 
-    const {
-        error
-    } =
+    const { error } =
         await supabaseClient
         .from("chat_invitations")
         .update({
-
-            status:
-                "declined"
-
+            status: "declined"
         })
-        .eq(
-            "id",
-            invitationId
-        );
-
+        .eq("id", invitationId);
 
     if (error) {
 
@@ -1681,7 +1423,6 @@ async function declineInvitation(
 
     }
 
-
     await loadInvitations();
 
 }
@@ -1694,11 +1435,8 @@ async function declineInvitation(
 async function loadConversations() {
 
     if (!currentUsername) {
-
         return;
-
     }
-
 
     const {
         data: memberships,
@@ -1707,11 +1445,7 @@ async function loadConversations() {
         await supabaseClient
         .from("conversation_members")
         .select("*")
-        .eq(
-            "username",
-            currentUsername
-        );
-
+        .eq("username", currentUsername);
 
     if (membershipError) {
 
@@ -1724,27 +1458,18 @@ async function loadConversations() {
 
     }
 
-
     const chatList =
         document.getElementById(
             "chatList"
         );
 
-
     if (!chatList) {
-
         return;
-
     }
-
 
     chatList.innerHTML = "";
 
-
-    if (
-        !memberships ||
-        memberships.length === 0
-    ) {
+    if (!memberships || memberships.length === 0) {
 
         chatList.innerHTML = `
 
@@ -1766,13 +1491,11 @@ async function loadConversations() {
 
     }
 
-
     const conversationIds =
         memberships.map(
             membership =>
                 membership.conversation_id
         );
-
 
     const {
         data: conversations,
@@ -1781,11 +1504,7 @@ async function loadConversations() {
         await supabaseClient
         .from("conversations")
         .select("*")
-        .in(
-            "id",
-            conversationIds
-        );
-
+        .in("id", conversationIds);
 
     if (conversationError) {
 
@@ -1798,84 +1517,62 @@ async function loadConversations() {
 
     }
 
-
-    if (
-        !conversations ||
-        conversations.length === 0
-    ) {
-
+    if (!conversations || conversations.length === 0) {
         return;
-
     }
 
+    conversations.forEach(conversation => {
 
-    conversations.forEach(
-        conversation => {
+        const div =
+            document.createElement("div");
 
-            const div =
-                document.createElement(
-                    "div"
-                );
+        div.className =
+            "chat-item";
 
-
-            div.className =
-                "chat-item";
-
-
-            const otherMembership =
-                memberships.find(
-                    membership =>
-                        membership.conversation_id ===
-                        conversation.id &&
-                        membership.username !==
-                        currentUsername
-                );
-
-
-            const otherUsername =
-                otherMembership
-                ?
-                otherMembership.username
-                :
-                conversation.name;
-
-
-            div.innerHTML = `
-
-                <div class="chat-item-name">
-
-                    💬 ${escapeHTML(
-                        otherUsername
-                    )}
-
-                </div>
-
-                <div class="chat-item-status">
-
-                    Private conversation
-
-                </div>
-
-            `;
-
-
-            div.onclick =
-                function() {
-
-                    openConversation(
-                        conversation.id,
-                        otherUsername
-                    );
-
-                };
-
-
-            chatList.appendChild(
-                div
+        const otherMembership =
+            memberships.find(
+                membership =>
+                    membership.conversation_id ===
+                    conversation.id &&
+                    membership.username !==
+                    currentUsername
             );
 
-        }
-    );
+        const otherUsername =
+            otherMembership
+            ? otherMembership.username
+            : conversation.name;
+
+        div.innerHTML = `
+
+            <div class="chat-item-name">
+
+                💬 ${escapeHTML(
+                    otherUsername
+                )}
+
+            </div>
+
+            <div class="chat-item-status">
+
+                Private conversation
+
+            </div>
+
+        `;
+
+        div.onclick = function() {
+
+            openConversation(
+                conversation.id,
+                otherUsername
+            );
+
+        };
+
+        chatList.appendChild(div);
+
+    });
 
 }
 
@@ -1892,63 +1589,52 @@ async function openConversation(
     currentConversationId =
         conversationId;
 
-
     const emptyChat =
         document.getElementById(
             "emptyChat"
         );
-
 
     const activeChat =
         document.getElementById(
             "activeChat"
         );
 
-
     if (emptyChat) {
-
-        emptyChat.style.display =
-            "none";
-
+        emptyChat.style.display = "none";
     }
-
 
     if (activeChat) {
-
-        activeChat.style.display =
-            "flex";
-
+        activeChat.style.display = "flex";
     }
-
 
     const chatHeader =
         document.getElementById(
             "chatHeader"
         );
 
-
     if (chatHeader) {
 
         chatHeader.innerHTML = `
 
             <h2>
-
                 💬 ${escapeHTML(
                     otherUsername
                 )}
-
             </h2>
 
             <p>
-
                 Private conversation
-
             </p>
 
         `;
 
     }
 
+    /*
+       IMPORTANT:
+       loadMessages() ONLY displays old messages.
+       It NEVER sends notifications.
+    */
 
     await loadMessages();
 
@@ -1956,17 +1642,15 @@ async function openConversation(
 
 
 /* =========================================
-   LOAD MESSAGES
+   LOAD OLD MESSAGES
+   🚫 NO SOUND HERE
 ========================================= */
 
 async function loadMessages() {
 
     if (!currentConversationId) {
-
         return;
-
     }
-
 
     const {
         data,
@@ -1986,7 +1670,6 @@ async function loadMessages() {
             }
         );
 
-
     if (error) {
 
         console.error(
@@ -1998,33 +1681,35 @@ async function loadMessages() {
 
     }
 
-
     const messages =
         document.getElementById(
             "messages"
         );
 
-
     if (!messages) {
-
         return;
-
     }
-
 
     messages.innerHTML = "";
 
-
     if (!data) {
-
         return;
-
     }
 
+    /*
+       🚨 IMPORTANT:
+       These are OLD messages.
+       displayMessage() is called WITHOUT notification.
+    */
 
-    data.forEach(
-        displayMessage
-    );
+    data.forEach(message => {
+
+        displayMessage(
+            message,
+            false
+        );
+
+    });
 
 }
 
@@ -2043,28 +1728,21 @@ function displayMessage(
             "messages"
         );
 
-
     if (!messages) {
-
         return;
-
     }
-
 
     const div =
         document.createElement(
             "div"
         );
 
-
     div.className =
         "message";
-
 
     const isMine =
         message.username ===
         currentUsername;
-
 
     if (isMine) {
 
@@ -2073,7 +1751,6 @@ function displayMessage(
         );
 
     }
-
 
     div.innerHTML = `
 
@@ -2105,11 +1782,8 @@ function displayMessage(
                 ).toLocaleTimeString(
                     [],
                     {
-                        hour:
-                            "2-digit",
-
-                        minute:
-                            "2-digit"
+                        hour: "2-digit",
+                        minute: "2-digit"
                     }
                 )
                 :
@@ -2120,108 +1794,30 @@ function displayMessage(
 
     `;
 
-
-    messages.appendChild(
-        div
-    );
-
+    messages.appendChild(div);
 
     messages.scrollTop =
         messages.scrollHeight;
 
 
-    /* =====================================
-       🔔 ONLY BROWSER NOTIFICATION
-       GETS THE SOUND
-    ===================================== */
+    /*
+       🔥 THE ONLY PLACE SOUND IS ALLOWED
+
+       shouldNotify = true ONLY from realtime.
+
+       Old messages = false.
+       Your own messages = false.
+    */
 
     if (
         shouldNotify &&
         !isMine
     ) {
 
+        playMessageNotification();
+
         showBrowserNotification(
             message
-        );
-
-    }
-
-}
-
-
-/* =========================================
-   🔔 BROWSER NOTIFICATION
-========================================= */
-
-async function showBrowserNotification(
-    message
-) {
-
-    if (
-        !("Notification" in window)
-    ) {
-
-        return;
-
-    }
-
-
-    if (
-        Notification.permission ===
-        "default"
-    ) {
-
-        try {
-
-            await Notification.requestPermission();
-
-        }
-
-        catch (error) {
-
-            console.log(
-                "Notification permission error:",
-                error
-            );
-
-            return;
-
-        }
-
-    }
-
-
-    if (
-        Notification.permission !==
-        "granted"
-    ) {
-
-        return;
-
-    }
-
-
-    try {
-
-        new Notification(
-            "💬 New Private Message",
-            {
-
-                body:
-                    message.username +
-                    ": " +
-                    message.message
-
-            }
-        );
-
-    }
-
-    catch (error) {
-
-        console.log(
-            "Browser notification error:",
-            error
         );
 
     }
@@ -2240,24 +1836,16 @@ async function sendMessage() {
             "messageInput"
         );
 
-
     if (!input) {
-
         return;
-
     }
-
 
     const text =
         input.value.trim();
 
-
     if (!text) {
-
         return;
-
     }
-
 
     if (!currentConversationId) {
 
@@ -2268,7 +1856,6 @@ async function sendMessage() {
         return;
 
     }
-
 
     const {
         error
@@ -2288,7 +1875,6 @@ async function sendMessage() {
 
         });
 
-
     if (error) {
 
         console.error(
@@ -2304,7 +1890,6 @@ async function sendMessage() {
 
     }
 
-
     input.value = "";
 
 }
@@ -2312,6 +1897,7 @@ async function sendMessage() {
 
 /* =========================================
    REALTIME PRIVATE MESSAGES
+   🔥 ONLY NEW MESSAGES COME THROUGH HERE
 ========================================= */
 
 function subscribeToPrivateMessages() {
@@ -2325,7 +1911,6 @@ function subscribeToPrivateMessages() {
 
     }
 
-
     privateChatChannel =
         supabaseClient
         .channel(
@@ -2335,11 +1920,9 @@ function subscribeToPrivateMessages() {
             "postgres_changes",
             {
 
-                event:
-                    "INSERT",
+                event: "INSERT",
 
-                schema:
-                    "public",
+                schema: "public",
 
                 table:
                     "conversation_messages"
@@ -2348,24 +1931,64 @@ function subscribeToPrivateMessages() {
 
             function(payload) {
 
+                const message =
+                    payload.new;
+
+
+                /*
+                   Ignore messages from other
+                   conversations.
+                */
+
                 if (
-                    payload.new.conversation_id ===
+                    message.conversation_id !==
                     currentConversationId
                 ) {
 
-                    const isMine =
-                        payload.new.username ===
-                        currentUsername;
-
-
-                    displayMessage(
-                        payload.new,
-                        !isMine
-                    );
+                    return;
 
                 }
 
+
+                /*
+                   Ignore OUR OWN realtime event.
+                */
+
+                const isMine =
+                    message.username ===
+                    currentUsername;
+
+
+                if (isMine) {
+
+                    /*
+                       Display it WITHOUT sound.
+                    */
+
+                    displayMessage(
+                        message,
+                        false
+                    );
+
+                    return;
+
+                }
+
+
+                /*
+                   🔥 BRAND NEW MESSAGE FROM SOMEONE ELSE
+
+                   ONE sound.
+                   ONE browser notification.
+                */
+
+                displayMessage(
+                    message,
+                    true
+                );
+
             }
+
         )
         .subscribe();
 
@@ -2387,7 +2010,6 @@ function subscribeToInvitations() {
 
     }
 
-
     invitationChannel =
         supabaseClient
         .channel(
@@ -2397,11 +2019,9 @@ function subscribeToInvitations() {
             "postgres_changes",
             {
 
-                event:
-                    "INSERT",
+                event: "INSERT",
 
-                schema:
-                    "public",
+                schema: "public",
 
                 table:
                     "chat_invitations"
@@ -2432,19 +2052,15 @@ function subscribeToInvitations() {
    ESCAPE HTML
 ========================================= */
 
-function escapeHTML(
-    text
-) {
+function escapeHTML(text) {
 
     const div =
         document.createElement(
             "div"
         );
 
-
     div.innerText =
         text;
-
 
     return div.innerHTML;
 
@@ -2476,6 +2092,50 @@ document.addEventListener(
 
 
 /* =========================================
+   🔔 ENABLE AUDIO AFTER USER INTERACTION
+========================================= */
+
+document.addEventListener(
+    "click",
+    function() {
+
+        try {
+
+            if (!notificationAudioContext) {
+
+                notificationAudioContext =
+                    new (
+                        window.AudioContext ||
+                        window.webkitAudioContext
+                    )();
+
+            }
+
+            if (
+                notificationAudioContext.state ===
+                "suspended"
+            ) {
+
+                notificationAudioContext.resume();
+
+            }
+
+        }
+
+        catch (error) {
+
+            console.log(
+                "Audio setup error:",
+                error
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================
    START
 ========================================= */
 
@@ -2483,7 +2143,6 @@ async function startPrivateChats() {
 
     const loggedIn =
         await getCurrentUser();
-
 
     if (!loggedIn) {
 
@@ -2494,16 +2153,20 @@ async function startPrivateChats() {
 
     }
 
-
     console.log(
         "Private Chats logged in as:",
         currentUsername
     );
 
-
     await loadInvitations();
 
     await loadConversations();
+
+    /*
+       Subscribe AFTER loading old data.
+       Therefore old messages can NEVER
+       trigger notification sounds.
+    */
 
     subscribeToPrivateMessages();
 
