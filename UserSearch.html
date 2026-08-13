@@ -1,310 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ChatsApp - Find Users</title>
+<title>Private Chat • ChatsApp</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 
 * {
-    box-sizing: border-box;
+    box-sizing:border-box;
 }
 
 body {
-    margin: 0;
-    min-height: 100vh;
-    font-family: Arial, sans-serif;
-    color: white;
-
+    margin:0;
+    min-height:100vh;
+    font-family:Inter,Arial,sans-serif;
     background:
-        radial-gradient(circle at 10% 10%, #263f78 0%, transparent 32%),
-        radial-gradient(circle at 90% 90%, #47216d 0%, transparent 32%),
+        radial-gradient(circle at 15% 20%,#253b6e 0%,transparent 35%),
+        radial-gradient(circle at 85% 80%,#34205d 0%,transparent 35%),
         #080b14;
-
-    overflow-x: hidden;
+    color:white;
 }
 
-/* =========================================
-   BACKGROUND
-========================================= */
+/* ================================
+   APP
+================================ */
 
-.background-glow {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    overflow: hidden;
-    z-index: 0;
+.chat-app {
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
 }
 
-.glow {
-    position: absolute;
-    width: 250px;
-    height: 250px;
-    border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.18;
-}
-
-.glow.one {
-    background: #4d7cff;
-    top: 10%;
-    left: 5%;
-}
-
-.glow.two {
-    background: #9a4dff;
-    bottom: 5%;
-    right: 5%;
-}
-
-/* =========================================
-   PAGE
-========================================= */
-
-.page {
-    position: relative;
-    z-index: 1;
-
-    width: 100%;
-    max-width: 1000px;
-
-    margin: auto;
-    padding: 35px 20px 60px;
-}
-
-/* =========================================
+/* ================================
    HEADER
-========================================= */
+================================ */
 
-.header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.chat-header {
+    height:78px;
+    display:flex;
+    align-items:center;
+    gap:15px;
+    padding:0 25px;
 
-    margin-bottom: 30px;
+    background:rgba(10,13,23,.94);
+    border-bottom:1px solid #202638;
+
+    backdrop-filter:blur(15px);
 }
 
-.logo-section h1 {
-    margin: 0;
+.back-button {
+    width:42px;
+    height:42px;
 
-    font-size: 32px;
+    border:1px solid #30384f;
+    border-radius:12px;
 
-    background:
-        linear-gradient(
-            135deg,
-            #ffffff,
-            #8aa8ff
-        );
+    background:#151a2a;
+    color:white;
 
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-size:20px;
+    cursor:pointer;
+
+    transition:.2s;
 }
 
-.logo-section p {
-    margin: 8px 0 0;
-
-    color: #78839d;
-    font-size: 14px;
+.back-button:hover {
+    background:#202a43;
+    transform:translateX(-2px);
 }
 
-.home-button {
-    border: 1px solid #303a55;
+.chat-avatar {
+    width:45px;
+    height:45px;
 
-    background: rgba(20,25,42,0.8);
+    border-radius:50%;
 
-    color: white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-    padding: 12px 18px;
+    background:linear-gradient(
+        135deg,
+        #5b8cff,
+        #9c5cff
+    );
 
-    border-radius: 12px;
-
-    cursor: pointer;
-
-    transition: 0.2s;
-}
-
-.home-button:hover {
-    background: #202a45;
-    transform: translateY(-2px);
-}
-
-/* =========================================
-   SEARCH CARD
-========================================= */
-
-.search-card {
-
-    background:
-        rgba(18,23,38,0.88);
-
-    border:
-        1px solid #252d43;
-
-    border-radius: 24px;
-
-    padding: 28px;
-
-    backdrop-filter: blur(20px);
+    font-size:18px;
+    font-weight:800;
 
     box-shadow:
-        0 20px 60px rgba(0,0,0,0.25);
+        0 7px 25px rgba(91,140,255,.25);
 }
 
-.search-title {
-    margin: 0 0 8px;
-
-    font-size: 22px;
+.chat-user-info {
+    flex:1;
 }
 
-.search-subtitle {
-    margin: 0 0 20px;
-
-    color: #737f99;
-
-    font-size: 13px;
+.chat-username {
+    font-size:17px;
+    font-weight:800;
 }
 
-/* =========================================
-   SEARCH BOX
-========================================= */
-
-.search-wrapper {
-    position: relative;
+.chat-status {
+    margin-top:3px;
+    color:#737d95;
+    font-size:12px;
 }
 
-.search-icon {
-    position: absolute;
-
-    left: 16px;
-    top: 50%;
-
-    transform: translateY(-50%);
-
-    font-size: 18px;
-
-    color: #68738d;
+.chat-status.online {
+    color:#55d88a;
 }
 
-#searchInput {
+/* ================================
+   MESSAGES
+================================ */
 
-    width: 100%;
+.messages {
+    flex:1;
 
-    padding:
-        16px
-        18px
-        16px
-        48px;
+    overflow-y:auto;
 
-    border-radius: 14px;
+    padding:30px;
 
-    border:
-        1px solid #303950;
-
-    background:
-        #0d1220;
-
-    color: white;
-
-    outline: none;
-
-    font-size: 15px;
-
-    transition: 0.2s;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
 }
 
-#searchInput:focus {
+/* MESSAGE ROW */
 
-    border-color: #617fff;
+.message-row {
+    display:flex;
+    width:100%;
+}
+
+.message-row.mine {
+    justify-content:flex-end;
+}
+
+.message-row.theirs {
+    justify-content:flex-start;
+}
+
+/* MESSAGE BUBBLE */
+
+.message-bubble {
+    max-width:min(70%,500px);
+
+    padding:12px 16px;
+
+    border-radius:17px;
+
+    background:#171d2e;
+
+    border:1px solid #272f45;
+
+    color:#edf0f7;
+
+    font-size:14px;
+
+    line-height:1.45;
+
+    word-break:break-word;
 
     box-shadow:
-        0 0 0 3px
-        rgba(91,140,255,0.12);
+        0 5px 20px rgba(0,0,0,.15);
 }
 
-/* =========================================
-   RESULTS
-========================================= */
-
-.results {
-
-    margin-top: 20px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 10px;
-}
-
-.user-card {
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 15px;
-
-    padding: 15px;
-
-    border-radius: 16px;
-
-    border:
-        1px solid #252d43;
-
-    background:
-        rgba(20,26,43,0.7);
-
-    transition: 0.2s;
-}
-
-.user-card:hover {
-
-    transform: translateY(-2px);
-
-    border-color: #3b4c77;
-
-    background:
-        rgba(29,37,61,0.85);
-}
-
-/* =========================================
-   USER INFO
-========================================= */
-
-.user-info {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 13px;
-
-    min-width: 0;
-}
-
-.avatar {
-
-    width: 48px;
-    height: 48px;
-
-    flex-shrink: 0;
-
-    border-radius: 15px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
+.message-row.mine .message-bubble {
     background:
         linear-gradient(
             135deg,
@@ -312,215 +180,156 @@ body {
             #795cff
         );
 
-    font-size: 20px;
+    border:none;
 
-    font-weight: bold;
+    border-bottom-right-radius:5px;
 }
 
-.user-details {
-
-    min-width: 0;
+.message-row.theirs .message-bubble {
+    border-bottom-left-radius:5px;
 }
 
-.username {
-
-    font-size: 15px;
-
-    font-weight: 700;
-
-    white-space: nowrap;
-
-    overflow: hidden;
-
-    text-overflow: ellipsis;
+.message-time {
+    margin-top:5px;
+    font-size:10px;
+    opacity:.55;
 }
 
-.status {
+/* ================================
+   EMPTY CHAT
+================================ */
 
-    margin-top: 5px;
+.empty-chat {
+    flex:1;
 
-    font-size: 11px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-    color: #69748c;
+    text-align:center;
 
-    display: flex;
-
-    align-items: center;
-
-    gap: 6px;
-}
-
-.online-dot {
-
-    width: 7px;
-    height: 7px;
-
-    border-radius: 50%;
-
-    background: #35d982;
-
-    box-shadow:
-        0 0 8px
-        rgba(53,217,130,0.7);
-}
-
-.offline-dot {
-
-    width: 7px;
-    height: 7px;
-
-    border-radius: 50%;
-
-    background: #596276;
-}
-
-/* =========================================
-   MESSAGE BUTTON
-========================================= */
-
-.message-button {
-
-    border: none;
-
-    padding: 11px 17px;
-
-    border-radius: 11px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #5b8cff,
-            #795cff
-        );
-
-    color: white;
-
-    font-weight: 700;
-
-    cursor: pointer;
-
-    transition: 0.2s;
-
-    white-space: nowrap;
-}
-
-.message-button:hover {
-
-    transform: translateY(-2px);
-
-    box-shadow:
-        0 8px 20px
-        rgba(91,140,255,0.25);
-}
-
-/* =========================================
-   LOADING
-========================================= */
-
-.loading {
-
-    text-align: center;
-
-    padding: 35px;
-
-    color: #707b94;
-
-    font-size: 13px;
-}
-
-/* =========================================
-   EMPTY
-========================================= */
-
-.empty {
-
-    text-align: center;
-
-    padding: 45px 20px;
-
-    color: #69748c;
+    color:#737d95;
 }
 
 .empty-icon {
-
-    font-size: 45px;
-
-    margin-bottom: 12px;
+    font-size:60px;
+    margin-bottom:15px;
 }
 
-.empty h3 {
-
-    margin: 0 0 8px;
-
-    color: white;
+.empty-chat h2 {
+    color:white;
+    margin:0 0 8px;
 }
 
-.empty p {
+/* ================================
+   INPUT
+================================ */
 
-    margin: 0;
+.input-area {
+    padding:18px 25px;
 
-    font-size: 13px;
+    background:rgba(10,13,23,.95);
+
+    border-top:1px solid #202638;
+
+    display:flex;
+    gap:10px;
 }
 
-/* =========================================
-   ERROR
-========================================= */
+.message-input {
+    flex:1;
 
-.error {
+    padding:15px 17px;
 
-    margin-top: 15px;
+    border-radius:14px;
 
-    padding: 12px;
+    border:1px solid #30384f;
 
-    border-radius: 10px;
+    background:#0e1220;
+
+    color:white;
+
+    outline:none;
+
+    font-size:14px;
+}
+
+.message-input:focus {
+    border-color:#638cff;
+
+    box-shadow:
+        0 0 0 3px rgba(99,140,255,.1);
+}
+
+.send-button {
+    width:90px;
+
+    border:0;
+    border-radius:14px;
 
     background:
-        rgba(150,61,74,0.15);
+        linear-gradient(
+            135deg,
+            #5b8cff,
+            #795cff
+        );
 
-    border:
-        1px solid rgba(150,61,74,0.3);
+    color:white;
 
-    color: #ff8585;
+    font-weight:700;
 
-    font-size: 12px;
+    cursor:pointer;
+
+    transition:.2s;
 }
 
-/* =========================================
+.send-button:hover {
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 8px 25px rgba(91,140,255,.3);
+}
+
+/* ================================
+   LOADING
+================================ */
+
+.loading {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    flex:1;
+
+    color:#737d95;
+
+    font-size:14px;
+}
+
+/* ================================
    MOBILE
-========================================= */
+================================ */
 
-@media(max-width:650px) {
+@media(max-width:600px) {
 
-    .page {
-        padding: 20px 12px 40px;
+    .chat-header {
+        padding:0 15px;
     }
 
-    .header {
-        align-items: flex-start;
-        gap: 15px;
+    .messages {
+        padding:20px 15px;
     }
 
-    .logo-section h1 {
-        font-size: 25px;
+    .input-area {
+        padding:12px 15px;
     }
 
-    .home-button {
-        padding: 10px 13px;
-        font-size: 12px;
+    .message-bubble {
+        max-width:82%;
     }
 
-    .search-card {
-        padding: 20px;
-        border-radius: 18px;
-    }
-
-    .user-card {
-        align-items: flex-start;
-    }
-
-    .message-button {
-        padding: 9px 12px;
-        font-size: 12px;
+    .send-button {
+        width:65px;
     }
 
 }
@@ -531,92 +340,82 @@ body {
 
 <body>
 
-<div class="background-glow">
-
-    <div class="glow one"></div>
-    <div class="glow two"></div>
-
-</div>
-
-<div class="page">
+<div class="chat-app">
 
     <!-- HEADER -->
 
-    <div class="header">
-
-        <div class="logo-section">
-
-            <h1>👥 Find Users</h1>
-
-            <p>
-                Search for ChatsApp users and start a private conversation.
-            </p>
-
-        </div>
+    <div class="chat-header">
 
         <button
-            class="home-button"
-            onclick="goHome()"
+            class="back-button"
+            onclick="goBack()"
         >
-            ← Home
+            ←
         </button>
+
+        <div
+            id="chatAvatar"
+            class="chat-avatar"
+        >
+            U
+        </div>
+
+        <div class="chat-user-info">
+
+            <div
+                id="chatUsername"
+                class="chat-username"
+            >
+                Loading...
+            </div>
+
+            <div
+                id="chatStatus"
+                class="chat-status"
+            >
+                Checking status...
+            </div>
+
+        </div>
 
     </div>
 
 
-    <!-- SEARCH -->
+    <!-- MESSAGES -->
 
-    <div class="search-card">
+    <div
+        id="loading"
+        class="loading"
+    >
+        Loading conversation...
+    </div>
 
-        <h2 class="search-title">
-            🔎 Search ChatsApp
-        </h2>
-
-        <p class="search-subtitle">
-            Enter a username to find someone.
-        </p>
-
-        <div class="search-wrapper">
-
-            <span class="search-icon">
-                🔎
-            </span>
-
-            <input
-                id="searchInput"
-                type="text"
-                maxlength="20"
-                autocomplete="off"
-                placeholder="Search username..."
-            >
-
-        </div>
+    <div
+        id="messages"
+        class="messages"
+        style="display:none;"
+    ></div>
 
 
-        <!-- RESULTS -->
+    <!-- INPUT -->
 
-        <div
-            id="results"
-            class="results"
+    <div class="input-area">
+
+        <input
+            id="messageInput"
+            class="message-input"
+            type="text"
+            placeholder="Type a message..."
+            maxlength="500"
+            autocomplete="off"
         >
 
-            <div class="empty">
-
-                <div class="empty-icon">
-                    👤
-                </div>
-
-                <h3>
-                    Find someone
-                </h3>
-
-                <p>
-                    Start typing a username above.
-                </p>
-
-            </div>
-
-        </div>
+        <button
+            class="send-button"
+            onclick="sendMessage()"
+        >
+            Send
+        </button>
 
     </div>
 
@@ -646,407 +445,490 @@ const supabaseClient =
    VARIABLES
 ========================================= */
 
-let currentUser = null;
-let currentUsername = null;
+let currentUsername = "";
 
-let searchTimer = null;
+let targetUsername = "";
+
+let privateChannel = null;
 
 
 /* =========================================
-   GET CURRENT USER
+   GET USER
 ========================================= */
 
 async function getCurrentUser() {
 
-    const {
-        data,
-        error
-    } =
-        await supabaseClient.auth.getUser();
+    const { data } =
+        await supabaseClient
+        .auth
+        .getSession();
 
-    if (
-        error ||
+    if(
         !data ||
-        !data.user
+        !data.session ||
+        !data.session.user
     ) {
 
-        return false;
+        window.location.href =
+            "index.html";
 
+        return false;
     }
 
-    currentUser = data.user;
-
     currentUsername =
-        currentUser.user_metadata?.username;
+        data.session.user
+        .user_metadata?.username ||
+        data.session.user.email
+        .split("@")[0];
+
+    return true;
+}
 
 
-    /*
-       If username isn't in auth metadata,
-       look inside profiles.
-    */
+/* =========================================
+   LOAD TARGET USER
+========================================= */
 
-    if (!currentUsername) {
+function getTargetUser() {
 
-        const {
-            data: profile,
-            error: profileError
-        } =
-            await supabaseClient
-            .from("profiles")
-            .select("username")
-            .eq(
-                "id",
-                currentUser.id
-            )
-            .maybeSingle();
+    targetUsername =
+        localStorage.getItem(
+            "chatsapp_target_user"
+        );
 
-        if (
-            profileError ||
-            !profile
-        ) {
+    if(!targetUsername) {
 
-            console.error(
-                "Profile error:",
-                profileError
-            );
+        alert(
+            "No user selected."
+        );
 
-            return false;
+        window.location.href =
+            "index.html";
 
-        }
-
-        currentUsername =
-            profile.username;
-
+        return false;
     }
 
     return true;
-
 }
 
 
 /* =========================================
-   HOME
+   HEADER
 ========================================= */
 
-function goHome() {
+async function loadTargetProfile() {
 
-    window.location.href =
-        "index.html";
-
-}
-
-
-/* =========================================
-   OPEN PRIVATE CHAT
-========================================= */
-
-function messageUser(username) {
-
-    /*
-       Pass the username through the URL.
-
-       Example:
-
-       PrivateChat.html?user=Abby
-    */
-
-    window.location.href =
-        "PrivateChat.html?user=" +
-        encodeURIComponent(username);
-
-}
-
-
-/* =========================================
-   SEARCH INPUT
-========================================= */
-
-const searchInput =
     document.getElementById(
-        "searchInput"
-    );
+        "chatUsername"
+    ).innerText =
+        targetUsername;
+
+    document.getElementById(
+        "chatAvatar"
+    ).innerText =
+        targetUsername
+        .charAt(0)
+        .toUpperCase();
 
 
-searchInput.addEventListener(
-    "input",
-    function() {
-
-        clearTimeout(
-            searchTimer
-        );
-
-        const query =
-            this.value.trim();
-
-        if (!query) {
-
-            showEmpty();
-
-            return;
-
-        }
-
-        /*
-           Small delay so we don't
-           spam Supabase while typing.
-        */
-
-        searchTimer =
-            setTimeout(
-                function() {
-
-                    searchUsers(
-                        query
-                    );
-
-                },
-                250
-            );
-
-    }
-);
-
-
-/* =========================================
-   SEARCH USERS
-========================================= */
-
-async function searchUsers(query) {
-
-    const results =
-        document.getElementById(
-            "results"
-        );
-
-    results.innerHTML = `
-
-        <div class="loading">
-            🔎 Searching...
-        </div>
-
-    `;
-
-
-    const {
-        data,
-        error
-    } =
+    const { data } =
         await supabaseClient
         .from("profiles")
-        .select("*")
-        .ilike(
+        .select("online")
+        .eq(
             "username",
-            "%" + query + "%"
+            targetUsername
         )
-        .limit(20);
+        .maybeSingle();
 
 
-    if (error) {
+    const status =
+        document.getElementById(
+            "chatStatus"
+        );
+
+
+    if(data && data.online) {
+
+        status.innerText =
+            "● Online";
+
+        status.className =
+            "chat-status online";
+
+    } else {
+
+        status.innerText =
+            "● Offline";
+
+        status.className =
+            "chat-status";
+
+    }
+}
+
+
+/* =========================================
+   LOAD MESSAGES
+========================================= */
+
+async function loadMessages() {
+
+    const loading =
+        document.getElementById(
+            "loading"
+        );
+
+    const messages =
+        document.getElementById(
+            "messages"
+        );
+
+
+    /*
+       PRIVATE_MESSAGES TABLE
+
+       Required columns:
+
+       id
+       sender
+       receiver
+       message
+       created_at
+    */
+
+
+    const { data,error } =
+        await supabaseClient
+        .from("private_messages")
+        .select("*")
+        .or(
+            `and(sender.eq.${currentUsername},receiver.eq.${targetUsername}),and(sender.eq.${targetUsername},receiver.eq.${currentUsername})`
+        )
+        .order(
+            "created_at",
+            {
+                ascending:true
+            }
+        );
+
+
+    if(error) {
 
         console.error(
-            "User search error:",
+            "Could not load private messages:",
             error
         );
 
-        results.innerHTML = `
-
-            <div class="error">
-
-                Couldn't search for users.
-
-                <br><br>
-
-                ${escapeHTML(
-                    error.message
-                )}
-
-            </div>
-
-        `;
+        loading.innerText =
+            "Could not load messages.";
 
         return;
-
     }
 
 
-    /*
-       Don't show yourself.
-    */
+    loading.style.display =
+        "none";
 
-    const users =
-        (data || []).filter(
-            user =>
-                user.username &&
-                user.username.toLowerCase() !==
-                currentUsername?.toLowerCase()
+    messages.style.display =
+        "flex";
+
+    messages.innerHTML = "";
+
+
+    if(!data || data.length === 0) {
+
+        showEmptyMessage();
+
+        return;
+    }
+
+
+    data.forEach(
+        message => {
+
+            displayMessage(
+                message
+            );
+
+        }
+    );
+
+
+    scrollToBottom();
+}
+
+
+/* =========================================
+   DISPLAY MESSAGE
+========================================= */
+
+function displayMessage(message) {
+
+    const box =
+        document.getElementById(
+            "messages"
         );
 
 
-    if (users.length === 0) {
+    const row =
+        document.createElement("div");
 
-        results.innerHTML = `
 
-            <div class="empty">
+    row.className =
+        "message-row " +
+        (
+            message.sender ===
+            currentUsername
+                ? "mine"
+                : "theirs"
+        );
+
+
+    const bubble =
+        document.createElement("div");
+
+
+    bubble.className =
+        "message-bubble";
+
+
+    bubble.innerText =
+        message.message;
+
+
+    row.appendChild(
+        bubble
+    );
+
+
+    box.appendChild(
+        row
+    );
+}
+
+
+/* =========================================
+   EMPTY CHAT
+========================================= */
+
+function showEmptyMessage() {
+
+    const box =
+        document.getElementById(
+            "messages"
+        );
+
+
+    box.innerHTML = `
+
+        <div class="empty-chat">
+
+            <div>
 
                 <div class="empty-icon">
-                    😭
+                    💬
                 </div>
 
-                <h3>
-                    No users found
-                </h3>
+                <h2>
+                    Start the conversation
+                </h2>
 
                 <p>
-                    Try another username.
+                    Send ${escapeHTML(targetUsername)}
+                    a message!
                 </p>
 
             </div>
 
-        `;
+        </div>
+
+    `;
+}
+
+
+/* =========================================
+   SEND MESSAGE
+========================================= */
+
+async function sendMessage() {
+
+    const input =
+        document.getElementById(
+            "messageInput"
+        );
+
+
+    const text =
+        input.value.trim();
+
+
+    if(!text) return;
+
+
+    const { data,error } =
+        await supabaseClient
+        .from("private_messages")
+        .insert({
+
+            sender:
+                currentUsername,
+
+            receiver:
+                targetUsername,
+
+            message:
+                text
+
+        })
+        .select()
+        .single();
+
+
+    if(error) {
+
+        console.error(
+            "Message error:",
+            error
+        );
+
+        alert(
+            "Message could not be sent."
+        );
 
         return;
+    }
+
+
+    input.value = "";
+
+
+    displayMessage(
+        data
+    );
+
+
+    scrollToBottom();
+}
+
+
+/* =========================================
+   REAL-TIME CHAT
+========================================= */
+
+function subscribeToChat() {
+
+    if(privateChannel) {
+
+        supabaseClient
+            .removeChannel(
+                privateChannel
+            );
 
     }
 
 
-    results.innerHTML = "";
+    privateChannel =
+        supabaseClient
+        .channel(
+            "private-chat-" +
+            currentUsername +
+            "-" +
+            targetUsername
+        )
+        .on(
+            "postgres_changes",
+            {
+                event:"INSERT",
+                schema:"public",
+                table:"private_messages"
+            },
+            payload => {
+
+                const message =
+                    payload.new;
 
 
-    users.forEach(
-        user => {
+                const isThisConversation =
+                    (
+                        message.sender ===
+                        currentUsername &&
+                        message.receiver ===
+                        targetUsername
+                    )
+                    ||
+                    (
+                        message.sender ===
+                        targetUsername &&
+                        message.receiver ===
+                        currentUsername
+                    );
 
-            const card =
-                document.createElement(
-                    "div"
+
+                if(!isThisConversation) {
+                    return;
+                }
+
+
+                /*
+                   Don't display our own message
+                   twice because sendMessage()
+                   already displays it.
+                */
+
+                if(
+                    message.sender ===
+                    currentUsername
+                ) {
+                    return;
+                }
+
+
+                displayMessage(
+                    message
                 );
 
-            card.className =
-                "user-card";
 
+                scrollToBottom();
 
-            const username =
-                user.username;
-
-
-            /*
-               Try to detect an online field
-               if your profiles table has one.
-            */
-
-            const isOnline =
-                user.online === true;
-
-
-            const firstLetter =
-                username
-                .charAt(0)
-                .toUpperCase();
-
-
-            card.innerHTML = `
-
-                <div class="user-info">
-
-                    <div class="avatar">
-
-                        ${escapeHTML(
-                            firstLetter
-                        )}
-
-                    </div>
-
-
-                    <div class="user-details">
-
-                        <div class="username">
-
-                            ${escapeHTML(
-                                username
-                            )}
-
-                        </div>
-
-
-                        <div class="status">
-
-                            <span class="${
-                                isOnline
-                                ?
-                                "online-dot"
-                                :
-                                "offline-dot"
-                            }"></span>
-
-                            ${
-                                isOnline
-                                ?
-                                "Online"
-                                :
-                                "ChatsApp User"
-                            }
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <button
-                    class="message-button"
-                    onclick="messageUser(
-                        '${escapeJS(username)}'
-                    )"
-                >
-
-                    💬 Message
-
-                </button>
-
-            `;
-
-
-            results.appendChild(
-                card
-            );
-
-        }
-    );
+            }
+        )
+        .subscribe();
 
 }
 
 
 /* =========================================
-   EMPTY SEARCH
+   SCROLL
 ========================================= */
 
-function showEmpty() {
+function scrollToBottom() {
 
-    const results =
+    const box =
         document.getElementById(
-            "results"
+            "messages"
         );
 
-    results.innerHTML = `
+    setTimeout(
+        function() {
 
-        <div class="empty">
+            box.scrollTop =
+                box.scrollHeight;
 
-            <div class="empty-icon">
-                👤
-            </div>
+        },
+        50
+    );
+}
 
-            <h3>
-                Find someone
-            </h3>
 
-            <p>
-                Start typing a username above.
-            </p>
+/* =========================================
+   BACK
+========================================= */
 
-        </div>
+function goBack() {
 
-    `;
-
+    window.location.href =
+        "index.html";
 }
 
 
@@ -1057,73 +939,67 @@ function showEmpty() {
 function escapeHTML(text) {
 
     const div =
-        document.createElement(
-            "div"
-        );
+        document.createElement("div");
 
     div.innerText =
         text;
 
     return div.innerHTML;
-
 }
 
 
 /* =========================================
-   ESCAPE JAVASCRIPT
+   ENTER KEY
 ========================================= */
 
-function escapeJS(text) {
+document.getElementById(
+    "messageInput"
+).addEventListener(
+    "keydown",
+    function(event) {
 
-    return String(text)
-        .replace(
-            /\\/g,
-            "\\\\"
-        )
-        .replace(
-            /'/g,
-            "\\'"
-        )
-        .replace(
-            /"/g,
-            '\\"'
-        );
+        if(event.key === "Enter") {
 
-}
+            event.preventDefault();
+
+            sendMessage();
+
+        }
+
+    }
+);
 
 
 /* =========================================
    START
 ========================================= */
 
-async function startUserSearch() {
+async function startChat() {
 
     const loggedIn =
         await getCurrentUser();
 
-
-    if (!loggedIn) {
-
-        window.location.href =
-            "index.html";
-
-        return;
-
-    }
+    if(!loggedIn) return;
 
 
-    console.log(
-        "User Search logged in as:",
-        currentUsername
-    );
+    const hasTarget =
+        getTargetUser();
+
+    if(!hasTarget) return;
+
+
+    await loadTargetProfile();
+
+    await loadMessages();
+
+    subscribeToChat();
 
 }
 
 
-startUserSearch();
+startChat();
 
 </script>
 
 </body>
-
 </html>
