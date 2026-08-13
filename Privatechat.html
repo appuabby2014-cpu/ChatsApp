@@ -1692,13 +1692,13 @@ async function acceptInvitation(invitationId) {
     if (conversationError) {
 
         console.error(
-    "CONVERSATION CREATION ERROR:",
-    JSON.stringify(
-        conversationError,
-        null,
-        2
-    )
-);
+            "CONVERSATION CREATION ERROR:",
+            JSON.stringify(
+                conversationError,
+                null,
+                2
+            )
+        );
 
         alert(
             "CONVERSATION ERROR:\n\n" +
@@ -2442,6 +2442,80 @@ async function sendMessage() {
 
 
 /* =========================================
+   MESSAGE NOTIFICATION SOUND
+========================================= */
+
+function playMessageNotification() {
+
+    try {
+
+        const audioContext =
+            new (
+                window.AudioContext ||
+                window.webkitAudioContext
+            )();
+
+        const oscillator =
+            audioContext.createOscillator();
+
+        const gainNode =
+            audioContext.createGain();
+
+        oscillator.type =
+            "sine";
+
+        oscillator.frequency.setValueAtTime(
+            700,
+            audioContext.currentTime
+        );
+
+        oscillator.frequency.setValueAtTime(
+            900,
+            audioContext.currentTime + 0.12
+        );
+
+        gainNode.gain.setValueAtTime(
+            0.001,
+            audioContext.currentTime
+        );
+
+        gainNode.gain.exponentialRampToValueAtTime(
+            0.15,
+            audioContext.currentTime + 0.02
+        );
+
+        gainNode.gain.exponentialRampToValueAtTime(
+            0.001,
+            audioContext.currentTime + 0.25
+        );
+
+        oscillator.connect(
+            gainNode
+        );
+
+        gainNode.connect(
+            audioContext.destination
+        );
+
+        oscillator.start();
+
+        oscillator.stop(
+            audioContext.currentTime + 0.25
+        );
+
+    } catch (error) {
+
+        console.log(
+            "Notification sound unavailable:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================
    REALTIME PRIVATE MESSAGES
 ========================================= */
 
@@ -2485,6 +2559,20 @@ function subscribeToPrivateMessages() {
                     displayMessage(
                         payload.new
                     );
+
+
+                    /* =====================================
+                       PLAY SOUND FOR OTHER USER'S MESSAGE
+                    ===================================== */
+
+                    if (
+                        payload.new.username !==
+                        currentUsername
+                    ) {
+
+                        playMessageNotification();
+
+                    }
 
                 }
 
