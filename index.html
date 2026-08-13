@@ -1428,120 +1428,120 @@ input:focus {
             </div>
 
 
-          <div class="welcome">
+            <div class="welcome">
 
-    <h2>
-        ChatsApp
-    </h2>
+                <h2>
+                    ChatsApp
+                </h2>
 
-    <p>
-        A new place to chat, connect and
-        keep in touch.
-    </p>
+                <p>
+                    A new place to chat, connect and
+                    keep in touch.
+                </p>
 
-</div>
-
-</div>
-
-
-<!-- =========================================
-     GLOBAL CHAT
-========================================= -->
-
-<div
-    id="globalChat"
-    class="global-chat"
->
-
-    <div class="chat-header">
-
-        <div>
-
-            <h1>
-                🌎 Global Chat
-            </h1>
-
-            <p id="onlineCount">
-                🟢 Global Chat
-            </p>
+            </div>
 
         </div>
 
-        <button
-            class="chat-back"
-            onclick="showHome()"
-        >
-            ← Home
-        </button>
 
-    </div>
-
-
-    <div
-        id="usernameBox"
-        class="username-box"
-    >
-
-        <h2>
-            Choose your username
-        </h2>
-
-        <p>
-            Your main ChatsApp username will be used.
-        </p>
-
-        <input
-            type="text"
-            id="chatUsername"
-            placeholder="Enter username..."
-            maxlength="20"
-        >
-
-        <button
-            class="primary"
-            onclick="joinGlobalChat()"
-        >
-            Join Global Chat
-        </button>
-
-    </div>
-
-
-    <div
-        id="chatArea"
-        style="display:none;"
-    >
+        <!-- =========================================
+             GLOBAL CHAT
+        ========================================= -->
 
         <div
-            id="messages"
-            class="messages"
+            id="globalChat"
+            class="global-chat"
         >
-        </div>
 
-        <div class="chat-input">
+            <div class="chat-header">
 
-            <input
-                type="text"
-                id="chatMessage"
-                placeholder="Type a message..."
-                maxlength="500"
+                <div>
+
+                    <h1>
+                        🌎 Global Chat
+                    </h1>
+
+                    <p id="onlineCount">
+                        🟢 Global Chat
+                    </p>
+
+                </div>
+
+                <button
+                    class="chat-back"
+                    onclick="showHome()"
+                >
+                    ← Home
+                </button>
+
+            </div>
+
+
+            <div
+                id="usernameBox"
+                class="username-box"
             >
 
-            <button
-                class="primary"
-                onclick="sendGlobalMessage()"
+                <h2>
+                    Choose your username
+                </h2>
+
+                <p>
+                    Your main ChatsApp username will be used.
+                </p>
+
+                <input
+                    type="text"
+                    id="chatUsername"
+                    placeholder="Enter username..."
+                    maxlength="20"
+                >
+
+                <button
+                    class="primary"
+                    onclick="joinGlobalChat()"
+                >
+                    Join Global Chat
+                </button>
+
+            </div>
+
+
+            <div
+                id="chatArea"
+                style="display:none;"
             >
-                Send
-            </button>
+
+                <div
+                    id="messages"
+                    class="messages"
+                >
+                </div>
+
+                <div class="chat-input">
+
+                    <input
+                        type="text"
+                        id="chatMessage"
+                        placeholder="Type a message..."
+                        maxlength="500"
+                    >
+
+                    <button
+                        class="primary"
+                        onclick="sendGlobalMessage()"
+                    >
+                        Send
+                    </button>
+
+                </div>
+
+            </div>
 
         </div>
 
-    </div>
 
-</div>
-
-
-</main>
+    </main>
 
 </div>
 
@@ -1574,6 +1574,168 @@ let signupMode = false;
 let currentUsername = "";
 
 let chatChannel = null;
+
+let soundPlayed = false;
+
+
+/* =========================================
+   LOADING SOUND
+========================================= */
+
+function playLoadingSound() {
+
+    if (soundPlayed) {
+        return;
+    }
+
+    soundPlayed = true;
+
+    try {
+
+        const AudioContext =
+            window.AudioContext ||
+            window.webkitAudioContext;
+
+        if (!AudioContext) {
+            return;
+        }
+
+        const audioContext =
+            new AudioContext();
+
+
+        if (audioContext.state === "suspended") {
+
+            audioContext.resume();
+
+        }
+
+
+        const now =
+            audioContext.currentTime;
+
+
+        /*
+         * Soft Windows-style startup chime
+         * Three notes with gentle fade-outs.
+         */
+
+        const notes = [
+
+            {
+                frequency: 523.25,
+                start: 0,
+                duration: 0.45,
+                volume: 0.045
+            },
+
+            {
+                frequency: 659.25,
+                start: 0.13,
+                duration: 0.55,
+                volume: 0.035
+            },
+
+            {
+                frequency: 783.99,
+                start: 0.27,
+                duration: 0.75,
+                volume: 0.025
+            }
+
+        ];
+
+
+        notes.forEach(note => {
+
+            const oscillator =
+                audioContext.createOscillator();
+
+            const gain =
+                audioContext.createGain();
+
+
+            oscillator.type =
+                "sine";
+
+
+            oscillator.frequency.setValueAtTime(
+                note.frequency,
+                now + note.start
+            );
+
+
+            gain.gain.setValueAtTime(
+                0,
+                now + note.start
+            );
+
+
+            gain.gain.linearRampToValueAtTime(
+                note.volume,
+                now + note.start + 0.04
+            );
+
+
+            gain.gain.exponentialRampToValueAtTime(
+                0.001,
+                now + note.start + note.duration
+            );
+
+
+            oscillator.connect(gain);
+
+            gain.connect(
+                audioContext.destination
+            );
+
+
+            oscillator.start(
+                now + note.start
+            );
+
+            oscillator.stop(
+                now + note.start + note.duration
+            );
+
+        });
+
+
+        setTimeout(
+            () => audioContext.close(),
+            1500
+        );
+
+    }
+
+    catch (error) {
+
+        console.log(
+            "Loading sound unavailable:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   FIRST CLICK / TAP
+========================================= */
+
+document.addEventListener(
+    "pointerdown",
+    function() {
+
+        playLoadingSound();
+
+    },
+    {
+        once: true,
+        passive: true
+    }
+);
 
 
 /* =========================================
@@ -1692,6 +1854,7 @@ function toggleAuth() {
 
         confirmGroup.style.display =
             "none";
+
     }
 
 }
@@ -1707,6 +1870,7 @@ function usernameToEmail(username) {
         username.toLowerCase() +
         "@chatsapp.local"
     );
+
 }
 
 
@@ -1743,6 +1907,7 @@ async function handleAuth() {
         );
 
         return;
+
     }
 
 
@@ -1756,6 +1921,7 @@ async function handleAuth() {
         );
 
         return;
+
     }
 
 
@@ -1767,6 +1933,7 @@ async function handleAuth() {
         );
 
         return;
+
     }
 
 
@@ -1778,6 +1945,7 @@ async function handleAuth() {
         );
 
         return;
+
     }
 
 
@@ -1799,6 +1967,7 @@ async function handleAuth() {
             );
 
             return;
+
         }
 
 
@@ -1837,6 +2006,7 @@ async function handleAuth() {
             );
 
             return;
+
         }
 
 
@@ -1848,6 +2018,7 @@ async function handleAuth() {
             showApp(username);
 
             return;
+
         }
 
 
@@ -1857,6 +2028,7 @@ async function handleAuth() {
         );
 
         return;
+
     }
 
 
@@ -1891,6 +2063,7 @@ async function handleAuth() {
         );
 
         return;
+
     }
 
 
@@ -2040,6 +2213,7 @@ async function logout() {
 
     currentUsername = "";
 
+
     if (chatChannel) {
 
         await supabaseClient.removeChannel(
@@ -2047,6 +2221,7 @@ async function logout() {
         );
 
         chatChannel = null;
+
     }
 
 
@@ -2064,9 +2239,11 @@ async function logout() {
         "username"
     ).value = "";
 
+
     document.getElementById(
         "password"
     ).value = "";
+
 
     clearMessage();
 
@@ -2128,6 +2305,7 @@ async function joinGlobalChat() {
         );
 
         return;
+
     }
 
 
@@ -2140,6 +2318,7 @@ async function joinGlobalChat() {
         );
 
         return;
+
     }
 
 
@@ -2194,6 +2373,7 @@ async function loadMessages() {
         );
 
         return;
+
     }
 
 
@@ -2290,6 +2470,7 @@ async function sendGlobalMessage() {
     if (text === "") {
 
         return;
+
     }
 
 
@@ -2320,6 +2501,7 @@ async function sendGlobalMessage() {
         );
 
         return;
+
     }
 
 
@@ -2380,6 +2562,7 @@ function updateOnlineCount() {
         "onlineCount"
     ).innerText =
         "🟢 Global Chat";
+
 }
 
 
@@ -2394,8 +2577,10 @@ function escapeHTML(text) {
             "div"
         );
 
+
     div.innerText =
         text;
+
 
     return div.innerHTML;
 
@@ -2429,6 +2614,7 @@ document.addEventListener(
             sendGlobalMessage();
 
             return;
+
         }
 
 
