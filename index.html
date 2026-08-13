@@ -2,588 +2,334 @@
 <html lang="en">
 
 <head>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>ChatsApp - Private Chats</title>
-
-<style>
-
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    min-height: 100vh;
-    font-family: Arial, sans-serif;
-
-    background:
-        radial-gradient(circle at 15% 20%, #253b6e 0%, transparent 35%),
-        radial-gradient(circle at 85% 80%, #34205d 0%, transparent 35%),
-        #080b14;
-
-    color: white;
-}
-
-.page {
-    min-height: 100vh;
-    padding: 30px;
-}
-
-.header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 30px;
-}
-
-.header-left h1 {
-    margin: 0;
-    font-size: 30px;
-}
-
-.header-left p {
-    margin: 7px 0 0;
-    color: #7f89a2;
-    font-size: 14px;
-}
-
-.back-button {
-    padding: 12px 18px;
-    border-radius: 12px;
-    border: 1px solid #30384f;
-    background: #151a2a;
-    color: white;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-.back-button:hover {
-    background: #20283c;
-}
-
-.chat-layout {
-    display: grid;
-    grid-template-columns: 300px 1fr;
-    gap: 20px;
-    min-height: 70vh;
-}
-
-.chat-sidebar {
-    background: rgba(18,23,38,0.9);
-    border: 1px solid #242b3e;
-    border-radius: 20px;
-    padding: 20px;
-}
-
-.sidebar-title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-}
-
-.sidebar-title h2 {
-    margin: 0;
-    font-size: 18px;
-}
-
-.add-button {
-    width: 38px;
-    height: 38px;
-    border: none;
-    border-radius: 12px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #5b8cff,
-            #795cff
-        );
-
-    color: white;
-    font-size: 22px;
-    cursor: pointer;
-}
-
-.add-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(91,140,255,0.3);
-}
-
-.chat-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.chat-item {
-    padding: 13px;
-    border-radius: 12px;
-    background: transparent;
-    border: 1px solid transparent;
-    cursor: pointer;
-}
-
-.chat-item:hover {
-    background: #171d2d;
-    border-color: #252c40;
-}
-
-.chat-item.active {
-    background: #1b2235;
-    border-color: #303b5b;
-}
-
-.chat-item-name {
-    font-weight: 700;
-    font-size: 14px;
-}
-
-.chat-item-status {
-    color: #69748c;
-    font-size: 11px;
-    margin-top: 4px;
-}
-
-.chat-area {
-    background: rgba(18,23,38,0.9);
-    border: 1px solid #242b3e;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
-
-.chat-area-header {
-    padding: 20px;
-    border-bottom: 1px solid #242b3e;
-}
-
-.chat-area-header h2 {
-    margin: 0;
-    font-size: 18px;
-}
-
-.chat-area-header p {
-    margin: 5px 0 0;
-    color: #69748c;
-    font-size: 12px;
-}
-
-.messages {
-    flex: 1;
-    min-height: 400px;
-    padding: 20px;
-    overflow-y: auto;
-}
-
-.message {
-    max-width: 70%;
-    padding: 11px 14px;
-    margin-bottom: 10px;
-    border-radius: 14px;
-    background: #171d2d;
-    border: 1px solid #252c40;
-}
-
-.message.mine {
-    margin-left: auto;
-    background: #273866;
-    border-color: #3b4e7c;
-}
-
-.message-user {
-    font-weight: 700;
-    font-size: 11px;
-    color: #7899ff;
-    margin-bottom: 4px;
-}
-
-.message-text {
-    font-size: 14px;
-    word-wrap: break-word;
-}
-
-.message-time {
-    display: block;
-    margin-top: 5px;
-    font-size: 9px;
-    color: #69748c;
-}
-
-.message-input {
-    display: flex;
-    gap: 10px;
-    padding: 15px;
-    border-top: 1px solid #242b3e;
-}
-
-.message-input input {
-    flex: 1;
-    padding: 14px;
-    border-radius: 12px;
-    border: 1px solid #30384f;
-    background: #0e1220;
-    color: white;
-    outline: none;
-}
-
-.send-button {
-    padding: 0 22px;
-    border: none;
-    border-radius: 12px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #5b8cff,
-            #795cff
-        );
-
-    color: white;
-    font-weight: 700;
-    cursor: pointer;
-}
-
-.new-chat-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.65);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    z-index: 10;
-}
-
-.new-chat-box {
-    width: 100%;
-    max-width: 450px;
-    padding: 30px;
-    border-radius: 20px;
-    background: #121726;
-    border: 1px solid #30384f;
-    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
-}
-
-.new-chat-box h2 {
-    margin-top: 0;
-}
-
-.new-chat-box p {
-    color: #7f89a2;
-    font-size: 13px;
-    line-height: 1.5;
-}
-
-.new-chat-box input {
-    width: 100%;
-    padding: 14px;
-    margin-top: 10px;
-    border-radius: 12px;
-    border: 1px solid #30384f;
-    background: #0e1220;
-    color: white;
-    outline: none;
-}
-
-.modal-buttons {
-    display: flex;
-    gap: 10px;
-    margin-top: 15px;
-}
-
-.modal-buttons button {
-    flex: 1;
-    padding: 13px;
-    border-radius: 12px;
-    cursor: pointer;
-    border: none;
-}
-
-.create-button {
-    background:
-        linear-gradient(
-            135deg,
-            #5b8cff,
-            #795cff
-        );
-
-    color: white;
-    font-weight: 700;
-}
-
-.cancel-button {
-    background: #202638;
-    color: white;
-}
-
-.error {
-    color: #ff8585;
-    font-size: 12px;
-    margin-top: 10px;
-}
-
-.success {
-    color: #71e0a0;
-    font-size: 12px;
-    margin-top: 10px;
-}
-
-.empty-chat {
-    height: 100%;
-    min-height: 500px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: #69748c;
-}
-
-.empty-chat div {
-    max-width: 350px;
-}
-
-.empty-chat-icon {
-    font-size: 50px;
-    margin-bottom: 15px;
-}
-
-@media(max-width:800px) {
-
-    .page {
-        padding: 15px;
-    }
-
-    .chat-layout {
-        grid-template-columns: 1fr;
-    }
-
-    .chat-sidebar {
-        min-height: auto;
-    }
-
-    .chat-area {
-        min-height: 65vh;
-    }
-
-    .message {
-        max-width: 85%;
-    }
-
-}
-
-</style>
-
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ChatsApp</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+
+            background:
+                radial-gradient(circle at 15% 20%, #253b6e 0%, transparent 35%),
+                radial-gradient(circle at 85% 80%, #34205d 0%, transparent 35%),
+                #080b14;
+
+            color: white;
+        }
+
+        .page {
+            min-height: 100vh;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: rgba(13,17,30,0.95);
+            border-right: 1px solid #242b3e;
+            padding: 25px 15px;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 800;
+            margin-bottom: 35px;
+            padding-left: 10px;
+        }
+
+        .nav-button {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 8px;
+            border: none;
+            border-radius: 12px;
+            background: transparent;
+            color: #aeb7cc;
+            text-align: left;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .nav-button:hover {
+            background: #171d2d;
+            color: white;
+        }
+
+        .nav-button.active {
+            background: #273866;
+            color: white;
+        }
+
+        .main {
+            flex: 1;
+            padding: 35px;
+        }
+
+        .top {
+            margin-bottom: 30px;
+        }
+
+        .top h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+
+        .top p {
+            color: #7f89a2;
+            margin-top: 8px;
+        }
+
+        .welcome {
+            background: rgba(18,23,38,0.9);
+            border: 1px solid #242b3e;
+            border-radius: 22px;
+            padding: 30px;
+            margin-bottom: 25px;
+        }
+
+        .welcome h2 {
+            margin-top: 0;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+        }
+
+        .card {
+            padding: 25px;
+            background: rgba(18,23,38,0.9);
+            border: 1px solid #242b3e;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            border-color: #526aa3;
+            background: #171d2d;
+        }
+
+        .card-icon {
+            font-size: 35px;
+            margin-bottom: 12px;
+        }
+
+        .card h3 {
+            margin: 0 0 8px;
+        }
+
+        .card p {
+            margin: 0;
+            color: #7f89a2;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .global-chat {
+            margin-top: 25px;
+            padding: 25px;
+            background: rgba(18,23,38,0.9);
+            border: 1px solid #242b3e;
+            border-radius: 20px;
+        }
+
+        .global-chat h2 {
+            margin-top: 0;
+        }
+
+        #usernameDisplay {
+            color: #7899ff;
+            font-weight: 700;
+        }
+
+        @media(max-width:800px) {
+            .page {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #242b3e;
+            }
+
+            .main {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
 <div class="page">
 
-    <div class="header">
+    <aside class="sidebar">
 
-        <div class="header-left">
+        <div class="logo">
+            💬 ChatsApp
+        </div>
 
-            <h1>💬 Private Chats</h1>
+        <button class="nav-button active" onclick="goHome()">
+            🏠 Home
+        </button>
+
+        <button class="nav-button" onclick="goGlobalChat()">
+            🌎 Global Chat
+        </button>
+
+        <button class="nav-button" onclick="goPrivateChats()">
+            💬 Private Chats
+        </button>
+
+        <button class="nav-button" onclick="showComingSoon('📨 Mail')">
+            📨 Mail
+        </button>
+
+        <button class="nav-button" onclick="showComingSoon('👤 Profile')">
+            👤 Profile
+        </button>
+
+    </aside>
+
+
+    <main class="main">
+
+        <div class="top">
+
+            <h1>
+                Welcome to ChatsApp 👋
+            </h1>
 
             <p>
-                Chat privately with another ChatsApp user.
+                Your place to chat, connect and have fun.
             </p>
 
         </div>
 
-        <button
-            class="back-button"
-            onclick="goHome()"
-        >
-            ← Home
-        </button>
 
-    </div>
+        <div class="welcome">
 
-    <div class="chat-layout">
+            <h2>
+                Hey,
+                <span id="usernameDisplay">
+                    ChatsApp User
+                </span>! 👋
+            </h2>
 
-        <aside class="chat-sidebar">
+            <p>
+                Welcome back to ChatsApp.
+                Choose something from the menu to get started!
+            </p>
 
-            <div class="sidebar-title">
+        </div>
 
-                <h2>Your Chats</h2>
 
-                <button
-                    class="add-button"
-                    onclick="openNewChat()"
-                >
-                    +
-                </button>
+        <div class="cards">
+
+            <div class="card" onclick="goGlobalChat()">
+
+                <div class="card-icon">
+                    🌎
+                </div>
+
+                <h3>
+                    Global Chat
+                </h3>
+
+                <p>
+                    Chat with everyone on ChatsApp.
+                </p>
 
             </div>
 
-            <div
-                id="chatList"
-                class="chat-list"
-            >
 
-                <div class="empty-chat">
+            <div class="card" onclick="goPrivateChats()">
 
-                    <div>
-
-                        <div class="empty-chat-icon">
-                            💬
-                        </div>
-
-                        <p>
-                            No private chats yet.
-                        </p>
-
-                        <p>
-                            Press + to start one.
-                        </p>
-
-                    </div>
-
+                <div class="card-icon">
+                    💬
                 </div>
+
+                <h3>
+                    Private Chats
+                </h3>
+
+                <p>
+                    Have private conversations
+                    with other ChatsApp users.
+                </p>
 
             </div>
 
-        </aside>
 
-        <section class="chat-area">
+            <div class="card" onclick="showComingSoon('📨 Mail')">
 
-            <div
-                id="emptyChat"
-                class="empty-chat"
-            >
-
-                <div>
-
-                    <div class="empty-chat-icon">
-                        💬
-                    </div>
-
-                    <h2>
-                        Your Private Chats
-                    </h2>
-
-                    <p>
-                        Select a chat from the sidebar
-                        or press + to start a new private chat.
-                    </p>
-
+                <div class="card-icon">
+                    📨
                 </div>
+
+                <h3>
+                    Mail
+                </h3>
+
+                <p>
+                    Check your ChatsApp mail.
+                </p>
 
             </div>
 
-            <div
-                id="activeChat"
-                style="display:none; height:100%; flex-direction:column;"
-            >
 
-                <div
-                    class="chat-area-header"
-                    id="chatHeader"
-                >
+            <div class="card" onclick="showComingSoon('👤 Profile')">
 
-                    <h2>
-                        Private Chat
-                    </h2>
-
-                    <p>
-                        Private conversation
-                    </p>
-
+                <div class="card-icon">
+                    👤
                 </div>
 
-                <div
-                    id="messages"
-                    class="messages"
-                ></div>
+                <h3>
+                    Profile
+                </h3>
 
-                <div class="message-input">
-
-                    <input
-                        id="messageInput"
-                        type="text"
-                        maxlength="500"
-                        placeholder="Type a message..."
-                    >
-
-                    <button
-                        class="send-button"
-                        onclick="sendMessage()"
-                    >
-                        Send
-                    </button>
-
-                </div>
+                <p>
+                    View your ChatsApp profile.
+                </p>
 
             </div>
 
-        </section>
+        </div>
 
-    </div>
 
-</div>
+        <div class="global-chat">
 
-<div
-    id="newChatOverlay"
-    class="new-chat-overlay"
->
+            <h2>
+                🌎 Global Chat
+            </h2>
 
-    <div class="new-chat-box">
+            <p>
+                Global Chat is available from the sidebar.
+            </p>
 
-        <h2>
-            💬 Start a Private Chat
-        </h2>
-
-        <p>
-            Enter the MAIN ChatsApp username
-            of the person you want to chat with.
-        </p>
-
-        <input
-            id="targetUsername"
-            type="text"
-            maxlength="20"
-            placeholder="Enter username..."
-        >
-
-        <div
-            id="chatError"
-            class="error"
-        ></div>
-
-        <div
-            id="chatSuccess"
-            class="success"
-        ></div>
-
-        <div class="modal-buttons">
-
-            <button
-                class="cancel-button"
-                onclick="closeNewChat()"
-            >
-                Cancel
-            </button>
-
-            <button
-                class="create-button"
-                onclick="createPrivateChat()"
-            >
-                Start Chat
+            <button class="nav-button" onclick="goGlobalChat()">
+                Open Global Chat →
             </button>
 
         </div>
 
-    </div>
+    </main>
 
 </div>
+
 
 <script>
 
@@ -600,72 +346,6 @@ const supabaseClient =
     );
 
 
-let currentUser = null;
-let currentUsername = null;
-let currentConversationId = null;
-
-
-/* =========================
-   GET REAL AUTH USER
-========================= */
-
-async function getCurrentUser() {
-
-    const {
-        data,
-        error
-    } =
-        await supabaseClient.auth.getUser();
-
-    if (error || !data.user) {
-
-        console.log("No Supabase Auth user found.");
-
-        return false;
-    }
-
-    currentUser = data.user;
-
-    const {
-        data: profile,
-        error: profileError
-    } =
-        await supabaseClient
-        .from("profiles")
-        .select("username")
-        .eq("id", currentUser.id)
-        .maybeSingle();
-
-    if (profileError) {
-
-        console.error(profileError);
-
-        return false;
-    }
-
-    if (!profile) {
-
-        console.log("Profile not found.");
-
-        return false;
-    }
-
-    currentUsername =
-        profile.username;
-
-    console.log(
-        "Logged in as:",
-        currentUsername
-    );
-
-    return true;
-}
-
-
-/* =========================
-   HOME
-========================= */
-
 function goHome() {
 
     window.location.href =
@@ -674,555 +354,72 @@ function goHome() {
 }
 
 
-/* =========================
-   NEW CHAT
-========================= */
+function goGlobalChat() {
 
-function openNewChat() {
-
-    document.getElementById(
-        "newChatOverlay"
-    ).style.display = "flex";
-
-    document.getElementById(
-        "targetUsername"
-    ).focus();
+    window.location.href =
+        "Globalchat.html";
 
 }
 
 
-function closeNewChat() {
+function goPrivateChats() {
 
-    document.getElementById(
-        "newChatOverlay"
-    ).style.display = "none";
-
-    document.getElementById(
-        "targetUsername"
-    ).value = "";
-
-    document.getElementById(
-        "chatError"
-    ).innerText = "";
-
-    document.getElementById(
-        "chatSuccess"
-    ).innerText = "";
+    window.location.href =
+        "Privatechat.html";
 
 }
 
 
-/* =========================
-   CREATE PRIVATE CHAT
-========================= */
-
-async function createPrivateChat() {
-
-    const targetUsername =
-        document.getElementById(
-            "targetUsername"
-        ).value.trim();
-
-    const errorBox =
-        document.getElementById(
-            "chatError"
-        );
-
-    const successBox =
-        document.getElementById(
-            "chatSuccess"
-        );
-
-    errorBox.innerText = "";
-    successBox.innerText = "";
-
-
-    /* GET REAL AUTH ACCOUNT */
-
-    if (!currentUsername) {
-
-        const loggedIn =
-            await getCurrentUser();
-
-        if (!loggedIn) {
-
-            errorBox.innerText =
-                "Your ChatsApp account couldn't be found.";
-
-            return;
-        }
-
-    }
-
-
-    if (!targetUsername) {
-
-        errorBox.innerText =
-            "Enter a username.";
-
-        return;
-
-    }
-
-
-    if (
-        !/^[a-zA-Z0-9_]{3,20}$/.test(
-            targetUsername
-        )
-    ) {
-
-        errorBox.innerText =
-            "Invalid username.";
-
-        return;
-
-    }
-
-
-    if (
-        targetUsername.toLowerCase() ===
-        currentUsername.toLowerCase()
-    ) {
-
-        errorBox.innerText =
-            "You can't chat with yourself.";
-
-        return;
-
-    }
-
-
-    /* =========================
-       FIND TARGET PROFILE
-    ========================= */
+async function loadUsername() {
 
     const {
-        data: targetProfile,
-        error: targetError
+        data
+    } =
+        await supabaseClient.auth.getUser();
+
+
+    if (!data || !data.user) {
+        return;
+    }
+
+
+    const {
+        data: profile
     } =
         await supabaseClient
         .from("profiles")
-        .select("id, username")
-        .ilike(
-            "username",
-            targetUsername
-        )
+        .select("username")
+        .eq("id", data.user.id)
         .maybeSingle();
 
 
-    if (targetError) {
-
-        console.error(targetError);
-
-        errorBox.innerText =
-            "Couldn't search for that username.";
-
-        return;
-
-    }
-
-
-    if (!targetProfile) {
-
-        errorBox.innerText =
-            "That ChatsApp username doesn't exist.";
-
-        return;
-
-    }
-
-
-    /* =========================
-       SEND INVITATION
-    ========================= */
-
-    const {
-        error: invitationError
-    } =
-        await supabaseClient
-        .from("chat_invitations")
-        .insert({
-
-            from_username:
-                currentUsername,
-
-            to_username:
-                targetProfile.username,
-
-            status:
-                "pending"
-
-        });
-
-
-    if (invitationError) {
-
-        console.error(invitationError);
-
-        errorBox.innerText =
-            "Couldn't send the invitation.";
-
-        return;
-
-    }
-
-
-    successBox.innerText =
-        "Invitation sent! 📩";
-
-
-    document.getElementById(
-        "targetUsername"
-    ).value = "";
-
-}
-
-
-/* =========================
-   OPEN CONVERSATION
-========================= */
-
-async function openConversation(
-    conversationId,
-    otherUsername
-) {
-
-    currentConversationId =
-        conversationId;
-
-    document.getElementById(
-        "emptyChat"
-    ).style.display = "none";
-
-    document.getElementById(
-        "activeChat"
-    ).style.display = "flex";
-
-    document.getElementById(
-        "chatHeader"
-    ).innerHTML = `
-
-        <h2>
-            💬 ${escapeHTML(otherUsername)}
-        </h2>
-
-        <p>
-            Private conversation
-        </p>
-
-    `;
-
-    await loadMessages();
-
-}
-
-
-/* =========================
-   LOAD MESSAGES
-========================= */
-
-async function loadMessages() {
-
-    if (!currentConversationId) {
-        return;
-    }
-
-    const {
-        data,
-        error
-    } =
-        await supabaseClient
-        .from("conversation_messages")
-        .select("*")
-        .eq(
-            "conversation_id",
-            currentConversationId
-        )
-        .order(
-            "created_at",
-            {
-                ascending: true
-            }
-        );
-
-    if (error) {
-
-        console.error(error);
-
-        return;
-
-    }
-
-    const messages =
-        document.getElementById(
-            "messages"
-        );
-
-    messages.innerHTML = "";
-
-    data.forEach(
-        displayMessage
-    );
-
-}
-
-
-/* =========================
-   DISPLAY MESSAGE
-========================= */
-
-function displayMessage(message) {
-
-    const messages =
-        document.getElementById(
-            "messages"
-        );
-
-    const div =
-        document.createElement(
-            "div"
-        );
-
-    div.className =
-        "message";
-
     if (
-        message.username ===
-        currentUsername
+        profile &&
+        profile.username
     ) {
 
-        div.classList.add(
-            "mine"
-        );
-
-    }
-
-    div.innerHTML = `
-
-        <div class="message-user">
-            ${escapeHTML(
-                message.username || "User"
-            )}
-        </div>
-
-        <div class="message-text">
-            ${escapeHTML(
-                message.message || ""
-            )}
-        </div>
-
-        <span class="message-time">
-            ${
-                message.created_at
-                ?
-                new Date(
-                    message.created_at
-                ).toLocaleTimeString(
-                    [],
-                    {
-                        hour: "2-digit",
-                        minute: "2-digit"
-                    }
-                )
-                :
-                ""
-            }
-        </span>
-
-    `;
-
-    messages.appendChild(div);
-
-    messages.scrollTop =
-        messages.scrollHeight;
-
-}
-
-
-/* =========================
-   SEND MESSAGE
-========================= */
-
-async function sendMessage() {
-
-    const input =
         document.getElementById(
-            "messageInput"
-        );
-
-    const text =
-        input.value.trim();
-
-    if (!text) {
-        return;
-    }
-
-    if (!currentConversationId) {
-        return;
-    }
-
-    if (!currentUsername) {
-
-        const loggedIn =
-            await getCurrentUser();
-
-        if (!loggedIn) {
-
-            alert(
-                "Your ChatsApp account couldn't be found."
-            );
-
-            return;
-
-        }
+            "usernameDisplay"
+        ).innerText =
+            profile.username;
 
     }
-
-    const {
-        error
-    } =
-        await supabaseClient
-        .from("conversation_messages")
-        .insert({
-
-            conversation_id:
-                currentConversationId,
-
-            username:
-                currentUsername,
-
-            message:
-                text
-
-        });
-
-    if (error) {
-
-        console.error(error);
-
-        alert(
-            "Couldn't send message."
-        );
-
-        return;
-
-    }
-
-    input.value = "";
 
 }
 
 
-/* =========================
-   REALTIME
-========================= */
+function showComingSoon(name) {
 
-const privateChatChannel =
-    supabaseClient
-    .channel(
-        "private-chat-messages"
-    );
-
-privateChatChannel
-.on(
-    "postgres_changes",
-    {
-        event: "INSERT",
-        schema: "public",
-        table: "conversation_messages"
-    },
-    function(payload) {
-
-        if (
-            payload.new.conversation_id ===
-            currentConversationId
-        ) {
-
-            displayMessage(
-                payload.new
-            );
-
-        }
-
-    }
-)
-.subscribe();
-
-
-/* =========================
-   ENTER TO SEND
-========================= */
-
-document.addEventListener(
-    "keydown",
-    function(event) {
-
-        if (
-            event.key === "Enter" &&
-            document.activeElement?.id ===
-            "messageInput"
-        ) {
-
-            event.preventDefault();
-
-            sendMessage();
-
-        }
-
-    }
-);
-
-
-/* =========================
-   ESCAPE HTML
-========================= */
-
-function escapeHTML(text) {
-
-    const div =
-        document.createElement(
-            "div"
-        );
-
-    div.innerText =
-        text;
-
-    return div.innerHTML;
-
-}
-
-
-/* =========================
-   START
-========================= */
-
-async function startPrivateChats() {
-
-    const loggedIn =
-        await getCurrentUser();
-
-    if (!loggedIn) {
-
-        console.log(
-            "No valid ChatsApp Auth session."
-        );
-
-        return;
-
-    }
-
-    console.log(
-        "Private Chats ready for:",
-        currentUsername
+    alert(
+        name + " is coming soon! 🚀"
     );
 
 }
 
 
-startPrivateChats();
+loadUsername();
 
 </script>
 
 </body>
-
 </html>
