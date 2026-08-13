@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ChatsApp - Find Users</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    color: white;
+
+    background:
+        radial-gradient(circle at 10% 10%, #263f78 0%, transparent 32%),
+        radial-gradient(circle at 90% 90%, #47216d 0%, transparent 32%),
+        #080b14;
+
+    overflow-x: hidden;
+}
+
+/* =========================================
+   BACKGROUND
+========================================= */
+
+.background-glow {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.glow {
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.18;
+}
+
+.glow.one {
+    background: #4d7cff;
+    top: 10%;
+    left: 5%;
+}
+
+.glow.two {
+    background: #9a4dff;
+    bottom: 5%;
+    right: 5%;
+}
+
+/* =========================================
+   PAGE
+========================================= */
+
+.page {
+    position: relative;
+    z-index: 1;
+
+    width: 100%;
+    max-width: 1000px;
+
+    margin: auto;
+    padding: 35px 20px 60px;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 30px;
+}
+
+.logo-section h1 {
+    margin: 0;
+
+    font-size: 32px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #8aa8ff
+        );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.logo-section p {
+    margin: 8px 0 0;
+
+    color: #78839d;
+    font-size: 14px;
+}
+
+.home-button {
+    border: 1px solid #303a55;
+
+    background: rgba(20,25,42,0.8);
+
+    color: white;
+
+    padding: 12px 18px;
+
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.home-button:hover {
+    background: #202a45;
+    transform: translateY(-2px);
+}
+
+/* =========================================
+   SEARCH CARD
+========================================= */
+
+.search-card {
+
+    background:
+        rgba(18,23,38,0.88);
+
+    border:
+        1px solid #252d43;
+
+    border-radius: 24px;
+
+    padding: 28px;
+
+    backdrop-filter: blur(20px);
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,0.25);
+}
+
+.search-title {
+    margin: 0 0 8px;
+
+    font-size: 22px;
+}
+
+.search-subtitle {
+    margin: 0 0 20px;
+
+    color: #737f99;
+
+    font-size: 13px;
+}
+
+/* =========================================
+   SEARCH BOX
+========================================= */
+
+.search-wrapper {
+    position: relative;
+}
+
+.search-icon {
+    position: absolute;
+
+    left: 16px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    font-size: 18px;
+
+    color: #68738d;
+}
+
+#searchInput {
+
+    width: 100%;
+
+    padding:
+        16px
+        18px
+        16px
+        48px;
+
+    border-radius: 14px;
+
+    border:
+        1px solid #303950;
+
+    background:
+        #0d1220;
+
+    color: white;
+
+    outline: none;
+
+    font-size: 15px;
+
+    transition: 0.2s;
+}
+
+#searchInput:focus {
+
+    border-color: #617fff;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(91,140,255,0.12);
+}
+
+/* =========================================
+   RESULTS
+========================================= */
+
+.results {
+
+    margin-top: 20px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+.user-card {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 15px;
+
+    border-radius: 16px;
+
+    border:
+        1px solid #252d43;
+
+    background:
+        rgba(20,26,43,0.7);
+
+    transition: 0.2s;
+}
+
+.user-card:hover {
+
+    transform: translateY(-2px);
+
+    border-color: #3b4c77;
+
+    background:
+        rgba(29,37,61,0.85);
+}
+
+/* =========================================
+   USER INFO
+========================================= */
+
+.user-info {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    min-width: 0;
+}
+
+.avatar {
+
+    width: 48px;
+    height: 48px;
+
+    flex-shrink: 0;
+
+    border-radius: 15px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #5b8cff,
+            #795cff
+        );
+
+    font-size: 20px;
+
+    font-weight: bold;
+}
+
+.user-details {
+
+    min-width: 0;
+}
+
+.username {
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+.status {
+
+    margin-top: 5px;
+
+    font-size: 11px;
+
+    color: #69748c;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+}
+
+.online-dot {
+
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #35d982;
+
+    box-shadow:
+        0 0 8px
+        rgba(53,217,130,0.7);
+}
+
+.offline-dot {
+
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #596276;
+}
+
+/* =========================================
+   MESSAGE BUTTON
+========================================= */
+
+.message-button {
+
+    border: none;
+
+    padding: 11px 17px;
+
+    border-radius: 11px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #5b8cff,
+            #795cff
+        );
+
+    color: white;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+
+    white-space: nowrap;
+}
+
+.message-button:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 20px
+        rgba(91,140,255,0.25);
+}
+
+/* =========================================
+   LOADING
+========================================= */
+
+.loading {
+
+    text-align: center;
+
+    padding: 35px;
+
+    color: #707b94;
+
+    font-size: 13px;
+}
+
+/* =========================================
+   EMPTY
+========================================= */
+
+.empty {
+
+    text-align: center;
+
+    padding: 45px 20px;
+
+    color: #69748c;
+}
+
+.empty-icon {
+
+    font-size: 45px;
+
+    margin-bottom: 12px;
+}
+
+.empty h3 {
+
+    margin: 0 0 8px;
+
+    color: white;
+}
+
+.empty p {
+
+    margin: 0;
+
+    font-size: 13px;
+}
+
+/* =========================================
+   ERROR
+========================================= */
+
+.error {
+
+    margin-top: 15px;
+
+    padding: 12px;
+
+    border-radius: 10px;
+
+    background:
+        rgba(150,61,74,0.15);
+
+    border:
+        1px solid rgba(150,61,74,0.3);
+
+    color: #ff8585;
+
+    font-size: 12px;
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media(max-width:650px) {
+
+    .page {
+        padding: 20px 12px 40px;
+    }
+
+    .header {
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .logo-section h1 {
+        font-size: 25px;
+    }
+
+    .home-button {
+        padding: 10px 13px;
+        font-size: 12px;
+    }
+
+    .search-card {
+        padding: 20px;
+        border-radius: 18px;
+    }
+
+    .user-card {
+        align-items: flex-start;
+    }
+
+    .message-button {
+        padding: 9px 12px;
+        font-size: 12px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="background-glow">
+
+    <div class="glow one"></div>
+    <div class="glow two"></div>
+
+</div>
+
+<div class="page">
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <div class="logo-section">
+
+            <h1>👥 Find Users</h1>
+
+            <p>
+                Search for ChatsApp users and start a private conversation.
+            </p>
+
+        </div>
+
+        <button
+            class="home-button"
+            onclick="goHome()"
+        >
+            ← Home
+        </button>
+
+    </div>
+
+
+    <!-- SEARCH -->
+
+    <div class="search-card">
+
+        <h2 class="search-title">
+            🔎 Search ChatsApp
+        </h2>
+
+        <p class="search-subtitle">
+            Enter a username to find someone.
+        </p>
+
+        <div class="search-wrapper">
+
+            <span class="search-icon">
+                🔎
+            </span>
+
+            <input
+                id="searchInput"
+                type="text"
+                maxlength="20"
+                autocomplete="off"
+                placeholder="Search username..."
+            >
+
+        </div>
+
+
+        <!-- RESULTS -->
+
+        <div
+            id="results"
+            class="results"
+        >
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    👤
+                </div>
+
+                <h3>
+                    Find someone
+                </h3>
+
+                <p>
+                    Start typing a username above.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================
+   SUPABASE
+========================================= */
+
+const SUPABASE_URL =
+    "https://kopzrnpporfdwauwlhni.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_bbxmPB71ADnIqe3oPB3MuQ_EWa4n_Ph";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+/* =========================================
+   VARIABLES
+========================================= */
+
+let currentUser = null;
+let currentUsername = null;
+
+let searchTimer = null;
+
+
+/* =========================================
+   GET CURRENT USER
+========================================= */
+
+async function getCurrentUser() {
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient.auth.getUser();
+
+    if (
+        error ||
+        !data ||
+        !data.user
+    ) {
+
+        return false;
+
+    }
+
+    currentUser = data.user;
+
+    currentUsername =
+        currentUser.user_metadata?.username;
+
+
+    /*
+       If username isn't in auth metadata,
+       look inside profiles.
+    */
+
+    if (!currentUsername) {
+
+        const {
+            data: profile,
+            error: profileError
+        } =
+            await supabaseClient
+            .from("profiles")
+            .select("username")
+            .eq(
+                "id",
+                currentUser.id
+            )
+            .maybeSingle();
+
+        if (
+            profileError ||
+            !profile
+        ) {
+
+            console.error(
+                "Profile error:",
+                profileError
+            );
+
+            return false;
+
+        }
+
+        currentUsername =
+            profile.username;
+
+    }
+
+    return true;
+
+}
+
+
+/* =========================================
+   HOME
+========================================= */
+
+function goHome() {
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+/* =========================================
+   OPEN PRIVATE CHAT
+========================================= */
+
+function messageUser(username) {
+
+    /*
+       Pass the username through the URL.
+
+       Example:
+
+       PrivateChat.html?user=Abby
+    */
+
+    window.location.href =
+        "PrivateChat.html?user=" +
+        encodeURIComponent(username);
+
+}
+
+
+/* =========================================
+   SEARCH INPUT
+========================================= */
+
+const searchInput =
+    document.getElementById(
+        "searchInput"
+    );
+
+
+searchInput.addEventListener(
+    "input",
+    function() {
+
+        clearTimeout(
+            searchTimer
+        );
+
+        const query =
+            this.value.trim();
+
+        if (!query) {
+
+            showEmpty();
+
+            return;
+
+        }
+
+        /*
+           Small delay so we don't
+           spam Supabase while typing.
+        */
+
+        searchTimer =
+            setTimeout(
+                function() {
+
+                    searchUsers(
+                        query
+                    );
+
+                },
+                250
+            );
+
+    }
+);
+
+
+/* =========================================
+   SEARCH USERS
+========================================= */
+
+async function searchUsers(query) {
+
+    const results =
+        document.getElementById(
+            "results"
+        );
+
+    results.innerHTML = `
+
+        <div class="loading">
+            🔎 Searching...
+        </div>
+
+    `;
+
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+        .from("profiles")
+        .select("*")
+        .ilike(
+            "username",
+            "%" + query + "%"
+        )
+        .limit(20);
+
+
+    if (error) {
+
+        console.error(
+            "User search error:",
+            error
+        );
+
+        results.innerHTML = `
+
+            <div class="error">
+
+                Couldn't search for users.
+
+                <br><br>
+
+                ${escapeHTML(
+                    error.message
+                )}
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    /*
+       Don't show yourself.
+    */
+
+    const users =
+        (data || []).filter(
+            user =>
+                user.username &&
+                user.username.toLowerCase() !==
+                currentUsername?.toLowerCase()
+        );
+
+
+    if (users.length === 0) {
+
+        results.innerHTML = `
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    😭
+                </div>
+
+                <h3>
+                    No users found
+                </h3>
+
+                <p>
+                    Try another username.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    results.innerHTML = "";
+
+
+    users.forEach(
+        user => {
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+            card.className =
+                "user-card";
+
+
+            const username =
+                user.username;
+
+
+            /*
+               Try to detect an online field
+               if your profiles table has one.
+            */
+
+            const isOnline =
+                user.online === true;
+
+
+            const firstLetter =
+                username
+                .charAt(0)
+                .toUpperCase();
+
+
+            card.innerHTML = `
+
+                <div class="user-info">
+
+                    <div class="avatar">
+
+                        ${escapeHTML(
+                            firstLetter
+                        )}
+
+                    </div>
+
+
+                    <div class="user-details">
+
+                        <div class="username">
+
+                            ${escapeHTML(
+                                username
+                            )}
+
+                        </div>
+
+
+                        <div class="status">
+
+                            <span class="${
+                                isOnline
+                                ?
+                                "online-dot"
+                                :
+                                "offline-dot"
+                            }"></span>
+
+                            ${
+                                isOnline
+                                ?
+                                "Online"
+                                :
+                                "ChatsApp User"
+                            }
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="message-button"
+                    onclick="messageUser(
+                        '${escapeJS(username)}'
+                    )"
+                >
+
+                    💬 Message
+
+                </button>
+
+            `;
+
+
+            results.appendChild(
+                card
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   EMPTY SEARCH
+========================================= */
+
+function showEmpty() {
+
+    const results =
+        document.getElementById(
+            "results"
+        );
+
+    results.innerHTML = `
+
+        <div class="empty">
+
+            <div class="empty-icon">
+                👤
+            </div>
+
+            <h3>
+                Find someone
+            </h3>
+
+            <p>
+                Start typing a username above.
+            </p>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================
+   ESCAPE HTML
+========================================= */
+
+function escapeHTML(text) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+    div.innerText =
+        text;
+
+    return div.innerHTML;
+
+}
+
+
+/* =========================================
+   ESCAPE JAVASCRIPT
+========================================= */
+
+function escapeJS(text) {
+
+    return String(text)
+        .replace(
+            /\\/g,
+            "\\\\"
+        )
+        .replace(
+            /'/g,
+            "\\'"
+        )
+        .replace(
+            /"/g,
+            '\\"'
+        );
+
+}
+
+
+/* =========================================
+   START
+========================================= */
+
+async function startUserSearch() {
+
+    const loggedIn =
+        await getCurrentUser();
+
+
+    if (!loggedIn) {
+
+        window.location.href =
+            "index.html";
+
+        return;
+
+    }
+
+
+    console.log(
+        "User Search logged in as:",
+        currentUsername
+    );
+
+}
+
+
+startUserSearch();
+
+</script>
+
+</body>
+
+</html>
