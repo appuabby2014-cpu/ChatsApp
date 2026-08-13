@@ -3,911 +3,777 @@
 
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
 
-<title>ChatsApp</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <title>ChatsApp - Private Chats</title>
 
-<style>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    <style>
 
-* {
-    box-sizing: border-box;
-}
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-body {
-    margin: 0;
-    min-height: 100vh;
+        * {
+            box-sizing: border-box;
+        }
 
-    font-family: "Inter", sans-serif;
+        body {
 
-    background:
-        radial-gradient(circle at 15% 20%, #253b6e 0%, transparent 35%),
-        radial-gradient(circle at 85% 80%, #34205d 0%, transparent 35%),
-        #080b14;
+            margin: 0;
 
-    color: white;
-    overflow-x: hidden;
-}
+            min-height: 100vh;
 
+            font-family: "Inter", sans-serif;
 
-/* =========================================
-   FLOATING EMOJIS
-========================================= */
+            background:
+                radial-gradient(
+                    circle at 15% 20%,
+                    #253b6e 0%,
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 85% 80%,
+                    #34205d 0%,
+                    transparent 35%
+                ),
+                #080b14;
 
-.floating-emojis {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    overflow: hidden;
-    z-index: 0;
-}
+            color: white;
 
-.floating-emojis span {
-    position: absolute;
-    opacity: 0.12;
-    font-size: 25px;
-    animation: floatEmoji 12s linear infinite;
-}
+            overflow-x: hidden;
+        }
 
-.floating-emojis span:nth-child(1) {
-    left: 10%;
-    top: 20%;
-    animation-delay: 0s;
-}
 
-.floating-emojis span:nth-child(2) {
-    left: 80%;
-    top: 15%;
-    animation-delay: 3s;
-}
+        /* =========================================
+           FLOATING EMOJIS
+        ========================================= */
 
-.floating-emojis span:nth-child(3) {
-    left: 25%;
-    top: 75%;
-    animation-delay: 6s;
-}
+        .floating-emojis {
 
-.floating-emojis span:nth-child(4) {
-    left: 70%;
-    top: 70%;
-    animation-delay: 2s;
-}
+            position: fixed;
 
-.floating-emojis span:nth-child(5) {
-    left: 50%;
-    top: 40%;
-    animation-delay: 8s;
-}
+            inset: 0;
 
-@keyframes floatEmoji {
+            pointer-events: none;
 
-    0% {
-        transform: translateY(20px) rotate(0deg);
-    }
+            overflow: hidden;
 
-    50% {
-        transform: translateY(-30px) rotate(10deg);
-    }
+            z-index: 0;
+        }
 
-    100% {
-        transform: translateY(20px) rotate(0deg);
-    }
+        .floating-emojis span {
 
-}
+            position: absolute;
 
+            opacity: 0.12;
 
-/* =========================================
-   AUTH SCREEN
-========================================= */
+            font-size: 25px;
 
-.auth-screen {
+            animation: floatEmoji 12s linear infinite;
+        }
 
-    min-height: 100vh;
+        .floating-emojis span:nth-child(1) {
+            left: 10%;
+            top: 20%;
+            animation-delay: 0s;
+        }
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+        .floating-emojis span:nth-child(2) {
+            left: 80%;
+            top: 15%;
+            animation-delay: 3s;
+        }
 
-    padding: 20px;
+        .floating-emojis span:nth-child(3) {
+            left: 25%;
+            top: 75%;
+            animation-delay: 6s;
+        }
 
-    position: relative;
-    z-index: 1;
-}
+        .floating-emojis span:nth-child(4) {
+            left: 70%;
+            top: 70%;
+            animation-delay: 2s;
+        }
 
+        .floating-emojis span:nth-child(5) {
+            left: 50%;
+            top: 40%;
+            animation-delay: 8s;
+        }
 
-.auth-box {
+        @keyframes floatEmoji {
 
-    width: 100%;
-    max-width: 440px;
+            0% {
+                transform: translateY(20px) rotate(0deg);
+            }
 
-    padding: 42px;
+            50% {
+                transform: translateY(-30px) rotate(10deg);
+            }
 
-    border-radius: 25px;
+            100% {
+                transform: translateY(20px) rotate(0deg);
+            }
 
-    background: rgba(18,22,38,0.90);
+        }
 
-    border: 1px solid rgba(255,255,255,0.1);
 
-    box-shadow:
-        0 30px 80px rgba(0,0,0,0.55),
-        inset 0 1px rgba(255,255,255,0.06);
+        /* =========================================
+           PAGE
+        ========================================= */
 
-    backdrop-filter: blur(20px);
+        .page {
 
-    text-align: center;
-}
+            min-height: 100vh;
 
+            padding: 35px;
 
-/* LOGO */
+            position: relative;
 
-.logo {
+            z-index: 1;
+        }
 
-    width: 70px;
-    height: 70px;
 
-    margin: 0 auto 20px;
+        /* =========================================
+           HEADER
+        ========================================= */
 
-    border-radius: 22px;
+        .header {
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+            display: flex;
 
-    font-size: 32px;
-    font-weight: 800;
+            align-items: center;
 
-    background:
-        linear-gradient(
-            135deg,
-            #5b8cff,
-            #8d5cff
-        );
+            justify-content: space-between;
 
-    box-shadow:
-        0 10px 30px rgba(91,140,255,0.35);
-}
+            margin-bottom: 30px;
+        }
 
+        .header-left h1 {
 
-.auth-box h1 {
+            margin: 0;
 
-    margin: 0;
+            font-size: 30px;
 
-    font-size: 32px;
+            letter-spacing: -1px;
+        }
 
-    letter-spacing: -1px;
-}
+        .header-left p {
 
+            margin: 8px 0 0;
 
-.subtitle {
+            color: #747e96;
 
-    color: #8d96ad;
+            font-size: 14px;
+        }
 
-    margin: 10px 0 30px;
+        .back-button {
 
-    font-size: 14px;
+            padding: 12px 18px;
 
-    line-height: 1.5;
-}
+            border-radius: 12px;
 
+            border: 1px solid #30384f;
 
-/* INPUTS */
+            background: #151a2a;
 
-.input-group {
+            color: white;
 
-    text-align: left;
+            cursor: pointer;
 
-    margin-bottom: 15px;
-}
+            font-size: 14px;
 
-.input-group label {
+            transition: 0.2s;
+        }
 
-    display: block;
+        .back-button:hover {
 
-    margin-bottom: 7px;
+            background: #20283c;
 
-    color: #9ca5ba;
+            transform: translateY(-2px);
+        }
 
-    font-size: 13px;
 
-    font-weight: 600;
-}
+        /* =========================================
+           MAIN CHAT LAYOUT
+        ========================================= */
 
-input {
+        .chat-layout {
 
-    width: 100%;
+            display: grid;
 
-    padding: 15px 17px;
+            grid-template-columns: 300px 1fr;
 
-    border-radius: 13px;
+            gap: 20px;
 
-    border: 1px solid #2c3348;
+            min-height: 70vh;
+        }
 
-    background: #0e1220;
 
-    color: white;
+        /* =========================================
+           SIDEBAR
+        ========================================= */
 
-    outline: none;
+        .chat-sidebar {
 
-    font-size: 15px;
+            background: rgba(18,23,38,0.85);
 
-    transition: 0.2s;
-}
+            border: 1px solid #242b3e;
 
-input:focus {
+            border-radius: 20px;
 
-    border-color: #638cff;
+            padding: 20px;
 
-    box-shadow:
-        0 0 0 3px rgba(99,140,255,0.1);
-}
+            backdrop-filter: blur(20px);
 
+            box-shadow:
+                0 20px 50px rgba(0,0,0,0.25);
+        }
 
-/* BUTTON */
+        .sidebar-title {
 
-.primary {
+            display: flex;
 
-    width: 100%;
+            align-items: center;
 
-    padding: 15px;
+            justify-content: space-between;
 
-    border: none;
+            margin-bottom: 20px;
+        }
 
-    border-radius: 13px;
+        .sidebar-title h2 {
 
-    background:
-        linear-gradient(
-            135deg,
-            #5b8cff,
-            #795cff
-        );
+            margin: 0;
 
-    color: white;
+            font-size: 18px;
+        }
 
-    font-weight: 700;
+        .add-button {
 
-    font-size: 15px;
+            width: 40px;
 
-    cursor: pointer;
+            height: 40px;
 
-    margin-top: 8px;
+            border: none;
 
-    transition: 0.2s;
-}
+            border-radius: 12px;
 
-.primary:hover {
+            background:
+                linear-gradient(
+                    135deg,
+                    #5b8cff,
+                    #795cff
+                );
 
-    transform: translateY(-2px);
+            color: white;
 
-    box-shadow:
-        0 10px 30px rgba(91,140,255,0.3);
-}
+            font-size: 22px;
 
+            cursor: pointer;
 
-/* SWITCH */
+            transition: 0.2s;
+        }
 
-.switch {
+        .add-button:hover {
 
-    margin-top: 22px;
+            transform: translateY(-2px);
 
-    color: #7f89a2;
+            box-shadow:
+                0 10px 25px rgba(91,140,255,0.3);
+        }
 
-    font-size: 14px;
-}
+        .chat-list {
 
-.switch span {
+            display: flex;
 
-    color: #7097ff;
+            flex-direction: column;
 
-    cursor: pointer;
+            gap: 8px;
+        }
 
-    font-weight: 600;
-}
+        .chat-item {
 
-.switch span:hover {
+            padding: 13px;
 
-    text-decoration: underline;
-}
+            border-radius: 12px;
 
+            background: transparent;
 
-/* MESSAGE */
+            border: 1px solid transparent;
 
-.message {
+            cursor: pointer;
 
-    display: none;
+            transition: 0.2s;
+        }
 
-    margin-bottom: 18px;
+        .chat-item:hover {
 
-    padding: 12px 15px;
+            background: #171d2d;
 
-    border-radius: 11px;
+            border-color: #252c40;
+        }
 
-    font-size: 13px;
+        .chat-item.active {
 
-    line-height: 1.4;
-}
+            background: #1b2235;
 
-.message.error {
+            border-color: #303b5b;
+        }
 
-    display: block;
+        .chat-item-name {
 
-    background: rgba(255,75,75,0.1);
+            font-weight: 700;
 
-    border: 1px solid rgba(255,75,75,0.25);
+            font-size: 14px;
+        }
 
-    color: #ff8585;
-}
+        .chat-item-status {
 
-.message.success {
+            color: #69748c;
 
-    display: block;
+            font-size: 11px;
 
-    background: rgba(70,210,130,0.1);
+            margin-top: 4px;
+        }
 
-    border: 1px solid rgba(70,210,130,0.25);
 
-    color: #71e0a0;
-}
+        /* =========================================
+           CHAT AREA
+        ========================================= */
 
+        .chat-area {
 
-/* =========================================
-   APP
-========================================= */
+            background: rgba(18,23,38,0.85);
 
-.app {
+            border: 1px solid #242b3e;
 
-    display: none;
+            border-radius: 20px;
 
-    min-height: 100vh;
+            display: flex;
 
-    grid-template-columns: 260px 1fr;
+            flex-direction: column;
 
-    position: relative;
+            overflow: hidden;
 
-    z-index: 1;
-}
+            backdrop-filter: blur(20px);
 
+            box-shadow:
+                0 20px 50px rgba(0,0,0,0.25);
+        }
 
-/* SIDEBAR */
+        .chat-area-header {
 
-.sidebar {
+            padding: 20px;
 
-    background: rgba(10,13,23,0.94);
+            border-bottom: 1px solid #242b3e;
+        }
 
-    border-right: 1px solid #202638;
+        .chat-area-header h2 {
 
-    padding: 25px 16px;
+            margin: 0;
 
-    display: flex;
+            font-size: 18px;
+        }
 
-    flex-direction: column;
-}
+        .chat-area-header p {
 
+            margin: 6px 0 0;
 
-.brand {
+            color: #69748c;
 
-    display: flex;
+            font-size: 12px;
+        }
 
-    align-items: center;
 
-    gap: 12px;
+        /* =========================================
+           MESSAGES
+        ========================================= */
 
-    padding: 5px 12px 30px;
-}
+        .messages {
 
+            flex: 1;
 
-.brand-icon {
+            min-height: 400px;
 
-    width: 42px;
-    height: 42px;
+            padding: 20px;
 
-    border-radius: 13px;
+            overflow-y: auto;
+        }
 
-    display: flex;
+        .message {
 
-    align-items: center;
+            max-width: 70%;
 
-    justify-content: center;
+            padding: 11px 14px;
 
-    background:
-        linear-gradient(
-            135deg,
-            #5b8cff,
-            #795cff
-        );
+            margin-bottom: 10px;
 
-    font-weight: 800;
-}
+            border-radius: 14px;
 
+            background: #171d2d;
 
-.brand-name {
+            border: 1px solid #252c40;
+        }
 
-    font-size: 20px;
+        .message.mine {
 
-    font-weight: 800;
-}
+            margin-left: auto;
 
+            background: #273866;
 
-.nav-title {
+            border-color: #3b4e7c;
+        }
 
-    color: #525b72;
+        .message-user {
 
-    font-size: 11px;
+            font-weight: 700;
 
-    font-weight: 700;
+            font-size: 11px;
 
-    letter-spacing: 1.5px;
+            color: #7899ff;
 
-    padding: 10px 13px;
-}
+            margin-bottom: 4px;
+        }
 
+        .message-text {
 
-.nav-btn {
+            font-size: 14px;
 
-    width: 100%;
+            word-wrap: break-word;
+        }
 
-    padding: 13px;
+        .message-time {
 
-    margin: 3px 0;
+            display: block;
 
-    border: none;
+            margin-top: 5px;
 
-    border-radius: 12px;
+            font-size: 9px;
 
-    background: transparent;
+            color: #69748c;
+        }
 
-    color: #8d96ad;
 
-    text-align: left;
+        /* =========================================
+           MESSAGE INPUT
+        ========================================= */
 
-    font-size: 14px;
+        .message-input {
 
-    cursor: pointer;
+            display: flex;
 
-    transition: 0.2s;
-}
+            gap: 10px;
 
+            padding: 15px;
 
-.nav-btn:hover,
-.nav-btn.active {
+            border-top: 1px solid #242b3e;
+        }
 
-    background: #1b2235;
+        .message-input input {
 
-    color: white;
-}
+            flex: 1;
 
+            padding: 14px;
 
-.nav-icon {
+            border-radius: 12px;
 
-    display: inline-block;
+            border: 1px solid #30384f;
 
-    width: 25px;
-}
+            background: #0e1220;
 
+            color: white;
 
-.profile {
+            outline: none;
 
-    margin-top: auto;
+            font-size: 14px;
+        }
 
-    background: #151a2a;
+        .message-input input:focus {
 
-    border: 1px solid #252c40;
+            border-color: #638cff;
 
-    border-radius: 15px;
+            box-shadow:
+                0 0 0 3px rgba(99,140,255,0.1);
+        }
 
-    padding: 13px;
-}
+        .send-button {
 
+            padding: 0 22px;
 
-.profile-name {
+            border: none;
 
-    font-weight: 600;
+            border-radius: 12px;
 
-    font-size: 14px;
+            background:
+                linear-gradient(
+                    135deg,
+                    #5b8cff,
+                    #795cff
+                );
 
-    overflow: hidden;
+            color: white;
 
-    text-overflow: ellipsis;
-}
+            font-weight: 700;
 
+            cursor: pointer;
+        }
 
-.profile-status {
 
-    color: #55d88a;
+        /* =========================================
+           NEW CHAT MODAL
+        ========================================= */
 
-    font-size: 11px;
+        .new-chat-overlay {
 
-    margin-top: 4px;
-}
+            position: fixed;
 
+            inset: 0;
 
-/* =========================================
-   MAIN
-========================================= */
+            background: rgba(0,0,0,0.65);
 
-.main {
+            display: none;
 
-    padding: 35px;
+            align-items: center;
 
-    overflow-y: auto;
-}
+            justify-content: center;
 
+            padding: 20px;
 
-/* TOPBAR */
+            z-index: 10;
 
-.topbar {
+            backdrop-filter: blur(5px);
+        }
 
-    display: flex;
+        .new-chat-box {
 
-    align-items: center;
+            width: 100%;
 
-    justify-content: space-between;
+            max-width: 450px;
 
-    margin-bottom: 35px;
-}
+            padding: 30px;
 
+            border-radius: 20px;
 
-.topbar h1 {
+            background: rgba(18,22,38,0.96);
 
-    margin: 0;
+            border: 1px solid rgba(255,255,255,0.1);
 
-    font-size: 30px;
+            box-shadow:
+                0 30px 80px rgba(0,0,0,0.55);
 
-    letter-spacing: -1px;
-}
+            backdrop-filter: blur(20px);
+        }
 
+        .new-chat-box h2 {
 
-.topbar p {
+            margin-top: 0;
 
-    margin: 7px 0 0;
+            font-size: 22px;
+        }
 
-    color: #747e96;
-}
+        .new-chat-box p {
 
+            color: #7f89a2;
 
-.avatar {
+            font-size: 13px;
 
-    width: 45px;
-    height: 45px;
+            line-height: 1.5;
+        }
 
-    border-radius: 50%;
+        .new-chat-box input {
 
-    display: flex;
+            width: 100%;
 
-    align-items: center;
+            padding: 14px;
 
-    justify-content: center;
+            margin-top: 10px;
 
-    background:
-        linear-gradient(
-            135deg,
-            #5b8cff,
-            #9c5cff
-        );
+            border-radius: 12px;
 
-    font-weight: 700;
-}
+            border: 1px solid #30384f;
 
+            background: #0e1220;
 
-/* =========================================
-   DASHBOARD
-========================================= */
+            color: white;
 
-.cards {
+            outline: none;
 
-    display: grid;
+            font-size: 14px;
+        }
 
-    grid-template-columns:
-        repeat(auto-fit, minmax(230px, 1fr));
+        .new-chat-box input:focus {
 
-    gap: 20px;
-}
+            border-color: #638cff;
 
+            box-shadow:
+                0 0 0 3px rgba(99,140,255,0.1);
+        }
 
-.card {
+        .modal-buttons {
 
-    min-height: 180px;
+            display: flex;
 
-    padding: 25px;
+            gap: 10px;
 
-    border-radius: 20px;
+            margin-top: 15px;
+        }
 
-    background: rgba(18,23,38,0.85);
+        .modal-buttons button {
 
-    border: 1px solid #242b3e;
+            flex: 1;
 
-    cursor: pointer;
+            padding: 13px;
 
-    transition: 0.25s;
-}
+            border-radius: 12px;
 
+            cursor: pointer;
 
-.card:hover {
+            border: none;
 
-    transform: translateY(-5px);
+            font-weight: 700;
+        }
 
-    border-color: #3c4b70;
+        .create-button {
 
-    box-shadow:
-        0 15px 40px rgba(0,0,0,0.25);
-}
+            background:
+                linear-gradient(
+                    135deg,
+                    #5b8cff,
+                    #795cff
+                );
 
+            color: white;
+        }
 
-.card-icon {
+        .cancel-button {
 
-    font-size: 30px;
+            background: #202638;
 
-    margin-bottom: 20px;
-}
+            color: white;
+        }
 
 
-.card h2 {
+        /* =========================================
+           MESSAGES
+        ========================================= */
 
-    margin: 0 0 8px;
+        .error {
 
-    font-size: 19px;
-}
+            color: #ff8585;
 
+            font-size: 12px;
 
-.card p {
+            margin-top: 10px;
+        }
 
-    margin: 0;
+        .success {
 
-    color: #78829a;
+            color: #71e0a0;
 
-    font-size: 13px;
+            font-size: 12px;
 
-    line-height: 1.5;
-}
+            margin-top: 10px;
+        }
 
 
-.welcome {
+        /* =========================================
+           EMPTY CHAT
+        ========================================= */
 
-    margin-top: 25px;
+        .empty-chat {
 
-    padding: 25px;
+            height: 100%;
 
-    border-radius: 20px;
+            min-height: 500px;
 
-    background:
-        linear-gradient(
-            135deg,
-            rgba(91,140,255,0.15),
-            rgba(121,92,255,0.08)
-        );
+            display: flex;
 
-    border: 1px solid rgba(91,140,255,0.2);
-}
+            align-items: center;
 
+            justify-content: center;
 
-.welcome h2 {
+            text-align: center;
 
-    margin-top: 0;
-}
+            color: #69748c;
+        }
 
+        .empty-chat div {
 
-/* =========================================
-   GLOBAL CHAT
-========================================= */
+            max-width: 350px;
+        }
 
-.global-chat {
+        .empty-chat-icon {
 
-    display: none;
-}
+            font-size: 50px;
 
+            margin-bottom: 15px;
+        }
 
-.chat-header {
+        .empty-chat h2 {
 
-    display: flex;
+            color: white;
+        }
 
-    align-items: center;
 
-    justify-content: space-between;
+        /* =========================================
+           MOBILE
+        ========================================= */
 
-    margin-bottom: 25px;
-}
+        @media(max-width:800px) {
 
+            .page {
 
-.chat-header h1 {
+                padding: 15px;
+            }
 
-    margin: 0;
+            .header {
 
-    font-size: 28px;
-}
+                align-items: flex-start;
 
+                gap: 15px;
+            }
 
-.chat-header p {
+            .header-left h1 {
 
-    color: #55d88a;
+                font-size: 24px;
+            }
 
-    margin: 7px 0 0;
+            .chat-layout {
 
-    font-size: 13px;
-}
+                grid-template-columns: 1fr;
+            }
 
+            .chat-sidebar {
 
-.chat-back {
+                min-height: auto;
+            }
 
-    border: 1px solid #30384f;
+            .chat-area {
 
-    background: #151a2a;
+                min-height: 65vh;
+            }
 
-    color: white;
+            .message {
 
-    padding: 11px 17px;
+                max-width: 85%;
+            }
 
-    border-radius: 11px;
+            .message-input {
 
-    cursor: pointer;
-}
+                flex-direction: column;
+            }
 
+            .send-button {
 
-.username-box {
+                padding: 13px;
+            }
 
-    max-width: 600px;
+        }
 
-    margin: 50px auto;
-
-    padding: 35px;
-
-    border-radius: 20px;
-
-    background: rgba(18,23,38,0.85);
-
-    border: 1px solid #242b3e;
-
-    text-align: center;
-}
-
-
-.username-box h2 {
-
-    margin-top: 0;
-}
-
-
-.username-box p {
-
-    color: #78829a;
-
-    font-size: 14px;
-
-    margin-bottom: 25px;
-}
-
-
-.messages {
-
-    height: 55vh;
-
-    overflow-y: auto;
-
-    padding: 20px;
-
-    border-radius: 18px;
-
-    background: rgba(10,13,23,0.75);
-
-    border: 1px solid #242b3e;
-
-    margin-bottom: 15px;
-}
-
-
-.message-item {
-
-    margin-bottom: 15px;
-
-    padding: 12px 15px;
-
-    border-radius: 13px;
-
-    background: #151b2c;
-}
-
-
-.message-user {
-
-    color: #7097ff;
-
-    font-size: 12px;
-
-    font-weight: 700;
-
-    margin-bottom: 4px;
-}
-
-
-.message-text {
-
-    color: #e8ebf3;
-
-    font-size: 14px;
-
-    word-break: break-word;
-}
-
-
-.chat-input {
-
-    display: flex;
-
-    gap: 10px;
-}
-
-
-.chat-input input {
-
-    flex: 1;
-}
-
-
-.chat-input .primary {
-
-    width: auto;
-
-    min-width: 90px;
-}
-
-
-/* MOBILE */
-
-@media(max-width:800px) {
-
-    .app {
-
-        grid-template-columns: 75px 1fr;
-    }
-
-    .brand-name,
-    .nav-title,
-    .nav-btn span,
-    .profile {
-
-        display: none;
-    }
-
-    .brand {
-
-        justify-content: center;
-    }
-
-    .nav-btn {
-
-        text-align: center;
-    }
-
-    .nav-icon {
-
-        width: auto;
-    }
-
-    .main {
-
-        padding: 22px;
-    }
-
-    .auth-box {
-
-        padding: 30px 22px;
-    }
-
-    .chat-input {
-
-        flex-direction: column;
-    }
-
-    .chat-input .primary {
-
-        width: 100%;
-    }
-
-}
-
-</style>
+    </style>
 
 </head>
 
@@ -915,1289 +781,1039 @@ input:focus {
 <body>
 
 
-<!-- FLOATING EMOJIS -->
+    <!-- FLOATING EMOJIS -->
 
-<div class="floating-emojis">
+    <div class="floating-emojis">
 
-    <span>💬</span>
-    <span>😊</span>
-    <span>💭</span>
-    <span>😂</span>
-    <span>👋</span>
+        <span>💬</span>
+        <span>😊</span>
+        <span>💭</span>
+        <span>😂</span>
+        <span>👋</span>
 
-</div>
-
-
-<!-- =========================================
-     AUTH
-========================================= -->
-
-<div class="auth-screen" id="authScreen">
-
-    <div class="auth-box">
-
-        <div class="logo">
-            C
-        </div>
+    </div>
 
 
-        <h1 id="authTitle">
-            Welcome to ChatsApp
-        </h1>
+    <!-- PAGE -->
+
+    <div class="page">
 
 
-        <p class="subtitle" id="authSubtitle">
-            Your conversations. Your world.
-        </p>
+        <!-- HEADER -->
+
+        <div class="header">
+
+            <div class="header-left">
+
+                <h1>
+                    💬 Private Chats
+                </h1>
+
+                <p>
+                    Chat privately with another ChatsApp user.
+                </p>
+
+            </div>
 
 
-        <div
-            id="message"
-            class="message">
-        </div>
-
-
-        <!-- USERNAME -->
-
-        <div class="input-group">
-
-            <label>
-                Username
-            </label>
-
-            <input
-                type="text"
-                id="username"
-                placeholder="Enter username"
-                maxlength="20"
-                autocomplete="username"
+            <button
+                class="back-button"
+                onclick="goHome()"
             >
+                ← Home
+            </button>
 
         </div>
 
 
-        <!-- PASSWORD -->
+        <!-- CHAT LAYOUT -->
 
-        <div class="input-group">
-
-            <label>
-                Password
-            </label>
-
-            <input
-                type="password"
-                id="password"
-                placeholder="Enter password"
-                autocomplete="current-password"
-            >
-
-        </div>
+        <div class="chat-layout">
 
 
-        <!-- CONFIRM PASSWORD -->
+            <!-- SIDEBAR -->
 
-        <div
-            class="input-group"
-            id="confirmGroup"
-            style="display:none;"
-        >
+            <aside class="chat-sidebar">
 
-            <label>
-                Confirm Password
-            </label>
+                <div class="sidebar-title">
 
-            <input
-                type="password"
-                id="confirmPassword"
-                placeholder="Enter password again"
-                autocomplete="new-password"
-            >
+                    <h2>
+                        Your Chats
+                    </h2>
 
-        </div>
+                    <button
+                        class="add-button"
+                        onclick="openNewChat()"
+                    >
+                        +
+                    </button>
+
+                </div>
 
 
-        <button
-            class="primary"
-            id="mainButton"
-            onclick="handleAuth()"
-        >
-            Log In
-        </button>
+                <div
+                    id="chatList"
+                    class="chat-list"
+                >
+
+                    <div class="empty-chat">
+
+                        <div>
+
+                            <div class="empty-chat-icon">
+                                💬
+                            </div>
+
+                            <p>
+                                No private chats yet.
+                            </p>
+
+                            <p>
+                                Press + to start one.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </aside>
 
 
-        <div class="switch">
+            <!-- CHAT AREA -->
 
-            <span
-                id="switchText"
-                onclick="toggleAuth()"
-            >
-                Don't have an account? Sign up
-            </span>
+            <section class="chat-area">
+
+
+                <!-- EMPTY -->
+
+                <div
+                    id="emptyChat"
+                    class="empty-chat"
+                >
+
+                    <div>
+
+                        <div class="empty-chat-icon">
+                            💬
+                        </div>
+
+                        <h2>
+                            Your Private Chats
+                        </h2>
+
+                        <p>
+                            Select a chat from the sidebar
+                            or press + to start a new private chat.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ACTIVE CHAT -->
+
+                <div
+                    id="activeChat"
+                    style="display:none; height:100%; flex-direction:column;"
+                >
+
+                    <div
+                        class="chat-area-header"
+                        id="chatHeader"
+                    >
+
+                        <h2>
+                            Private Chat
+                        </h2>
+
+                        <p>
+                            Private conversation
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        id="messages"
+                        class="messages"
+                    ></div>
+
+
+                    <div class="message-input">
+
+                        <input
+                            id="messageInput"
+                            type="text"
+                            maxlength="500"
+                            placeholder="Type a message..."
+                        >
+
+                        <button
+                            class="send-button"
+                            onclick="sendMessage()"
+                        >
+                            Send
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
 
         </div>
 
     </div>
 
-</div>
+
+    <!-- NEW CHAT MODAL -->
+
+    <div
+        id="newChatOverlay"
+        class="new-chat-overlay"
+    >
+
+        <div class="new-chat-box">
+
+            <h2>
+                💬 Start a Private Chat
+            </h2>
+
+            <p>
+                Enter the <strong>MAIN ChatsApp username</strong>
+                of the person you want to chat with.
+            </p>
 
 
-<!-- =========================================
-     MAIN APP
-========================================= -->
+            <input
+                id="targetUsername"
+                type="text"
+                maxlength="20"
+                placeholder="Enter username..."
+            >
 
-<div class="app" id="app">
-
-
-    <!-- SIDEBAR -->
-
-    <aside class="sidebar">
-
-
-        <div class="brand">
-
-            <div class="brand-icon">
-                C
-            </div>
-
-            <div class="brand-name">
-                ChatsApp
-            </div>
-
-        </div>
-
-
-        <div class="nav-title">
-            COMMUNICATION
-        </div>
-
-
-        <button
-            class="nav-btn active"
-            onclick="showHome()"
-        >
-
-            <span class="nav-icon">
-                ⌂
-            </span>
-
-            <span>
-                Home
-            </span>
-
-        </button>
-
-
-        <button
-            class="nav-btn"
-            onclick="openGlobalChat()"
-        >
-
-            <span class="nav-icon">
-                🌎
-            </span>
-
-            <span>
-                Global Chat
-            </span>
-
-        </button>
-
-
-        <button class="nav-btn">
-
-            <span class="nav-icon">
-                💬
-            </span>
-
-            <span>
-                Private Chats
-            </span>
-
-        </button>
-
-
-        <button class="nav-btn">
-
-            <span class="nav-icon">
-                ✉
-            </span>
-
-            <span>
-                Mail
-            </span>
-
-        </button>
-
-
-        <div class="nav-title">
-            ACCOUNT
-        </div>
-
-
-        <button class="nav-btn">
-
-            <span class="nav-icon">
-                ●
-            </span>
-
-            <span>
-                My Profile
-            </span>
-
-        </button>
-
-
-        <div class="profile">
 
             <div
-                class="profile-name"
-                id="profileName"
-            >
-                User
-            </div>
-
-            <div class="profile-status">
-                ● Online
-            </div>
-
-        </div>
+                id="chatError"
+                class="error"
+            ></div>
 
 
-    </aside>
+            <div
+                id="chatSuccess"
+                class="success"
+            ></div>
 
 
-    <!-- MAIN -->
+            <div class="modal-buttons">
 
-    <main class="main">
-
-
-        <!-- HOME -->
-
-        <div id="homePage">
-
-            <div class="topbar">
-
-                <div>
-
-                    <h1>
-                        Welcome back 👋
-                    </h1>
-
-                    <p>
-                        What would you like to do?
-                    </p>
-
-                </div>
-
-
-                <div
-                    class="avatar"
-                    id="avatar"
+                <button
+                    class="cancel-button"
+                    onclick="closeNewChat()"
                 >
-                    U
-                </div>
-
-            </div>
-
-
-            <div class="cards">
-
-
-                <div
-                    class="card"
-                    onclick="openGlobalChat()"
-                >
-
-                    <div class="card-icon">
-                        🌎
-                    </div>
-
-                    <h2>
-                        Global Chat
-                    </h2>
-
-                    <p>
-                        Talk with everyone on ChatsApp.
-                    </p>
-
-                </div>
-
-
-                <div class="card">
-
-                    <div class="card-icon">
-                        💬
-                    </div>
-
-                    <h2>
-                        Private Chats
-                    </h2>
-
-                    <p>
-                        Message people using their username.
-                    </p>
-
-                </div>
-
-
-                <div class="card">
-
-                    <div class="card-icon">
-                        ✉️
-                    </div>
-
-                    <h2>
-                        Mail
-                    </h2>
-
-                    <p>
-                        Send and receive longer messages.
-                    </p>
-
-                </div>
-
-
-                <div class="card">
-
-                    <div class="card-icon">
-                        👤
-                    </div>
-
-                    <h2>
-                        Your Profile
-                    </h2>
-
-                    <p>
-                        Manage your ChatsApp identity.
-                    </p>
-
-                </div>
-
-
-            </div>
-
-
-            <div class="welcome">
-
-                <h2>
-                    ChatsApp
-                </h2>
-
-                <p>
-                    A new place to chat, connect and
-                    keep in touch.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <!-- =========================================
-             GLOBAL CHAT
-        ========================================= -->
-
-        <div
-            id="globalChat"
-            class="global-chat"
-        >
-
-
-            <div class="chat-header">
-
-                <div>
-
-                    <h1>
-                        🌎 Global Chat
-                    </h1>
-
-                    <p id="onlineCount">
-                        🟢 Online
-                    </p>
-
-                </div>
+                    Cancel
+                </button>
 
 
                 <button
-                    class="chat-back"
-                    onclick="showHome()"
+                    class="create-button"
+                    onclick="createPrivateChat()"
                 >
-                    ← Home
+                    Send Invitation
                 </button>
 
             </div>
 
-
-            <!-- USERNAME -->
-
-            <div
-                id="usernameBox"
-                class="username-box"
-            >
-
-                <h2>
-                    Choose your username
-                </h2>
-
-                <p>
-                    This is the name everyone will see in Global Chat.
-                </p>
-
-                <input
-                    type="text"
-                    id="chatUsername"
-                    placeholder="Enter username..."
-                    maxlength="20"
-                >
-
-                <button
-                    class="primary"
-                    onclick="joinGlobalChat()"
-                >
-                    Join Global Chat
-                </button>
-
-            </div>
-
-
-            <!-- CHAT -->
-
-            <div
-                id="chatArea"
-                style="display:none;"
-            >
-
-                <div
-                    id="messages"
-                    class="messages"
-                >
-                </div>
-
-
-                <div class="chat-input">
-
-                    <input
-                        type="text"
-                        id="chatMessage"
-                        placeholder="Type a message..."
-                        maxlength="500"
-                    >
-
-                    <button
-                        class="primary"
-                        onclick="sendGlobalMessage()"
-                    >
-                        Send
-                    </button>
-
-                </div>
-
-            </div>
-
-
         </div>
 
+    </div>
 
-    </main>
 
-</div>
+    <script>
 
 
-<script>
+        /* =========================================
+           SUPABASE
+        ========================================= */
 
+        const SUPABASE_URL =
+            "https://kopzrnpporfdwauwlhni.supabase.co";
 
-/* =========================================
-   SUPABASE
-========================================= */
+        const SUPABASE_KEY =
+            "sb_publishable_bbxmPB71ADnIqe3oPB3MuQ_EWa4n_Ph";
 
-const SUPABASE_URL =
-    "https://kopzrnpporfdwauwlhni.supabase.co";
 
-const SUPABASE_KEY =
-    "sb_publishable_bbxmPB71ADnIqe3oPB3MuQ_EWa4n_Ph";
-
-
-const supabaseClient =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-    );
-
-
-/* =========================================
-   VARIABLES
-========================================= */
-
-let signupMode = false;
-
-let currentUsername = "";
-
-let chatChannel = null;
-
-
-/* =========================================
-   MESSAGE
-========================================= */
-
-function showMessage(text, type) {
-
-    const message =
-        document.getElementById("message");
-
-    message.innerText = text;
-
-    message.className =
-        "message " + type;
-}
-
-
-function clearMessage() {
-
-    const message =
-        document.getElementById("message");
-
-    message.innerText = "";
-
-    message.className = "message";
-}
-
-
-/* =========================================
-   LOGIN / SIGNUP SWITCH
-========================================= */
-
-function toggleAuth() {
-
-    signupMode = !signupMode;
-
-    clearMessage();
-
-    const title =
-        document.getElementById("authTitle");
-
-    const subtitle =
-        document.getElementById("authSubtitle");
-
-    const button =
-        document.getElementById("mainButton");
-
-    const switchText =
-        document.getElementById("switchText");
-
-    const confirmGroup =
-        document.getElementById("confirmGroup");
-
-
-    if (signupMode) {
-
-        title.innerText =
-            "Create your ChatsApp";
-
-        subtitle.innerText =
-            "Create your account and join the conversation.";
-
-        button.innerText =
-            "Create Account";
-
-        switchText.innerText =
-            "Already have an account? Log in";
-
-        confirmGroup.style.display =
-            "block";
-
-    }
-
-    else {
-
-        title.innerText =
-            "Welcome to ChatsApp";
-
-        subtitle.innerText =
-            "Your conversations. Your world.";
-
-        button.innerText =
-            "Log In";
-
-        switchText.innerText =
-            "Don't have an account? Sign up";
-
-        confirmGroup.style.display =
-            "none";
-    }
-
-}
-
-
-/* =========================================
-   USERNAME → INTERNAL EMAIL
-========================================= */
-
-function usernameToEmail(username) {
-
-    return (
-        username.toLowerCase()
-        + "@chatsapp.local"
-    );
-}
-
-
-/* =========================================
-   AUTH
-========================================= */
-
-async function handleAuth() {
-
-    clearMessage();
-
-
-    const username =
-        document.getElementById("username")
-        .value
-        .trim();
-
-
-    const password =
-        document.getElementById("password")
-        .value;
-
-
-    const confirmPassword =
-        document.getElementById("confirmPassword")
-        .value;
-
-
-    /* USERNAME */
-
-    if (username === "") {
-
-        showMessage(
-            "Please enter a username.",
-            "error"
-        );
-
-        return;
-    }
-
-
-    if (
-        !/^[a-zA-Z0-9_]{3,20}$/.test(username)
-    ) {
-
-        showMessage(
-            "Username must be 3–20 characters and use only letters, numbers, or underscores.",
-            "error"
-        );
-
-        return;
-    }
-
-
-    /* PASSWORD */
-
-    if (password === "") {
-
-        showMessage(
-            "Please enter your password.",
-            "error"
-        );
-
-        return;
-    }
-
-
-    if (password.length < 6) {
-
-        showMessage(
-            "Password must be at least 6 characters.",
-            "error"
-        );
-
-        return;
-    }
-
-
-    const internalEmail =
-        usernameToEmail(username);
-
-
-    /* =====================================
-       SIGN UP
-    ===================================== */
-
-    if (signupMode) {
-
-
-        if (password !== confirmPassword) {
-
-            showMessage(
-                "Passwords do not match.",
-                "error"
+        const supabaseClient =
+            window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_KEY
             );
 
-            return;
-        }
 
+        /* =========================================
+           VARIABLES
+        ========================================= */
 
-        showMessage(
-            "Creating your account...",
-            "success"
-        );
+        let currentUser = null;
 
+        let currentUsername = null;
 
-        const {
-            data,
-            error
-        } =
-            await supabaseClient.auth.signUp({
+        let currentConversationId = null;
 
-                email: internalEmail,
+        let privateChatChannel = null;
 
-                password: password,
 
-                options: {
+        /* =========================================
+           GET REAL SUPABASE AUTH USER
+        ========================================= */
 
-                    data: {
+        async function getCurrentUser() {
 
-                        username: username
-
-                    }
-
-                }
-
-            });
-
-
-        if (error) {
-
-            showMessage(
-                error.message,
-                "error"
-            );
-
-            return;
-        }
-
-
-        if (data.user) {
-
-            currentUsername =
-                username;
-
-
-            showApp(username);
-
-            return;
-        }
-
-
-        showMessage(
-            "Account created! 🎉",
-            "success"
-        );
-
-        return;
-    }
-
-
-    /* =====================================
-       LOGIN
-    ===================================== */
-
-    showMessage(
-        "Logging in...",
-        "success"
-    );
-
-
-    const {
-        data,
-        error
-    } =
-        await supabaseClient.auth.signInWithPassword({
-
-            email: internalEmail,
-
-            password: password
-
-        });
-
-
-    if (error) {
-
-        showMessage(
-            "Invalid username or password.",
-            "error"
-        );
-
-        return;
-    }
-
-
-    if (data.user) {
-
-        currentUsername =
-            data.user.user_metadata?.username
-            || username;
-
-
-        showApp(currentUsername);
-
-    }
-
-}
-
-
-/* =========================================
-   SHOW APP
-========================================= */
-
-function showApp(username) {
-
-    currentUsername = username;
-
-    document.getElementById(
-        "authScreen"
-    ).style.display = "none";
-
-
-    document.getElementById(
-        "app"
-    ).style.display = "grid";
-
-
-    document.getElementById(
-        "profileName"
-    ).innerText = username;
-
-
-    document.getElementById(
-        "avatar"
-    ).innerText =
-        username.charAt(0).toUpperCase();
-
-}
-
-
-/* =========================================
-   SESSION
-========================================= */
-
-async function checkSession() {
-
-    const {
-        data
-    } =
-        await supabaseClient.auth.getSession();
-
-
-    if (
-        data &&
-        data.session &&
-        data.session.user
-    ) {
-
-        const username =
-            data.session.user.user_metadata?.username
-            || data.session.user.email.split("@")[0];
-
-
-        showApp(username);
-
-    }
-
-}
-
-
-/* =========================================
-   HOME
-========================================= */
-
-function showHome() {
-
-    document.getElementById(
-        "homePage"
-    ).style.display = "block";
-
-
-    document.getElementById(
-        "globalChat"
-    ).style.display = "none";
-
-}
-
-
-/* =========================================
-   GLOBAL CHAT
-========================================= */
-
-function openGlobalChat() {
-
-    document.getElementById(
-        "homePage"
-    ).style.display = "none";
-
-
-    document.getElementById(
-        "globalChat"
-    ).style.display = "block";
-
-
-    document.getElementById(
-        "usernameBox"
-    ).style.display = "block";
-
-
-    document.getElementById(
-        "chatArea"
-    ).style.display = "none";
-
-
-    document.getElementById(
-        "chatUsername"
-    ).value = currentUsername;
-
-
-    updateOnlineCount();
-
-}
-
-
-/* =========================================
-   JOIN GLOBAL CHAT
-========================================= */
-
-async function joinGlobalChat() {
-
-    const username =
-        document.getElementById(
-            "chatUsername"
-        ).value.trim();
-
-
-    if (username === "") {
-
-        alert(
-            "Please enter a username."
-        );
-
-        return;
-    }
-
-
-    if (
-        !/^[a-zA-Z0-9_]{3,20}$/.test(username)
-    ) {
-
-        alert(
-            "Username must be 3–20 characters."
-        );
-
-        return;
-    }
-
-
-    currentUsername = username;
-
-
-    document.getElementById(
-        "usernameBox"
-    ).style.display = "none";
-
-
-    document.getElementById(
-        "chatArea"
-    ).style.display = "block";
-
-
-    await loadMessages();
-
-    subscribeToMessages();
-
-    updateOnlineCount();
-
-}
-
-
-/* =========================================
-   LOAD MESSAGES
-========================================= */
-
-async function loadMessages() {
-
-    const {
-        data,
-        error
-    } =
-        await supabaseClient
-        .from("global_messages")
-        .select("*")
-        .order("created_at", {
-            ascending: true
-        });
-
-
-    if (error) {
-
-        console.error(
-            "Could not load messages:",
-            error
-        );
-
-        return;
-    }
-
-
-    const box =
-        document.getElementById(
-            "messages"
-        );
-
-
-    box.innerHTML = "";
-
-
-    data.forEach(
-        message => {
-
-            displayMessage(
-                message.username,
-                message.message
-            );
-
-        }
-    );
-
-
-    box.scrollTop =
-        box.scrollHeight;
-
-}
-
-
-/* =========================================
-   DISPLAY MESSAGE
-========================================= */
-
-function displayMessage(
-    username,
-    text
-) {
-
-    const box =
-        document.getElementById(
-            "messages"
-        );
-
-
-    const item =
-        document.createElement(
-            "div"
-        );
-
-
-    item.className =
-        "message-item";
-
-
-    item.innerHTML = `
-
-        <div class="message-user">
-            ${escapeHTML(username)}
-        </div>
-
-        <div class="message-text">
-            ${escapeHTML(text)}
-        </div>
-
-    `;
-
-
-    box.appendChild(item);
-
-
-    box.scrollTop =
-        box.scrollHeight;
-
-}
-
-
-/* =========================================
-   SEND MESSAGE
-========================================= */
-
-async function sendGlobalMessage() {
-
-    const input =
-        document.getElementById(
-            "chatMessage"
-        );
-
-
-    const text =
-        input.value.trim();
-
-
-    if (text === "") {
-
-        return;
-    }
-
-
-    const {
-        error
-    } =
-        await supabaseClient
-        .from("global_messages")
-        .insert({
-
-            username:
-                currentUsername,
-
-            message:
-                text
-
-        });
-
-
-    if (error) {
-
-        console.error(
-            error
-        );
-
-        alert(
-            "Message could not be sent."
-        );
-
-        return;
-    }
-
-
-    input.value = "";
-
-}
-
-
-/* =========================================
-   REALTIME CHAT
-========================================= */
-
-function subscribeToMessages() {
-
-    if (chatChannel) {
-
-        supabaseClient
-            .removeChannel(
-                chatChannel
-            );
-
-    }
-
-
-    chatChannel =
-        supabaseClient
-        .channel(
-            "global-chat-room"
-        )
-        .on(
-            "postgres_changes",
-            {
-                event: "INSERT",
-                schema: "public",
-                table: "global_messages"
-            },
-            payload => {
-
-                displayMessage(
-                    payload.new.username,
-                    payload.new.message
-                );
-
-            }
-        )
-        .subscribe();
-
-}
-
-
-/* =========================================
-   ONLINE COUNT
-========================================= */
-
-async function updateOnlineCount() {
-
-    document.getElementById(
-        "onlineCount"
-    ).innerText =
-        "🟢 Global Chat";
-}
-
-
-/* =========================================
-   ESCAPE HTML
-========================================= */
-
-function escapeHTML(text) {
-
-    const div =
-        document.createElement(
-            "div"
-        );
-
-    div.innerText =
-        text;
-
-    return div.innerHTML;
-
-}
-
-
-/* =========================================
-   ENTER KEY
-========================================= */
-
-document.addEventListener(
-    "keydown",
-    function(event) {
-
-        if (
-            event.key === "Enter"
-        ) {
-
-            const chatArea =
-                document.getElementById(
-                    "chatArea"
-                );
+            const {
+                data,
+                error
+            } =
+                await supabaseClient.auth.getUser();
 
 
             if (
-                chatArea.style.display
-                !== "none"
+                error ||
+                !data ||
+                !data.user
             ) {
 
-                sendGlobalMessage();
+                return false;
 
             }
 
-            else {
 
-                handleAuth();
+            currentUser =
+                data.user;
+
+
+            /*
+                IMPORTANT:
+                The username comes from the
+                SAME MAIN ChatsApp account.
+            */
+
+            currentUsername =
+                currentUser.user_metadata?.username;
+
+
+            /*
+                If metadata does not contain the
+                username, look it up in profiles.
+            */
+
+            if (!currentUsername) {
+
+                const {
+                    data: profile,
+                    error: profileError
+                } =
+                    await supabaseClient
+                    .from("profiles")
+                    .select("username")
+                    .eq(
+                        "id",
+                        currentUser.id
+                    )
+                    .maybeSingle();
+
+
+                if (
+                    profileError ||
+                    !profile
+                ) {
+
+                    return false;
+
+                }
+
+
+                currentUsername =
+                    profile.username;
 
             }
+
+
+            return true;
 
         }
 
-    }
-);
+
+        /* =========================================
+           HOME
+        ========================================= */
+
+        function goHome() {
+
+            window.location.href =
+                "index.html";
+
+        }
 
 
-/* =========================================
-   START
-========================================= */
+        /* =========================================
+           NEW CHAT
+        ========================================= */
 
-checkSession();
+        function openNewChat() {
 
-</script>
+            document.getElementById(
+                "newChatOverlay"
+            ).style.display = "flex";
+
+
+            document.getElementById(
+                "chatError"
+            ).innerText = "";
+
+
+            document.getElementById(
+                "chatSuccess"
+            ).innerText = "";
+
+
+            document.getElementById(
+                "targetUsername"
+            ).focus();
+
+        }
+
+
+        function closeNewChat() {
+
+            document.getElementById(
+                "newChatOverlay"
+            ).style.display = "none";
+
+
+            document.getElementById(
+                "targetUsername"
+            ).value = "";
+
+
+            document.getElementById(
+                "chatError"
+            ).innerText = "";
+
+
+            document.getElementById(
+                "chatSuccess"
+            ).innerText = "";
+
+        }
+
+
+        /* =========================================
+           CREATE PRIVATE CHAT INVITATION
+        ========================================= */
+
+        async function createPrivateChat() {
+
+            const targetUsername =
+                document.getElementById(
+                    "targetUsername"
+                )
+                .value
+                .trim();
+
+
+            const errorBox =
+                document.getElementById(
+                    "chatError"
+                );
+
+
+            const successBox =
+                document.getElementById(
+                    "chatSuccess"
+                );
+
+
+            errorBox.innerText = "";
+
+            successBox.innerText = "";
+
+
+            /* MAKE SURE REAL AUTH USER EXISTS */
+
+            if (!currentUser) {
+
+                const loggedIn =
+                    await getCurrentUser();
+
+
+                if (!loggedIn) {
+
+                    errorBox.innerText =
+                        "Please log in to ChatsApp first.";
+
+                    return;
+
+                }
+
+            }
+
+
+            /* USERNAME */
+
+            if (!targetUsername) {
+
+                errorBox.innerText =
+                    "Enter a username.";
+
+                return;
+
+            }
+
+
+            if (
+                !/^[a-zA-Z0-9_]{3,20}$/.test(
+                    targetUsername
+                )
+            ) {
+
+                errorBox.innerText =
+                    "Invalid username.";
+
+                return;
+
+            }
+
+
+            /* CAN'T CHAT WITH YOURSELF */
+
+            if (
+                targetUsername.toLowerCase() ===
+                currentUsername.toLowerCase()
+            ) {
+
+                errorBox.innerText =
+                    "You can't chat with yourself.";
+
+                return;
+
+            }
+
+
+            /* =====================================
+               FIND MAIN ACCOUNT
+            ===================================== */
+
+            const {
+                data: targetProfile,
+                error: targetError
+            } =
+                await supabaseClient
+                .from("profiles")
+                .select(
+                    "id, username"
+                )
+                .ilike(
+                    "username",
+                    targetUsername
+                )
+                .maybeSingle();
+
+
+            if (targetError) {
+
+                console.error(
+                    "Profile search error:",
+                    targetError
+                );
+
+
+                errorBox.innerText =
+                    "Couldn't search for that username.";
+
+                return;
+
+            }
+
+
+            if (!targetProfile) {
+
+                errorBox.innerText =
+                    "That ChatsApp username doesn't exist.";
+
+                return;
+
+            }
+
+
+            /* =====================================
+               SEND INVITATION
+            ===================================== */
+
+            const {
+                error: invitationError
+            } =
+                await supabaseClient
+                .from("chat_invitations")
+                .insert({
+
+                    from_username:
+                        currentUsername,
+
+                    to_username:
+                        targetProfile.username,
+
+                    status:
+                        "pending"
+
+                });
+
+
+            if (invitationError) {
+
+                console.error(
+                    "Invitation error:",
+                    invitationError
+                );
+
+
+                errorBox.innerText =
+                    "Couldn't send the invitation.";
+
+                return;
+
+            }
+
+
+            /* SUCCESS */
+
+            successBox.innerText =
+                "Invitation sent! 📩";
+
+
+            document.getElementById(
+                "targetUsername"
+            ).value = "";
+
+        }
+
+
+        /* =========================================
+           OPEN CONVERSATION
+        ========================================= */
+
+        async function openConversation(
+            conversationId,
+            otherUsername
+        ) {
+
+            currentConversationId =
+                conversationId;
+
+
+            document.getElementById(
+                "emptyChat"
+            ).style.display = "none";
+
+
+            document.getElementById(
+                "activeChat"
+            ).style.display = "flex";
+
+
+            document.getElementById(
+                "chatHeader"
+            ).innerHTML = `
+
+                <h2>
+                    💬 ${escapeHTML(otherUsername)}
+                </h2>
+
+                <p>
+                    Private conversation
+                </p>
+
+            `;
+
+
+            await loadMessages();
+
+        }
+
+
+        /* =========================================
+           LOAD MESSAGES
+        ========================================= */
+
+        async function loadMessages() {
+
+            if (!currentConversationId) {
+
+                return;
+
+            }
+
+
+            const {
+                data,
+                error
+            } =
+                await supabaseClient
+                .from("conversation_messages")
+                .select("*")
+                .eq(
+                    "conversation_id",
+                    currentConversationId
+                )
+                .order(
+                    "created_at",
+                    {
+                        ascending: true
+                    }
+                );
+
+
+            if (error) {
+
+                console.error(
+                    "Message loading error:",
+                    error
+                );
+
+                return;
+
+            }
+
+
+            const messages =
+                document.getElementById(
+                    "messages"
+                );
+
+
+            messages.innerHTML = "";
+
+
+            data.forEach(
+                displayMessage
+            );
+
+        }
+
+
+        /* =========================================
+           DISPLAY MESSAGE
+        ========================================= */
+
+        function displayMessage(message) {
+
+            const messages =
+                document.getElementById(
+                    "messages"
+                );
+
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.className =
+                "message";
+
+
+            if (
+                message.username ===
+                currentUsername
+            ) {
+
+                div.classList.add(
+                    "mine"
+                );
+
+            }
+
+
+            div.innerHTML = `
+
+                <div class="message-user">
+                    ${escapeHTML(
+                        message.username || "User"
+                    )}
+                </div>
+
+                <div class="message-text">
+                    ${escapeHTML(
+                        message.message || ""
+                    )}
+                </div>
+
+                <span class="message-time">
+
+                    ${
+                        message.created_at
+                        ?
+                        new Date(
+                            message.created_at
+                        ).toLocaleTimeString(
+                            [],
+                            {
+                                hour: "2-digit",
+                                minute: "2-digit"
+                            }
+                        )
+                        :
+                        ""
+                    }
+
+                </span>
+
+            `;
+
+
+            messages.appendChild(
+                div
+            );
+
+
+            messages.scrollTop =
+                messages.scrollHeight;
+
+        }
+
+
+        /* =========================================
+           SEND MESSAGE
+        ========================================= */
+
+        async function sendMessage() {
+
+            const input =
+                document.getElementById(
+                    "messageInput"
+                );
+
+
+            const text =
+                input.value.trim();
+
+
+            if (!text) {
+
+                return;
+
+            }
+
+
+            if (!currentConversationId) {
+
+                return;
+
+            }
+
+
+            if (!currentUsername) {
+
+                const loggedIn =
+                    await getCurrentUser();
+
+
+                if (!loggedIn) {
+
+                    alert(
+                        "Please log in to ChatsApp first."
+                    );
+
+                    return;
+
+                }
+
+            }
+
+
+            const {
+                error
+            } =
+                await supabaseClient
+                .from("conversation_messages")
+                .insert({
+
+                    conversation_id:
+                        currentConversationId,
+
+                    username:
+                        currentUsername,
+
+                    message:
+                        text
+
+                });
+
+
+            if (error) {
+
+                console.error(
+                    "Send message error:",
+                    error
+                );
+
+
+                alert(
+                    "Couldn't send message."
+                );
+
+                return;
+
+            }
+
+
+            input.value = "";
+
+        }
+
+
+        /* =========================================
+           REALTIME
+        ========================================= */
+
+        function subscribeToPrivateMessages() {
+
+            if (privateChatChannel) {
+
+                supabaseClient
+                    .removeChannel(
+                        privateChatChannel
+                    );
+
+            }
+
+
+            privateChatChannel =
+                supabaseClient
+                .channel(
+                    "private-chat-messages"
+                )
+                .on(
+                    "postgres_changes",
+                    {
+                        event: "INSERT",
+                        schema: "public",
+                        table: "conversation_messages"
+                    },
+                    function(payload) {
+
+                        if (
+                            payload.new.conversation_id ===
+                            currentConversationId
+                        ) {
+
+                            displayMessage(
+                                payload.new
+                            );
+
+                        }
+
+                    }
+                )
+                .subscribe();
+
+        }
+
+
+        /* =========================================
+           ESCAPE HTML
+        ========================================= */
+
+        function escapeHTML(text) {
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.innerText =
+                text;
+
+
+            return div.innerHTML;
+
+        }
+
+
+        /* =========================================
+           ENTER TO SEND
+        ========================================= */
+
+        document.addEventListener(
+            "keydown",
+            function(event) {
+
+                if (
+                    event.key === "Enter" &&
+                    document.activeElement?.id ===
+                    "messageInput"
+                ) {
+
+                    event.preventDefault();
+
+                    sendMessage();
+
+                }
+
+            }
+        );
+
+
+        /* =========================================
+           START PRIVATE CHATS
+        ========================================= */
+
+        async function startPrivateChats() {
+
+            const loggedIn =
+                await getCurrentUser();
+
+
+            if (!loggedIn) {
+
+                /*
+                    NO SEPARATE LOGIN PAGE HERE.
+
+                    If the user isn't logged into
+                    the MAIN ChatsApp account,
+                    send them back to index.html.
+                */
+
+                window.location.href =
+                    "index.html";
+
+                return;
+
+            }
+
+
+            console.log(
+                "Private Chats logged in as:",
+                currentUsername
+            );
+
+
+            subscribeToPrivateMessages();
+
+        }
+
+
+        /* =========================================
+           START
+        ========================================= */
+
+        startPrivateChats();
+
+    </script>
 
 </body>
 
