@@ -1798,10 +1798,13 @@ function openMail() {
 
 function openProfile() {
 
-    alert(
-        "👤 Your ChatsApp username is: " +
+    localStorage.setItem(
+        "chatsapp_username",
         currentUsername
     );
+
+    window.location.href =
+        "Profile.html";
 
 }
 
