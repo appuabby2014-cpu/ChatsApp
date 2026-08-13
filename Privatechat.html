@@ -17,10 +17,8 @@
 }
 
 body {
-
     margin: 0;
     min-height: 100vh;
-
     font-family: Arial, sans-serif;
 
     background:
@@ -44,24 +42,17 @@ body {
 /* FLOATING EMOJIS */
 
 .floating-emojis {
-
     position: fixed;
     inset: 0;
-
     pointer-events: none;
     overflow: hidden;
-
     z-index: 0;
 }
 
 .floating-emojis span {
-
     position: absolute;
-
     opacity: 0.12;
-
     font-size: 25px;
-
     animation: floatEmoji 12s linear infinite;
 }
 
@@ -114,13 +105,9 @@ body {
 /* PAGE */
 
 .page {
-
     min-height: 100vh;
-
     padding: 35px;
-
     position: relative;
-
     z-index: 1;
 }
 
@@ -128,66 +115,44 @@ body {
 /* HEADER */
 
 .header {
-
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
-
     margin-bottom: 30px;
 }
 
 .header-left h1 {
-
     margin: 0;
-
     font-size: 30px;
 }
 
 .header-left p {
-
     margin: 8px 0 0;
-
     color: #747e96;
-
     font-size: 14px;
 }
 
 .back-button {
-
     padding: 12px 18px;
-
     border-radius: 12px;
-
     border: 1px solid #30384f;
-
     background: #151a2a;
-
     color: white;
-
     cursor: pointer;
-
     font-size: 14px;
 }
 
 .back-button:hover {
-
     background: #20283c;
-
 }
 
 
 /* LAYOUT */
 
 .chat-layout {
-
     display: grid;
-
     grid-template-columns: 300px 1fr;
-
     gap: 20px;
-
     min-height: 70vh;
 }
 
@@ -195,44 +160,29 @@ body {
 /* SIDEBAR */
 
 .chat-sidebar {
-
     background: rgba(18,23,38,0.85);
-
     border: 1px solid #242b3e;
-
     border-radius: 20px;
-
     padding: 20px;
-
     backdrop-filter: blur(20px);
 }
 
 .sidebar-title {
-
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
-
     margin-bottom: 15px;
 }
 
 .sidebar-title h2 {
-
     margin: 0;
-
     font-size: 18px;
 }
 
 .add-button {
-
     width: 40px;
-
     height: 40px;
-
     border: none;
-
     border-radius: 12px;
 
     background:
@@ -243,14 +193,11 @@ body {
         );
 
     color: white;
-
     font-size: 22px;
-
     cursor: pointer;
 }
 
 .add-button:hover {
-
     transform: translateY(-2px);
 }
 
@@ -258,80 +205,53 @@ body {
 /* INVITATIONS */
 
 .invitation-section {
-
     margin-bottom: 20px;
-
     padding-bottom: 15px;
-
     border-bottom: 1px solid #242b3e;
 }
 
 .invitation-title {
-
     font-size: 13px;
-
     font-weight: 700;
-
     color: #9aa5c0;
-
     margin-bottom: 10px;
 }
 
 .invitation-item {
-
     background: #171d2d;
-
     border: 1px solid #30384f;
-
     border-radius: 12px;
-
     padding: 12px;
-
     margin-bottom: 8px;
 }
 
 .invitation-name {
-
     font-weight: 700;
-
     font-size: 13px;
-
     margin-bottom: 8px;
 }
 
 .invitation-buttons {
-
     display: flex;
-
     gap: 6px;
 }
 
 .invitation-buttons button {
-
     flex: 1;
-
     border: none;
-
     border-radius: 8px;
-
     padding: 8px;
-
     color: white;
-
     cursor: pointer;
-
     font-weight: 700;
-
     font-size: 11px;
 }
 
 .accept-button {
-
     background: #238b57;
 }
 
 .decline-button {
-
     background: #963d4a;
 }
 
@@ -339,54 +259,37 @@ body {
 /* CHAT LIST */
 
 .chat-list {
-
     display: flex;
-
     flex-direction: column;
-
     gap: 8px;
 }
 
 .chat-item {
-
     padding: 13px;
-
     border-radius: 12px;
-
     background: transparent;
-
     border: 1px solid transparent;
-
     cursor: pointer;
 }
 
 .chat-item:hover {
-
     background: #171d2d;
-
     border-color: #252c40;
 }
 
 .chat-item.active {
-
     background: #1b2235;
-
     border-color: #303b5b;
 }
 
 .chat-item-name {
-
     font-weight: 700;
-
     font-size: 14px;
 }
 
 .chat-item-status {
-
     color: #69748c;
-
     font-size: 11px;
-
     margin-top: 4px;
 }
 
@@ -394,42 +297,28 @@ body {
 /* CHAT AREA */
 
 .chat-area {
-
     background: rgba(18,23,38,0.85);
-
     border: 1px solid #242b3e;
-
     border-radius: 20px;
-
     display: flex;
-
     flex-direction: column;
-
     overflow: hidden;
-
     backdrop-filter: blur(20px);
 }
 
 .chat-area-header {
-
     padding: 20px;
-
     border-bottom: 1px solid #242b3e;
 }
 
 .chat-area-header h2 {
-
     margin: 0;
-
     font-size: 18px;
 }
 
 .chat-area-header p {
-
     margin: 6px 0 0;
-
     color: #69748c;
-
     font-size: 12px;
 }
 
@@ -437,66 +326,43 @@ body {
 /* MESSAGES */
 
 .messages {
-
     flex: 1;
-
     min-height: 400px;
-
     padding: 20px;
-
     overflow-y: auto;
 }
 
 .message {
-
     max-width: 70%;
-
     padding: 11px 14px;
-
     margin-bottom: 10px;
-
     border-radius: 14px;
-
     background: #171d2d;
-
     border: 1px solid #252c40;
 }
 
 .message.mine {
-
     margin-left: auto;
-
     background: #273866;
-
     border-color: #3b4e7c;
 }
 
 .message-user {
-
     font-weight: 700;
-
     font-size: 11px;
-
     color: #7899ff;
-
     margin-bottom: 4px;
 }
 
 .message-text {
-
     font-size: 14px;
-
     word-wrap: break-word;
 }
 
 .message-time {
-
     display: block;
-
     margin-top: 5px;
-
     font-size: 9px;
-
     color: #69748c;
 }
 
@@ -504,41 +370,26 @@ body {
 /* INPUT */
 
 .message-input {
-
     display: flex;
-
     gap: 10px;
-
     padding: 15px;
-
     border-top: 1px solid #242b3e;
 }
 
 .message-input input {
-
     flex: 1;
-
     padding: 14px;
-
     border-radius: 12px;
-
     border: 1px solid #30384f;
-
     background: #0e1220;
-
     color: white;
-
     outline: none;
-
     font-size: 14px;
 }
 
 .send-button {
-
     padding: 0 22px;
-
     border: none;
-
     border-radius: 12px;
 
     background:
@@ -549,9 +400,7 @@ body {
         );
 
     color: white;
-
     font-weight: 700;
-
     cursor: pointer;
 }
 
@@ -559,100 +408,63 @@ body {
 /* MODAL */
 
 .new-chat-overlay {
-
     position: fixed;
-
     inset: 0;
-
     background: rgba(0,0,0,0.65);
-
     display: none;
-
     align-items: center;
-
     justify-content: center;
-
     padding: 20px;
-
     z-index: 10;
-
     backdrop-filter: blur(5px);
 }
 
 .new-chat-box {
-
     width: 100%;
-
     max-width: 450px;
-
     padding: 30px;
-
     border-radius: 20px;
-
     background: rgba(18,22,38,0.96);
-
     border: 1px solid rgba(255,255,255,0.1);
 }
 
 .new-chat-box h2 {
-
     margin-top: 0;
 }
 
 .new-chat-box p {
-
     color: #7f89a2;
-
     font-size: 13px;
-
     line-height: 1.5;
 }
 
 .new-chat-box input {
-
     width: 100%;
-
     padding: 14px;
-
     margin-top: 10px;
-
     border-radius: 12px;
-
     border: 1px solid #30384f;
-
     background: #0e1220;
-
     color: white;
-
     outline: none;
 }
 
 .modal-buttons {
-
     display: flex;
-
     gap: 10px;
-
     margin-top: 15px;
 }
 
 .modal-buttons button {
-
     flex: 1;
-
     padding: 13px;
-
     border-radius: 12px;
-
     cursor: pointer;
-
     border: none;
-
     font-weight: 700;
 }
 
 .create-button {
-
     background:
         linear-gradient(
             135deg,
@@ -664,27 +476,19 @@ body {
 }
 
 .cancel-button {
-
     background: #202638;
-
     color: white;
 }
 
 .error {
-
     color: #ff8585;
-
     font-size: 12px;
-
     margin-top: 10px;
 }
 
 .success {
-
     color: #71e0a0;
-
     font-size: 12px;
-
     margin-top: 10px;
 }
 
@@ -692,36 +496,25 @@ body {
 /* EMPTY */
 
 .empty-chat {
-
     height: 100%;
-
     min-height: 500px;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     text-align: center;
-
     color: #69748c;
 }
 
 .empty-chat div {
-
     max-width: 350px;
 }
 
 .empty-chat-icon {
-
     font-size: 50px;
-
     margin-bottom: 15px;
 }
 
 .empty-chat h2 {
-
     color: white;
 }
 
@@ -820,10 +613,6 @@ body {
 </div>
 
 
-<!-- =========================================
-     INVITATIONS
-========================================= -->
-
 <div class="invitation-section">
 
     <div class="invitation-title">
@@ -840,10 +629,6 @@ body {
 
 </div>
 
-
-<!-- =========================================
-     CHATS
-========================================= -->
 
 <div
     id="chatList"
@@ -954,10 +739,6 @@ body {
 </div>
 
 
-<!-- =========================================
-     NEW CHAT MODAL
-========================================= -->
-
 <div
     id="newChatOverlay"
     class="new-chat-overlay"
@@ -1050,47 +831,13 @@ let invitationChannel = null;
 
 
 /* =========================================
-   🔊 MESSAGE NOTIFICATION SOUND
+   🔔 NOTIFICATION SOUND
 ========================================= */
 
 let notificationAudioContext = null;
 
-function unlockNotificationSound() {
 
-    try {
-
-        if (!notificationAudioContext) {
-
-            notificationAudioContext =
-                new (
-                    window.AudioContext ||
-                    window.webkitAudioContext
-                )();
-
-        }
-
-        if (
-            notificationAudioContext.state ===
-            "suspended"
-        ) {
-
-            notificationAudioContext.resume();
-
-        }
-
-    } catch (error) {
-
-        console.error(
-            "Audio unlock error:",
-            error
-        );
-
-    }
-
-}
-
-
-function playNotificationSound() {
+function playMessageNotification() {
 
     try {
 
@@ -1113,18 +860,14 @@ function playNotificationSound() {
             notificationAudioContext.resume();
 
         }
-
-
-        const ctx =
-            notificationAudioContext;
 
 
         const oscillator =
-            ctx.createOscillator();
+            notificationAudioContext.createOscillator();
 
 
         const gain =
-            ctx.createGain();
+            notificationAudioContext.createGain();
 
 
         oscillator.type =
@@ -1133,56 +876,53 @@ function playNotificationSound() {
 
         oscillator.frequency.setValueAtTime(
             880,
-            ctx.currentTime
+            notificationAudioContext.currentTime
         );
 
 
         oscillator.frequency.setValueAtTime(
-            660,
-            ctx.currentTime + 0.10
+            1175,
+            notificationAudioContext.currentTime + 0.12
         );
 
 
         gain.gain.setValueAtTime(
             0.0001,
-            ctx.currentTime
+            notificationAudioContext.currentTime
         );
 
 
         gain.gain.exponentialRampToValueAtTime(
-            0.18,
-            ctx.currentTime + 0.01
+            0.85,
+            notificationAudioContext.currentTime + 0.02
         );
 
 
         gain.gain.exponentialRampToValueAtTime(
             0.0001,
-            ctx.currentTime + 0.25
+            notificationAudioContext.currentTime + 0.5
         );
 
 
-        oscillator.connect(
-            gain
-        );
-
+        oscillator.connect(gain);
 
         gain.connect(
-            ctx.destination
+            notificationAudioContext.destination
         );
 
 
-        oscillator.start(
-            ctx.currentTime
-        );
+        oscillator.start();
 
 
         oscillator.stop(
-            ctx.currentTime + 0.25
+            notificationAudioContext.currentTime + 0.5
         );
 
-    } catch (error) {
+    }
 
-        console.error(
+    catch (error) {
+
+        console.log(
             "Notification sound error:",
             error
         );
@@ -1193,18 +933,94 @@ function playNotificationSound() {
 
 
 /* =========================================
-   UNLOCK AUDIO AFTER USER INTERACTION
+   🔔 BROWSER NOTIFICATION
 ========================================= */
 
-document.addEventListener(
-    "click",
-    unlockNotificationSound
-);
+async function showMessageNotification(
+    message
+) {
 
-document.addEventListener(
-    "keydown",
-    unlockNotificationSound
-);
+    /* NEVER notify for YOUR OWN message */
+
+    if (
+        message.username ===
+        currentUsername
+    ) {
+
+        return;
+
+    }
+
+
+    /* PLAY SOUND */
+
+    playMessageNotification();
+
+
+    /* BROWSER NOTIFICATION */
+
+    if (
+        "Notification" in window
+    ) {
+
+        if (
+            Notification.permission ===
+            "default"
+        ) {
+
+            try {
+
+                await Notification.requestPermission();
+
+            }
+
+            catch (error) {
+
+                console.log(
+                    "Notification permission error:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        if (
+            Notification.permission ===
+            "granted"
+        ) {
+
+            try {
+
+                new Notification(
+                    "💬 New Private Message",
+                    {
+
+                        body:
+                            message.username +
+                            ": " +
+                            message.message
+
+                    }
+                );
+
+            }
+
+            catch (error) {
+
+                console.log(
+                    "Browser notification error:",
+                    error
+                );
+
+            }
+
+        }
+
+    }
+
+}
 
 
 /* =========================================
@@ -1303,13 +1119,16 @@ function openNewChat() {
         "newChatOverlay"
     ).style.display = "flex";
 
+
     document.getElementById(
         "chatError"
     ).innerText = "";
 
+
     document.getElementById(
         "chatSuccess"
     ).innerText = "";
+
 
     document.getElementById(
         "targetUsername"
@@ -1324,13 +1143,16 @@ function closeNewChat() {
         "newChatOverlay"
     ).style.display = "none";
 
+
     document.getElementById(
         "targetUsername"
     ).value = "";
 
+
     document.getElementById(
         "chatError"
     ).innerText = "";
+
 
     document.getElementById(
         "chatSuccess"
@@ -1374,6 +1196,7 @@ async function createPrivateChat() {
 
         const loggedIn =
             await getCurrentUser();
+
 
         if (!loggedIn) {
 
@@ -1704,7 +1527,9 @@ async function loadInvitations() {
    ACCEPT INVITATION
 ========================================= */
 
-async function acceptInvitation(invitationId) {
+async function acceptInvitation(
+    invitationId
+) {
 
     console.log(
         "Accepting invitation:",
@@ -1754,28 +1579,12 @@ async function acceptInvitation(invitationId) {
     }
 
 
-    console.log(
-        "Invitation received:",
-        invitation
-    );
-
-
     const fromUsername =
         invitation.from_username;
 
+
     const toUsername =
         invitation.to_username;
-
-
-    console.log(
-        "FROM USERNAME:",
-        fromUsername
-    );
-
-    console.log(
-        "TO USERNAME:",
-        toUsername
-    );
 
 
     if (
@@ -1784,12 +1593,7 @@ async function acceptInvitation(invitationId) {
     ) {
 
         alert(
-            "Username error!\n\n" +
-            "from_username = " +
-            fromUsername +
-            "\n" +
-            "to_username = " +
-            toUsername
+            "Username error!"
         );
 
         return;
@@ -1846,12 +1650,6 @@ async function acceptInvitation(invitationId) {
     }
 
 
-    console.log(
-        "Conversation created:",
-        conversation
-    );
-
-
     const {
         error: membersError
     } =
@@ -1887,19 +1685,12 @@ async function acceptInvitation(invitationId) {
 
         alert(
             "MEMBERS ERROR:\n\n" +
-            membersError.message +
-            "\n\nError code: " +
-            membersError.code
+            membersError.message
         );
 
         return;
 
     }
-
-
-    console.log(
-        "Both users added to conversation."
-    );
 
 
     const {
@@ -1931,19 +1722,12 @@ async function acceptInvitation(invitationId) {
 
         alert(
             "INVITATION UPDATE ERROR:\n\n" +
-            updateError.message +
-            "\n\nError code: " +
-            updateError.code
+            updateError.message
         );
 
         return;
 
     }
-
-
-    console.log(
-        "Private chat successfully created!"
-    );
 
 
     alert(
@@ -2357,7 +2141,8 @@ async function loadMessages() {
 ========================================= */
 
 function displayMessage(
-    message
+    message,
+    shouldNotify = false
 ) {
 
     const messages =
@@ -2383,10 +2168,12 @@ function displayMessage(
         "message";
 
 
-    if (
+    const isMine =
         message.username ===
-        currentUsername
-    ) {
+        currentUsername;
+
+
+    if (isMine) {
 
         div.classList.add(
             "mine"
@@ -2449,6 +2236,105 @@ function displayMessage(
     messages.scrollTop =
         messages.scrollHeight;
 
+
+    /* =====================================
+       🔔 ONLY REALTIME INCOMING MESSAGES
+       GET A SOUND
+    ===================================== */
+
+    if (
+        shouldNotify &&
+        !isMine
+    ) {
+
+        playMessageNotification();
+
+        showBrowserNotification(
+            message
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   🔔 BROWSER NOTIFICATION
+========================================= */
+
+async function showBrowserNotification(
+    message
+) {
+
+    if (
+        !("Notification" in window)
+    ) {
+
+        return;
+
+    }
+
+
+    if (
+        Notification.permission ===
+        "default"
+    ) {
+
+        try {
+
+            await Notification.requestPermission();
+
+        }
+
+        catch (error) {
+
+            console.log(
+                "Notification permission error:",
+                error
+            );
+
+            return;
+
+        }
+
+    }
+
+
+    if (
+        Notification.permission !==
+        "granted"
+    ) {
+
+        return;
+
+    }
+
+
+    try {
+
+        new Notification(
+            "💬 New Private Message",
+            {
+
+                body:
+                    message.username +
+                    ": " +
+                    message.message
+
+            }
+        );
+
+    }
+
+    catch (error) {
+
+        console.log(
+            "Browser notification error:",
+            error
+        );
+
+    }
+
 }
 
 
@@ -2457,9 +2343,6 @@ function displayMessage(
 ========================================= */
 
 async function sendMessage() {
-
-    unlockNotificationSound();
-
 
     const input =
         document.getElementById(
@@ -2560,6 +2443,7 @@ function subscribeToPrivateMessages() {
         .on(
             "postgres_changes",
             {
+
                 event:
                     "INSERT",
 
@@ -2568,6 +2452,7 @@ function subscribeToPrivateMessages() {
 
                 table:
                     "conversation_messages"
+
             },
 
             function(payload) {
@@ -2577,23 +2462,15 @@ function subscribeToPrivateMessages() {
                     currentConversationId
                 ) {
 
+                    const isMine =
+                        payload.new.username ===
+                        currentUsername;
+
+
                     displayMessage(
-                        payload.new
+                        payload.new,
+                        !isMine
                     );
-
-
-                    /* =================================
-                       🔊 SOUND ONLY FOR INCOMING MESSAGE
-                       ================================= */
-
-                    if (
-                        payload.new.username !==
-                        currentUsername
-                    ) {
-
-                        playNotificationSound();
-
-                    }
 
                 }
 
@@ -2628,6 +2505,7 @@ function subscribeToInvitations() {
         .on(
             "postgres_changes",
             {
+
                 event:
                     "INSERT",
 
@@ -2636,6 +2514,7 @@ function subscribeToInvitations() {
 
                 table:
                     "chat_invitations"
+
             },
 
             function(payload) {
@@ -2701,6 +2580,54 @@ document.addEventListener(
 
         }
 
+    }
+);
+
+
+/* =========================================
+   🔔 ENABLE AUDIO AFTER USER INTERACTION
+========================================= */
+
+document.addEventListener(
+    "click",
+    function() {
+
+        try {
+
+            if (!notificationAudioContext) {
+
+                notificationAudioContext =
+                    new (
+                        window.AudioContext ||
+                        window.webkitAudioContext
+                    )();
+
+            }
+
+
+            if (
+                notificationAudioContext.state ===
+                "suspended"
+            ) {
+
+                notificationAudioContext.resume();
+
+            }
+
+        }
+
+        catch (error) {
+
+            console.log(
+                "Audio setup error:",
+                error
+            );
+
+        }
+
+    },
+    {
+        once: false
     }
 );
 
