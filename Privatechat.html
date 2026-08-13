@@ -1692,9 +1692,13 @@ async function acceptInvitation(invitationId) {
     if (conversationError) {
 
         console.error(
-            "CONVERSATION CREATION ERROR:",
-            conversationError
-        );
+    "CONVERSATION CREATION ERROR:",
+    JSON.stringify(
+        conversationError,
+        null,
+        2
+    )
+);
 
         alert(
             "CONVERSATION ERROR:\n\n" +
