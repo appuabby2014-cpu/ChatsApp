@@ -831,109 +831,7 @@ let invitationChannel = null;
 
 
 /* =========================================
-   🔔 NOTIFICATION SOUND
-========================================= */
-
-let notificationAudioContext = null;
-
-
-function playMessageNotification() {
-
-    try {
-
-        if (!notificationAudioContext) {
-
-            notificationAudioContext =
-                new (
-                    window.AudioContext ||
-                    window.webkitAudioContext
-                )();
-
-        }
-
-
-        if (
-            notificationAudioContext.state ===
-            "suspended"
-        ) {
-
-            notificationAudioContext.resume();
-
-        }
-
-
-        const oscillator =
-            notificationAudioContext.createOscillator();
-
-
-        const gain =
-            notificationAudioContext.createGain();
-
-
-        oscillator.type =
-            "sine";
-
-
-        oscillator.frequency.setValueAtTime(
-            880,
-            notificationAudioContext.currentTime
-        );
-
-
-        oscillator.frequency.setValueAtTime(
-            1175,
-            notificationAudioContext.currentTime + 0.12
-        );
-
-
-        gain.gain.setValueAtTime(
-            0.0001,
-            notificationAudioContext.currentTime
-        );
-
-
-        gain.gain.exponentialRampToValueAtTime(
-            0.85,
-            notificationAudioContext.currentTime + 0.02
-        );
-
-
-        gain.gain.exponentialRampToValueAtTime(
-            0.0001,
-            notificationAudioContext.currentTime + 0.5
-        );
-
-
-        oscillator.connect(gain);
-
-        gain.connect(
-            notificationAudioContext.destination
-        );
-
-
-        oscillator.start();
-
-
-        oscillator.stop(
-            notificationAudioContext.currentTime + 0.5
-        );
-
-    }
-
-    catch (error) {
-
-        console.log(
-            "Notification sound error:",
-            error
-        );
-
-    }
-
-}
-
-
-/* =========================================
-   🔔 BROWSER NOTIFICATION
+   BROWSER NOTIFICATION
 ========================================= */
 
 async function showMessageNotification(
@@ -950,11 +848,6 @@ async function showMessageNotification(
         return;
 
     }
-
-
-    /* PLAY SOUND */
-
-    playMessageNotification();
 
 
     /* BROWSER NOTIFICATION */
@@ -2238,16 +2131,14 @@ function displayMessage(
 
 
     /* =====================================
-       🔔 ONLY REALTIME INCOMING MESSAGES
-       GET A SOUND
+       🔔 ONLY BROWSER NOTIFICATION
+       GETS THE SOUND
     ===================================== */
 
     if (
         shouldNotify &&
         !isMine
     ) {
-
-        playMessageNotification();
 
         showBrowserNotification(
             message
@@ -2580,54 +2471,6 @@ document.addEventListener(
 
         }
 
-    }
-);
-
-
-/* =========================================
-   🔔 ENABLE AUDIO AFTER USER INTERACTION
-========================================= */
-
-document.addEventListener(
-    "click",
-    function() {
-
-        try {
-
-            if (!notificationAudioContext) {
-
-                notificationAudioContext =
-                    new (
-                        window.AudioContext ||
-                        window.webkitAudioContext
-                    )();
-
-            }
-
-
-            if (
-                notificationAudioContext.state ===
-                "suspended"
-            ) {
-
-                notificationAudioContext.resume();
-
-            }
-
-        }
-
-        catch (error) {
-
-            console.log(
-                "Audio setup error:",
-                error
-            );
-
-        }
-
-    },
-    {
-        once: false
     }
 );
 
