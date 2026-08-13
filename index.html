@@ -2844,14 +2844,15 @@ async function sendGlobalMessage() {
 
     if(error) {
 
-        console.error(error);
+    console.error(error);
 
-        alert(
-            "Message could not be sent."
-        );
+    alert(
+        "Message could not be sent!\n\n" +
+        error.message
+    );
 
-        return;
-    }
+    return;
+}
 
     input.value = "";
 }
