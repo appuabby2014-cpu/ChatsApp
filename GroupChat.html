@@ -12,6 +12,8 @@
 
 <style>
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
 * {
     box-sizing: border-box;
 }
@@ -19,7 +21,7 @@
 body {
     margin: 0;
     min-height: 100vh;
-    font-family: Arial, sans-serif;
+    font-family: "Inter", sans-serif;
 
     background:
         radial-gradient(circle at 15% 20%, #253b6e 0%, transparent 35%),
@@ -29,11 +31,19 @@ body {
     color: white;
 }
 
+/* =========================================
+   APP
+========================================= */
+
 .app {
     min-height: 100vh;
     display: grid;
     grid-template-columns: 250px 1fr;
 }
+
+/* =========================================
+   SIDEBAR
+========================================= */
 
 .sidebar {
     background: rgba(10,13,23,.94);
@@ -48,21 +58,30 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
+
     padding: 5px 12px 30px;
 }
 
 .brand-icon {
     width: 42px;
     height: 42px;
+
     border-radius: 13px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    background: linear-gradient(135deg,#5b8cff,#795cff);
+    background: linear-gradient(
+        135deg,
+        #5b8cff,
+        #795cff
+    );
 
     font-weight: 800;
+
+    box-shadow:
+        0 8px 25px rgba(91,140,255,.25);
 }
 
 .brand-name {
@@ -74,12 +93,15 @@ body {
     color: #525b72;
     font-size: 11px;
     font-weight: 700;
+
     letter-spacing: 1.5px;
+
     padding: 10px 13px;
 }
 
 .nav-btn {
     width: 100%;
+
     padding: 13px;
     margin: 3px 0;
 
@@ -91,7 +113,9 @@ body {
 
     text-align: left;
     font-size: 14px;
+
     cursor: pointer;
+    transition: .2s;
 }
 
 .nav-btn:hover,
@@ -105,13 +129,17 @@ body {
     width: 27px;
 }
 
+/* =========================================
+   PROFILE
+========================================= */
+
 .profile {
     margin-top: auto;
 
     background: #151a2a;
     border: 1px solid #252c40;
-    border-radius: 15px;
 
+    border-radius: 15px;
     padding: 13px;
 }
 
@@ -129,16 +157,25 @@ body {
     margin-top: 4px;
 }
 
+/* =========================================
+   MAIN
+========================================= */
+
 .main {
     min-width: 0;
     padding: 30px;
     overflow: hidden;
 }
 
+/* =========================================
+   TOPBAR
+========================================= */
+
 .topbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     margin-bottom: 25px;
 }
 
@@ -154,28 +191,48 @@ body {
 
 .home-button {
     border: 1px solid #30384f;
+
     background: #151a2a;
     color: white;
 
     padding: 11px 17px;
+
     border-radius: 11px;
+
     cursor: pointer;
+    transition: .2s;
 }
+
+.home-button:hover {
+    background: #202a43;
+    transform: translateY(-1px);
+}
+
+/* =========================================
+   LAYOUT
+========================================= */
 
 .group-layout {
     display: grid;
+
     grid-template-columns: 300px 1fr;
 
     gap: 20px;
 
     height: calc(100vh - 135px);
+
     min-height: 500px;
 }
+
+/* =========================================
+   GROUP LIST
+========================================= */
 
 .group-list-panel {
     background: rgba(18,23,38,.85);
 
     border: 1px solid #242b3e;
+
     border-radius: 20px;
 
     overflow: hidden;
@@ -190,6 +247,7 @@ body {
     border-bottom: 1px solid #242b3e;
 
     display: flex;
+
     justify-content: space-between;
     align-items: center;
 }
@@ -206,11 +264,25 @@ body {
     border: none;
     border-radius: 11px;
 
-    background: linear-gradient(135deg,#5b8cff,#795cff);
+    background: linear-gradient(
+        135deg,
+        #5b8cff,
+        #795cff
+    );
 
     color: white;
+
     font-size: 20px;
+
     cursor: pointer;
+    transition: .2s;
+}
+
+.create-button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 25px rgba(91,140,255,.3);
 }
 
 .groups {
@@ -221,9 +293,13 @@ body {
 
 .group-item {
     padding: 15px;
+
     border-radius: 13px;
+
     margin-bottom: 5px;
+
     cursor: pointer;
+    transition: .2s;
 }
 
 .group-item:hover {
@@ -231,11 +307,12 @@ body {
 }
 
 .group-item.active {
-    background: linear-gradient(
-        135deg,
-        rgba(91,140,255,.18),
-        rgba(121,92,255,.12)
-    );
+    background:
+        linear-gradient(
+            135deg,
+            rgba(91,140,255,.18),
+            rgba(121,92,255,.12)
+        );
 
     border: 1px solid rgba(91,140,255,.2);
 }
@@ -243,18 +320,24 @@ body {
 .group-item-name {
     font-weight: 700;
     font-size: 14px;
+
+    word-break: break-word;
 }
 
 .group-item-info {
     color: #737d95;
     font-size: 11px;
+
     margin-top: 5px;
 }
 
 .no-groups {
     text-align: center;
+
     color: #737d95;
+
     padding: 45px 20px;
+
     font-size: 13px;
 }
 
@@ -263,12 +346,17 @@ body {
     margin-bottom: 12px;
 }
 
+/* =========================================
+   CHAT PANEL
+========================================= */
+
 .chat-panel {
     min-width: 0;
 
     background: rgba(18,23,38,.85);
 
     border: 1px solid #242b3e;
+
     border-radius: 20px;
 
     overflow: hidden;
@@ -281,10 +369,12 @@ body {
     flex: 1;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
     text-align: center;
+
     padding: 30px;
 }
 
@@ -302,19 +392,28 @@ body {
     margin: 0;
 }
 
+/* =========================================
+   CHAT HEADER
+========================================= */
+
 .chat-header {
     padding: 18px 22px;
 
     border-bottom: 1px solid #242b3e;
 
     display: flex;
+
     justify-content: space-between;
     align-items: center;
+
+    gap: 15px;
 }
 
 .chat-group-name {
     font-size: 18px;
     font-weight: 800;
+
+    word-break: break-word;
 }
 
 .chat-group-info {
@@ -325,24 +424,52 @@ body {
 
 .members-button {
     border: 1px solid #30384f;
+
     background: #151a2a;
     color: white;
 
     padding: 9px 13px;
+
     border-radius: 10px;
+
     cursor: pointer;
+    white-space: nowrap;
 }
+
+/* =========================================
+   MESSAGES
+========================================= */
 
 .messages {
     flex: 1;
+
     overflow-y: auto;
+
     padding: 20px;
 }
 
 .message {
     display: flex;
+
     gap: 10px;
+
     margin-bottom: 17px;
+
+    animation: messageIn .25s ease;
+}
+
+@keyframes messageIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
 }
 
 .message-avatar {
@@ -373,8 +500,10 @@ body {
 
 .message-user {
     color: #7097ff;
+
     font-size: 11px;
     font-weight: 700;
+
     margin-bottom: 4px;
 }
 
@@ -384,20 +513,23 @@ body {
     border: 1px solid #252d42;
 
     padding: 10px 13px;
+
     border-radius: 12px;
 
     font-size: 14px;
 
     word-break: break-word;
+
     line-height: 1.45;
+}
+
+.message.mine .message-content {
+    margin-left: auto;
+    text-align: right;
 }
 
 .message.mine {
     justify-content: flex-end;
-}
-
-.message.mine .message-content {
-    text-align: right;
 }
 
 .message.mine .message-bubble {
@@ -408,8 +540,13 @@ body {
     );
 
     border: none;
+
     text-align: left;
 }
+
+/* =========================================
+   CHAT INPUT
+========================================= */
 
 .chat-input {
     padding: 15px;
@@ -417,6 +554,7 @@ body {
     border-top: 1px solid #242b3e;
 
     display: flex;
+
     gap: 10px;
 }
 
@@ -426,17 +564,28 @@ body {
     padding: 13px 15px;
 
     border-radius: 12px;
+
     border: 1px solid #2c3348;
 
     background: #0e1220;
+
     color: white;
 
     outline: none;
+
     font-size: 14px;
+}
+
+.chat-input input:focus {
+    border-color: #638cff;
+
+    box-shadow:
+        0 0 0 3px rgba(99,140,255,.1);
 }
 
 .send-button {
     border: none;
+
     border-radius: 12px;
 
     padding: 0 20px;
@@ -448,20 +597,28 @@ body {
     );
 
     color: white;
+
     font-weight: 700;
 
     cursor: pointer;
 }
 
+/* =========================================
+   MODAL
+========================================= */
+
 .modal-overlay {
     display: none;
 
     position: fixed;
+
     inset: 0;
 
     z-index: 1000;
 
     background: rgba(0,0,0,.7);
+
+    backdrop-filter: blur(8px);
 
     align-items: center;
     justify-content: center;
@@ -477,22 +634,49 @@ body {
     width: 100%;
     max-width: 500px;
 
+    max-height: 90vh;
+
+    overflow-y: auto;
+
     background: #121726;
 
     border: 1px solid #30384f;
+
     border-radius: 23px;
 
     padding: 28px;
+
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.6);
+
+    animation: modalIn .25s ease;
+}
+
+@keyframes modalIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
 }
 
 .modal h2 {
     margin: 0 0 7px;
+    font-size: 23px;
 }
 
 .modal-subtitle {
     color: #737d95;
+
     font-size: 13px;
-    margin-bottom: 23px;
+
+    margin: 0 0 23px;
 }
 
 .field {
@@ -510,31 +694,181 @@ body {
     margin-bottom: 7px;
 }
 
-.field input {
+.field input,
+.field textarea {
     width: 100%;
 
     padding: 13px 15px;
 
     border-radius: 11px;
+
     border: 1px solid #2c3348;
 
     background: #0e1220;
+
+    color: white;
+
+    outline: none;
+
+    font-family: inherit;
+
+    resize: vertical;
+}
+
+.field textarea {
+    min-height: 75px;
+}
+
+.field input:focus,
+.field textarea:focus {
+    border-color: #638cff;
+
+    box-shadow:
+        0 0 0 3px rgba(99,140,255,.1);
+}
+
+/* =========================================
+   USER SEARCH
+========================================= */
+
+.user-search {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.user-search input {
+    width: 100%;
+
+    padding: 12px 14px;
+
+    border-radius: 11px;
+
+    border: 1px solid #2c3348;
+
+    background: #0e1220;
+
     color: white;
 
     outline: none;
 }
 
+.user-results {
+    max-height: 180px;
+
+    overflow-y: auto;
+
+    margin-top: 8px;
+
+    border-radius: 12px;
+}
+
+.user-result {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 10px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    transition: .15s;
+}
+
+.user-result:hover {
+    background: #1a2133;
+}
+
+.user-result-avatar {
+    width: 34px;
+    height: 34px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: linear-gradient(
+        135deg,
+        #5b8cff,
+        #9c5cff
+    );
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.user-result-name {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.selected-users {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 7px;
+
+    margin-top: 10px;
+}
+
+.selected-user {
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    background: #1b2742;
+
+    border: 1px solid #30436d;
+
+    border-radius: 20px;
+
+    padding: 6px 9px;
+
+    font-size: 11px;
+}
+
+.remove-user {
+    border: none;
+
+    background: transparent;
+
+    color: #9da8c0;
+
+    cursor: pointer;
+
+    padding: 0;
+
+    font-size: 14px;
+}
+
+/* =========================================
+   MODAL BUTTONS
+========================================= */
+
 .modal-actions {
     display: flex;
+
     gap: 10px;
+
     margin-top: 23px;
 }
 
 .modal-actions button {
     flex: 1;
+
     padding: 12px;
 
     border-radius: 11px;
+
     cursor: pointer;
 
     font-weight: 700;
@@ -542,7 +876,9 @@ body {
 
 .cancel-button {
     border: 1px solid #30384f;
+
     background: #151a2a;
+
     color: white;
 }
 
@@ -558,76 +894,29 @@ body {
     color: white;
 }
 
-.user-results {
-    max-height: 180px;
-    overflow-y: auto;
-    margin-top: 8px;
-}
-
-.user-result {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
-    padding: 10px;
-    border-radius: 10px;
-
-    cursor: pointer;
-}
-
-.user-result:hover {
-    background: #1a2133;
-}
-
-.user-result-avatar {
-    width: 34px;
-    height: 34px;
-
-    border-radius: 50%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: linear-gradient(
-        135deg,
-        #5b8cff,
-        #9c5cff
-    );
-
-    font-weight: 800;
-}
-
-.selected-users {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 7px;
-    margin-top: 10px;
-}
-
-.selected-user {
-    background: #1b2742;
-
-    border: 1px solid #30436d;
-
-    border-radius: 20px;
-
-    padding: 6px 9px;
-    font-size: 11px;
-}
+/* =========================================
+   MEMBERS
+========================================= */
 
 .member-list {
     display: flex;
+
     flex-direction: column;
+
     gap: 7px;
+
+    margin-top: 15px;
 }
 
 .member {
     display: flex;
+
     align-items: center;
+
     gap: 11px;
 
     padding: 10px;
+
     border-radius: 11px;
 
     background: #151b2c;
@@ -640,6 +929,7 @@ body {
     border-radius: 50%;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
@@ -649,14 +939,26 @@ body {
         #9c5cff
     );
 
+    font-size: 12px;
     font-weight: 800;
 }
+
+.member-name {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* =========================================
+   TOAST
+========================================= */
 
 .toast {
     position: fixed;
 
     bottom: 25px;
     right: 25px;
+
+    z-index: 5000;
 
     background: #171e31;
 
@@ -666,9 +968,14 @@ body {
 
     border-radius: 12px;
 
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.4);
+
     opacity: 0;
 
     transform: translateY(15px);
+
+    pointer-events: none;
 
     transition: .25s;
 }
@@ -677,6 +984,10 @@ body {
     opacity: 1;
     transform: translateY(0);
 }
+
+/* =========================================
+   MOBILE
+========================================= */
 
 @media(max-width:850px) {
 
@@ -689,6 +1000,22 @@ body {
     .nav-btn span:not(.nav-icon),
     .profile {
         display: none;
+    }
+
+    .brand {
+        justify-content: center;
+    }
+
+    .nav-btn {
+        text-align: center;
+    }
+
+    .nav-icon {
+        width: auto;
+    }
+
+    .main {
+        padding: 20px;
     }
 
     .group-layout {
@@ -706,19 +1033,46 @@ body {
 
 }
 
+@media(max-width:550px) {
+
+    .topbar h1 {
+        font-size: 23px;
+    }
+
+    .home-button {
+        padding: 9px 12px;
+    }
+
+    .main {
+        padding: 14px;
+    }
+
+    .group-layout {
+        gap: 12px;
+    }
+
+}
+
 </style>
 
 </head>
+
 
 <body>
 
 <div class="app">
 
+<!-- =========================================
+     SIDEBAR
+========================================= -->
+
 <aside class="sidebar">
 
     <div class="brand">
 
-        <div class="brand-icon">C</div>
+        <div class="brand-icon">
+            C
+        </div>
 
         <div class="brand-name">
             ChatsApp
@@ -730,28 +1084,67 @@ body {
         COMMUNICATION
     </div>
 
-    <button class="nav-btn" onclick="goHome()">
-        <span class="nav-icon">⌂</span>
-        <span>Home</span>
+    <button
+        class="nav-btn"
+        onclick="goHome()"
+    >
+
+        <span class="nav-icon">
+            ⌂
+        </span>
+
+        <span>
+            Home
+        </span>
+
     </button>
 
-    <button class="nav-btn active">
-        <span class="nav-icon">👥</span>
-        <span>Group Chats</span>
+    <button
+        class="nav-btn active"
+    >
+
+        <span class="nav-icon">
+            👥
+        </span>
+
+        <span>
+            Group Chats
+        </span>
+
     </button>
 
     <div class="nav-title">
         ACCOUNT
     </div>
 
-    <button class="nav-btn" onclick="goProfile()">
-        <span class="nav-icon">●</span>
-        <span>My Profile</span>
+    <button
+        class="nav-btn"
+        onclick="goProfile()"
+    >
+
+        <span class="nav-icon">
+            ●
+        </span>
+
+        <span>
+            My Profile
+        </span>
+
     </button>
 
-    <button class="nav-btn" onclick="logout()">
-        <span class="nav-icon">↪</span>
-        <span>Log Out</span>
+    <button
+        class="nav-btn"
+        onclick="logout()"
+    >
+
+        <span class="nav-icon">
+            ↪
+        </span>
+
+        <span>
+            Log Out
+        </span>
+
     </button>
 
     <div class="profile">
@@ -772,13 +1165,19 @@ body {
 </aside>
 
 
+<!-- =========================================
+     MAIN
+========================================= -->
+
 <main class="main">
 
     <div class="topbar">
 
         <div>
 
-            <h1>👥 Group Chats</h1>
+            <h1>
+                👥 Group Chats
+            </h1>
 
             <p>
                 Chat with multiple people at once.
@@ -799,7 +1198,9 @@ body {
     <div class="group-layout">
 
 
-        <!-- GROUP LIST -->
+        <!-- =================================
+             GROUP LIST
+        ================================== -->
 
         <section class="group-list-panel">
 
@@ -812,12 +1213,12 @@ body {
                 <button
                     class="create-button"
                     onclick="openCreateModal()"
+                    title="Create group"
                 >
                     +
                 </button>
 
             </div>
-
 
             <div
                 class="groups"
@@ -825,7 +1226,13 @@ body {
             >
 
                 <div class="no-groups">
+
+                    <div class="no-groups-icon">
+                        👥
+                    </div>
+
                     Loading groups...
+
                 </div>
 
             </div>
@@ -833,7 +1240,9 @@ body {
         </section>
 
 
-        <!-- CHAT -->
+        <!-- =================================
+             CHAT
+        ================================== -->
 
         <section class="chat-panel">
 
@@ -938,7 +1347,9 @@ body {
 </div>
 
 
-<!-- CREATE GROUP MODAL -->
+<!-- =========================================
+     CREATE GROUP MODAL
+========================================= -->
 
 <div
     class="modal-overlay"
@@ -954,7 +1365,6 @@ body {
         <p class="modal-subtitle">
             Create a group and choose who can join.
         </p>
-
 
         <div class="field">
 
@@ -978,12 +1388,17 @@ body {
                 ADD MEMBERS
             </label>
 
-            <input
-                id="memberSearchInput"
-                type="text"
-                placeholder="Search usernames..."
-                autocomplete="off"
-            >
+            <div class="user-search">
+
+                <input
+                    id="memberSearchInput"
+                    type="text"
+                    placeholder="Search usernames..."
+                    maxlength="20"
+                    autocomplete="off"
+                >
+
+            </div>
 
             <div
                 class="user-results"
@@ -1021,7 +1436,9 @@ body {
 </div>
 
 
-<!-- MEMBERS MODAL -->
+<!-- =========================================
+     MEMBERS MODAL
+========================================= -->
 
 <div
     class="modal-overlay"
@@ -1062,6 +1479,10 @@ body {
 </div>
 
 
+<!-- =========================================
+     TOAST
+========================================= -->
+
 <div
     class="toast"
     id="toast"
@@ -1101,6 +1522,8 @@ let groupChannel = null;
 
 let selectedUsers = [];
 
+let searchTimer = null;
+
 
 /* =========================================
    HELPERS
@@ -1119,6 +1542,15 @@ function escapeHTML(text) {
 }
 
 
+function escapeAttribute(text) {
+
+    return String(text)
+        .replace(/\\/g, "\\\\")
+        .replace(/'/g, "\\'");
+
+}
+
+
 function showToast(text) {
 
     const toast =
@@ -1129,11 +1561,12 @@ function showToast(text) {
 
     toast.classList.add("show");
 
-    setTimeout(() => {
-
-        toast.classList.remove("show");
-
-    }, 2500);
+    setTimeout(
+        () => {
+            toast.classList.remove("show");
+        },
+        2500
+    );
 
 }
 
@@ -1199,10 +1632,14 @@ async function loadGroups() {
         );
 
 
-    list.innerHTML =
-        `<div class="no-groups">
+    list.innerHTML = `
+        <div class="no-groups">
+            <div class="no-groups-icon">
+                ⏳
+            </div>
             Loading groups...
-        </div>`;
+        </div>
+    `;
 
 
     const {
@@ -1225,34 +1662,34 @@ async function loadGroups() {
             error
         );
 
-        list.innerHTML =
-            `<div class="no-groups">
+        list.innerHTML = `
+            <div class="no-groups">
                 Could not load groups.
-            </div>`;
+            </div>
+        `;
 
         return;
 
     }
 
 
-    if (!memberships?.length) {
+    if (!memberships || !memberships.length) {
 
-        list.innerHTML =
-            `<div class="no-groups">
+        list.innerHTML = `
+            <div class="no-groups">
 
                 <div class="no-groups-icon">
                     👥
                 </div>
 
-                <strong>
-                    No groups yet
-                </strong>
+                <strong>No groups yet</strong>
 
                 <br><br>
 
                 Click <b>+</b> to create one.
 
-            </div>`;
+            </div>
+        `;
 
         return;
 
@@ -1299,40 +1736,46 @@ async function loadGroups() {
     list.innerHTML = "";
 
 
-    (groups || []).forEach(group => {
+    (groups || []).forEach(
+        group => {
 
-        const item =
-            document.createElement("div");
-
-
-        item.className =
-            "group-item";
-
-
-        item.dataset.groupId =
-            String(group.id);
+            const item =
+                document.createElement(
+                    "div"
+                );
 
 
-        item.innerHTML = `
-
-            <div class="group-item-name">
-                👥 ${escapeHTML(group.name)}
-            </div>
-
-            <div class="group-item-info">
-                Created by ${escapeHTML(group.created_by)}
-            </div>
-
-        `;
+            item.className =
+                "group-item";
 
 
-        item.onclick =
-            () => openGroup(group);
+            item.dataset.groupId =
+                String(group.id);
 
 
-        list.appendChild(item);
+            item.innerHTML = `
 
-    });
+                <div class="group-item-name">
+                    👥 ${escapeHTML(group.name)}
+                </div>
+
+                <div class="group-item-info">
+                    Created by ${escapeHTML(
+                        group.created_by
+                    )}
+                </div>
+
+            `;
+
+
+            item.onclick =
+                () => openGroup(group);
+
+
+            list.appendChild(item);
+
+        }
+    );
 
 }
 
@@ -1352,15 +1795,17 @@ async function openGroup(group) {
 
     document
         .querySelectorAll(".group-item")
-        .forEach(item => {
+        .forEach(
+            item => {
 
-            item.classList.toggle(
-                "active",
-                item.dataset.groupId ===
-                String(group.id)
-            );
+                item.classList.toggle(
+                    "active",
+                    item.dataset.groupId ===
+                    String(group.id)
+                );
 
-        });
+            }
+        );
 
 
     document.getElementById(
@@ -1369,9 +1814,13 @@ async function openGroup(group) {
         "none";
 
 
-    document.getElementById(
-        "chatContent"
-    ).style.display =
+    const content =
+        document.getElementById(
+            "chatContent"
+        );
+
+
+    content.style.display =
         "flex";
 
 
@@ -1396,7 +1845,7 @@ async function openGroup(group) {
 
 
 /* =========================================
-   LOAD MEMBERS
+   LOAD GROUP MEMBERS
 ========================================= */
 
 async function loadGroupMembers() {
@@ -1415,13 +1864,19 @@ async function loadGroupMembers() {
         .eq(
             "group_id",
             currentGroupId
+        )
+        .order(
+            "created_at",
+            {
+                ascending: true
+            }
         );
 
 
     if (error) {
 
         console.error(
-            "MEMBERS ERROR:",
+            "MEMBERS LOAD ERROR:",
             error
         );
 
@@ -1459,14 +1914,32 @@ async function loadMessages() {
         );
 
 
-    box.innerHTML =
-        `<div style="
+    box.innerHTML = `
+        <div style="
             text-align:center;
             color:#737d95;
             padding:30px;
         ">
             Loading messages...
-        </div>`;
+        </div>
+    `;
+
+
+    /*
+       IMPORTANT:
+
+       group_messages does NOT have group_id.
+
+       It has:
+
+       conversation_id BIGINT
+
+       Therefore we use:
+
+       currentGroupId
+       ↓
+       conversation_id
+    */
 
 
     const {
@@ -1474,7 +1947,7 @@ async function loadMessages() {
         error
     } =
         await supabaseClient
-        .from("messages")
+        .from("group_messages")
         .select("*")
         .eq(
             "conversation_id",
@@ -1495,16 +1968,28 @@ async function loadMessages() {
             error
         );
 
-        box.innerHTML =
-            `<div style="
+        box.innerHTML = `
+            <div style="
                 text-align:center;
                 color:#ff8585;
                 padding:30px;
             ">
-                Could not load messages.
+
+                <strong>
+                    Could not load messages.
+                </strong>
+
                 <br><br>
-                Check the browser console.
-            </div>`;
+
+                <span style="
+                    color:#737d95;
+                    font-size:12px;
+                ">
+                    ${escapeHTML(error.message)}
+                </span>
+
+            </div>
+        `;
 
         return;
 
@@ -1542,14 +2027,31 @@ function displayMessage(message) {
         );
 
 
+    /*
+       IMPORTANT:
+
+       group_messages uses:
+
+       sender
+
+       NOT username.
+    */
+
+
+    const sender =
+        message.sender ||
+        "Unknown";
+
+
+    const text =
+        message.message ||
+        "";
+
+
     const item =
         document.createElement(
             "div"
         );
-
-
-    const sender =
-        message.sender || "Unknown";
 
 
     const mine =
@@ -1587,7 +2089,7 @@ function displayMessage(message) {
             </div>
 
             <div class="message-bubble">
-                ${escapeHTML(message.message)}
+                ${escapeHTML(text)}
             </div>
 
         </div>
@@ -1631,22 +2133,19 @@ async function sendMessage() {
         return;
 
 
-    input.disabled = true;
+    input.disabled =
+        true;
 
 
-    console.log(
-        "Sending message:",
-        {
-            conversation_id:
-                currentGroupId,
+    /*
+       IMPORTANT:
 
-            sender:
-                currentUsername,
+       group_messages columns:
 
-            message:
-                text
-        }
-    );
+       conversation_id
+       sender
+       message
+    */
 
 
     const {
@@ -1654,7 +2153,7 @@ async function sendMessage() {
         error
     } =
         await supabaseClient
-        .from("messages")
+        .from("group_messages")
         .insert({
 
             conversation_id:
@@ -1671,13 +2170,14 @@ async function sendMessage() {
         .single();
 
 
-    input.disabled = false;
+    input.disabled =
+        false;
 
 
     if (error) {
 
         console.error(
-            "MESSAGE SEND ERROR:",
+            "SEND MESSAGE ERROR:",
             error
         );
 
@@ -1690,21 +2190,63 @@ async function sendMessage() {
     }
 
 
-    console.log(
-        "MESSAGE SENT:",
-        data
-    );
-
-
-    input.value = "";
+    input.value =
+        "";
 
     input.focus();
+
+
+    /*
+       If Realtime is working,
+       the subscription will display
+       the message automatically.
+
+       If Realtime is not enabled,
+       display it immediately here.
+    */
+
+
+    if (data) {
+
+        const existingMessages =
+            document.querySelectorAll(
+                ".message"
+            );
+
+
+        /*
+           Only display manually if
+           Realtime hasn't already inserted it.
+        */
+
+
+        const alreadyDisplayed =
+            Array.from(
+                existingMessages
+            ).some(
+                element =>
+                    element.dataset.messageId ===
+                    String(data.id)
+            );
+
+
+        if (!alreadyDisplayed) {
+
+            displayMessage(
+                data
+            );
+
+            scrollMessages();
+
+        }
+
+    }
 
 }
 
 
 /* =========================================
-   REALTIME MESSAGES
+   REALTIME
 ========================================= */
 
 function subscribeToGroup() {
@@ -1716,15 +2258,20 @@ function subscribeToGroup() {
                 groupChannel
             );
 
+        groupChannel =
+            null;
+
     }
+
+
+    const channelName =
+        "group-chat-" +
+        currentGroupId;
 
 
     groupChannel =
         supabaseClient
-        .channel(
-            "group-chat-" +
-            currentGroupId
-        )
+        .channel(channelName)
         .on(
             "postgres_changes",
             {
@@ -1733,19 +2280,25 @@ function subscribeToGroup() {
 
                 schema: "public",
 
-                table: "messages"
+                table: "group_messages",
+
+                filter:
+                    "conversation_id=eq." +
+                    currentGroupId
 
             },
 
             payload => {
 
-                const message =
-                    payload.new;
-
+                /*
+                   Make sure this message
+                   belongs to the currently
+                   opened group.
+                */
 
                 if (
                     String(
-                        message.conversation_id
+                        payload.new.conversation_id
                     ) !==
                     String(currentGroupId)
                 ) {
@@ -1756,19 +2309,19 @@ function subscribeToGroup() {
 
 
                 displayMessage(
-                    message
+                    payload.new
                 );
-
 
                 scrollMessages();
 
             }
+
         )
         .subscribe(
             status => {
 
                 console.log(
-                    "Realtime status:",
+                    "GROUP REALTIME:",
                     status
                 );
 
@@ -1790,18 +2343,21 @@ function scrollMessages() {
         );
 
 
-    setTimeout(() => {
+    setTimeout(
+        () => {
 
-        box.scrollTop =
-            box.scrollHeight;
+            box.scrollTop =
+                box.scrollHeight;
 
-    }, 30);
+        },
+        30
+    );
 
 }
 
 
 /* =========================================
-   CREATE GROUP MODAL
+   CREATE MODAL
 ========================================= */
 
 function openCreateModal() {
@@ -1813,23 +2369,39 @@ function openCreateModal() {
 
     document.getElementById(
         "groupNameInput"
-    ).value = "";
+    ).value =
+        "";
 
 
     document.getElementById(
         "memberSearchInput"
-    ).value = "";
+    ).value =
+        "";
 
 
     document.getElementById(
         "memberSearchResults"
-    ).innerHTML = "";
+    ).innerHTML =
+        "";
 
 
-    selectedUsers = [];
+    selectedUsers =
+        [];
 
 
     renderSelectedUsers();
+
+
+    setTimeout(
+        () => {
+
+            document.getElementById(
+                "groupNameInput"
+            ).focus();
+
+        },
+        100
+    );
 
 }
 
@@ -1851,74 +2423,108 @@ document.getElementById(
     "memberSearchInput"
 ).addEventListener(
     "input",
-    async function() {
+    function() {
 
         const query =
             this.value.trim();
+
+
+        clearTimeout(
+            searchTimer
+        );
 
 
         if (!query) {
 
             document.getElementById(
                 "memberSearchResults"
-            ).innerHTML = "";
+            ).innerHTML =
+                "";
 
             return;
 
         }
 
 
-        const {
-            data,
+        searchTimer =
+            setTimeout(
+                () => {
+
+                    searchUsersForGroup(
+                        query
+                    );
+
+                },
+                250
+            );
+
+    }
+);
+
+
+/* =========================================
+   SEARCH USERS
+========================================= */
+
+async function searchUsersForGroup(query) {
+
+    const results =
+        document.getElementById(
+            "memberSearchResults"
+        );
+
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+        .from("profiles")
+        .select(
+            "username, online"
+        )
+        .ilike(
+            "username",
+            "%" + query + "%"
+        )
+        .order(
+            "username",
+            {
+                ascending: true
+            }
+        )
+        .limit(20);
+
+
+    if (error) {
+
+        console.error(
+            "USER SEARCH ERROR:",
             error
-        } =
-            await supabaseClient
-            .from("profiles")
-            .select(
-                "username, online"
-            )
-            .ilike(
-                "username",
-                "%" + query + "%"
-            )
-            .limit(20);
+        );
+
+        return;
+
+    }
 
 
-        if (error) {
-
-            console.error(
-                "USER SEARCH ERROR:",
-                error
-            );
-
-            return;
-
-        }
+    results.innerHTML =
+        "";
 
 
-        const results =
-            document.getElementById(
-                "memberSearchResults"
-            );
-
-
-        results.innerHTML = "";
-
-
-        const filtered =
-            (data || []).filter(user => {
-
-                if (!user.username)
-                    return false;
-
+    const filtered =
+        (data || []).filter(
+            user => {
 
                 if (
-                    user.username
-                        .toLowerCase() ===
-                    currentUsername
-                        .toLowerCase()
-                )
+                    !user.username ||
+                    user.username.toLowerCase() ===
+                    currentUsername.toLowerCase()
+                ) {
+
                     return false;
+
+                }
 
 
                 return !selectedUsers.some(
@@ -1927,10 +2533,12 @@ document.getElementById(
                         user.username.toLowerCase()
                 );
 
-            });
+            }
+        );
 
 
-        filtered.forEach(user => {
+    filtered.forEach(
+        user => {
 
             const item =
                 document.createElement(
@@ -1954,9 +2562,11 @@ document.getElementById(
 
                 <div>
 
-                    <b>
-                        ${escapeHTML(user.username)}
-                    </b>
+                    <div class="user-result-name">
+                        ${escapeHTML(
+                            user.username
+                        )}
+                    </div>
 
                     <div style="
                         color:${
@@ -1965,12 +2575,15 @@ document.getElementById(
                                 : "#737d95"
                         };
                         font-size:10px;
+                        margin-top:2px;
                     ">
+
                         ${
                             user.online
                                 ? "● Online"
                                 : "● Offline"
                         }
+
                     </div>
 
                 </div>
@@ -1978,39 +2591,88 @@ document.getElementById(
             `;
 
 
-            item.onclick = () => {
+            item.onclick =
+                () => {
 
-                selectedUsers.push(
-                    user.username
-                );
+                    addSelectedUser(
+                        user.username
+                    );
 
-
-                renderSelectedUsers();
-
-
-                document.getElementById(
-                    "memberSearchInput"
-                ).value = "";
-
-
-                results.innerHTML = "";
-
-            };
+                };
 
 
             results.appendChild(
                 item
             );
 
-        });
+        }
+    );
+
+
+    if (!filtered.length) {
+
+        results.innerHTML = `
+            <div style="
+                color:#737d95;
+                padding:12px;
+                font-size:12px;
+            ">
+                No users found.
+            </div>
+        `;
 
     }
-);
+
+}
 
 
 /* =========================================
-   SELECTED USERS
+   SELECT USERS
 ========================================= */
+
+function addSelectedUser(username) {
+
+    if (
+        selectedUsers.includes(username)
+    )
+        return;
+
+
+    selectedUsers.push(
+        username
+    );
+
+
+    renderSelectedUsers();
+
+
+    document.getElementById(
+        "memberSearchInput"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "memberSearchResults"
+    ).innerHTML =
+        "";
+
+}
+
+
+function removeSelectedUser(username) {
+
+    selectedUsers =
+        selectedUsers.filter(
+            user =>
+                user !== username
+        );
+
+
+    renderSelectedUsers();
+
+}
+
 
 function renderSelectedUsers() {
 
@@ -2020,7 +2682,8 @@ function renderSelectedUsers() {
         );
 
 
-    container.innerHTML = "";
+    container.innerHTML =
+        "";
 
 
     selectedUsers.forEach(
@@ -2041,13 +2704,8 @@ function renderSelectedUsers() {
                 ${escapeHTML(username)}
 
                 <button
+                    class="remove-user"
                     onclick="removeSelectedUser('${escapeAttribute(username)}')"
-                    style="
-                        border:none;
-                        background:none;
-                        color:white;
-                        cursor:pointer;
-                    "
                 >
                     ×
                 </button>
@@ -2061,20 +2719,6 @@ function renderSelectedUsers() {
 
         }
     );
-
-}
-
-
-function removeSelectedUser(username) {
-
-    selectedUsers =
-        selectedUsers.filter(
-            user =>
-                user !== username
-        );
-
-
-    renderSelectedUsers();
 
 }
 
@@ -2102,6 +2746,23 @@ async function createGroup() {
         return;
 
     }
+
+
+    if (name.length < 2) {
+
+        showToast(
+            "⚠️ Group name is too short"
+        );
+
+        return;
+
+    }
+
+
+    console.log(
+        "Creating group:",
+        name
+    );
 
 
     const {
@@ -2140,28 +2801,40 @@ async function createGroup() {
     }
 
 
-    console.log(
-        "GROUP CREATED:",
-        group
-    );
+    if (!group) {
+
+        alert(
+            "Could not create group!"
+        );
+
+        return;
+
+    }
 
 
-    const members = [];
+    /*
+       Add creator.
+    */
+
+    const members = [
+
+        {
+            group_id:
+                group.id,
+
+            username:
+                currentUsername,
+
+            role:
+                "owner"
+        }
+
+    ];
 
 
-    members.push({
-
-        group_id:
-            group.id,
-
-        username:
-            currentUsername,
-
-        role:
-            "owner"
-
-    });
-
+    /*
+       Add selected users.
+    */
 
     selectedUsers.forEach(
         username => {
@@ -2183,6 +2856,12 @@ async function createGroup() {
     );
 
 
+    console.log(
+        "Adding members:",
+        members
+    );
+
+
     const {
         error: memberError
     } =
@@ -2199,6 +2878,16 @@ async function createGroup() {
             "MEMBER INSERT ERROR:",
             memberError
         );
+
+
+        await supabaseClient
+            .from("groups")
+            .delete()
+            .eq(
+                "id",
+                group.id
+            );
+
 
         alert(
             "Group was created, but members could not be added.\n\n" +
@@ -2221,7 +2910,9 @@ async function createGroup() {
     await loadGroups();
 
 
-    openGroup(group);
+    await openGroup(
+        group
+    );
 
 }
 
@@ -2247,14 +2938,15 @@ async function openMembersModal() {
         );
 
 
-    list.innerHTML =
-        `<div style="
+    list.innerHTML = `
+        <div style="
             color:#737d95;
             padding:20px;
             text-align:center;
         ">
             Loading...
-        </div>`;
+        </div>
+    `;
 
 
     const {
@@ -2269,6 +2961,12 @@ async function openMembersModal() {
         .eq(
             "group_id",
             currentGroupId
+        )
+        .order(
+            "created_at",
+            {
+                ascending: true
+            }
         );
 
 
@@ -2279,78 +2977,102 @@ async function openMembersModal() {
             error
         );
 
+        list.innerHTML = `
+            <div style="
+                color:#ff8585;
+                padding:20px;
+                text-align:center;
+            ">
+                Could not load members.
+            </div>
+        `;
+
         return;
 
     }
 
 
+    const members =
+        data || [];
+
+
     document.getElementById(
         "membersSubtitle"
     ).innerText =
-        data.length +
+        members.length +
         (
-            data.length === 1
+            members.length === 1
                 ? " member"
                 : " members"
         );
 
 
-    list.innerHTML = "";
+    list.innerHTML =
+        "";
 
 
-    data.forEach(member => {
+    members.forEach(
+        member => {
 
-        const item =
-            document.createElement(
-                "div"
-            );
-
-
-        item.className =
-            "member";
+            const item =
+                document.createElement(
+                    "div"
+                );
 
 
-        item.innerHTML = `
+            item.className =
+                "member";
 
-            <div class="member-avatar">
-                ${escapeHTML(
-                    member.username
-                        .charAt(0)
-                        .toUpperCase()
-                )}
-            </div>
 
-            <div>
-                <div>
+            const isOwner =
+                member.role === "owner" ||
+                (
+                    currentGroup &&
+                    member.username.toLowerCase() ===
+                    currentGroup.created_by.toLowerCase()
+                );
+
+
+            item.innerHTML = `
+
+                <div class="member-avatar">
+                    ${escapeHTML(
+                        member.username
+                            .charAt(0)
+                            .toUpperCase()
+                    )}
+                </div>
+
+                <div class="member-name">
                     ${escapeHTML(
                         member.username
                     )}
                 </div>
 
                 ${
-                    member.role
+                    isOwner
                         ? `
-                            <small style="
-                                color:#737d95;
+                            <span style="
+                                margin-left:auto;
+                                color:#7097ff;
+                                font-size:10px;
+                                font-weight:700;
                             ">
-                                ${escapeHTML(
-                                    member.role
-                                )}
-                            </small>
-                          `
+                                OWNER
+                            </span>
+                        `
                         : ""
                 }
 
-            </div>
-
-        `;
+            `;
 
 
-        list.appendChild(
-            item
-        );
+            list.appendChild(
+                item
+            );
 
-    });
+        }
+    );
 
 }
 
@@ -2377,7 +3099,8 @@ function goHome() {
                 groupChannel
             );
 
-        groupChannel = null;
+        groupChannel =
+            null;
 
     }
 
@@ -2415,6 +3138,9 @@ async function logout() {
                 groupChannel
             );
 
+        groupChannel =
+            null;
+
     }
 
 
@@ -2430,19 +3156,6 @@ async function logout() {
 
 
 /* =========================================
-   ATTRIBUTE ESCAPE
-========================================= */
-
-function escapeAttribute(text) {
-
-    return String(text)
-        .replace(/\\/g, "\\\\")
-        .replace(/'/g, "\\'");
-
-}
-
-
-/* =========================================
    ENTER KEY
 ========================================= */
 
@@ -2452,9 +3165,7 @@ document.getElementById(
     "keydown",
     function(event) {
 
-        if (
-            event.key === "Enter"
-        ) {
+        if (event.key === "Enter") {
 
             event.preventDefault();
 
@@ -2467,7 +3178,7 @@ document.getElementById(
 
 
 /* =========================================
-   CLOSE MODALS
+   CLOSE CREATE MODAL
 ========================================= */
 
 document.getElementById(
@@ -2476,9 +3187,7 @@ document.getElementById(
     "click",
     function(event) {
 
-        if (
-            event.target === this
-        ) {
+        if (event.target === this) {
 
             closeCreateModal();
 
@@ -2488,15 +3197,17 @@ document.getElementById(
 );
 
 
+/* =========================================
+   CLOSE MEMBERS MODAL
+========================================= */
+
 document.getElementById(
     "membersModal"
 ).addEventListener(
     "click",
     function(event) {
 
-        if (
-            event.target === this
-        ) {
+        if (event.target === this) {
 
             closeMembersModal();
 
@@ -2507,7 +3218,7 @@ document.getElementById(
 
 
 /* =========================================
-   START
+   START APP
 ========================================= */
 
 loadSession();
