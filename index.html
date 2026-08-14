@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -9,6 +11,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 * {
@@ -19,13 +22,16 @@ body {
     margin: 0;
     min-height: 100vh;
     font-family: "Inter", sans-serif;
+
     background:
         radial-gradient(circle at 15% 20%, #253b6e 0%, transparent 35%),
         radial-gradient(circle at 85% 80%, #34205d 0%, transparent 35%),
         #080b14;
+
     color: white;
     overflow-x: hidden;
 }
+
 
 /* =========================================
    LOADING SCREEN
@@ -35,14 +41,17 @@ body {
     position: fixed;
     inset: 0;
     z-index: 99999;
+
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+
     background:
         radial-gradient(circle at 20% 20%, #253b6e 0%, transparent 35%),
         radial-gradient(circle at 80% 80%, #34205d 0%, transparent 35%),
         #080b14;
+
     transition: opacity .8s ease, visibility .8s ease;
 }
 
@@ -55,17 +64,24 @@ body {
 .loading-logo {
     width: 96px;
     height: 96px;
+
     border-radius: 29px;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     font-size: 45px;
     font-weight: 800;
+
     background: linear-gradient(135deg,#5b8cff,#8d5cff);
+
     box-shadow:
         0 0 25px rgba(91,140,255,.55),
         0 0 60px rgba(121,92,255,.3);
+
     animation: loadingLogoGlow 2s ease-in-out infinite;
+
     position: relative;
     z-index: 5;
 }
@@ -75,8 +91,10 @@ body {
 }
 
 @keyframes loadingLogoGlow {
+
     0%,100% {
         transform: scale(1);
+
         box-shadow:
             0 0 25px rgba(91,140,255,.55),
             0 0 60px rgba(121,92,255,.3);
@@ -84,39 +102,64 @@ body {
 
     50% {
         transform: scale(1.045);
+
         box-shadow:
             0 0 38px rgba(91,140,255,.75),
             0 0 85px rgba(121,92,255,.45);
     }
+
 }
 
 @keyframes connectedPulse {
-    0% { transform:scale(1); }
-    45% { transform:scale(1.14); }
-    100% { transform:scale(1); }
+
+    0% {
+        transform:scale(1);
+    }
+
+    45% {
+        transform:scale(1.14);
+    }
+
+    100% {
+        transform:scale(1);
+    }
+
 }
 
 .loading-particles {
     position:absolute;
+
     width:280px;
     height:280px;
+
     left:50%;
     top:50%;
+
     transform:translate(-50%,-50%);
+
     pointer-events:none;
     z-index:3;
 }
 
 .loading-particle {
     position:absolute;
+
     width:6px;
     height:6px;
+
     border-radius:50%;
+
     background:#7097ff;
-    box-shadow:0 0 10px #7097ff,0 0 20px rgba(112,151,255,.8);
+
+    box-shadow:
+        0 0 10px #7097ff,
+        0 0 20px rgba(112,151,255,.8);
+
     left:50%;
     top:50%;
+
     opacity:0;
+
     animation:particleFly 2.2s ease-in-out infinite;
 }
 
@@ -130,15 +173,21 @@ body {
 .loading-particle:nth-child(8){--x:-130px;--y:0;animation-delay:1.75s}
 
 @keyframes particleFly {
+
     0% {
         transform:translate(var(--x),var(--y)) scale(.4);
         opacity:0;
     }
-    25%,70% { opacity:1; }
+
+    25%,70% {
+        opacity:1;
+    }
+
     100% {
         transform:translate(0,0) scale(.05);
         opacity:0;
     }
+
 }
 
 .loading-title {
@@ -169,8 +218,11 @@ body {
     width:8px;
     height:8px;
     border-radius:50%;
+
     background:#7097ff;
+
     animation:loadingDot 1.2s infinite ease-in-out;
+
     box-shadow:0 0 8px rgba(112,151,255,.6);
 }
 
@@ -178,15 +230,19 @@ body {
 .loading-dots span:nth-child(3){animation-delay:.3s}
 
 @keyframes loadingDot {
+
     0%,100% {
         transform:translateY(0);
         opacity:.35;
     }
+
     50% {
         transform:translateY(-7px);
         opacity:1;
     }
+
 }
+
 
 /* =========================================
    FLOATING EMOJIS
@@ -195,15 +251,19 @@ body {
 .floating-emojis {
     position:fixed;
     inset:0;
+
     pointer-events:none;
     overflow:hidden;
+
     z-index:0;
 }
 
 .floating-emojis span {
     position:absolute;
+
     opacity:.12;
     font-size:25px;
+
     animation:floatEmoji 12s linear infinite;
 }
 
@@ -214,13 +274,17 @@ body {
 .floating-emojis span:nth-child(5){left:50%;top:40%;animation-delay:8s}
 
 @keyframes floatEmoji {
+
     0%,100% {
         transform:translateY(20px) rotate(0deg);
     }
+
     50% {
         transform:translateY(-30px) rotate(10deg);
     }
+
 }
+
 
 /* =========================================
    AUTH
@@ -228,10 +292,13 @@ body {
 
 .auth-screen {
     min-height:100vh;
+
     display:flex;
     align-items:center;
     justify-content:center;
+
     padding:20px;
+
     position:relative;
     z-index:1;
 }
@@ -239,29 +306,43 @@ body {
 .auth-box {
     width:100%;
     max-width:440px;
+
     padding:42px;
+
     border-radius:25px;
+
     background:rgba(18,22,38,.9);
+
     border:1px solid rgba(255,255,255,.1);
+
     box-shadow:
         0 30px 80px rgba(0,0,0,.55),
         inset 0 1px rgba(255,255,255,.06);
+
     backdrop-filter:blur(20px);
+
     text-align:center;
 }
 
 .logo {
     width:70px;
     height:70px;
+
     margin:0 auto 20px;
+
     border-radius:22px;
+
     display:flex;
     align-items:center;
     justify-content:center;
+
     font-size:32px;
     font-weight:800;
+
     background:linear-gradient(135deg,#5b8cff,#8d5cff);
-    box-shadow:0 10px 30px rgba(91,140,255,.35);
+
+    box-shadow:
+        0 10px 30px rgba(91,140,255,.35);
 }
 
 .auth-box h1 {
@@ -271,7 +352,9 @@ body {
 
 .subtitle {
     color:#8d96ad;
+
     margin:10px 0 30px;
+
     font-size:14px;
     line-height:1.5;
 }
@@ -283,81 +366,125 @@ body {
 
 .input-group label {
     display:block;
+
     margin-bottom:7px;
+
     color:#9ca5ba;
+
     font-size:13px;
     font-weight:600;
 }
 
 input {
     width:100%;
+
     padding:15px 17px;
+
     border-radius:13px;
+
     border:1px solid #2c3348;
+
     background:#0e1220;
+
     color:white;
+
     outline:none;
+
     font-size:15px;
+
     transition:.2s;
 }
 
 input:focus {
     border-color:#638cff;
-    box-shadow:0 0 0 3px rgba(99,140,255,.1);
+
+    box-shadow:
+        0 0 0 3px rgba(99,140,255,.1);
 }
 
 .primary {
     width:100%;
+
     padding:15px;
+
     border:none;
+
     border-radius:13px;
-    background:linear-gradient(135deg,#5b8cff,#795cff);
+
+    background:
+        linear-gradient(
+            135deg,
+            #5b8cff,
+            #795cff
+        );
+
     color:white;
+
     font-weight:700;
     font-size:15px;
+
     cursor:pointer;
+
     margin-top:8px;
+
     transition:.2s;
 }
 
 .primary:hover {
     transform:translateY(-2px);
-    box-shadow:0 10px 30px rgba(91,140,255,.3);
+
+    box-shadow:
+        0 10px 30px rgba(91,140,255,.3);
 }
 
 .switch {
     margin-top:22px;
+
     color:#7f89a2;
+
     font-size:14px;
 }
 
 .switch span {
     color:#7097ff;
+
     cursor:pointer;
+
     font-weight:600;
 }
 
 .message {
     display:none;
+
     margin-bottom:18px;
+
     padding:12px 15px;
+
     border-radius:11px;
+
     font-size:13px;
 }
 
 .message.error {
     display:block;
+
     background:rgba(255,75,75,.1);
+
     border:1px solid rgba(255,75,75,.25);
+
     color:#ff8585;
 }
 
 .message.success {
     display:block;
+
     background:rgba(70,210,130,.1);
+
     border:1px solid rgba(70,210,130,.25);
+
     color:#71e0a0;
 }
+
 
 /* =========================================
    APP
@@ -365,16 +492,23 @@ input:focus {
 
 .app {
     display:none;
+
     min-height:100vh;
+
     grid-template-columns:260px 1fr;
+
     position:relative;
+
     z-index:1;
 }
 
 .sidebar {
     background:rgba(10,13,23,.94);
+
     border-right:1px solid #202638;
+
     padding:25px 16px;
+
     display:flex;
     flex-direction:column;
 }
@@ -382,18 +516,29 @@ input:focus {
 .brand {
     display:flex;
     align-items:center;
+
     gap:12px;
+
     padding:5px 12px 30px;
 }
 
 .brand-icon {
     width:42px;
     height:42px;
+
     border-radius:13px;
+
     display:flex;
     align-items:center;
     justify-content:center;
-    background:linear-gradient(135deg,#5b8cff,#795cff);
+
+    background:
+        linear-gradient(
+            135deg,
+            #5b8cff,
+            #795cff
+        );
+
     font-weight:800;
 }
 
@@ -404,23 +549,36 @@ input:focus {
 
 .nav-title {
     color:#525b72;
+
     font-size:11px;
     font-weight:700;
+
     letter-spacing:1.5px;
+
     padding:10px 13px;
 }
 
 .nav-btn {
     width:100%;
+
     padding:13px;
+
     margin:3px 0;
+
     border:none;
+
     border-radius:12px;
+
     background:transparent;
+
     color:#8d96ad;
+
     text-align:left;
+
     font-size:14px;
+
     cursor:pointer;
+
     transition:.2s;
 }
 
@@ -437,24 +595,33 @@ input:focus {
 
 .profile {
     margin-top:auto;
+
     background:#151a2a;
+
     border:1px solid #252c40;
+
     border-radius:15px;
+
     padding:13px;
 }
 
 .profile-name {
     font-weight:600;
     font-size:14px;
+
     overflow:hidden;
+
     text-overflow:ellipsis;
 }
 
 .profile-status {
     color:#55d88a;
+
     font-size:11px;
+
     margin-top:4px;
 }
+
 
 /* =========================================
    MAIN
@@ -462,13 +629,17 @@ input:focus {
 
 .main {
     padding:35px;
+
     overflow-y:auto;
 }
 
 .topbar {
     display:flex;
+
     align-items:center;
+
     justify-content:space-between;
+
     margin-bottom:35px;
 }
 
@@ -485,34 +656,55 @@ input:focus {
 .avatar {
     width:45px;
     height:45px;
+
     border-radius:50%;
+
     display:flex;
     align-items:center;
     justify-content:center;
-    background:linear-gradient(135deg,#5b8cff,#9c5cff);
+
+    background:
+        linear-gradient(
+            135deg,
+            #5b8cff,
+            #9c5cff
+        );
+
     font-weight:700;
 }
 
 .cards {
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+
+    grid-template-columns:
+        repeat(auto-fit,minmax(230px,1fr));
+
     gap:20px;
 }
 
 .card {
     min-height:180px;
+
     padding:25px;
+
     border-radius:20px;
+
     background:rgba(18,23,38,.85);
+
     border:1px solid #242b3e;
+
     cursor:pointer;
+
     transition:.25s;
 }
 
 .card:hover {
     transform:translateY(-5px);
+
     border-color:#3c4b70;
-    box-shadow:0 15px 40px rgba(0,0,0,.25);
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.25);
 }
 
 .card-icon {
@@ -527,26 +719,35 @@ input:focus {
 
 .card p {
     margin:0;
+
     color:#78829a;
+
     font-size:13px;
+
     line-height:1.5;
 }
 
 .welcome {
     margin-top:25px;
+
     padding:25px;
+
     border-radius:20px;
-    background:linear-gradient(
-        135deg,
-        rgba(91,140,255,.15),
-        rgba(121,92,255,.08)
-    );
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(91,140,255,.15),
+            rgba(121,92,255,.08)
+        );
+
     border:1px solid rgba(91,140,255,.2);
 }
 
 .welcome h2 {
     margin-top:0;
 }
+
 
 /* =========================================
    USER SEARCH
@@ -558,20 +759,26 @@ input:focus {
 }
 
 @keyframes pageIn {
+
     from {
         opacity:0;
         transform:translateY(12px);
     }
+
     to {
         opacity:1;
         transform:translateY(0);
     }
+
 }
 
 .search-header {
     display:flex;
+
     justify-content:space-between;
+
     align-items:center;
+
     margin-bottom:25px;
 }
 
@@ -587,10 +794,15 @@ input:focus {
 
 .search-back {
     border:1px solid #30384f;
+
     background:#151a2a;
+
     color:white;
+
     padding:11px 17px;
+
     border-radius:11px;
+
     cursor:pointer;
 }
 
@@ -601,95 +813,145 @@ input:focus {
 
 .search-icon {
     position:absolute;
+
     left:17px;
     top:50%;
+
     transform:translateY(-50%);
+
     font-size:20px;
+
     pointer-events:none;
 }
 
 #userSearchInput {
     padding-left:50px;
     padding-right:45px;
+
     font-size:16px;
+
     background:rgba(14,18,32,.9);
 }
 
 .clear-search {
     position:absolute;
+
     right:12px;
     top:50%;
+
     transform:translateY(-50%);
+
     width:30px;
     height:30px;
+
     border:0;
+
     border-radius:50%;
+
     background:#252d42;
+
     color:#aab3c8;
+
     cursor:pointer;
+
     display:none;
 }
 
 .search-info {
     display:flex;
+
     justify-content:space-between;
+
     align-items:center;
+
     color:#737d95;
+
     font-size:13px;
+
     margin-bottom:15px;
 }
 
 .search-results {
     display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+
+    grid-template-columns:
+        repeat(auto-fill,minmax(250px,1fr));
+
     gap:15px;
 }
 
 .user-card {
     position:relative;
+
     padding:20px;
+
     border-radius:18px;
+
     background:rgba(18,23,38,.86);
+
     border:1px solid #252d42;
+
     transition:.25s;
+
     animation:userCardIn .35s ease both;
 }
 
 .user-card:hover {
     transform:translateY(-4px);
+
     border-color:#4a5e8d;
-    box-shadow:0 15px 35px rgba(0,0,0,.25);
+
+    box-shadow:
+        0 15px 35px rgba(0,0,0,.25);
 }
 
 @keyframes userCardIn {
+
     from {
         opacity:0;
         transform:translateY(12px) scale(.98);
     }
+
     to {
         opacity:1;
         transform:translateY(0) scale(1);
     }
+
 }
 
 .user-card-top {
     display:flex;
+
     align-items:center;
+
     gap:13px;
 }
 
 .user-avatar {
     width:52px;
     height:52px;
+
     flex-shrink:0;
+
     border-radius:50%;
+
     display:flex;
+
     align-items:center;
     justify-content:center;
-    background:linear-gradient(135deg,#5b8cff,#9c5cff);
+
+    background:
+        linear-gradient(
+            135deg,
+            #5b8cff,
+            #9c5cff
+        );
+
     font-size:20px;
     font-weight:800;
-    box-shadow:0 7px 20px rgba(91,140,255,.25);
+
+    box-shadow:
+        0 7px 20px rgba(91,140,255,.25);
 }
 
 .user-name {
@@ -700,7 +962,9 @@ input:focus {
 
 .user-status {
     margin-top:5px;
+
     font-size:12px;
+
     color:#7d879f;
 }
 
@@ -710,59 +974,94 @@ input:focus {
 
 .user-actions {
     display:flex;
+
     gap:8px;
+
     margin-top:17px;
 }
 
 .user-action {
     flex:1;
+
     padding:10px;
+
     border-radius:10px;
+
     border:1px solid #30384f;
+
     background:#151a2a;
+
     color:white;
+
     cursor:pointer;
+
     font-size:12px;
     font-weight:600;
+
     transition:.2s;
 }
 
 .user-action:hover {
     background:#202a43;
+
     transform:translateY(-1px);
 }
 
 .user-action.message-btn {
-    background:linear-gradient(135deg,#5b8cff,#795cff);
+    background:
+        linear-gradient(
+            135deg,
+            #5b8cff,
+            #795cff
+        );
+
     border:none;
 }
 
 .no-results {
     display:none;
+
     text-align:center;
+
     padding:70px 20px;
+
     animation:noResultsIn .4s ease;
 }
 
 @keyframes noResultsIn {
+
     from {
         opacity:0;
         transform:scale(.9);
     }
+
     to {
         opacity:1;
         transform:scale(1);
     }
+
 }
 
 .no-results-icon {
     font-size:55px;
-    animation:noResultsBounce 1.5s ease-in-out infinite;
+
+    animation:
+        noResultsBounce
+        1.5s
+        ease-in-out
+        infinite;
 }
 
 @keyframes noResultsBounce {
-    0%,100% {transform:translateY(0)}
-    50% {transform:translateY(-8px)}
+
+    0%,100% {
+        transform:translateY(0);
+    }
+
+    50% {
+        transform:translateY(-8px);
+    }
+
 }
 
 .no-results h2 {
@@ -774,24 +1073,34 @@ input:focus {
     margin:0;
 }
 
+
 /* =========================================
    RECENT SEARCHES
 ========================================= */
 
 .recent-searches {
     display:none;
+
     margin-top:20px;
+
     padding:18px;
+
     border-radius:17px;
+
     background:rgba(18,23,38,.75);
+
     border:1px solid #252d42;
+
     animation:pageIn .3s ease;
 }
 
 .recent-top {
     display:flex;
+
     justify-content:space-between;
+
     align-items:center;
+
     margin-bottom:12px;
 }
 
@@ -802,26 +1111,39 @@ input:focus {
 
 .clear-history {
     border:0;
+
     background:none;
+
     color:#7097ff;
+
     cursor:pointer;
+
     font-size:12px;
 }
 
 .recent-list {
     display:flex;
+
     flex-wrap:wrap;
+
     gap:8px;
 }
 
 .recent-item {
     border:1px solid #30384f;
+
     background:#151a2a;
+
     color:#b7bfd1;
+
     border-radius:20px;
+
     padding:7px 11px;
+
     cursor:pointer;
+
     font-size:12px;
+
     transition:.2s;
 }
 
@@ -830,19 +1152,26 @@ input:focus {
     color:white;
 }
 
+
 /* =========================================
    PROFILE PREVIEW
 ========================================= */
 
 .profile-preview-overlay {
     display:none;
+
     position:fixed;
     inset:0;
+
     z-index:10000;
+
     background:rgba(0,0,0,.65);
+
     backdrop-filter:blur(7px);
+
     align-items:center;
     justify-content:center;
+
     padding:20px;
 }
 
@@ -853,35 +1182,56 @@ input:focus {
 .profile-preview {
     width:100%;
     max-width:390px;
+
     padding:30px;
+
     border-radius:25px;
+
     background:#121726;
+
     border:1px solid #30384f;
-    box-shadow:0 30px 80px rgba(0,0,0,.6);
+
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.6);
+
     text-align:center;
+
     animation:previewIn .3s ease;
 }
 
 @keyframes previewIn {
+
     from {
         opacity:0;
         transform:translateY(20px) scale(.94);
     }
+
     to {
         opacity:1;
         transform:translateY(0) scale(1);
     }
+
 }
 
 .preview-avatar {
     width:90px;
     height:90px;
+
     margin:0 auto 15px;
+
     border-radius:50%;
+
     display:flex;
     align-items:center;
     justify-content:center;
-    background:linear-gradient(135deg,#5b8cff,#9c5cff);
+
+    background:
+        linear-gradient(
+            135deg,
+            #5b8cff,
+            #9c5cff
+        );
+
     font-size:34px;
     font-weight:800;
 }
@@ -893,7 +1243,9 @@ input:focus {
 
 .preview-status {
     margin-top:6px;
+
     color:#55d88a;
+
     font-size:13px;
 }
 
@@ -903,24 +1255,39 @@ input:focus {
 
 .preview-actions {
     display:flex;
+
     gap:10px;
+
     margin-top:25px;
 }
 
 .preview-actions button {
     flex:1;
+
     padding:12px;
+
     border-radius:11px;
+
     cursor:pointer;
+
     color:white;
+
     border:1px solid #30384f;
+
     background:#191f31;
 }
 
 .preview-actions .preview-message {
-    background:linear-gradient(135deg,#5b8cff,#795cff);
+    background:
+        linear-gradient(
+            135deg,
+            #5b8cff,
+            #795cff
+        );
+
     border:0;
 }
+
 
 /* =========================================
    GLOBAL CHAT
@@ -933,8 +1300,11 @@ input:focus {
 
 .chat-header {
     display:flex;
+
     align-items:center;
+
     justify-content:space-between;
+
     margin-bottom:25px;
 }
 
@@ -945,26 +1315,39 @@ input:focus {
 
 .chat-header p {
     color:#55d88a;
+
     margin:7px 0 0;
+
     font-size:13px;
 }
 
 .chat-back {
     border:1px solid #30384f;
+
     background:#151a2a;
+
     color:white;
+
     padding:11px 17px;
+
     border-radius:11px;
+
     cursor:pointer;
 }
 
 .username-box {
     max-width:600px;
+
     margin:50px auto;
+
     padding:35px;
+
     border-radius:20px;
+
     background:rgba(18,23,38,.85);
+
     border:1px solid #242b3e;
+
     text-align:center;
 }
 
@@ -974,42 +1357,59 @@ input:focus {
 
 .username-box p {
     color:#78829a;
+
     font-size:14px;
+
     margin-bottom:25px;
 }
 
 .messages {
     height:55vh;
+
     overflow-y:auto;
+
     padding:20px;
+
     border-radius:18px;
+
     background:rgba(10,13,23,.75);
+
     border:1px solid #242b3e;
+
     margin-bottom:15px;
 }
 
 .message-item {
     margin-bottom:15px;
+
     padding:12px 15px;
+
     border-radius:13px;
+
     background:#151b2c;
 }
 
 .message-user {
     color:#7097ff;
+
     font-size:12px;
+
     font-weight:700;
+
     margin-bottom:4px;
 }
 
 .message-text {
     color:#e8ebf3;
+
     font-size:14px;
+
     word-break:break-word;
 }
 
 .chat-input {
     display:flex;
+
     gap:10px;
 }
 
@@ -1019,8 +1419,10 @@ input:focus {
 
 .chat-input .primary {
     width:auto;
+
     min-width:90px;
 }
+
 
 /* =========================================
    MOBILE
@@ -1078,11 +1480,15 @@ input:focus {
     .search-back {
         padding:9px 12px;
     }
+
 }
+
 </style>
+
 </head>
 
 <body>
+
 
 <!-- =========================================
      LOADING
@@ -1091,6 +1497,7 @@ input:focus {
 <div id="loadingScreen">
 
     <div class="loading-particles">
+
         <span class="loading-particle"></span>
         <span class="loading-particle"></span>
         <span class="loading-particle"></span>
@@ -1099,51 +1506,82 @@ input:focus {
         <span class="loading-particle"></span>
         <span class="loading-particle"></span>
         <span class="loading-particle"></span>
+
     </div>
 
-    <div class="loading-logo" id="loadingLogo">C</div>
+    <div class="loading-logo" id="loadingLogo">
+        C
+    </div>
 
-    <div class="loading-title">ChatsApp</div>
+    <div class="loading-title">
+        ChatsApp
+    </div>
 
-    <div class="loading-subtitle" id="loadingStatus">
+    <div
+        class="loading-subtitle"
+        id="loadingStatus"
+    >
         Connecting...
     </div>
 
     <div class="loading-dots">
+
         <span></span>
         <span></span>
         <span></span>
+
     </div>
+
 </div>
 
+
 <div class="floating-emojis">
+
     <span>💬</span>
     <span>😊</span>
     <span>💭</span>
     <span>😂</span>
     <span>👋</span>
+
 </div>
+
 
 <!-- =========================================
      AUTH
 ========================================= -->
 
-<div class="auth-screen" id="authScreen">
+<div
+    class="auth-screen"
+    id="authScreen"
+>
 
     <div class="auth-box">
 
-        <div class="logo">C</div>
+        <div class="logo">
+            C
+        </div>
 
-        <h1 id="authTitle">Welcome to ChatsApp</h1>
+        <h1 id="authTitle">
+            Welcome to ChatsApp
+        </h1>
 
-        <p class="subtitle" id="authSubtitle">
+        <p
+            class="subtitle"
+            id="authSubtitle"
+        >
             Your conversations. Your world.
         </p>
 
-        <div id="message" class="message"></div>
+        <div
+            id="message"
+            class="message"
+        ></div>
 
         <div class="input-group">
-            <label>Username</label>
+
+            <label>
+                Username
+            </label>
 
             <input
                 type="text"
@@ -1152,10 +1590,14 @@ input:focus {
                 maxlength="20"
                 autocomplete="username"
             >
+
         </div>
 
         <div class="input-group">
-            <label>Password</label>
+
+            <label>
+                Password
+            </label>
 
             <input
                 type="password"
@@ -1163,6 +1605,7 @@ input:focus {
                 placeholder="Enter password"
                 autocomplete="current-password"
             >
+
         </div>
 
         <div
@@ -1170,7 +1613,10 @@ input:focus {
             id="confirmGroup"
             style="display:none;"
         >
-            <label>Confirm Password</label>
+
+            <label>
+                Confirm Password
+            </label>
 
             <input
                 type="password"
@@ -1178,6 +1624,7 @@ input:focus {
                 placeholder="Enter password again"
                 autocomplete="new-password"
             >
+
         </div>
 
         <button
@@ -1189,25 +1636,37 @@ input:focus {
         </button>
 
         <div class="switch">
-            <span id="switchText" onclick="toggleAuth()">
+
+            <span
+                id="switchText"
+                onclick="toggleAuth()"
+            >
                 Don't have an account? Sign up
             </span>
+
         </div>
 
     </div>
+
 </div>
+
 
 <!-- =========================================
      MAIN APP
 ========================================= -->
 
-<div class="app" id="app">
+<div
+    class="app"
+    id="app"
+>
 
     <aside class="sidebar">
 
         <div class="brand">
 
-            <div class="brand-icon">C</div>
+            <div class="brand-icon">
+                C
+            </div>
 
             <div class="brand-name">
                 ChatsApp
@@ -1215,52 +1674,153 @@ input:focus {
 
         </div>
 
+
         <div class="nav-title">
             COMMUNICATION
         </div>
 
-        <button class="nav-btn active" onclick="showHome()">
-            <span class="nav-icon">⌂</span>
-            <span>Home</span>
+
+        <button
+            class="nav-btn active"
+            onclick="showHome()"
+        >
+
+            <span class="nav-icon">
+                ⌂
+            </span>
+
+            <span>
+                Home
+            </span>
+
         </button>
 
-        <button class="nav-btn" onclick="openUserSearch()">
-            <span class="nav-icon">🔎</span>
-            <span>Find Users</span>
+
+        <button
+            class="nav-btn"
+            onclick="openUserSearch()"
+        >
+
+            <span class="nav-icon">
+                🔎
+            </span>
+
+            <span>
+                Find Users
+            </span>
+
         </button>
 
-        <button class="nav-btn" onclick="openGlobalChat()">
-            <span class="nav-icon">🌎</span>
-            <span>Global Chat</span>
+
+        <button
+            class="nav-btn"
+            onclick="openGlobalChat()"
+        >
+
+            <span class="nav-icon">
+                🌎
+            </span>
+
+            <span>
+                Global Chat
+            </span>
+
         </button>
 
-        <button class="nav-btn" onclick="openPrivateChats()">
-            <span class="nav-icon">💬</span>
-            <span>Private Chats</span>
+
+        <button
+            class="nav-btn"
+            onclick="openPrivateChats()"
+        >
+
+            <span class="nav-icon">
+                💬
+            </span>
+
+            <span>
+                Private Chats
+            </span>
+
         </button>
 
-        <button class="nav-btn" onclick="openMail()">
-            <span class="nav-icon">✉</span>
-            <span>Mail</span>
+
+        <button
+            class="nav-btn"
+            onclick="openMail()"
+        >
+
+            <span class="nav-icon">
+                ✉
+            </span>
+
+            <span>
+                Mail
+            </span>
+
         </button>
+
+
+        <!-- NEW GROUP CHAT BUTTON -->
+
+        <button
+            class="nav-btn"
+            onclick="openGroupChat()"
+        >
+
+            <span class="nav-icon">
+                👥
+            </span>
+
+            <span>
+                Group Chats
+            </span>
+
+        </button>
+
 
         <div class="nav-title">
             ACCOUNT
         </div>
 
-        <button class="nav-btn" onclick="openProfile()">
-            <span class="nav-icon">●</span>
-            <span>My Profile</span>
+
+        <button
+            class="nav-btn"
+            onclick="openProfile()"
+        >
+
+            <span class="nav-icon">
+                ●
+            </span>
+
+            <span>
+                My Profile
+            </span>
+
         </button>
 
-        <button class="nav-btn" onclick="logout()">
-            <span class="nav-icon">↪</span>
-            <span>Log Out</span>
+
+        <button
+            class="nav-btn"
+            onclick="logout()"
+        >
+
+            <span class="nav-icon">
+                ↪
+            </span>
+
+            <span>
+                Log Out
+            </span>
+
         </button>
+
 
         <div class="profile">
 
-            <div class="profile-name" id="profileName">
+            <div
+                class="profile-name"
+                id="profileName"
+            >
                 User
             </div>
 
@@ -1272,7 +1832,9 @@ input:focus {
 
     </aside>
 
+
     <main class="main">
+
 
         <!-- =====================================
              HOME
@@ -1283,91 +1845,160 @@ input:focus {
             <div class="topbar">
 
                 <div>
-                    <h1>Welcome back 👋</h1>
+
+                    <h1>
+                        Welcome back 👋
+                    </h1>
 
                     <p>
                         What would you like to do?
                     </p>
+
                 </div>
 
-                <div class="avatar" id="avatar">
+                <div
+                    class="avatar"
+                    id="avatar"
+                >
                     U
                 </div>
 
             </div>
 
+
             <div class="cards">
+
 
                 <div
                     class="card"
                     onclick="openUserSearch()"
                 >
-                    <div class="card-icon">🔎</div>
 
-                    <h2>Find Users</h2>
+                    <div class="card-icon">
+                        🔎
+                    </div>
+
+                    <h2>
+                        Find Users
+                    </h2>
 
                     <p>
                         Search for people on ChatsApp.
                     </p>
+
                 </div>
+
 
                 <div
                     class="card"
                     onclick="openGlobalChat()"
                 >
-                    <div class="card-icon">🌎</div>
 
-                    <h2>Global Chat</h2>
+                    <div class="card-icon">
+                        🌎
+                    </div>
+
+                    <h2>
+                        Global Chat
+                    </h2>
 
                     <p>
                         Talk with everyone on ChatsApp.
                     </p>
+
                 </div>
+
 
                 <div
                     class="card"
                     onclick="openPrivateChats()"
                 >
-                    <div class="card-icon">💬</div>
 
-                    <h2>Private Chats</h2>
+                    <div class="card-icon">
+                        💬
+                    </div>
+
+                    <h2>
+                        Private Chats
+                    </h2>
 
                     <p>
                         Message people using their username.
                     </p>
+
                 </div>
+
 
                 <div
                     class="card"
                     onclick="openMail()"
                 >
-                    <div class="card-icon">✉️</div>
 
-                    <h2>Mail</h2>
+                    <div class="card-icon">
+                        ✉️
+                    </div>
+
+                    <h2>
+                        Mail
+                    </h2>
 
                     <p>
                         Send and receive longer messages.
                     </p>
+
                 </div>
+
+
+                <!-- NEW GROUP CHAT CARD -->
+
+                <div
+                    class="card"
+                    onclick="openGroupChat()"
+                >
+
+                    <div class="card-icon">
+                        👥
+                    </div>
+
+                    <h2>
+                        Group Chats
+                    </h2>
+
+                    <p>
+                        Create and chat with multiple people.
+                    </p>
+
+                </div>
+
 
                 <div
                     class="card"
                     onclick="openProfile()"
                 >
-                    <div class="card-icon">👤</div>
 
-                    <h2>Your Profile</h2>
+                    <div class="card-icon">
+                        👤
+                    </div>
+
+                    <h2>
+                        Your Profile
+                    </h2>
 
                     <p>
                         Manage your ChatsApp identity.
                     </p>
+
                 </div>
+
 
             </div>
 
+
             <div class="welcome">
 
-                <h2>ChatsApp</h2>
+                <h2>
+                    ChatsApp
+                </h2>
 
                 <p>
                     A new place to chat, connect and
@@ -1378,20 +2009,28 @@ input:focus {
 
         </div>
 
+
         <!-- =====================================
              USER SEARCH
         ====================================== -->
 
-        <div id="userSearchPage" class="user-search-page">
+        <div
+            id="userSearchPage"
+            class="user-search-page"
+        >
 
             <div class="search-header">
 
                 <div>
-                    <h1>🔎 Find Users</h1>
+
+                    <h1>
+                        🔎 Find Users
+                    </h1>
 
                     <p>
                         Search for people on ChatsApp.
                     </p>
+
                 </div>
 
                 <button
@@ -1402,6 +2041,7 @@ input:focus {
                 </button>
 
             </div>
+
 
             <div class="search-box-wrap">
 
@@ -1426,6 +2066,7 @@ input:focus {
                 </button>
 
             </div>
+
 
             <div
                 id="recentSearches"
@@ -1454,6 +2095,7 @@ input:focus {
 
             </div>
 
+
             <div class="search-info">
 
                 <span id="searchResultText">
@@ -1464,10 +2106,12 @@ input:focus {
 
             </div>
 
+
             <div
                 id="searchResults"
                 class="search-results"
             ></div>
+
 
             <div
                 id="noResults"
@@ -1490,11 +2134,15 @@ input:focus {
 
         </div>
 
+
         <!-- =====================================
              GLOBAL CHAT
         ====================================== -->
 
-        <div id="globalChat" class="global-chat">
+        <div
+            id="globalChat"
+            class="global-chat"
+        >
 
             <div class="chat-header">
 
@@ -1518,6 +2166,7 @@ input:focus {
                 </button>
 
             </div>
+
 
             <div
                 id="usernameBox"
@@ -1547,6 +2196,7 @@ input:focus {
                 </button>
 
             </div>
+
 
             <div
                 id="chatArea"
@@ -1580,8 +2230,11 @@ input:focus {
 
         </div>
 
+
     </main>
+
 </div>
+
 
 <!-- =========================================
      PROFILE PREVIEW
@@ -1640,7 +2293,9 @@ input:focus {
 
 </div>
 
+
 <script>
+
 
 /* =========================================
    SUPABASE
@@ -1658,85 +2313,132 @@ const supabaseClient =
         SUPABASE_KEY
     );
 
+
 /* =========================================
    VARIABLES
 ========================================= */
 
 let signupMode = false;
+
 let currentUsername = "";
+
 let chatChannel = null;
 
 let searchTimer = null;
+
 let selectedProfileUsername = "";
+
 
 /* =========================================
    LOADING
 ========================================= */
 
-window.addEventListener("load", function() {
+window.addEventListener(
+    "load",
+    function() {
 
-    const loadingScreen =
-        document.getElementById("loadingScreen");
+        const loadingScreen =
+            document.getElementById(
+                "loadingScreen"
+            );
 
-    const loadingStatus =
-        document.getElementById("loadingStatus");
+        const loadingStatus =
+            document.getElementById(
+                "loadingStatus"
+            );
 
-    const loadingLogo =
-        document.getElementById("loadingLogo");
-
-    loadingStatus.innerText =
-        "Connecting...";
-
-    setTimeout(function() {
+        const loadingLogo =
+            document.getElementById(
+                "loadingLogo"
+            );
 
         loadingStatus.innerText =
             "Connecting...";
 
-    },500);
 
-    setTimeout(function() {
+        setTimeout(
+            function() {
 
-        loadingStatus.innerText =
-            "Connected ✓";
+                loadingStatus.innerText =
+                    "Connecting...";
 
-        loadingStatus.classList.add("connected");
+            },
+            500
+        );
 
-        loadingLogo.classList.add("connected");
 
-    },1500);
+        setTimeout(
+            function() {
 
-    setTimeout(function() {
+                loadingStatus.innerText =
+                    "Connected ✓";
 
-        loadingScreen.classList.add("hidden");
+                loadingStatus.classList.add(
+                    "connected"
+                );
 
-    },2200);
+                loadingLogo.classList.add(
+                    "connected"
+                );
 
-});
+            },
+            1500
+        );
+
+
+        setTimeout(
+            function() {
+
+                loadingScreen.classList.add(
+                    "hidden"
+                );
+
+            },
+            2200
+        );
+
+    }
+);
+
 
 /* =========================================
    MESSAGE
 ========================================= */
 
-function showMessage(text,type) {
+function showMessage(
+    text,
+    type
+) {
 
     const message =
-        document.getElementById("message");
+        document.getElementById(
+            "message"
+        );
 
-    message.innerText = text;
+    message.innerText =
+        text;
 
     message.className =
         "message " + type;
+
 }
+
 
 function clearMessage() {
 
     const message =
-        document.getElementById("message");
+        document.getElementById(
+            "message"
+        );
 
-    message.innerText = "";
+    message.innerText =
+        "";
 
-    message.className = "message";
+    message.className =
+        "message";
+
 }
+
 
 /* =========================================
    LOGIN / SIGNUP SWITCH
@@ -1744,24 +2446,36 @@ function clearMessage() {
 
 function toggleAuth() {
 
-    signupMode = !signupMode;
+    signupMode =
+        !signupMode;
 
     clearMessage();
 
     const title =
-        document.getElementById("authTitle");
+        document.getElementById(
+            "authTitle"
+        );
 
     const subtitle =
-        document.getElementById("authSubtitle");
+        document.getElementById(
+            "authSubtitle"
+        );
 
     const button =
-        document.getElementById("mainButton");
+        document.getElementById(
+            "mainButton"
+        );
 
     const switchText =
-        document.getElementById("switchText");
+        document.getElementById(
+            "switchText"
+        );
 
     const confirmGroup =
-        document.getElementById("confirmGroup");
+        document.getElementById(
+            "confirmGroup"
+        );
+
 
     if(signupMode) {
 
@@ -1796,20 +2510,27 @@ function toggleAuth() {
 
         confirmGroup.style.display =
             "none";
+
     }
+
 }
+
 
 /* =========================================
    USERNAME EMAIL
 ========================================= */
 
-function usernameToEmail(username) {
+function usernameToEmail(
+    username
+) {
 
     return (
         username.toLowerCase() +
         "@chatsapp.local"
     );
+
 }
+
 
 /* =========================================
    AUTH
@@ -1819,18 +2540,28 @@ async function handleAuth() {
 
     clearMessage();
 
+
     const username =
-        document.getElementById("username")
+        document.getElementById(
+            "username"
+        )
         .value
         .trim();
 
+
     const password =
-        document.getElementById("password")
+        document.getElementById(
+            "password"
+        )
         .value;
 
+
     const confirmPassword =
-        document.getElementById("confirmPassword")
+        document.getElementById(
+            "confirmPassword"
+        )
         .value;
+
 
     if(username === "") {
 
@@ -1840,9 +2571,15 @@ async function handleAuth() {
         );
 
         return;
+
     }
 
-    if(!/^[a-zA-Z0-9_]{3,20}$/.test(username)) {
+
+    if(
+        !/^[a-zA-Z0-9_]{3,20}$/.test(
+            username
+        )
+    ) {
 
         showMessage(
             "Username must be 3–20 characters and use only letters, numbers, or underscores.",
@@ -1850,7 +2587,9 @@ async function handleAuth() {
         );
 
         return;
+
     }
+
 
     if(password === "") {
 
@@ -1860,7 +2599,9 @@ async function handleAuth() {
         );
 
         return;
+
     }
+
 
     if(password.length < 6) {
 
@@ -1870,14 +2611,22 @@ async function handleAuth() {
         );
 
         return;
+
     }
 
+
     const internalEmail =
-        usernameToEmail(username);
+        usernameToEmail(
+            username
+        );
+
 
     if(signupMode) {
 
-        if(password !== confirmPassword) {
+        if(
+            password !==
+            confirmPassword
+        ) {
 
             showMessage(
                 "Passwords do not match.",
@@ -1885,27 +2634,41 @@ async function handleAuth() {
             );
 
             return;
+
         }
+
 
         showMessage(
             "Creating your account...",
             "success"
         );
 
-        const {data,error} =
-            await supabaseClient.auth.signUp({
 
-                email:internalEmail,
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+            .auth
+            .signUp({
 
-                password:password,
+                email:
+                    internalEmail,
+
+                password:
+                    password,
 
                 options:{
+
                     data:{
-                        username:username
+                        username:
+                            username
                     }
+
                 }
 
             });
+
 
         if(error) {
 
@@ -1915,19 +2678,30 @@ async function handleAuth() {
             );
 
             return;
+
         }
 
-        if(data.session && data.user) {
+
+        if(
+            data.session &&
+            data.user
+        ) {
 
             currentUsername =
                 username;
 
-            await ensureProfile(username);
+            await ensureProfile(
+                username
+            );
 
-            showApp(username);
+            showApp(
+                username
+            );
 
             return;
+
         }
+
 
         showMessage(
             "Account created! You can now log in. 🎉",
@@ -1935,21 +2709,32 @@ async function handleAuth() {
         );
 
         return;
+
     }
+
 
     showMessage(
         "Logging in...",
         "success"
     );
 
-    const {data,error} =
-        await supabaseClient.auth.signInWithPassword({
 
-            email:internalEmail,
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+        .auth
+        .signInWithPassword({
 
-            password:password
+            email:
+                internalEmail,
+
+            password:
+                password
 
         });
+
 
     if(error) {
 
@@ -1959,40 +2744,63 @@ async function handleAuth() {
         );
 
         return;
+
     }
+
 
     if(data.user) {
 
         currentUsername =
-            data.user.user_metadata?.username ||
+            data.user
+            .user_metadata?.username ||
             username;
 
-        await ensureProfile(currentUsername);
+        await ensureProfile(
+            currentUsername
+        );
 
-        showApp(currentUsername);
+        showApp(
+            currentUsername
+        );
+
     }
+
 }
+
 
 /* =========================================
    PROFILE TABLE
 ========================================= */
 
-async function ensureProfile(username) {
+async function ensureProfile(
+    username
+) {
 
     if(!username) return;
 
-    const {error} =
+
+    const {
+        error
+    } =
         await supabaseClient
         .from("profiles")
         .upsert(
+
             {
-                username:username,
-                online:true
+                username:
+                    username,
+
+                online:
+                    true
             },
+
             {
-                onConflict:"username"
+                onConflict:
+                    "username"
             }
+
         );
+
 
     if(error) {
 
@@ -2000,54 +2808,103 @@ async function ensureProfile(username) {
             "Could not update profile:",
             error
         );
+
     }
+
 }
 
-async function setProfileOnline(isOnline) {
 
-    if(!currentUsername) return;
+/* =========================================
+   ONLINE STATUS
+========================================= */
 
-    const {error} =
+async function setProfileOnline(
+    isOnline
+) {
+
+    if(!currentUsername)
+        return;
+
+
+    const {
+        error
+    } =
         await supabaseClient
         .from("profiles")
         .update({
-            online:isOnline
+
+            online:
+                isOnline
+
         })
         .eq(
             "username",
             currentUsername
         );
 
+
     if(error) {
-        console.warn(error);
+
+        console.warn(
+            error
+        );
+
     }
+
 }
+
 
 /* =========================================
    SHOW APP
 ========================================= */
 
-function showApp(username) {
+function showApp(
+    username
+) {
 
-    currentUsername = username;
+    currentUsername =
+        username;
 
-    document.getElementById("authScreen")
-        .style.display = "none";
 
-    document.getElementById("app")
-        .style.display = "grid";
+    document.getElementById(
+        "authScreen"
+    )
+    .style.display =
+        "none";
 
-    document.getElementById("profileName")
-        .innerText = username;
 
-    document.getElementById("avatar")
-        .innerText =
-        username.charAt(0).toUpperCase();
+    document.getElementById(
+        "app"
+    )
+    .style.display =
+        "grid";
 
-    setProfileOnline(true);
+
+    document.getElementById(
+        "profileName"
+    )
+    .innerText =
+        username;
+
+
+    document.getElementById(
+        "avatar"
+    )
+    .innerText =
+        username
+        .charAt(0)
+        .toUpperCase();
+
+
+    setProfileOnline(
+        true
+    );
+
 
     showHome();
+
 }
+
 
 /* =========================================
    SESSION
@@ -2055,10 +2912,13 @@ function showApp(username) {
 
 async function checkSession() {
 
-    const {data} =
+    const {
+        data
+    } =
         await supabaseClient
         .auth
         .getSession();
+
 
     if(
         data &&
@@ -2067,16 +2927,29 @@ async function checkSession() {
     ) {
 
         const username =
-            data.session.user.user_metadata?.username ||
-            data.session.user.email.split("@")[0];
+            data.session.user
+            .user_metadata?.username ||
+            data.session.user.email
+            .split("@")[0];
 
-        currentUsername = username;
 
-        await ensureProfile(username);
+        currentUsername =
+            username;
 
-        showApp(username);
+
+        await ensureProfile(
+            username
+        );
+
+
+        showApp(
+            username
+        );
+
     }
+
 }
+
 
 /* =========================================
    PAGE NAVIGATION
@@ -2084,44 +2957,87 @@ async function checkSession() {
 
 function hideAllPages() {
 
-    document.getElementById("homePage")
-        .style.display = "none";
+    document.getElementById(
+        "homePage"
+    )
+    .style.display =
+        "none";
 
-    document.getElementById("globalChat")
-        .style.display = "none";
 
-    document.getElementById("userSearchPage")
-        .style.display = "none";
+    document.getElementById(
+        "globalChat"
+    )
+    .style.display =
+        "none";
+
+
+    document.getElementById(
+        "userSearchPage"
+    )
+    .style.display =
+        "none";
+
 }
+
 
 function showHome() {
 
     hideAllPages();
 
-    document.getElementById("homePage")
-        .style.display = "block";
 
-    setActiveNav("Home");
+    document.getElementById(
+        "homePage"
+    )
+    .style.display =
+        "block";
+
+
+    setActiveNav(
+        "Home"
+    );
+
 }
 
-function setActiveNav(name) {
 
-    document.querySelectorAll(".nav-btn")
-        .forEach(button => {
+function setActiveNav(
+    name
+) {
 
-            button.classList.remove("active");
+    document
+        .querySelectorAll(
+            ".nav-btn"
+        )
+        .forEach(
+            button => {
 
-            const span =
-                button.querySelector("span:last-child");
+                button.classList.remove(
+                    "active"
+                );
 
-            if(
-                span &&
-                span.innerText.trim() === name
-            ) {
-                button.classList.add("active");
+
+                const span =
+                    button.querySelector(
+                        "span:last-child"
+                    );
+
+
+                if(
+                    span &&
+                    span.innerText.trim() ===
+                    name
+                ) {
+
+                    button.classList.add(
+                        "active"
+                    );
+
+                }
+
             }
-        });
+        );
+
 }
+
 
 /* =========================================
    USER SEARCH PAGE
@@ -2131,107 +3047,196 @@ function openUserSearch() {
 
     hideAllPages();
 
-    document.getElementById("userSearchPage")
-        .style.display = "block";
 
-    setActiveNav("Find Users");
+    document.getElementById(
+        "userSearchPage"
+    )
+    .style.display =
+        "block";
+
+
+    setActiveNav(
+        "Find Users"
+    );
+
 
     const input =
-        document.getElementById("userSearchInput");
+        document.getElementById(
+            "userSearchInput"
+        );
+
 
     input.focus();
 
+
     renderRecentSearches();
 
+
     if(input.value.trim()) {
-        searchUsers(input.value.trim());
+
+        searchUsers(
+            input.value.trim()
+        );
+
     }
+
 }
+
 
 /* =========================================
    LIVE SEARCH
 ========================================= */
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
 
-    const input =
-        document.getElementById("userSearchInput");
+        const input =
+            document.getElementById(
+                "userSearchInput"
+            );
 
-    if(!input) return;
 
-    input.addEventListener("input", function() {
+        if(!input) return;
 
-        const query =
-            input.value.trim();
 
-        const clearButton =
-            document.getElementById("clearSearchButton");
+        input.addEventListener(
+            "input",
+            function() {
 
-        clearButton.style.display =
-            query ? "block" : "none";
+                const query =
+                    input.value.trim();
 
-        clearTimeout(searchTimer);
 
-        if(!query) {
+                const clearButton =
+                    document.getElementById(
+                        "clearSearchButton"
+                    );
 
-            document.getElementById("searchResults")
-                .innerHTML = "";
 
-            document.getElementById("noResults")
-                .style.display = "none";
+                clearButton.style.display =
+                    query
+                    ? "block"
+                    : "none";
 
-            document.getElementById("searchResultText")
+
+                clearTimeout(
+                    searchTimer
+                );
+
+
+                if(!query) {
+
+                    document.getElementById(
+                        "searchResults"
+                    )
+                    .innerHTML =
+                        "";
+
+
+                    document.getElementById(
+                        "noResults"
+                    )
+                    .style.display =
+                        "none";
+
+
+                    document.getElementById(
+                        "searchResultText"
+                    )
+                    .innerText =
+                        "Start typing to find users";
+
+
+                    renderRecentSearches();
+
+                    return;
+
+                }
+
+
+                document.getElementById(
+                    "recentSearches"
+                )
+                .style.display =
+                    "none";
+
+
+                document.getElementById(
+                    "searchLoading"
+                )
                 .innerText =
-                "Start typing to find users";
+                    "Searching...";
 
-            renderRecentSearches();
 
-            return;
-        }
+                searchTimer =
+                    setTimeout(
+                        function() {
 
-        document.getElementById("recentSearches")
-            .style.display = "none";
+                            searchUsers(
+                                query
+                            );
 
-        document.getElementById("searchLoading")
-            .innerText = "Searching...";
+                        },
+                        220
+                    );
 
-        searchTimer =
-            setTimeout(function() {
+            }
+        );
 
-                searchUsers(query);
+    }
+);
 
-            },220);
-
-    });
-
-});
 
 /* =========================================
    SEARCH USERS
 ========================================= */
 
-async function searchUsers(query) {
+async function searchUsers(
+    query
+) {
 
     const results =
-        document.getElementById("searchResults");
+        document.getElementById(
+            "searchResults"
+        );
+
 
     const noResults =
-        document.getElementById("noResults");
+        document.getElementById(
+            "noResults"
+        );
+
 
     const resultText =
-        document.getElementById("searchResultText");
+        document.getElementById(
+            "searchResultText"
+        );
+
 
     const loading =
-        document.getElementById("searchLoading");
+        document.getElementById(
+            "searchLoading"
+        );
 
-    loading.innerText = "Searching...";
 
-    noResults.style.display = "none";
+    loading.innerText =
+        "Searching...";
 
-    const {data,error} =
+
+    noResults.style.display =
+        "none";
+
+
+    const {
+        data,
+        error
+    } =
         await supabaseClient
         .from("profiles")
-        .select("username, online")
+        .select(
+            "username, online"
+        )
         .ilike(
             "username",
             "%" + query + "%"
@@ -2244,7 +3249,10 @@ async function searchUsers(query) {
         )
         .limit(30);
 
-    loading.innerText = "";
+
+    loading.innerText =
+        "";
+
 
     if(error) {
 
@@ -2253,54 +3261,81 @@ async function searchUsers(query) {
             error
         );
 
-        results.innerHTML = "";
+
+        results.innerHTML =
+            "";
+
 
         resultText.innerText =
             "Could not search users.";
 
+
         return;
+
     }
 
+
     const filtered =
-        (data || []).filter(
+        (data || [])
+        .filter(
             user =>
                 user.username &&
                 user.username.toLowerCase() !==
                 currentUsername.toLowerCase()
         );
 
-    results.innerHTML = "";
+
+    results.innerHTML =
+        "";
+
 
     if(filtered.length === 0) {
 
         resultText.innerText =
             "No matching users";
 
+
         noResults.style.display =
             "block";
 
+
         return;
+
     }
+
 
     resultText.innerText =
         filtered.length +
-        (filtered.length === 1
+        (
+            filtered.length === 1
             ? " user found"
-            : " users found");
+            : " users found"
+        );
+
 
     filtered.forEach(
         (user,index) => {
 
             const card =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
 
-            card.className = "user-card";
+
+            card.className =
+                "user-card";
+
 
             card.style.animationDelay =
-                (index * 45) + "ms";
+                (index * 45) +
+                "ms";
+
 
             const username =
-                escapeHTML(user.username);
+                escapeHTML(
+                    user.username
+                );
+
 
             const firstLetter =
                 escapeHTML(
@@ -2309,25 +3344,33 @@ async function searchUsers(query) {
                     .toUpperCase()
                 );
 
+
             const online =
                 !!user.online;
+
 
             card.innerHTML = `
 
                 <div class="user-card-top">
 
                     <div class="user-avatar">
+
                         ${firstLetter}
+
                     </div>
 
                     <div>
 
                         <div class="user-name">
+
                             ${username}
+
                         </div>
 
                         <div class="user-status ${
-                            online ? "online" : ""
+                            online
+                            ? "online"
+                            : ""
                         }">
 
                             ${
@@ -2342,78 +3385,132 @@ async function searchUsers(query) {
 
                 </div>
 
+
                 <div class="user-actions">
 
                     <button
                         class="user-action"
                         onclick="previewUser(
-                            '${escapeAttribute(user.username)}',
+                            '${escapeAttribute(
+                                user.username
+                            )}',
                             ${online}
                         )"
                     >
+
                         👀 Preview
+
                     </button>
+
 
                     <button
                         class="user-action message-btn"
                         onclick="messageUser(
-                            '${escapeAttribute(user.username)}'
+                            '${escapeAttribute(
+                                user.username
+                            )}'
                         )"
                     >
+
                         💬 Message
+
                     </button>
 
                 </div>
+
             `;
 
-            results.appendChild(card);
+
+            results.appendChild(
+                card
+            );
+
         }
     );
 
-    saveSearch(query);
+
+    saveSearch(
+        query
+    );
+
 }
+
 
 /* =========================================
    PROFILE PREVIEW
 ========================================= */
 
-function previewUser(username,online) {
+function previewUser(
+    username,
+    online
+) {
 
     selectedProfileUsername =
         username;
 
-    document.getElementById("previewAvatar")
-        .innerText =
-        username.charAt(0).toUpperCase();
 
-    document.getElementById("previewName")
-        .innerText =
+    document.getElementById(
+        "previewAvatar"
+    )
+    .innerText =
+        username
+        .charAt(0)
+        .toUpperCase();
+
+
+    document.getElementById(
+        "previewName"
+    )
+    .innerText =
         username;
 
+
     const status =
-        document.getElementById("previewStatus");
+        document.getElementById(
+            "previewStatus"
+        );
+
 
     status.innerText =
-        online ? "● Online" : "● Offline";
+        online
+        ? "● Online"
+        : "● Offline";
+
 
     status.className =
         "preview-status" +
-        (online ? "" : " offline");
+        (
+            online
+            ? ""
+            : " offline"
+        );
+
 
     document.getElementById(
         "previewMessageButton"
-    ).onclick = function() {
+    ).onclick =
+        function() {
 
-        messageUser(username);
+            messageUser(
+                username
+            );
 
-    };
+        };
+
 
     document.getElementById(
         "profilePreviewOverlay"
-    ).classList.add("show");
+    )
+    .classList.add(
+        "show"
+    );
+
 }
 
-function closeProfilePreview(event) {
+
+function closeProfilePreview(
+    event
+) {
 
     if(
         event &&
@@ -2421,30 +3518,44 @@ function closeProfilePreview(event) {
         event.target.id !==
         "profilePreviewOverlay"
     ) {
+
         return;
+
     }
+
 
     document.getElementById(
         "profilePreviewOverlay"
-    ).classList.remove("show");
+    )
+    .classList.remove(
+        "show"
+    );
+
 }
+
 
 /* =========================================
    MESSAGE USER
 ========================================= */
 
-function messageUser(username) {
+function messageUser(
+    username
+) {
 
     closeProfilePreview();
+
 
     localStorage.setItem(
         "chatsapp_target_user",
         username
     );
 
+
     window.location.href =
-    "UserSearch.html";
+        "UserSearch.html";
+
 }
+
 
 /* =========================================
    SEARCH HISTORY
@@ -2460,23 +3571,34 @@ function getSearchHistory() {
             )
         ) || [];
 
-    } catch {
+    }
+
+    catch {
 
         return [];
+
     }
+
 }
 
-function saveSearch(query) {
+
+function saveSearch(
+    query
+) {
 
     if(!query) return;
+
 
     const normalized =
         query.trim();
 
+
     if(!normalized) return;
+
 
     let history =
         getSearchHistory();
+
 
     history =
         history.filter(
@@ -2485,29 +3607,49 @@ function saveSearch(query) {
                 normalized.toLowerCase()
         );
 
-    history.unshift(normalized);
+
+    history.unshift(
+        normalized
+    );
+
 
     history =
-        history.slice(0,8);
+        history.slice(
+            0,
+            8
+        );
+
 
     localStorage.setItem(
         "chatsapp_recent_searches",
-        JSON.stringify(history)
+        JSON.stringify(
+            history
+        )
     );
 
+
     renderRecentSearches();
+
 }
+
 
 function renderRecentSearches() {
 
     const container =
-        document.getElementById("recentSearches");
+        document.getElementById(
+            "recentSearches"
+        );
+
 
     const list =
-        document.getElementById("recentList");
+        document.getElementById(
+            "recentList"
+        );
+
 
     const history =
         getSearchHistory();
+
 
     if(!history.length) {
 
@@ -2515,35 +3657,53 @@ function renderRecentSearches() {
             "none";
 
         return;
+
     }
 
-    const input =
-        document.getElementById("userSearchInput");
 
-    if(input && input.value.trim()) {
+    const input =
+        document.getElementById(
+            "userSearchInput"
+        );
+
+
+    if(
+        input &&
+        input.value.trim()
+    ) {
 
         container.style.display =
             "none";
 
         return;
+
     }
+
 
     container.style.display =
         "block";
 
-    list.innerHTML = "";
+
+    list.innerHTML =
+        "";
+
 
     history.forEach(
         query => {
 
             const button =
-                document.createElement("button");
+                document.createElement(
+                    "button"
+                );
+
 
             button.className =
                 "recent-item";
 
+
             button.innerText =
                 "🔎 " + query;
+
 
             button.onclick =
                 function() {
@@ -2551,21 +3711,34 @@ function renderRecentSearches() {
                     input.value =
                         query;
 
+
                     document.getElementById(
                         "clearSearchButton"
-                    ).style.display =
+                    )
+                    .style.display =
                         "block";
 
-                    searchUsers(query);
+
+                    searchUsers(
+                        query
+                    );
+
 
                     container.style.display =
                         "none";
+
                 };
 
-            list.appendChild(button);
+
+            list.appendChild(
+                button
+            );
+
         }
     );
+
 }
+
 
 function clearSearchHistory() {
 
@@ -2573,39 +3746,59 @@ function clearSearchHistory() {
         "chatsapp_recent_searches"
     );
 
+
     renderRecentSearches();
+
 }
+
 
 function clearUserSearch() {
 
     const input =
-        document.getElementById("userSearchInput");
+        document.getElementById(
+            "userSearchInput"
+        );
 
-    input.value = "";
+
+    input.value =
+        "";
+
 
     document.getElementById(
         "clearSearchButton"
-    ).style.display =
+    )
+    .style.display =
         "none";
+
 
     document.getElementById(
         "searchResults"
-    ).innerHTML = "";
+    )
+    .innerHTML =
+        "";
+
 
     document.getElementById(
         "noResults"
-    ).style.display =
+    )
+    .style.display =
         "none";
+
 
     document.getElementById(
         "searchResultText"
-    ).innerText =
+    )
+    .innerText =
         "Start typing to find users";
+
 
     renderRecentSearches();
 
+
     input.focus();
+
 }
+
 
 /* =========================================
    PRIVATE CHATS
@@ -2615,7 +3808,9 @@ function openPrivateChats() {
 
     window.location.href =
         "Privatechat.html";
+
 }
+
 
 /* =========================================
    MAIL
@@ -2625,7 +3820,21 @@ function openMail() {
 
     window.location.href =
         "Mail.html";
+
 }
+
+
+/* =========================================
+   GROUP CHATS
+========================================= */
+
+function openGroupChat() {
+
+    window.location.href =
+        "GroupChat.html";
+
+}
+
 
 /* =========================================
    PROFILE
@@ -2638,9 +3847,12 @@ function openProfile() {
         currentUsername
     );
 
+
     window.location.href =
         "Profile.html";
+
 }
+
 
 /* =========================================
    LOGOUT
@@ -2648,13 +3860,19 @@ function openProfile() {
 
 async function logout() {
 
-    await setProfileOnline(false);
+    await setProfileOnline(
+        false
+    );
+
 
     await supabaseClient
         .auth
         .signOut();
 
-    currentUsername = "";
+
+    currentUsername =
+        "";
+
 
     if(chatChannel) {
 
@@ -2663,26 +3881,51 @@ async function logout() {
                 chatChannel
             );
 
-        chatChannel = null;
+        chatChannel =
+            null;
+
     }
 
-    document.getElementById("app")
-        .style.display = "none";
 
-    document.getElementById("authScreen")
-        .style.display = "flex";
+    document.getElementById(
+        "app"
+    )
+    .style.display =
+        "none";
 
-    document.getElementById("username")
-        .value = "";
 
-    document.getElementById("password")
-        .value = "";
+    document.getElementById(
+        "authScreen"
+    )
+    .style.display =
+        "flex";
 
-    document.getElementById("confirmPassword")
-        .value = "";
+
+    document.getElementById(
+        "username"
+    )
+    .value =
+        "";
+
+
+    document.getElementById(
+        "password"
+    )
+    .value =
+        "";
+
+
+    document.getElementById(
+        "confirmPassword"
+    )
+    .value =
+        "";
+
 
     clearMessage();
+
 }
+
 
 /* =========================================
    GLOBAL CHAT
@@ -2692,29 +3935,54 @@ function openGlobalChat() {
 
     hideAllPages();
 
-    document.getElementById("globalChat")
-        .style.display = "block";
 
-    setActiveNav("Global Chat");
+    document.getElementById(
+        "globalChat"
+    )
+    .style.display =
+        "block";
 
-    document.getElementById("usernameBox")
-        .style.display = "block";
 
-    document.getElementById("chatArea")
-        .style.display = "none";
+    setActiveNav(
+        "Global Chat"
+    );
 
-    document.getElementById("chatUsername")
-        .value = currentUsername;
+
+    document.getElementById(
+        "usernameBox"
+    )
+    .style.display =
+        "block";
+
+
+    document.getElementById(
+        "chatArea"
+    )
+    .style.display =
+        "none";
+
+
+    document.getElementById(
+        "chatUsername"
+    )
+    .value =
+        currentUsername;
+
 
     updateOnlineCount();
+
 }
+
 
 async function joinGlobalChat() {
 
     const username =
-        document.getElementById("chatUsername")
+        document.getElementById(
+            "chatUsername"
+        )
         .value
         .trim();
+
 
     if(username === "") {
 
@@ -2723,35 +3991,60 @@ async function joinGlobalChat() {
         );
 
         return;
+
     }
 
-    if(!/^[a-zA-Z0-9_]{3,20}$/.test(username)) {
+
+    if(
+        !/^[a-zA-Z0-9_]{3,20}$/.test(
+            username
+        )
+    ) {
 
         alert(
             "Username must be 3–20 characters."
         );
 
         return;
+
     }
 
-    currentUsername = username;
 
-    document.getElementById("usernameBox")
-        .style.display = "none";
+    currentUsername =
+        username;
 
-    document.getElementById("chatArea")
-        .style.display = "block";
+
+    document.getElementById(
+        "usernameBox"
+    )
+    .style.display =
+        "none";
+
+
+    document.getElementById(
+        "chatArea"
+    )
+    .style.display =
+        "block";
+
 
     await loadMessages();
 
+
     subscribeToMessages();
 
+
     updateOnlineCount();
+
 }
+
 
 async function loadMessages() {
 
-    const {data,error} =
+    const {
+        data,
+        error
+    } =
         await supabaseClient
         .from("global_messages")
         .select("*")
@@ -2762,6 +4055,7 @@ async function loadMessages() {
             }
         );
 
+
     if(error) {
 
         console.error(
@@ -2770,12 +4064,19 @@ async function loadMessages() {
         );
 
         return;
+
     }
 
-    const box =
-        document.getElementById("messages");
 
-    box.innerHTML = "";
+    const box =
+        document.getElementById(
+            "messages"
+        );
+
+
+    box.innerHTML =
+        "";
+
 
     data.forEach(
         message => {
@@ -2788,74 +4089,117 @@ async function loadMessages() {
         }
     );
 
+
     box.scrollTop =
         box.scrollHeight;
+
 }
 
-function displayMessage(username,text) {
+
+function displayMessage(
+    username,
+    text
+) {
 
     const box =
-        document.getElementById("messages");
+        document.getElementById(
+            "messages"
+        );
+
 
     const item =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
+
 
     item.className =
         "message-item";
 
+
     item.innerHTML = `
 
         <div class="message-user">
+
             ${escapeHTML(username)}
+
         </div>
 
         <div class="message-text">
+
             ${escapeHTML(text)}
+
         </div>
 
     `;
 
-    box.appendChild(item);
+
+    box.appendChild(
+        item
+    );
+
 
     box.scrollTop =
         box.scrollHeight;
+
 }
+
 
 async function sendGlobalMessage() {
 
     const input =
-        document.getElementById("chatMessage");
+        document.getElementById(
+            "chatMessage"
+        );
+
 
     const text =
         input.value.trim();
 
-    if(text === "") return;
 
-    const {error} =
+    if(text === "")
+        return;
+
+
+    const {
+        error
+    } =
         await supabaseClient
         .from("global_messages")
         .insert({
 
-            username:currentUsername,
+            username:
+                currentUsername,
 
-            message:text
+            message:
+                text
 
         });
 
+
     if(error) {
 
-    console.error(error);
+        console.error(
+            error
+        );
 
-    alert(
-        "Message could not be sent!\n\n" +
-        error.message
-    );
 
-    return;
+        alert(
+            "Message could not be sent!\n\n" +
+            error.message
+        );
+
+
+        return;
+
+    }
+
+
+    input.value =
+        "";
+
 }
 
-    input.value = "";
-}
 
 function subscribeToMessages() {
 
@@ -2865,18 +4209,30 @@ function subscribeToMessages() {
             .removeChannel(
                 chatChannel
             );
+
     }
+
 
     chatChannel =
         supabaseClient
-        .channel("global-chat-room")
+        .channel(
+            "global-chat-room"
+        )
         .on(
             "postgres_changes",
             {
-                event:"INSERT",
-                schema:"public",
-                table:"global_messages"
+
+                event:
+                    "INSERT",
+
+                schema:
+                    "public",
+
+                table:
+                    "global_messages"
+
             },
+
             payload => {
 
                 displayMessage(
@@ -2887,37 +4243,60 @@ function subscribeToMessages() {
             }
         )
         .subscribe();
+
 }
+
 
 function updateOnlineCount() {
 
     document.getElementById(
         "onlineCount"
-    ).innerText =
+    )
+    .innerText =
         "🟢 Global Chat";
+
 }
+
 
 /* =========================================
    ESCAPE HTML
 ========================================= */
 
-function escapeHTML(text) {
+function escapeHTML(
+    text
+) {
 
     const div =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
+
 
     div.innerText =
         text;
 
+
     return div.innerHTML;
+
 }
 
-function escapeAttribute(text) {
+
+function escapeAttribute(
+    text
+) {
 
     return String(text)
-        .replace(/\\/g,"\\\\")
-        .replace(/'/g,"\\'");
+        .replace(
+            /\\/g,
+            "\\\\"
+        )
+        .replace(
+            /'/g,
+            "\\'"
+        );
+
 }
+
 
 /* =========================================
    ENTER KEY
@@ -2927,16 +4306,24 @@ document.addEventListener(
     "keydown",
     function(event) {
 
-        if(event.key !== "Enter") {
+        if(
+            event.key !==
+            "Enter"
+        ) {
+
             return;
+
         }
+
 
         const active =
             document.activeElement;
 
+
         if(
             active &&
-            active.id === "chatMessage"
+            active.id ===
+            "chatMessage"
         ) {
 
             event.preventDefault();
@@ -2944,14 +4331,21 @@ document.addEventListener(
             sendGlobalMessage();
 
             return;
+
         }
+
 
         if(
             active &&
             (
-                active.id === "username" ||
-                active.id === "password" ||
-                active.id === "confirmPassword"
+                active.id ===
+                "username" ||
+
+                active.id ===
+                "password" ||
+
+                active.id ===
+                "confirmPassword"
             )
         ) {
 
@@ -2960,9 +4354,12 @@ document.addEventListener(
             handleAuth();
 
             return;
+
         }
+
     }
 );
+
 
 /* =========================================
    ONLINE STATUS
@@ -2973,7 +4370,9 @@ setInterval(
 
         if(currentUsername) {
 
-            setProfileOnline(true);
+            setProfileOnline(
+                true
+            );
 
         }
 
@@ -2981,18 +4380,22 @@ setInterval(
     30000
 );
 
+
 window.addEventListener(
     "beforeunload",
     function() {
 
         if(currentUsername) {
 
-            setProfileOnline(false);
+            setProfileOnline(
+                false
+            );
 
         }
 
     }
 );
+
 
 /* =========================================
    START
@@ -3003,4 +4406,5 @@ checkSession();
 </script>
 
 </body>
+
 </html>
