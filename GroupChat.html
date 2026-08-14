@@ -12,8 +12,6 @@
 
 <style>
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-
 * {
     box-sizing: border-box;
 }
@@ -21,7 +19,7 @@
 body {
     margin: 0;
     min-height: 100vh;
-    font-family: "Inter", sans-serif;
+    font-family: Arial, sans-serif;
 
     background:
         radial-gradient(circle at 15% 20%, #253b6e 0%, transparent 35%),
@@ -31,29 +29,15 @@ body {
     color: white;
 }
 
-
-/* =========================================
-   APP
-========================================= */
-
 .app {
     min-height: 100vh;
-
     display: grid;
-
     grid-template-columns: 250px 1fr;
 }
 
-
-/* =========================================
-   SIDEBAR
-========================================= */
-
 .sidebar {
     background: rgba(10,13,23,.94);
-
     border-right: 1px solid #202638;
-
     padding: 25px 16px;
 
     display: flex;
@@ -62,104 +46,70 @@ body {
 
 .brand {
     display: flex;
-
     align-items: center;
-
     gap: 12px;
-
     padding: 5px 12px 30px;
 }
 
 .brand-icon {
     width: 42px;
     height: 42px;
-
     border-radius: 13px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    background:
-        linear-gradient(
-            135deg,
-            #5b8cff,
-            #795cff
-        );
+    background: linear-gradient(135deg,#5b8cff,#795cff);
 
     font-weight: 800;
-
-    box-shadow:
-        0 8px 25px rgba(91,140,255,.25);
 }
 
 .brand-name {
     font-size: 20px;
-
     font-weight: 800;
 }
 
 .nav-title {
     color: #525b72;
-
     font-size: 11px;
-
     font-weight: 700;
-
     letter-spacing: 1.5px;
-
     padding: 10px 13px;
 }
 
 .nav-btn {
     width: 100%;
-
     padding: 13px;
-
     margin: 3px 0;
 
     border: none;
-
     border-radius: 12px;
 
     background: transparent;
-
     color: #8d96ad;
 
     text-align: left;
-
     font-size: 14px;
-
     cursor: pointer;
-
-    transition: .2s;
 }
 
 .nav-btn:hover,
 .nav-btn.active {
     background: #1b2235;
-
     color: white;
 }
 
 .nav-icon {
     display: inline-block;
-
     width: 27px;
 }
-
-
-/* =========================================
-   PROFILE
-========================================= */
 
 .profile {
     margin-top: auto;
 
     background: #151a2a;
-
     border: 1px solid #252c40;
-
     border-radius: 15px;
 
     padding: 13px;
@@ -167,117 +117,70 @@ body {
 
 .profile-name {
     font-weight: 600;
-
     font-size: 14px;
 
     overflow: hidden;
-
     text-overflow: ellipsis;
 }
 
 .profile-status {
     color: #55d88a;
-
     font-size: 11px;
-
     margin-top: 4px;
 }
 
-
-/* =========================================
-   MAIN
-========================================= */
-
 .main {
     min-width: 0;
-
     padding: 30px;
-
     overflow: hidden;
 }
 
-
-/* =========================================
-   TOPBAR
-========================================= */
-
 .topbar {
     display: flex;
-
     justify-content: space-between;
-
     align-items: center;
-
     margin-bottom: 25px;
 }
 
 .topbar h1 {
     margin: 0;
-
     font-size: 30px;
 }
 
 .topbar p {
     margin: 7px 0 0;
-
     color: #747e96;
 }
 
 .home-button {
     border: 1px solid #30384f;
-
     background: #151a2a;
-
     color: white;
 
     padding: 11px 17px;
-
     border-radius: 11px;
-
     cursor: pointer;
-
-    transition: .2s;
 }
-
-.home-button:hover {
-    background: #202a43;
-
-    transform: translateY(-1px);
-}
-
-
-/* =========================================
-   LAYOUT
-========================================= */
 
 .group-layout {
     display: grid;
-
     grid-template-columns: 300px 1fr;
 
     gap: 20px;
 
     height: calc(100vh - 135px);
-
     min-height: 500px;
 }
-
-
-/* =========================================
-   GROUP LIST
-========================================= */
 
 .group-list-panel {
     background: rgba(18,23,38,.85);
 
     border: 1px solid #242b3e;
-
     border-radius: 20px;
 
     overflow: hidden;
 
     display: flex;
-
     flex-direction: column;
 }
 
@@ -287,15 +190,12 @@ body {
     border-bottom: 1px solid #242b3e;
 
     display: flex;
-
     justify-content: space-between;
-
     align-items: center;
 }
 
 .panel-header h2 {
     margin: 0;
-
     font-size: 17px;
 }
 
@@ -304,50 +204,26 @@ body {
     height: 38px;
 
     border: none;
-
     border-radius: 11px;
 
-    background:
-        linear-gradient(
-            135deg,
-            #5b8cff,
-            #795cff
-        );
+    background: linear-gradient(135deg,#5b8cff,#795cff);
 
     color: white;
-
     font-size: 20px;
-
     cursor: pointer;
-
-    transition: .2s;
-}
-
-.create-button:hover {
-    transform: translateY(-2px);
-
-    box-shadow:
-        0 8px 25px rgba(91,140,255,.3);
 }
 
 .groups {
     flex: 1;
-
     overflow-y: auto;
-
     padding: 10px;
 }
 
 .group-item {
     padding: 15px;
-
     border-radius: 13px;
-
     margin-bottom: 5px;
-
     cursor: pointer;
-
-    transition: .2s;
 }
 
 .group-item:hover {
@@ -355,52 +231,37 @@ body {
 }
 
 .group-item.active {
-    background:
-        linear-gradient(
-            135deg,
-            rgba(91,140,255,.18),
-            rgba(121,92,255,.12)
-        );
+    background: linear-gradient(
+        135deg,
+        rgba(91,140,255,.18),
+        rgba(121,92,255,.12)
+    );
 
     border: 1px solid rgba(91,140,255,.2);
 }
 
 .group-item-name {
     font-weight: 700;
-
     font-size: 14px;
-
-    word-break: break-word;
 }
 
 .group-item-info {
     color: #737d95;
-
     font-size: 11px;
-
     margin-top: 5px;
 }
 
 .no-groups {
     text-align: center;
-
     color: #737d95;
-
     padding: 45px 20px;
-
     font-size: 13px;
 }
 
 .no-groups-icon {
     font-size: 40px;
-
     margin-bottom: 12px;
 }
-
-
-/* =========================================
-   CHAT PANEL
-========================================= */
 
 .chat-panel {
     min-width: 0;
@@ -408,13 +269,11 @@ body {
     background: rgba(18,23,38,.85);
 
     border: 1px solid #242b3e;
-
     border-radius: 20px;
 
     overflow: hidden;
 
     display: flex;
-
     flex-direction: column;
 }
 
@@ -422,19 +281,15 @@ body {
     flex: 1;
 
     display: flex;
-
     align-items: center;
-
     justify-content: center;
 
     text-align: center;
-
     padding: 30px;
 }
 
 .chat-empty-icon {
     font-size: 60px;
-
     margin-bottom: 15px;
 }
 
@@ -444,14 +299,8 @@ body {
 
 .chat-empty p {
     color: #737d95;
-
     margin: 0;
 }
-
-
-/* =========================================
-   CHAT HEADER
-========================================= */
 
 .chat-header {
     padding: 18px 22px;
@@ -459,83 +308,41 @@ body {
     border-bottom: 1px solid #242b3e;
 
     display: flex;
-
     justify-content: space-between;
-
     align-items: center;
-
-    gap: 15px;
 }
 
 .chat-group-name {
     font-size: 18px;
-
     font-weight: 800;
-
-    word-break: break-word;
 }
 
 .chat-group-info {
     color: #737d95;
-
     font-size: 12px;
-
     margin-top: 4px;
 }
 
 .members-button {
     border: 1px solid #30384f;
-
     background: #151a2a;
-
     color: white;
 
     padding: 9px 13px;
-
     border-radius: 10px;
-
     cursor: pointer;
-
-    white-space: nowrap;
 }
-
-
-/* =========================================
-   MESSAGES
-========================================= */
 
 .messages {
     flex: 1;
-
     overflow-y: auto;
-
     padding: 20px;
 }
 
 .message {
     display: flex;
-
     gap: 10px;
-
     margin-bottom: 17px;
-
-    animation: messageIn .25s ease;
-}
-
-@keyframes messageIn {
-
-    from {
-        opacity: 0;
-
-        transform: translateY(8px);
-    }
-
-    to {
-        opacity: 1;
-
-        transform: translateY(0);
-    }
-
 }
 
 .message-avatar {
@@ -547,19 +354,16 @@ body {
     border-radius: 50%;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 
-    background:
-        linear-gradient(
-            135deg,
-            #5b8cff,
-            #9c5cff
-        );
+    background: linear-gradient(
+        135deg,
+        #5b8cff,
+        #9c5cff
+    );
 
     font-size: 13px;
-
     font-weight: 800;
 }
 
@@ -569,11 +373,8 @@ body {
 
 .message-user {
     color: #7097ff;
-
     font-size: 11px;
-
     font-weight: 700;
-
     margin-bottom: 4px;
 }
 
@@ -583,43 +384,32 @@ body {
     border: 1px solid #252d42;
 
     padding: 10px 13px;
-
     border-radius: 12px;
 
     font-size: 14px;
 
     word-break: break-word;
-
     line-height: 1.45;
-}
-
-.message.mine .message-content {
-    margin-left: auto;
-
-    text-align: right;
 }
 
 .message.mine {
     justify-content: flex-end;
 }
 
-.message.mine .message-bubble {
-    background:
-        linear-gradient(
-            135deg,
-            #355fc2,
-            #6547c4
-        );
-
-    border: none;
-
-    text-align: left;
+.message.mine .message-content {
+    text-align: right;
 }
 
+.message.mine .message-bubble {
+    background: linear-gradient(
+        135deg,
+        #355fc2,
+        #6547c4
+    );
 
-/* =========================================
-   CHAT INPUT
-========================================= */
+    border: none;
+    text-align: left;
+}
 
 .chat-input {
     padding: 15px;
@@ -627,7 +417,6 @@ body {
     border-top: 1px solid #242b3e;
 
     display: flex;
-
     gap: 10px;
 }
 
@@ -637,66 +426,44 @@ body {
     padding: 13px 15px;
 
     border-radius: 12px;
-
     border: 1px solid #2c3348;
 
     background: #0e1220;
-
     color: white;
 
     outline: none;
-
     font-size: 14px;
-}
-
-.chat-input input:focus {
-    border-color: #638cff;
-
-    box-shadow:
-        0 0 0 3px rgba(99,140,255,.1);
 }
 
 .send-button {
     border: none;
-
     border-radius: 12px;
 
     padding: 0 20px;
 
-    background:
-        linear-gradient(
-            135deg,
-            #5b8cff,
-            #795cff
-        );
+    background: linear-gradient(
+        135deg,
+        #5b8cff,
+        #795cff
+    );
 
     color: white;
-
     font-weight: 700;
 
     cursor: pointer;
 }
 
-
-/* =========================================
-   MODAL
-========================================= */
-
 .modal-overlay {
     display: none;
 
     position: fixed;
-
     inset: 0;
 
     z-index: 1000;
 
     background: rgba(0,0,0,.7);
 
-    backdrop-filter: blur(8px);
-
     align-items: center;
-
     justify-content: center;
 
     padding: 20px;
@@ -708,55 +475,24 @@ body {
 
 .modal {
     width: 100%;
-
     max-width: 500px;
-
-    max-height: 90vh;
-
-    overflow-y: auto;
 
     background: #121726;
 
     border: 1px solid #30384f;
-
     border-radius: 23px;
 
     padding: 28px;
-
-    box-shadow:
-        0 30px 80px rgba(0,0,0,.6);
-
-    animation: modalIn .25s ease;
-}
-
-@keyframes modalIn {
-
-    from {
-        opacity: 0;
-
-        transform: translateY(20px) scale(.96);
-    }
-
-    to {
-        opacity: 1;
-
-        transform: translateY(0) scale(1);
-    }
-
 }
 
 .modal h2 {
     margin: 0 0 7px;
-
-    font-size: 23px;
 }
 
 .modal-subtitle {
     color: #737d95;
-
     font-size: 13px;
-
-    margin: 0 0 23px;
+    margin-bottom: 23px;
 }
 
 .field {
@@ -769,96 +505,74 @@ body {
     color: #9ca5ba;
 
     font-size: 12px;
-
     font-weight: 600;
 
     margin-bottom: 7px;
 }
 
-.field input,
-.field textarea {
+.field input {
     width: 100%;
 
     padding: 13px 15px;
 
     border-radius: 11px;
-
     border: 1px solid #2c3348;
 
     background: #0e1220;
-
     color: white;
 
     outline: none;
-
-    font-family: inherit;
-
-    resize: vertical;
 }
 
-.field textarea {
-    min-height: 75px;
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 23px;
 }
 
-.field input:focus,
-.field textarea:focus {
-    border-color: #638cff;
-
-    box-shadow:
-        0 0 0 3px rgba(99,140,255,.1);
-}
-
-
-/* =========================================
-   USER SELECT
-========================================= */
-
-.user-search {
-    position: relative;
-
-    margin-bottom: 10px;
-}
-
-.user-search input {
-    width: 100%;
-
-    padding: 12px 14px;
+.modal-actions button {
+    flex: 1;
+    padding: 12px;
 
     border-radius: 11px;
+    cursor: pointer;
 
-    border: 1px solid #2c3348;
+    font-weight: 700;
+}
 
-    background: #0e1220;
+.cancel-button {
+    border: 1px solid #30384f;
+    background: #151a2a;
+    color: white;
+}
+
+.create-group-button {
+    border: none;
+
+    background: linear-gradient(
+        135deg,
+        #5b8cff,
+        #795cff
+    );
 
     color: white;
-
-    outline: none;
 }
 
 .user-results {
     max-height: 180px;
-
     overflow-y: auto;
-
     margin-top: 8px;
-
-    border-radius: 12px;
 }
 
 .user-result {
     display: flex;
-
     align-items: center;
-
     gap: 10px;
 
     padding: 10px;
-
     border-radius: 10px;
 
     cursor: pointer;
-
-    transition: .15s;
 }
 
 .user-result:hover {
@@ -872,45 +586,26 @@ body {
     border-radius: 50%;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 
-    background:
-        linear-gradient(
-            135deg,
-            #5b8cff,
-            #9c5cff
-        );
-
-    font-size: 12px;
+    background: linear-gradient(
+        135deg,
+        #5b8cff,
+        #9c5cff
+    );
 
     font-weight: 800;
 }
 
-.user-result-name {
-    font-size: 13px;
-
-    font-weight: 600;
-}
-
 .selected-users {
     display: flex;
-
     flex-wrap: wrap;
-
     gap: 7px;
-
     margin-top: 10px;
 }
 
 .selected-user {
-    display: flex;
-
-    align-items: center;
-
-    gap: 6px;
-
     background: #1b2742;
 
     border: 1px solid #30436d;
@@ -918,94 +613,21 @@ body {
     border-radius: 20px;
 
     padding: 6px 9px;
-
     font-size: 11px;
 }
 
-.remove-user {
-    border: none;
-
-    background: transparent;
-
-    color: #9da8c0;
-
-    cursor: pointer;
-
-    padding: 0;
-
-    font-size: 14px;
-}
-
-
-/* =========================================
-   MODAL BUTTONS
-========================================= */
-
-.modal-actions {
-    display: flex;
-
-    gap: 10px;
-
-    margin-top: 23px;
-}
-
-.modal-actions button {
-    flex: 1;
-
-    padding: 12px;
-
-    border-radius: 11px;
-
-    cursor: pointer;
-
-    font-weight: 700;
-}
-
-.cancel-button {
-    border: 1px solid #30384f;
-
-    background: #151a2a;
-
-    color: white;
-}
-
-.create-group-button {
-    border: none;
-
-    background:
-        linear-gradient(
-            135deg,
-            #5b8cff,
-            #795cff
-        );
-
-    color: white;
-}
-
-
-/* =========================================
-   MEMBERS MODAL
-========================================= */
-
 .member-list {
     display: flex;
-
     flex-direction: column;
-
     gap: 7px;
-
-    margin-top: 15px;
 }
 
 .member {
     display: flex;
-
     align-items: center;
-
     gap: 11px;
 
     padding: 10px;
-
     border-radius: 11px;
 
     background: #151b2c;
@@ -1018,41 +640,23 @@ body {
     border-radius: 50%;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 
-    background:
-        linear-gradient(
-            135deg,
-            #5b8cff,
-            #9c5cff
-        );
-
-    font-size: 12px;
+    background: linear-gradient(
+        135deg,
+        #5b8cff,
+        #9c5cff
+    );
 
     font-weight: 800;
 }
-
-.member-name {
-    font-size: 13px;
-
-    font-weight: 600;
-}
-
-
-/* =========================================
-   TOAST
-========================================= */
 
 .toast {
     position: fixed;
 
     bottom: 25px;
-
     right: 25px;
-
-    z-index: 5000;
 
     background: #171e31;
 
@@ -1062,28 +666,17 @@ body {
 
     border-radius: 12px;
 
-    box-shadow:
-        0 15px 40px rgba(0,0,0,.4);
-
     opacity: 0;
 
     transform: translateY(15px);
-
-    pointer-events: none;
 
     transition: .25s;
 }
 
 .toast.show {
     opacity: 1;
-
     transform: translateY(0);
 }
-
-
-/* =========================================
-   MOBILE
-========================================= */
 
 @media(max-width:850px) {
 
@@ -1098,25 +691,8 @@ body {
         display: none;
     }
 
-    .brand {
-        justify-content: center;
-    }
-
-    .nav-btn {
-        text-align: center;
-    }
-
-    .nav-icon {
-        width: auto;
-    }
-
-    .main {
-        padding: 20px;
-    }
-
     .group-layout {
         grid-template-columns: 1fr;
-
         height: auto;
     }
 
@@ -1130,338 +706,239 @@ body {
 
 }
 
-@media(max-width:550px) {
-
-    .topbar h1 {
-        font-size: 23px;
-    }
-
-    .home-button {
-        padding: 9px 12px;
-    }
-
-    .main {
-        padding: 14px;
-    }
-
-    .group-layout {
-        gap: 12px;
-    }
-
-}
-
 </style>
 
 </head>
 
-
 <body>
-
 
 <div class="app">
 
+<aside class="sidebar">
 
-    <!-- =====================================
-         SIDEBAR
-    ====================================== -->
+    <div class="brand">
 
-    <aside class="sidebar">
+        <div class="brand-icon">C</div>
 
-        <div class="brand">
-
-            <div class="brand-icon">
-                C
-            </div>
-
-            <div class="brand-name">
-                ChatsApp
-            </div>
-
+        <div class="brand-name">
+            ChatsApp
         </div>
 
+    </div>
 
-        <div class="nav-title">
-            COMMUNICATION
+    <div class="nav-title">
+        COMMUNICATION
+    </div>
+
+    <button class="nav-btn" onclick="goHome()">
+        <span class="nav-icon">⌂</span>
+        <span>Home</span>
+    </button>
+
+    <button class="nav-btn active">
+        <span class="nav-icon">👥</span>
+        <span>Group Chats</span>
+    </button>
+
+    <div class="nav-title">
+        ACCOUNT
+    </div>
+
+    <button class="nav-btn" onclick="goProfile()">
+        <span class="nav-icon">●</span>
+        <span>My Profile</span>
+    </button>
+
+    <button class="nav-btn" onclick="logout()">
+        <span class="nav-icon">↪</span>
+        <span>Log Out</span>
+    </button>
+
+    <div class="profile">
+
+        <div
+            class="profile-name"
+            id="profileName"
+        >
+            Loading...
         </div>
 
+        <div class="profile-status">
+            ● Online
+        </div>
+
+    </div>
+
+</aside>
+
+
+<main class="main">
+
+    <div class="topbar">
+
+        <div>
+
+            <h1>👥 Group Chats</h1>
+
+            <p>
+                Chat with multiple people at once.
+            </p>
+
+        </div>
 
         <button
-            class="nav-btn"
+            class="home-button"
             onclick="goHome()"
         >
-
-            <span class="nav-icon">
-                ⌂
-            </span>
-
-            <span>
-                Home
-            </span>
-
+            ← Home
         </button>
 
-
-        <button
-            class="nav-btn active"
-        >
-
-            <span class="nav-icon">
-                👥
-            </span>
-
-            <span>
-                Group Chats
-            </span>
-
-        </button>
+    </div>
 
 
-        <div class="nav-title">
-            ACCOUNT
-        </div>
+    <div class="group-layout">
 
 
-        <button
-            class="nav-btn"
-            onclick="goProfile()"
-        >
+        <!-- GROUP LIST -->
 
-            <span class="nav-icon">
-                ●
-            </span>
+        <section class="group-list-panel">
 
-            <span>
-                My Profile
-            </span>
+            <div class="panel-header">
 
-        </button>
+                <h2>
+                    Your Groups
+                </h2>
 
+                <button
+                    class="create-button"
+                    onclick="openCreateModal()"
+                >
+                    +
+                </button>
 
-        <button
-            class="nav-btn"
-            onclick="logout()"
-        >
+            </div>
 
-            <span class="nav-icon">
-                ↪
-            </span>
-
-            <span>
-                Log Out
-            </span>
-
-        </button>
-
-
-        <div class="profile">
 
             <div
-                class="profile-name"
-                id="profileName"
+                class="groups"
+                id="groupsList"
             >
-                Loading...
-            </div>
 
-            <div class="profile-status">
-                ● Online
-            </div>
-
-        </div>
-
-    </aside>
-
-
-    <!-- =====================================
-         MAIN
-    ====================================== -->
-
-    <main class="main">
-
-
-        <div class="topbar">
-
-            <div>
-
-                <h1>
-                    👥 Group Chats
-                </h1>
-
-                <p>
-                    Chat with multiple people at once.
-                </p>
+                <div class="no-groups">
+                    Loading groups...
+                </div>
 
             </div>
 
+        </section>
 
-            <button
-                class="home-button"
-                onclick="goHome()"
+
+        <!-- CHAT -->
+
+        <section class="chat-panel">
+
+            <div
+                class="chat-empty"
+                id="chatEmpty"
             >
-                ← Home
-            </button>
 
-        </div>
+                <div>
 
-
-        <div class="group-layout">
-
-
-            <!-- =================================
-                 GROUP LIST
-            ================================== -->
-
-            <section class="group-list-panel">
-
-                <div class="panel-header">
+                    <div class="chat-empty-icon">
+                        💬
+                    </div>
 
                     <h2>
-                        Your Groups
+                        Select a group
                     </h2>
 
+                    <p>
+                        Choose a group from the left<br>
+                        to start chatting.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="chatContent"
+                style="
+                    display:none;
+                    flex:1;
+                    flex-direction:column;
+                    min-height:0;
+                "
+            >
+
+                <div class="chat-header">
+
+                    <div>
+
+                        <div
+                            class="chat-group-name"
+                            id="chatGroupName"
+                        >
+                            Group
+                        </div>
+
+                        <div
+                            class="chat-group-info"
+                            id="chatGroupInfo"
+                        >
+                            Group members
+                        </div>
+
+                    </div>
+
                     <button
-                        class="create-button"
-                        onclick="openCreateModal()"
-                        title="Create group"
+                        class="members-button"
+                        onclick="openMembersModal()"
                     >
-                        +
+                        👥 Members
                     </button>
 
                 </div>
 
 
                 <div
-                    class="groups"
-                    id="groupsList"
-                >
-
-                    <div class="no-groups">
-
-                        <div class="no-groups-icon">
-                            👥
-                        </div>
-
-                        Loading groups...
-
-                    </div>
-
-                </div>
-
-            </section>
+                    class="messages"
+                    id="messages"
+                ></div>
 
 
-            <!-- =================================
-                 CHAT
-            ================================== -->
+                <div class="chat-input">
 
-            <section class="chat-panel">
+                    <input
+                        id="messageInput"
+                        type="text"
+                        placeholder="Type a message..."
+                        maxlength="500"
+                        autocomplete="off"
+                    >
 
-
-                <div
-                    class="chat-empty"
-                    id="chatEmpty"
-                >
-
-                    <div>
-
-                        <div class="chat-empty-icon">
-                            💬
-                        </div>
-
-                        <h2>
-                            Select a group
-                        </h2>
-
-                        <p>
-                            Choose a group from the left<br>
-                            to start chatting.
-                        </p>
-
-                    </div>
+                    <button
+                        class="send-button"
+                        onclick="sendMessage()"
+                    >
+                        Send
+                    </button>
 
                 </div>
 
+            </div>
 
-                <div
-                    id="chatContent"
-                    style="display:none; flex:1; flex-direction:column; min-height:0;"
-                >
+        </section>
 
+    </div>
 
-                    <div class="chat-header">
-
-                        <div>
-
-                            <div
-                                class="chat-group-name"
-                                id="chatGroupName"
-                            >
-                                Group
-                            </div>
-
-                            <div
-                                class="chat-group-info"
-                                id="chatGroupInfo"
-                            >
-                                Group members
-                            </div>
-
-                        </div>
-
-
-                        <button
-                            class="members-button"
-                            onclick="openMembersModal()"
-                        >
-                            👥 Members
-                        </button>
-
-                    </div>
-
-
-                    <div
-                        class="messages"
-                        id="messages"
-                    ></div>
-
-
-                    <div class="chat-input">
-
-                        <input
-                            id="messageInput"
-                            type="text"
-                            placeholder="Type a message..."
-                            maxlength="500"
-                            autocomplete="off"
-                        >
-
-
-                        <button
-                            class="send-button"
-                            onclick="sendMessage()"
-                        >
-                            Send
-                        </button>
-
-                    </div>
-
-
-                </div>
-
-
-            </section>
-
-
-        </div>
-
-
-    </main>
+</main>
 
 </div>
 
 
-<!-- =========================================
-     CREATE GROUP MODAL
-========================================= -->
+<!-- CREATE GROUP MODAL -->
 
 <div
     class="modal-overlay"
@@ -1498,43 +975,20 @@ body {
         <div class="field">
 
             <label>
-                DESCRIPTION
-            </label>
-
-            <textarea
-                id="groupDescriptionInput"
-                placeholder="What's this group about?"
-                maxlength="150"
-            ></textarea>
-
-        </div>
-
-
-        <div class="field">
-
-            <label>
                 ADD MEMBERS
             </label>
 
-
-            <div class="user-search">
-
-                <input
-                    id="memberSearchInput"
-                    type="text"
-                    placeholder="Search usernames..."
-                    maxlength="20"
-                    autocomplete="off"
-                >
-
-            </div>
-
+            <input
+                id="memberSearchInput"
+                type="text"
+                placeholder="Search usernames..."
+                autocomplete="off"
+            >
 
             <div
                 class="user-results"
                 id="memberSearchResults"
             ></div>
-
 
             <div
                 class="selected-users"
@@ -1567,9 +1021,7 @@ body {
 </div>
 
 
-<!-- =========================================
-     MEMBERS MODAL
-========================================= -->
+<!-- MEMBERS MODAL -->
 
 <div
     class="modal-overlay"
@@ -1589,12 +1041,10 @@ body {
             Members
         </p>
 
-
         <div
             class="member-list"
             id="memberList"
         ></div>
-
 
         <div class="modal-actions">
 
@@ -1612,10 +1062,6 @@ body {
 </div>
 
 
-<!-- =========================================
-     TOAST
-========================================= -->
-
 <div
     class="toast"
     id="toast"
@@ -1623,7 +1069,6 @@ body {
 
 
 <script>
-
 
 /* =========================================
    SUPABASE
@@ -1656,8 +1101,6 @@ let groupChannel = null;
 
 let selectedUsers = [];
 
-let searchTimer = null;
-
 
 /* =========================================
    HELPERS
@@ -1672,6 +1115,7 @@ function escapeHTML(text) {
         String(text ?? "");
 
     return div.innerHTML;
+
 }
 
 
@@ -1685,12 +1129,11 @@ function showToast(text) {
 
     toast.classList.add("show");
 
-    setTimeout(
-        () => {
-            toast.classList.remove("show");
-        },
-        2500
-    );
+    setTimeout(() => {
+
+        toast.classList.remove("show");
+
+    }, 2500);
 
 }
 
@@ -1710,7 +1153,7 @@ async function loadSession() {
         .getSession();
 
 
-    if(
+    if (
         error ||
         !data ||
         !data.session
@@ -1730,8 +1173,7 @@ async function loadSession() {
 
     currentUsername =
         user.user_metadata?.username ||
-        user.email
-            .split("@")[0];
+        user.email.split("@")[0];
 
 
     document.getElementById(
@@ -1758,14 +1200,9 @@ async function loadGroups() {
 
 
     list.innerHTML =
-        `
-        <div class="no-groups">
-            <div class="no-groups-icon">
-                ⏳
-            </div>
+        `<div class="no-groups">
             Loading groups...
-        </div>
-        `;
+        </div>`;
 
 
     const {
@@ -1781,40 +1218,41 @@ async function loadGroups() {
         );
 
 
-    if(error) {
+    if (error) {
 
-        console.error(error);
+        console.error(
+            "GROUP MEMBERS ERROR:",
+            error
+        );
 
         list.innerHTML =
-            `
-            <div class="no-groups">
+            `<div class="no-groups">
                 Could not load groups.
-            </div>
-            `;
+            </div>`;
 
         return;
 
     }
 
 
-    if(!memberships.length) {
+    if (!memberships?.length) {
 
         list.innerHTML =
-            `
-            <div class="no-groups">
+            `<div class="no-groups">
 
                 <div class="no-groups-icon">
                     👥
                 </div>
 
-                <strong>No groups yet</strong>
+                <strong>
+                    No groups yet
+                </strong>
 
                 <br><br>
 
                 Click <b>+</b> to create one.
 
-            </div>
-            `;
+            </div>`;
 
         return;
 
@@ -1846,60 +1284,55 @@ async function loadGroups() {
         );
 
 
-    if(groupError) {
+    if (groupError) {
 
-        console.error(groupError);
+        console.error(
+            "GROUP LOAD ERROR:",
+            groupError
+        );
 
         return;
 
     }
 
 
-    list.innerHTML =
-        "";
+    list.innerHTML = "";
 
 
-    groups.forEach(
-        group => {
+    (groups || []).forEach(group => {
 
-            const item =
-                document.createElement(
-                    "div"
-                );
+        const item =
+            document.createElement("div");
 
 
-            item.className =
-                "group-item";
+        item.className =
+            "group-item";
 
 
-            item.dataset.groupId =
-                group.id;
+        item.dataset.groupId =
+            String(group.id);
 
 
-            item.innerHTML = `
+        item.innerHTML = `
 
-                <div class="group-item-name">
-                    👥 ${escapeHTML(group.name)}
-                </div>
+            <div class="group-item-name">
+                👥 ${escapeHTML(group.name)}
+            </div>
 
-                <div class="group-item-info">
-                    ${escapeHTML(
-                        group.description ||
-                        "No description"
-                    )}
-                </div>
+            <div class="group-item-info">
+                Created by ${escapeHTML(group.created_by)}
+            </div>
 
-            `;
+        `;
 
 
-            item.onclick =
-                () => openGroup(group);
+        item.onclick =
+            () => openGroup(group);
 
 
-            list.appendChild(item);
+        list.appendChild(item);
 
-        }
-    );
+    });
 
 }
 
@@ -1919,17 +1352,15 @@ async function openGroup(group) {
 
     document
         .querySelectorAll(".group-item")
-        .forEach(
-            item => {
+        .forEach(item => {
 
-                item.classList.toggle(
-                    "active",
-                    item.dataset.groupId ===
-                    group.id
-                );
+            item.classList.toggle(
+                "active",
+                item.dataset.groupId ===
+                String(group.id)
+            );
 
-            }
-        );
+        });
 
 
     document.getElementById(
@@ -1938,12 +1369,9 @@ async function openGroup(group) {
         "none";
 
 
-    const content =
-        document.getElementById(
-            "chatContent"
-        );
-
-    content.style.display =
+    document.getElementById(
+        "chatContent"
+    ).style.display =
         "flex";
 
 
@@ -1973,7 +1401,7 @@ async function openGroup(group) {
 
 async function loadGroupMembers() {
 
-    if(!currentGroupId)
+    if (!currentGroupId)
         return;
 
 
@@ -1987,18 +1415,15 @@ async function loadGroupMembers() {
         .eq(
             "group_id",
             currentGroupId
-        )
-        .order(
-            "joined_at",
-            {
-                ascending:true
-            }
         );
 
 
-    if(error) {
+    if (error) {
 
-        console.error(error);
+        console.error(
+            "MEMBERS ERROR:",
+            error
+        );
 
         return;
 
@@ -2015,8 +1440,8 @@ async function loadGroupMembers() {
         count +
         (
             count === 1
-            ? " member"
-            : " members"
+                ? " member"
+                : " members"
         );
 
 }
@@ -2035,15 +1460,13 @@ async function loadMessages() {
 
 
     box.innerHTML =
-        `
-        <div style="
+        `<div style="
             text-align:center;
             color:#737d95;
             padding:30px;
         ">
             Loading messages...
-        </div>
-        `;
+        </div>`;
 
 
     const {
@@ -2051,45 +1474,47 @@ async function loadMessages() {
         error
     } =
         await supabaseClient
-        .from("group_messages")
+        .from("messages")
         .select("*")
         .eq(
-            "group_id",
+            "conversation_id",
             currentGroupId
         )
         .order(
             "created_at",
             {
-                ascending:true
+                ascending: true
             }
         );
 
 
-    if(error) {
+    if (error) {
 
-        console.error(error);
+        console.error(
+            "MESSAGE LOAD ERROR:",
+            error
+        );
 
         box.innerHTML =
-            `
-            <div style="
+            `<div style="
                 text-align:center;
                 color:#ff8585;
                 padding:30px;
             ">
                 Could not load messages.
-            </div>
-            `;
+                <br><br>
+                Check the browser console.
+            </div>`;
 
         return;
 
     }
 
 
-    box.innerHTML =
-        "";
+    box.innerHTML = "";
 
 
-    data.forEach(
+    (data || []).forEach(
         message => {
 
             displayMessage(
@@ -2123,25 +1548,27 @@ function displayMessage(message) {
         );
 
 
+    const sender =
+        message.sender || "Unknown";
+
+
     const mine =
-        message.username
-            .toLowerCase() ===
-        currentUsername
-            .toLowerCase();
+        sender.toLowerCase() ===
+        currentUsername.toLowerCase();
 
 
     item.className =
         "message" +
         (
             mine
-            ? " mine"
-            : ""
+                ? " mine"
+                : ""
         );
 
 
     const firstLetter =
         escapeHTML(
-            message.username
+            sender
                 .charAt(0)
                 .toUpperCase()
         );
@@ -2156,7 +1583,7 @@ function displayMessage(message) {
         <div class="message-content">
 
             <div class="message-user">
-                ${escapeHTML(message.username)}
+                ${escapeHTML(sender)}
             </div>
 
             <div class="message-bubble">
@@ -2179,8 +1606,15 @@ function displayMessage(message) {
 
 async function sendMessage() {
 
-    if(!currentGroupId)
+    if (!currentGroupId) {
+
+        showToast(
+            "⚠️ Select a group first"
+        );
+
         return;
+
+    }
 
 
     const input =
@@ -2193,40 +1627,59 @@ async function sendMessage() {
         input.value.trim();
 
 
-    if(!text)
+    if (!text)
         return;
 
 
-    input.disabled =
-        true;
+    input.disabled = true;
+
+
+    console.log(
+        "Sending message:",
+        {
+            conversation_id:
+                currentGroupId,
+
+            sender:
+                currentUsername,
+
+            message:
+                text
+        }
+    );
 
 
     const {
+        data,
         error
     } =
         await supabaseClient
-        .from("group_messages")
+        .from("messages")
         .insert({
 
-            group_id:
+            conversation_id:
                 currentGroupId,
 
-            username:
+            sender:
                 currentUsername,
 
             message:
                 text
 
-        });
+        })
+        .select()
+        .single();
 
 
-    input.disabled =
-        false;
+    input.disabled = false;
 
 
-    if(error) {
+    if (error) {
 
-        console.error(error);
+        console.error(
+            "MESSAGE SEND ERROR:",
+            error
+        );
 
         showToast(
             "❌ Message could not be sent"
@@ -2237,8 +1690,13 @@ async function sendMessage() {
     }
 
 
-    input.value =
-        "";
+    console.log(
+        "MESSAGE SENT:",
+        data
+    );
+
+
+    input.value = "";
 
     input.focus();
 
@@ -2246,12 +1704,12 @@ async function sendMessage() {
 
 
 /* =========================================
-   REALTIME
+   REALTIME MESSAGES
 ========================================= */
 
 function subscribeToGroup() {
 
-    if(groupChannel) {
+    if (groupChannel) {
 
         supabaseClient
             .removeChannel(
@@ -2261,14 +1719,12 @@ function subscribeToGroup() {
     }
 
 
-    const channelName =
-        "group-chat-" +
-        currentGroupId;
-
-
     groupChannel =
         supabaseClient
-        .channel(channelName)
+        .channel(
+            "group-chat-" +
+            currentGroupId
+        )
         .on(
             "postgres_changes",
             {
@@ -2277,25 +1733,47 @@ function subscribeToGroup() {
 
                 schema: "public",
 
-                table: "group_messages",
-
-                filter:
-                    "group_id=eq." +
-                    currentGroupId
+                table: "messages"
 
             },
 
             payload => {
 
+                const message =
+                    payload.new;
+
+
+                if (
+                    String(
+                        message.conversation_id
+                    ) !==
+                    String(currentGroupId)
+                ) {
+
+                    return;
+
+                }
+
+
                 displayMessage(
-                    payload.new
+                    message
                 );
+
 
                 scrollMessages();
 
             }
         )
-        .subscribe();
+        .subscribe(
+            status => {
+
+                console.log(
+                    "Realtime status:",
+                    status
+                );
+
+            }
+        );
 
 }
 
@@ -2312,21 +1790,18 @@ function scrollMessages() {
         );
 
 
-    setTimeout(
-        () => {
+    setTimeout(() => {
 
-            box.scrollTop =
-                box.scrollHeight;
+        box.scrollTop =
+            box.scrollHeight;
 
-        },
-        30
-    );
+    }, 30);
 
 }
 
 
 /* =========================================
-   CREATE MODAL
+   CREATE GROUP MODAL
 ========================================= */
 
 function openCreateModal() {
@@ -2338,45 +1813,23 @@ function openCreateModal() {
 
     document.getElementById(
         "groupNameInput"
-    ).value =
-        "";
-
-
-    document.getElementById(
-        "groupDescriptionInput"
-    ).value =
-        "";
+    ).value = "";
 
 
     document.getElementById(
         "memberSearchInput"
-    ).value =
-        "";
+    ).value = "";
 
 
     document.getElementById(
         "memberSearchResults"
-    ).innerHTML =
-        "";
+    ).innerHTML = "";
 
 
-    selectedUsers =
-        [];
+    selectedUsers = [];
 
 
     renderSelectedUsers();
-
-
-    setTimeout(
-        () => {
-
-            document.getElementById(
-                "groupNameInput"
-            ).focus();
-
-        },
-        100
-    );
 
 }
 
@@ -2398,101 +1851,74 @@ document.getElementById(
     "memberSearchInput"
 ).addEventListener(
     "input",
-    function() {
+    async function() {
 
         const query =
             this.value.trim();
 
 
-        clearTimeout(
-            searchTimer
-        );
-
-
-        if(!query) {
+        if (!query) {
 
             document.getElementById(
                 "memberSearchResults"
-            ).innerHTML =
-                "";
+            ).innerHTML = "";
 
             return;
 
         }
 
 
-        searchTimer =
-            setTimeout(
-                () => searchUsersForGroup(query),
-                250
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+            .from("profiles")
+            .select(
+                "username, online"
+            )
+            .ilike(
+                "username",
+                "%" + query + "%"
+            )
+            .limit(20);
+
+
+        if (error) {
+
+            console.error(
+                "USER SEARCH ERROR:",
+                error
             );
 
-    }
-);
+            return;
+
+        }
 
 
-/* =========================================
-   SEARCH USERS
-========================================= */
-
-async function searchUsersForGroup(query) {
-
-    const results =
-        document.getElementById(
-            "memberSearchResults"
-        );
+        const results =
+            document.getElementById(
+                "memberSearchResults"
+            );
 
 
-    const {
-        data,
-        error
-    } =
-        await supabaseClient
-        .from("profiles")
-        .select(
-            "username, online"
-        )
-        .ilike(
-            "username",
-            "%" + query + "%"
-        )
-        .order(
-            "username",
-            {
-                ascending:true
-            }
-        )
-        .limit(20);
+        results.innerHTML = "";
 
 
-    if(error) {
+        const filtered =
+            (data || []).filter(user => {
 
-        console.error(error);
-
-        return;
-
-    }
+                if (!user.username)
+                    return false;
 
 
-    results.innerHTML =
-        "";
-
-
-    const filtered =
-        (data || []).filter(
-            user => {
-
-                if(
-                    !user.username ||
+                if (
                     user.username
                         .toLowerCase() ===
                     currentUsername
                         .toLowerCase()
-                ) {
-
+                )
                     return false;
-
-                }
 
 
                 return !selectedUsers.some(
@@ -2501,12 +1927,10 @@ async function searchUsersForGroup(query) {
                         user.username.toLowerCase()
                 );
 
-            }
-        );
+            });
 
 
-    filtered.forEach(
-        user => {
+        filtered.forEach(user => {
 
             const item =
                 document.createElement(
@@ -2530,26 +1954,23 @@ async function searchUsersForGroup(query) {
 
                 <div>
 
-                    <div class="user-result-name">
+                    <b>
                         ${escapeHTML(user.username)}
-                    </div>
+                    </b>
 
                     <div style="
                         color:${
                             user.online
-                            ? "#55d88a"
-                            : "#737d95"
+                                ? "#55d88a"
+                                : "#737d95"
                         };
                         font-size:10px;
-                        margin-top:2px;
                     ">
-
                         ${
                             user.online
-                            ? "● Online"
-                            : "● Offline"
+                                ? "● Online"
+                                : "● Offline"
                         }
-
                     </div>
 
                 </div>
@@ -2557,89 +1978,39 @@ async function searchUsersForGroup(query) {
             `;
 
 
-            item.onclick =
-                () => {
+            item.onclick = () => {
 
-                    addSelectedUser(
-                        user.username
-                    );
+                selectedUsers.push(
+                    user.username
+                );
 
-                };
+
+                renderSelectedUsers();
+
+
+                document.getElementById(
+                    "memberSearchInput"
+                ).value = "";
+
+
+                results.innerHTML = "";
+
+            };
 
 
             results.appendChild(
                 item
             );
 
-        }
-    );
-
-
-    if(!filtered.length) {
-
-        results.innerHTML =
-            `
-            <div style="
-                color:#737d95;
-                padding:12px;
-                font-size:12px;
-            ">
-                No users found.
-            </div>
-            `;
+        });
 
     }
-
-}
+);
 
 
 /* =========================================
-   SELECT USERS
+   SELECTED USERS
 ========================================= */
-
-function addSelectedUser(username) {
-
-    if(
-        selectedUsers.includes(username)
-    )
-        return;
-
-
-    selectedUsers.push(
-        username
-    );
-
-
-    renderSelectedUsers();
-
-
-    document.getElementById(
-        "memberSearchInput"
-    ).value =
-        "";
-
-
-    document.getElementById(
-        "memberSearchResults"
-    ).innerHTML =
-        "";
-
-}
-
-
-function removeSelectedUser(username) {
-
-    selectedUsers =
-        selectedUsers.filter(
-            user =>
-                user !== username
-        );
-
-
-    renderSelectedUsers();
-
-}
-
 
 function renderSelectedUsers() {
 
@@ -2649,8 +2020,7 @@ function renderSelectedUsers() {
         );
 
 
-    container.innerHTML =
-        "";
+    container.innerHTML = "";
 
 
     selectedUsers.forEach(
@@ -2671,8 +2041,13 @@ function renderSelectedUsers() {
                 ${escapeHTML(username)}
 
                 <button
-                    class="remove-user"
                     onclick="removeSelectedUser('${escapeAttribute(username)}')"
+                    style="
+                        border:none;
+                        background:none;
+                        color:white;
+                        cursor:pointer;
+                    "
                 >
                     ×
                 </button>
@@ -2690,6 +2065,20 @@ function renderSelectedUsers() {
 }
 
 
+function removeSelectedUser(username) {
+
+    selectedUsers =
+        selectedUsers.filter(
+            user =>
+                user !== username
+        );
+
+
+    renderSelectedUsers();
+
+}
+
+
 /* =========================================
    CREATE GROUP
 ========================================= */
@@ -2697,43 +2086,49 @@ function renderSelectedUsers() {
 async function createGroup() {
 
     const name =
-        document.getElementById("groupNameInput")
+        document.getElementById(
+            "groupNameInput"
+        )
         .value
         .trim();
 
-    const description =
-        document.getElementById("groupDescriptionInput")
-        .value
-        .trim();
 
     if (!name) {
-        showToast("⚠️ Enter a group name");
+
+        showToast(
+            "⚠️ Enter a group name"
+        );
+
         return;
+
     }
 
-    if (name.length < 2) {
-        showToast("⚠️ Group name is too short");
-        return;
-    }
-
-    console.log("Creating group:", name);
 
     const {
         data: group,
         error: groupError
-    } = await supabaseClient
+    } =
+        await supabaseClient
         .from("groups")
         .insert({
-            name: name,
-            created_by: currentUsername
+
+            name:
+                name,
+
+            created_by:
+                currentUsername
+
         })
         .select()
         .single();
 
-    // IMPORTANT: check groupError, NOT error
+
     if (groupError) {
 
-        console.error("GROUP CREATE ERROR:", groupError);
+        console.error(
+            "GROUP CREATE ERROR:",
+            groupError
+        );
 
         alert(
             "Could not create group!\n\n" +
@@ -2741,42 +2136,62 @@ async function createGroup() {
         );
 
         return;
+
     }
 
-    if (!group) {
 
-        console.error("No group returned!");
+    console.log(
+        "GROUP CREATED:",
+        group
+    );
 
-        alert("Could not create group!");
 
-        return;
-    }
+    const members = [];
 
-    console.log("GROUP CREATED:", group);
 
-    const members = [
-        {
-            group_id: group.id,
-            username: currentUsername
-        }
-    ];
+    members.push({
 
-    selectedUsers.forEach(username => {
+        group_id:
+            group.id,
 
-        members.push({
-            group_id: group.id,
-            username: username
-        });
+        username:
+            currentUsername,
+
+        role:
+            "owner"
 
     });
 
-    console.log("Adding members:", members);
+
+    selectedUsers.forEach(
+        username => {
+
+            members.push({
+
+                group_id:
+                    group.id,
+
+                username:
+                    username,
+
+                role:
+                    "member"
+
+            });
+
+        }
+    );
+
 
     const {
         error: memberError
-    } = await supabaseClient
+    } =
+        await supabaseClient
         .from("group_members")
-        .insert(members);
+        .insert(
+            members
+        );
+
 
     if (memberError) {
 
@@ -2785,29 +2200,29 @@ async function createGroup() {
             memberError
         );
 
-        // Delete the group if members couldn't be added
-        await supabaseClient
-            .from("groups")
-            .delete()
-            .eq("id", group.id);
-
         alert(
             "Group was created, but members could not be added.\n\n" +
             memberError.message
         );
 
         return;
+
     }
 
-    console.log("GROUP + MEMBERS CREATED SUCCESSFULLY!");
 
     closeCreateModal();
 
-    showToast("🎉 Group created!");
+
+    showToast(
+        "🎉 Group created!"
+    );
+
 
     await loadGroups();
 
+
     openGroup(group);
+
 }
 
 
@@ -2820,39 +2235,42 @@ async function openMembersModal() {
     if (!currentGroupId)
         return;
 
+
     document.getElementById(
         "membersModal"
     ).classList.add("show");
 
-    const list =
-        document.getElementById("memberList");
 
-    list.innerHTML = `
-        <div style="
+    const list =
+        document.getElementById(
+            "memberList"
+        );
+
+
+    list.innerHTML =
+        `<div style="
             color:#737d95;
             padding:20px;
             text-align:center;
         ">
             Loading...
-        </div>
-    `;
+        </div>`;
+
 
     const {
         data,
         error
-    } = await supabaseClient
+    } =
+        await supabaseClient
         .from("group_members")
-        .select("username")
+        .select(
+            "username, role"
+        )
         .eq(
             "group_id",
             currentGroupId
-        )
-        .order(
-            "joined_at",
-            {
-                ascending: true
-            }
         );
+
 
     if (error) {
 
@@ -2862,7 +2280,9 @@ async function openMembersModal() {
         );
 
         return;
+
     }
+
 
     document.getElementById(
         "membersSubtitle"
@@ -2874,14 +2294,21 @@ async function openMembersModal() {
                 : " members"
         );
 
+
     list.innerHTML = "";
+
 
     data.forEach(member => {
 
         const item =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
-        item.className = "member";
+
+        item.className =
+            "member";
+
 
         item.innerHTML = `
 
@@ -2893,31 +2320,35 @@ async function openMembersModal() {
                 )}
             </div>
 
-            <div class="member-name">
-                ${escapeHTML(member.username)}
+            <div>
+                <div>
+                    ${escapeHTML(
+                        member.username
+                    )}
+                </div>
+
+                ${
+                    member.role
+                        ? `
+                            <small style="
+                                color:#737d95;
+                            ">
+                                ${escapeHTML(
+                                    member.role
+                                )}
+                            </small>
+                          `
+                        : ""
+                }
+
             </div>
-
-            ${
-                currentGroup &&
-                member.username.toLowerCase() ===
-                currentGroup.created_by.toLowerCase()
-
-                ? `
-                    <span style="
-                        margin-left:auto;
-                        color:#7097ff;
-                        font-size:10px;
-                    ">
-                        OWNER
-                    </span>
-                  `
-
-                : ""
-            }
 
         `;
 
-        list.appendChild(item);
+
+        list.appendChild(
+            item
+        );
 
     });
 
@@ -2942,13 +2373,18 @@ function goHome() {
     if (groupChannel) {
 
         supabaseClient
-            .removeChannel(groupChannel);
+            .removeChannel(
+                groupChannel
+            );
 
         groupChannel = null;
 
     }
 
-    window.location.href = "index.html";
+
+    window.location.href =
+        "index.html";
+
 }
 
 
@@ -2959,8 +2395,10 @@ function goProfile() {
         currentUsername
     );
 
+
     window.location.href =
         "Profile.html";
+
 }
 
 
@@ -2973,17 +2411,21 @@ async function logout() {
     if (groupChannel) {
 
         await supabaseClient
-            .removeChannel(groupChannel);
+            .removeChannel(
+                groupChannel
+            );
 
-        groupChannel = null;
     }
+
 
     await supabaseClient
         .auth
         .signOut();
 
+
     window.location.href =
         "index.html";
+
 }
 
 
@@ -3010,7 +2452,9 @@ document.getElementById(
     "keydown",
     function(event) {
 
-        if (event.key === "Enter") {
+        if (
+            event.key === "Enter"
+        ) {
 
             event.preventDefault();
 
@@ -3024,774 +2468,42 @@ document.getElementById(
 
 /* =========================================
    CLOSE MODALS
-========================================= */
-
-document
-    .getElementById("createModal")
-    .addEventListener(
-        "click",
-        function(event) {
-
-            if (event.target === this) {
-
-                closeCreateModal();
-
-            }
-
-        }
-    );
-
-
-document
-    .getElementById("membersModal")
-    .addEventListener(
-        "click",
-        function(event) {
-
-            if (event.target === this) {
-
-                closeMembersModal();
-
-            }
-
-        }
-    );
-
-
-/* =========================================
-   START
-========================================= */
-
-async function createGroup() {
-
-    const name =
-        document.getElementById("groupNameInput")
-        .value
-        .trim();
-
-    const description =
-        document.getElementById("groupDescriptionInput")
-        .value
-        .trim();
-
-    if (!name) {
-        showToast("⚠️ Enter a group name");
-        return;
-    }
-
-    if (name.length < 2) {
-        showToast("⚠️ Group name is too short");
-        return;
-    }
-
-    console.log("Creating group:", name);
-
-    const {
-        data: group,
-        error: groupError
-    } = await supabaseClient
-        .from("groups")
-        .insert({
-            name: name,
-            created_by: currentUsername
-        })
-        .select()
-        .single();
-
-    // IMPORTANT: check groupError, NOT error
-    if (groupError) {
-
-        console.error("GROUP CREATE ERROR:", groupError);
-
-        alert(
-            "Could not create group!\n\n" +
-            groupError.message
-        );
-
-        return;
-    }
-
-    if (!group) {
-
-        console.error("No group returned!");
-
-        alert("Could not create group!");
-
-        return;
-    }
-
-    console.log("GROUP CREATED:", group);
-
-    const members = [
-        {
-            group_id: group.id,
-            username: currentUsername
-        }
-    ];
-
-    selectedUsers.forEach(username => {
-
-        members.push({
-            group_id: group.id,
-            username: username
-        });
-
-    });
-
-    console.log("Adding members:", members);
-
-    const {
-        error: memberError
-    } = await supabaseClient
-        .from("group_members")
-        .insert(members);
-
-    if (memberError) {
-
-        console.error(
-            "MEMBER INSERT ERROR:",
-            memberError
-        );
-
-        // Delete the group if members couldn't be added
-        await supabaseClient
-            .from("groups")
-            .delete()
-            .eq("id", group.id);
-
-        alert(
-            "Group was created, but members could not be added.\n\n" +
-            memberError.message
-        );
-
-        return;
-    }
-
-    console.log("GROUP + MEMBERS CREATED SUCCESSFULLY!");
-
-    closeCreateModal();
-
-    showToast("🎉 Group created!");
-
-    await loadGroups();
-
-    openGroup(group);
-}
-
-
-/* =========================================
-   MEMBERS MODAL
-========================================= */
-
-async function openMembersModal() {
-
-    if (!currentGroupId)
-        return;
-
-    document.getElementById(
-        "membersModal"
-    ).classList.add("show");
-
-    const list =
-        document.getElementById("memberList");
-
-    list.innerHTML = `
-        <div style="
-            color:#737d95;
-            padding:20px;
-            text-align:center;
-        ">
-            Loading...
-        </div>
-    `;
-
-    const {
-        data,
-        error
-    } = await supabaseClient
-        .from("group_members")
-        .select("username")
-        .eq(
-            "group_id",
-            currentGroupId
-        )
-        .order(
-            "joined_at",
-            {
-                ascending: true
-            }
-        );
-
-    if (error) {
-
-        console.error(
-            "MEMBERS LOAD ERROR:",
-            error
-        );
-
-        return;
-    }
-
-    document.getElementById(
-        "membersSubtitle"
-    ).innerText =
-        data.length +
-        (
-            data.length === 1
-                ? " member"
-                : " members"
-        );
-
-    list.innerHTML = "";
-
-    data.forEach(member => {
-
-        const item =
-            document.createElement("div");
-
-        item.className = "member";
-
-        item.innerHTML = `
-
-            <div class="member-avatar">
-                ${escapeHTML(
-                    member.username
-                        .charAt(0)
-                        .toUpperCase()
-                )}
-            </div>
-
-            <div class="member-name">
-                ${escapeHTML(member.username)}
-            </div>
-
-            ${
-                currentGroup &&
-                member.username.toLowerCase() ===
-                currentGroup.created_by.toLowerCase()
-
-                ? `
-                    <span style="
-                        margin-left:auto;
-                        color:#7097ff;
-                        font-size:10px;
-                    ">
-                        OWNER
-                    </span>
-                  `
-
-                : ""
-            }
-
-        `;
-
-        list.appendChild(item);
-
-    });
-
-}
-
-
-function closeMembersModal() {
-
-    document.getElementById(
-        "membersModal"
-    ).classList.remove("show");
-
-}
-
-
-/* =========================================
-   NAVIGATION
-========================================= */
-
-function goHome() {
-
-    if (groupChannel) {
-
-        supabaseClient
-            .removeChannel(groupChannel);
-
-        groupChannel = null;
-
-    }
-
-    window.location.href = "index.html";
-}
-
-
-function goProfile() {
-
-    localStorage.setItem(
-        "chatsapp_username",
-        currentUsername
-    );
-
-    window.location.href =
-        "Profile.html";
-}
-
-
-/* =========================================
-   LOGOUT
-========================================= */
-
-async function logout() {
-
-    if (groupChannel) {
-
-        await supabaseClient
-            .removeChannel(groupChannel);
-
-        groupChannel = null;
-    }
-
-    await supabaseClient
-        .auth
-        .signOut();
-
-    window.location.href =
-        "index.html";
-}
-
-
-/* =========================================
-   ATTRIBUTE ESCAPE
-========================================= */
-
-function escapeAttribute(text) {
-
-    return String(text)
-        .replace(/\\/g, "\\\\")
-        .replace(/'/g, "\\'");
-
-}
-
-
-/* =========================================
-   ENTER KEY
 ========================================= */
 
 document.getElementById(
-    "messageInput"
+    "createModal"
 ).addEventListener(
-    "keydown",
+    "click",
     function(event) {
 
-        if (event.key === "Enter") {
+        if (
+            event.target === this
+        ) {
 
-            event.preventDefault();
-
-            sendMessage();
+            closeCreateModal();
 
         }
 
     }
 );
 
-
-/* =========================================
-   CLOSE MODALS
-========================================= */
-
-document
-    .getElementById("createModal")
-    .addEventListener(
-        "click",
-        function(event) {
-
-            if (event.target === this) {
-
-                closeCreateModal();
-
-            }
-
-        }
-    );
-
-
-document
-    .getElementById("membersModal")
-    .addEventListener(
-        "click",
-        function(event) {
-
-            if (event.target === this) {
-
-                closeMembersModal();
-
-            }
-
-        }
-    );
-
-
-/* =========================================
-   START
-========================================= */
-
-async function createGroup() {
-
-    const name =
-        document.getElementById("groupNameInput")
-        .value
-        .trim();
-
-    const description =
-        document.getElementById("groupDescriptionInput")
-        .value
-        .trim();
-
-    if (!name) {
-        showToast("⚠️ Enter a group name");
-        return;
-    }
-
-    if (name.length < 2) {
-        showToast("⚠️ Group name is too short");
-        return;
-    }
-
-    console.log("Creating group:", name);
-
-    const {
-        data: group,
-        error: groupError
-    } = await supabaseClient
-        .from("groups")
-        .insert({
-            name: name,
-            created_by: currentUsername
-        })
-        .select()
-        .single();
-
-    // IMPORTANT: check groupError, NOT error
-    if (groupError) {
-
-        console.error("GROUP CREATE ERROR:", groupError);
-
-        alert(
-            "Could not create group!\n\n" +
-            groupError.message
-        );
-
-        return;
-    }
-
-    if (!group) {
-
-        console.error("No group returned!");
-
-        alert("Could not create group!");
-
-        return;
-    }
-
-    console.log("GROUP CREATED:", group);
-
-    const members = [
-        {
-            group_id: group.id,
-            username: currentUsername
-        }
-    ];
-
-    selectedUsers.forEach(username => {
-
-        members.push({
-            group_id: group.id,
-            username: username
-        });
-
-    });
-
-    console.log("Adding members:", members);
-
-    const {
-        error: memberError
-    } = await supabaseClient
-        .from("group_members")
-        .insert(members);
-
-    if (memberError) {
-
-        console.error(
-            "MEMBER INSERT ERROR:",
-            memberError
-        );
-
-        // Delete the group if members couldn't be added
-        await supabaseClient
-            .from("groups")
-            .delete()
-            .eq("id", group.id);
-
-        alert(
-            "Group was created, but members could not be added.\n\n" +
-            memberError.message
-        );
-
-        return;
-    }
-
-    console.log("GROUP + MEMBERS CREATED SUCCESSFULLY!");
-
-    closeCreateModal();
-
-    showToast("🎉 Group created!");
-
-    await loadGroups();
-
-    openGroup(group);
-}
-
-
-/* =========================================
-   MEMBERS MODAL
-========================================= */
-
-async function openMembersModal() {
-
-    if (!currentGroupId)
-        return;
-
-    document.getElementById(
-        "membersModal"
-    ).classList.add("show");
-
-    const list =
-        document.getElementById("memberList");
-
-    list.innerHTML = `
-        <div style="
-            color:#737d95;
-            padding:20px;
-            text-align:center;
-        ">
-            Loading...
-        </div>
-    `;
-
-    const {
-        data,
-        error
-    } = await supabaseClient
-        .from("group_members")
-        .select("username")
-        .eq(
-            "group_id",
-            currentGroupId
-        )
-        .order(
-            "joined_at",
-            {
-                ascending: true
-            }
-        );
-
-    if (error) {
-
-        console.error(
-            "MEMBERS LOAD ERROR:",
-            error
-        );
-
-        return;
-    }
-
-    document.getElementById(
-        "membersSubtitle"
-    ).innerText =
-        data.length +
-        (
-            data.length === 1
-                ? " member"
-                : " members"
-        );
-
-    list.innerHTML = "";
-
-    data.forEach(member => {
-
-        const item =
-            document.createElement("div");
-
-        item.className = "member";
-
-        item.innerHTML = `
-
-            <div class="member-avatar">
-                ${escapeHTML(
-                    member.username
-                        .charAt(0)
-                        .toUpperCase()
-                )}
-            </div>
-
-            <div class="member-name">
-                ${escapeHTML(member.username)}
-            </div>
-
-            ${
-                currentGroup &&
-                member.username.toLowerCase() ===
-                currentGroup.created_by.toLowerCase()
-
-                ? `
-                    <span style="
-                        margin-left:auto;
-                        color:#7097ff;
-                        font-size:10px;
-                    ">
-                        OWNER
-                    </span>
-                  `
-
-                : ""
-            }
-
-        `;
-
-        list.appendChild(item);
-
-    });
-
-}
-
-
-function closeMembersModal() {
-
-    document.getElementById(
-        "membersModal"
-    ).classList.remove("show");
-
-}
-
-
-/* =========================================
-   NAVIGATION
-========================================= */
-
-function goHome() {
-
-    if (groupChannel) {
-
-        supabaseClient
-            .removeChannel(groupChannel);
-
-        groupChannel = null;
-
-    }
-
-    window.location.href = "index.html";
-}
-
-
-function goProfile() {
-
-    localStorage.setItem(
-        "chatsapp_username",
-        currentUsername
-    );
-
-    window.location.href =
-        "Profile.html";
-}
-
-
-/* =========================================
-   LOGOUT
-========================================= */
-
-async function logout() {
-
-    if (groupChannel) {
-
-        await supabaseClient
-            .removeChannel(groupChannel);
-
-        groupChannel = null;
-    }
-
-    await supabaseClient
-        .auth
-        .signOut();
-
-    window.location.href =
-        "index.html";
-}
-
-
-/* =========================================
-   ATTRIBUTE ESCAPE
-========================================= */
-
-function escapeAttribute(text) {
-
-    return String(text)
-        .replace(/\\/g, "\\\\")
-        .replace(/'/g, "\\'");
-
-}
-
-
-/* =========================================
-   ENTER KEY
-========================================= */
 
 document.getElementById(
-    "messageInput"
+    "membersModal"
 ).addEventListener(
-    "keydown",
+    "click",
     function(event) {
 
-        if (event.key === "Enter") {
+        if (
+            event.target === this
+        ) {
 
-            event.preventDefault();
-
-            sendMessage();
+            closeMembersModal();
 
         }
 
     }
 );
-
-
-/* =========================================
-   CLOSE MODALS
-========================================= */
-
-document
-    .getElementById("createModal")
-    .addEventListener(
-        "click",
-        function(event) {
-
-            if (event.target === this) {
-
-                closeCreateModal();
-
-            }
-
-        }
-    );
-
-
-document
-    .getElementById("membersModal")
-    .addEventListener(
-        "click",
-        function(event) {
-
-            if (event.target === this) {
-
-                closeMembersModal();
-
-            }
-
-        }
-    );
 
 
 /* =========================================
