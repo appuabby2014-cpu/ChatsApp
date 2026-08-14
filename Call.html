@@ -1,0 +1,1726 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ChatsApp Call</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    font-family: Inter, Arial, sans-serif;
+
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        radial-gradient(circle at 20% 20%, #253b6e 0%, transparent 35%),
+        radial-gradient(circle at 80% 80%, #34205d 0%, transparent 35%),
+        #080b14;
+}
+
+.call-app {
+    width: 100%;
+    max-width: 520px;
+
+    padding: 30px;
+}
+
+.logo {
+    width: 70px;
+    height: 70px;
+
+    margin: 0 auto 20px;
+
+    border-radius: 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 32px;
+    font-weight: 800;
+
+    background: linear-gradient(
+        135deg,
+        #5b8cff,
+        #795cff
+    );
+
+    box-shadow:
+        0 10px 35px rgba(91,140,255,.35);
+}
+
+h1 {
+    text-align: center;
+
+    margin: 0;
+
+    font-size: 32px;
+}
+
+.subtitle {
+    text-align: center;
+
+    color: #818ba3;
+
+    margin: 10px 0 30px;
+}
+
+.card {
+    padding: 25px;
+
+    border-radius: 22px;
+
+    background: rgba(18,23,38,.9);
+
+    border: 1px solid #283149;
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.45);
+}
+
+label {
+    display: block;
+
+    color: #9ca5ba;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    margin-bottom: 8px;
+}
+
+input {
+    width: 100%;
+
+    padding: 15px;
+
+    border-radius: 13px;
+
+    border: 1px solid #30384f;
+
+    background: #0e1220;
+
+    color: white;
+
+    outline: none;
+
+    font-size: 15px;
+}
+
+input:focus {
+    border-color: #638cff;
+
+    box-shadow:
+        0 0 0 3px rgba(99,140,255,.1);
+}
+
+button {
+    border: 0;
+
+    cursor: pointer;
+
+    color: white;
+
+    font-weight: 700;
+
+    border-radius: 13px;
+
+    transition: .2s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+}
+
+.call-button {
+    width: 100%;
+
+    margin-top: 15px;
+
+    padding: 15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #5b8cff,
+            #795cff
+        );
+
+    font-size: 15px;
+}
+
+.home-button {
+    width: 100%;
+
+    margin-top: 12px;
+
+    padding: 13px;
+
+    background: #191f31;
+
+    border: 1px solid #30384f;
+}
+
+.status {
+    text-align: center;
+
+    margin-top: 20px;
+
+    min-height: 22px;
+
+    color: #7f89a2;
+
+    font-size: 14px;
+}
+
+.status.green {
+    color: #55d88a;
+}
+
+.status.red {
+    color: #ff8585;
+}
+
+
+/* =========================
+   INCOMING CALL
+========================= */
+
+.incoming {
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 100;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #172448,
+            #080b14 65%
+        );
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 25px;
+}
+
+.incoming.show {
+    display: flex;
+}
+
+.incoming-box {
+    text-align: center;
+
+    width: 100%;
+    max-width: 400px;
+
+    padding: 40px 25px;
+
+    border-radius: 28px;
+
+    background: rgba(18,23,38,.95);
+
+    border: 1px solid #30384f;
+
+    box-shadow:
+        0 30px 100px rgba(0,0,0,.65);
+}
+
+.caller-avatar {
+    width: 100px;
+    height: 100px;
+
+    margin: 0 auto 20px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 40px;
+    font-weight: 800;
+
+    background:
+        linear-gradient(
+            135deg,
+            #5b8cff,
+            #9c5cff
+        );
+
+    animation:
+        callerPulse 1.5s infinite;
+}
+
+@keyframes callerPulse {
+
+    0%,100% {
+        box-shadow:
+            0 0 0 0 rgba(91,140,255,.35);
+    }
+
+    50% {
+        box-shadow:
+            0 0 0 18px rgba(91,140,255,0);
+    }
+
+}
+
+.incoming-box h2 {
+    margin: 0;
+
+    font-size: 27px;
+}
+
+.incoming-box p {
+    color: #818ba3;
+
+    margin: 10px 0 30px;
+}
+
+.incoming-buttons {
+    display: flex;
+
+    gap: 12px;
+}
+
+.accept {
+    flex: 1;
+
+    padding: 15px;
+
+    background: #39c878;
+}
+
+.decline {
+    flex: 1;
+
+    padding: 15px;
+
+    background: #e34f5f;
+}
+
+
+/* =========================
+   ACTIVE CALL
+========================= */
+
+.active-call {
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 90;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #172448,
+            #080b14 70%
+        );
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+.active-call.show {
+    display: flex;
+}
+
+.active-box {
+    text-align: center;
+}
+
+.active-avatar {
+    width: 130px;
+    height: 130px;
+
+    margin: 0 auto 25px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 50px;
+    font-weight: 800;
+
+    background:
+        linear-gradient(
+            135deg,
+            #5b8cff,
+            #9c5cff
+        );
+
+    animation:
+        activePulse 2s infinite;
+}
+
+@keyframes activePulse {
+
+    0%,100% {
+        box-shadow:
+            0 0 35px rgba(91,140,255,.25);
+    }
+
+    50% {
+        box-shadow:
+            0 0 70px rgba(91,140,255,.55);
+    }
+
+}
+
+.active-name {
+    font-size: 28px;
+
+    font-weight: 800;
+}
+
+.call-state {
+    margin-top: 8px;
+
+    color: #55d88a;
+}
+
+.call-controls {
+    margin-top: 35px;
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 15px;
+}
+
+.control {
+    width: 58px;
+    height: 58px;
+
+    border-radius: 50%;
+
+    background: #20283d;
+
+    border: 1px solid #35405c;
+
+    font-size: 22px;
+}
+
+.control.muted {
+    background: #5b6380;
+}
+
+.end-call {
+    width: 65px;
+    height: 65px;
+
+    border-radius: 50%;
+
+    background: #e34f5f;
+
+    font-size: 24px;
+}
+
+
+/* =========================
+   HIDDEN AUDIO
+========================= */
+
+#audioContainer {
+    display: none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<div class="call-app">
+
+    <div class="logo">
+        C
+    </div>
+
+    <h1>
+        ChatsApp Call
+    </h1>
+
+    <p class="subtitle">
+        Voice calls with your ChatsApp friends 📞
+    </p>
+
+
+    <div class="card">
+
+        <label>
+            Username to call
+        </label>
+
+        <input
+            id="targetUsername"
+            type="text"
+            placeholder="Enter username..."
+            maxlength="20"
+            autocomplete="off"
+        >
+
+        <button
+            class="call-button"
+            onclick="startCall()"
+        >
+            📞 Call
+        </button>
+
+        <button
+            class="home-button"
+            onclick="goHome()"
+        >
+            ← Back to ChatsApp
+        </button>
+
+        <div
+            id="status"
+            class="status"
+        >
+            Ready to call
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     INCOMING CALL
+========================= -->
+
+<div
+    id="incomingCall"
+    class="incoming"
+>
+
+    <div class="incoming-box">
+
+        <div
+            id="callerAvatar"
+            class="caller-avatar"
+        >
+            C
+        </div>
+
+        <h2 id="callerName">
+            Someone
+        </h2>
+
+        <p>
+            📞 Incoming voice call...
+        </p>
+
+        <div class="incoming-buttons">
+
+            <button
+                class="accept"
+                onclick="acceptCall()"
+            >
+                ✓ Accept
+            </button>
+
+            <button
+                class="decline"
+                onclick="declineCall()"
+            >
+                ✕ Decline
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     ACTIVE CALL
+========================= -->
+
+<div
+    id="activeCall"
+    class="active-call"
+>
+
+    <div class="active-box">
+
+        <div
+            id="activeAvatar"
+            class="active-avatar"
+        >
+            C
+        </div>
+
+        <div
+            id="activeName"
+            class="active-name"
+        >
+            User
+        </div>
+
+        <div
+            id="callState"
+            class="call-state"
+        >
+            Connecting...
+        </div>
+
+        <div class="call-controls">
+
+            <button
+                id="muteButton"
+                class="control"
+                onclick="toggleMute()"
+            >
+                🎤
+            </button>
+
+            <button
+                class="end-call"
+                onclick="endCall()"
+            >
+                ☎
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div id="audioContainer"></div>
+
+
+<script>
+
+/* =========================================
+   SUPABASE
+========================================= */
+
+const SUPABASE_URL =
+    "https://kopzrnpporfdwauwlhni.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_bbxmPB71ADnIqe3oPB3MuQ_EWa4n_Ph";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+/* =========================================
+   VARIABLES
+========================================= */
+
+let currentUsername = "";
+
+let targetUsername = "";
+
+let callChannel = null;
+
+let incomingCallData = null;
+
+let peerConnection = null;
+
+let localStream = null;
+
+let remoteStream = null;
+
+let isMuted = false;
+
+let isCaller = false;
+
+
+/* =========================================
+   WEBRTC
+========================================= */
+
+const rtcConfiguration = {
+
+    iceServers: [
+
+        {
+            urls:
+                "stun:stun.l.google.com:19302"
+        },
+
+        {
+            urls:
+                "stun:stun1.l.google.com:19302"
+        }
+
+    ]
+
+};
+
+
+/* =========================================
+   START
+========================================= */
+
+window.addEventListener(
+    "load",
+    async function() {
+
+        const savedUsername =
+            localStorage.getItem(
+                "chatsapp_username"
+            );
+
+        if(savedUsername) {
+
+            currentUsername =
+                savedUsername;
+
+        }
+
+
+        const {
+            data
+        } =
+            await supabaseClient
+            .auth
+            .getSession();
+
+
+        if(
+            data &&
+            data.session &&
+            data.session.user
+        ) {
+
+            currentUsername =
+                data.session.user
+                .user_metadata?.username ||
+                data.session.user.email
+                    .split("@")[0];
+
+        }
+
+
+        if(!currentUsername) {
+
+            setStatus(
+                "Please log in to ChatsApp first.",
+                "red"
+            );
+
+            return;
+
+        }
+
+
+        setupCallInbox();
+
+    }
+);
+
+
+/* =========================================
+   CALL INBOX
+========================================= */
+
+function setupCallInbox() {
+
+    const inboxName =
+        "chatsapp-call-inbox-" +
+        currentUsername.toLowerCase();
+
+
+    callChannel =
+        supabaseClient
+        .channel(inboxName);
+
+
+    callChannel
+        .on(
+            "broadcast",
+            {
+                event: "incoming-call"
+            },
+            payload => {
+
+                handleIncomingCall(
+                    payload.payload
+                );
+
+            }
+        )
+        .on(
+            "broadcast",
+            {
+                event: "call-ended"
+            },
+            payload => {
+
+                if(
+                    payload.payload &&
+                    payload.payload.from ===
+                    targetUsername
+                ) {
+
+                    endCall(false);
+
+                }
+
+            }
+        )
+        .subscribe();
+
+}
+
+
+/* =========================================
+   START CALL
+========================================= */
+
+async function startCall() {
+
+    targetUsername =
+        document
+        .getElementById(
+            "targetUsername"
+        )
+        .value
+        .trim();
+
+
+    if(!targetUsername) {
+
+        setStatus(
+            "Enter a username first.",
+            "red"
+        );
+
+        return;
+
+    }
+
+
+    if(
+        targetUsername.toLowerCase() ===
+        currentUsername.toLowerCase()
+    ) {
+
+        setStatus(
+            "You can't call yourself 😭",
+            "red"
+        );
+
+        return;
+
+    }
+
+
+    isCaller = true;
+
+
+    showActiveCall(
+        targetUsername
+    );
+
+
+    setCallState(
+        "Calling..."
+    );
+
+
+    await createPeerConnection();
+
+
+    try {
+
+        localStream =
+            await navigator
+            .mediaDevices
+            .getUserMedia({
+
+                audio: true,
+
+                video: false
+
+            });
+
+    }
+
+    catch(error) {
+
+        console.error(error);
+
+        setCallState(
+            "Microphone permission denied."
+        );
+
+        return;
+
+    }
+
+
+    localStream
+        .getTracks()
+        .forEach(
+            track => {
+
+                peerConnection
+                    .addTrack(
+                        track,
+                        localStream
+                    );
+
+            }
+        );
+
+
+    const offer =
+        await peerConnection
+        .createOffer();
+
+
+    await peerConnection
+        .setLocalDescription(
+            offer
+        );
+
+
+    const channel =
+        await getUserChannel(
+            targetUsername
+        );
+
+
+    await channel.send({
+
+        type:
+            "broadcast",
+
+        event:
+            "incoming-call",
+
+        payload: {
+
+            from:
+                currentUsername,
+
+            offer:
+                offer
+
+        }
+
+    });
+
+
+    setCallState(
+        "Ringing..."
+    );
+
+}
+
+
+/* =========================================
+   INCOMING CALL
+========================================= */
+
+function handleIncomingCall(
+    data
+) {
+
+    if(!data || !data.from)
+        return;
+
+
+    if(
+        data.from.toLowerCase() ===
+        currentUsername.toLowerCase()
+    ) {
+
+        return;
+
+    }
+
+
+    incomingCallData =
+        data;
+
+
+    targetUsername =
+        data.from;
+
+
+    document.getElementById(
+        "callerName"
+    )
+    .innerText =
+        data.from;
+
+
+    document.getElementById(
+        "callerAvatar"
+    )
+    .innerText =
+        data.from
+        .charAt(0)
+        .toUpperCase();
+
+
+    document.getElementById(
+        "incomingCall"
+    )
+    .classList.add(
+        "show"
+    );
+
+}
+
+
+/* =========================================
+   ACCEPT CALL
+========================================= */
+
+async function acceptCall() {
+
+    if(!incomingCallData)
+        return;
+
+
+    document.getElementById(
+        "incomingCall"
+    )
+    .classList.remove(
+        "show"
+    );
+
+
+    isCaller = false;
+
+
+    showActiveCall(
+        targetUsername
+    );
+
+
+    setCallState(
+        "Connecting..."
+    );
+
+
+    await createPeerConnection();
+
+
+    try {
+
+        localStream =
+            await navigator
+            .mediaDevices
+            .getUserMedia({
+
+                audio: true,
+
+                video: false
+
+            });
+
+    }
+
+    catch(error) {
+
+        console.error(error);
+
+        setCallState(
+            "Microphone permission denied."
+        );
+
+        return;
+
+    }
+
+
+    localStream
+        .getTracks()
+        .forEach(
+            track => {
+
+                peerConnection
+                    .addTrack(
+                        track,
+                        localStream
+                    );
+
+            }
+        );
+
+
+    await peerConnection
+        .setRemoteDescription(
+            new RTCSessionDescription(
+                incomingCallData.offer
+            )
+        );
+
+
+    const answer =
+        await peerConnection
+        .createAnswer();
+
+
+    await peerConnection
+        .setLocalDescription(
+            answer
+        );
+
+
+    const channel =
+        await getUserChannel(
+            targetUsername
+        );
+
+
+    await channel.send({
+
+        type:
+            "broadcast",
+
+        event:
+            "call-answer",
+
+        payload: {
+
+            from:
+                currentUsername,
+
+            answer:
+                answer
+
+        }
+
+    });
+
+
+    setCallState(
+        "Connected"
+    );
+
+
+    incomingCallData =
+        null;
+
+}
+
+
+/* =========================================
+   CREATE PEER
+========================================= */
+
+async function createPeerConnection() {
+
+    peerConnection =
+        new RTCPeerConnection(
+            rtcConfiguration
+        );
+
+
+    remoteStream =
+        new MediaStream();
+
+
+    const audio =
+        document.createElement(
+            "audio"
+        );
+
+
+    audio.autoplay =
+        true;
+
+
+    audio.playsInline =
+        true;
+
+
+    audio.srcObject =
+        remoteStream;
+
+
+    document.getElementById(
+        "audioContainer"
+    )
+    .appendChild(
+        audio
+    );
+
+
+    peerConnection
+        .ontrack =
+        function(event) {
+
+            event.streams[0]
+                .getTracks()
+                .forEach(
+                    track => {
+
+                        remoteStream
+                            .addTrack(
+                                track
+                            );
+
+                    }
+                );
+
+        };
+
+
+    peerConnection
+        .onicecandidate =
+        async function(event) {
+
+            if(!event.candidate)
+                return;
+
+
+            const channel =
+                await getUserChannel(
+                    targetUsername
+                );
+
+
+            await channel.send({
+
+                type:
+                    "broadcast",
+
+                event:
+                    "ice-candidate",
+
+                payload: {
+
+                    from:
+                        currentUsername,
+
+                    candidate:
+                        event.candidate
+
+                }
+
+            });
+
+        };
+
+
+    const channel =
+        await getUserChannel(
+            targetUsername
+        );
+
+
+    channel
+        .on(
+            "broadcast",
+            {
+                event: "call-answer"
+            },
+            async payload => {
+
+                if(
+                    !isCaller ||
+                    !peerConnection
+                )
+                    return;
+
+
+                if(
+                    payload.payload.from
+                    .toLowerCase() !==
+                    targetUsername.toLowerCase()
+                )
+                    return;
+
+
+                await peerConnection
+                    .setRemoteDescription(
+                        new RTCSessionDescription(
+                            payload.payload.answer
+                        )
+                    );
+
+
+                setCallState(
+                    "Connected"
+                );
+
+            }
+        )
+        .on(
+            "broadcast",
+            {
+                event: "ice-candidate"
+            },
+            async payload => {
+
+                if(
+                    !peerConnection ||
+                    !payload.payload.candidate
+                )
+                    return;
+
+
+                if(
+                    payload.payload.from
+                    .toLowerCase() !==
+                    targetUsername.toLowerCase()
+                )
+                    return;
+
+
+                try {
+
+                    await peerConnection
+                        .addIceCandidate(
+                            new RTCIceCandidate(
+                                payload.payload.candidate
+                            )
+                        );
+
+                }
+
+                catch(error) {
+
+                    console.warn(
+                        error
+                    );
+
+                }
+
+            }
+        )
+        .subscribe();
+
+}
+
+
+/* =========================================
+   CHANNEL
+========================================= */
+
+async function getUserChannel(
+    username
+) {
+
+    const channelName =
+        "chatsapp-call-" +
+        [
+            currentUsername.toLowerCase(),
+            username.toLowerCase()
+        ]
+        .sort()
+        .join("-");
+
+
+    let channel =
+        supabaseClient
+        .getChannels()
+        .find(
+            c =>
+                c.topic ===
+                "realtime:" +
+                channelName
+        );
+
+
+    if(channel)
+        return channel;
+
+
+    channel =
+        supabaseClient
+        .channel(
+            channelName
+        );
+
+
+    await channel
+        .subscribe();
+
+
+    return channel;
+
+}
+
+
+/* =========================================
+   SHOW ACTIVE CALL
+========================================= */
+
+function showActiveCall(
+    username
+) {
+
+    document.getElementById(
+        "activeName"
+    )
+    .innerText =
+        username;
+
+
+    document.getElementById(
+        "activeAvatar"
+    )
+    .innerText =
+        username
+        .charAt(0)
+        .toUpperCase();
+
+
+    document.getElementById(
+        "activeCall"
+    )
+    .classList.add(
+        "show"
+    );
+
+}
+
+
+/* =========================================
+   CALL STATE
+========================================= */
+
+function setCallState(
+    text
+) {
+
+    document.getElementById(
+        "callState"
+    )
+    .innerText =
+        text;
+
+}
+
+
+/* =========================================
+   MUTE
+========================================= */
+
+function toggleMute() {
+
+    if(!localStream)
+        return;
+
+
+    isMuted =
+        !isMuted;
+
+
+    localStream
+        .getAudioTracks()
+        .forEach(
+            track => {
+
+                track.enabled =
+                    !isMuted;
+
+            }
+        );
+
+
+    const button =
+        document.getElementById(
+            "muteButton"
+        );
+
+
+    button.innerText =
+        isMuted
+        ? "🔇"
+        : "🎤";
+
+
+    button.classList.toggle(
+        "muted",
+        isMuted
+    );
+
+}
+
+
+/* =========================================
+   DECLINE
+========================================= */
+
+async function declineCall() {
+
+    if(
+        incomingCallData &&
+        incomingCallData.from
+    ) {
+
+        const channel =
+            await getUserChannel(
+                incomingCallData.from
+            );
+
+
+        await channel.send({
+
+            type:
+                "broadcast",
+
+            event:
+                "call-ended",
+
+            payload: {
+
+                from:
+                    currentUsername
+
+            }
+
+        });
+
+    }
+
+
+    incomingCallData =
+        null;
+
+
+    document.getElementById(
+        "incomingCall"
+    )
+    .classList.remove(
+        "show"
+    );
+
+}
+
+
+/* =========================================
+   END CALL
+========================================= */
+
+async function endCall(
+    notify = true
+) {
+
+    if(
+        notify &&
+        targetUsername
+    ) {
+
+        try {
+
+            const channel =
+                await getUserChannel(
+                    targetUsername
+                );
+
+
+            await channel.send({
+
+                type:
+                    "broadcast",
+
+                event:
+                    "call-ended",
+
+                payload: {
+
+                    from:
+                        currentUsername
+
+                }
+
+            });
+
+        }
+
+        catch(error) {
+
+            console.warn(error);
+
+        }
+
+    }
+
+
+    if(localStream) {
+
+        localStream
+            .getTracks()
+            .forEach(
+                track => track.stop()
+            );
+
+        localStream =
+            null;
+
+    }
+
+
+    if(peerConnection) {
+
+        peerConnection.close();
+
+        peerConnection =
+            null;
+
+    }
+
+
+    document.getElementById(
+        "activeCall"
+    )
+    .classList.remove(
+        "show"
+    );
+
+
+    document.getElementById(
+        "incomingCall"
+    )
+    .classList.remove(
+        "show"
+    );
+
+
+    isMuted =
+        false;
+
+
+    document.getElementById(
+        "muteButton"
+    )
+    .innerText =
+        "🎤";
+
+
+    document.getElementById(
+        "muteButton"
+    )
+    .classList.remove(
+        "muted"
+    );
+
+
+    incomingCallData =
+        null;
+
+
+    targetUsername =
+        "";
+
+
+    setStatus(
+        "Call ended.",
+        ""
+    );
+
+}
+
+
+/* =========================================
+   STATUS
+========================================= */
+
+function setStatus(
+    text,
+    type
+) {
+
+    const status =
+        document.getElementById(
+            "status"
+        );
+
+
+    status.innerText =
+        text;
+
+
+    status.className =
+        "status " +
+        (type || "");
+
+}
+
+
+/* =========================================
+   HOME
+========================================= */
+
+function goHome() {
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+/* =========================================
+   CLEANUP
+========================================= */
+
+window.addEventListener(
+    "beforeunload",
+    function() {
+
+        if(localStream) {
+
+            localStream
+                .getTracks()
+                .forEach(
+                    track => track.stop()
+                );
+
+        }
+
+
+        if(peerConnection) {
+
+            peerConnection.close();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+
+</html>
