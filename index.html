@@ -1760,8 +1760,6 @@ input:focus {
         </button>
 
 
-        <!-- NEW GROUP CHAT BUTTON -->
-
         <button
             class="nav-btn"
             onclick="openGroupChat()"
@@ -1948,8 +1946,6 @@ input:focus {
 
                 </div>
 
-
-                <!-- NEW GROUP CHAT CARD -->
 
                 <div
                     class="card"
@@ -2333,6 +2329,26 @@ let selectedProfileUsername = "";
    LOADING
 ========================================= */
 
+/*
+ * IMPORTANT:
+ *
+ * The loading screen normally appears when
+ * ChatsApp is opened.
+ *
+ * BUT if index.html was reached from one of
+ * the other ChatsApp pages, we skip it.
+ *
+ * This means:
+ *
+ * Private Chats → Home = INSTANT
+ * Mail → Home          = INSTANT
+ * Group Chats → Home   = INSTANT
+ * Profile → Home       = INSTANT
+ *
+ * No changes are required to those pages
+ * for this version.
+ */
+
 window.addEventListener(
     "load",
     function() {
@@ -2351,6 +2367,63 @@ window.addEventListener(
             document.getElementById(
                 "loadingLogo"
             );
+
+
+        /*
+         * Check where the user came from.
+         */
+
+        const referrer =
+            document.referrer
+                .toLowerCase();
+
+
+        /*
+         * These are ChatsApp internal pages.
+         *
+         * If the previous page is one of these,
+         * we are returning to Home.
+         */
+
+        const cameFromChatsAppPage =
+            referrer.includes(
+                "privatechat.html"
+            ) ||
+            referrer.includes(
+                "mail.html"
+            ) ||
+            referrer.includes(
+                "groupchat.html"
+            ) ||
+            referrer.includes(
+                "profile.html"
+            ) ||
+            referrer.includes(
+                "usersearch.html"
+            );
+
+
+        /*
+         * INSTANT HOME RETURN
+         */
+
+        if(cameFromChatsAppPage) {
+
+            loadingScreen.classList.add(
+                "hidden"
+            );
+
+            return;
+
+        }
+
+
+        /*
+         * NORMAL FIRST VISIT
+         *
+         * Keep the original loading
+         * animation exactly as before.
+         */
 
         loadingStatus.innerText =
             "Connecting...";
