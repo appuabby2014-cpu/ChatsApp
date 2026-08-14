@@ -1774,7 +1774,18 @@ input:focus {
             </span>
 
         </button>
+<button
+    class="nav-btn"
+    onclick="openCalls()"
+>
+    <span class="nav-icon">
+        📞
+    </span>
 
+    <span>
+        Calls
+    </span>
+</button>
 
         <div class="nav-title">
             ACCOUNT
@@ -3848,7 +3859,12 @@ function openGroupChat() {
         "GroupChat.html";
 
 }
+function openCalls() {
 
+    window.location.href =
+        "Call.html";
+
+}
 
 /* =========================================
    PROFILE
