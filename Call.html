@@ -79,7 +79,6 @@ h1 {
 
 .card {
     padding: 25px;
-
     border-radius: 22px;
 
     background: rgba(18,23,38,.9);
@@ -332,6 +331,7 @@ button:hover {
         );
 
     align-items: center;
+
     justify-content: center;
 }
 
@@ -431,11 +431,6 @@ button:hover {
     font-size: 24px;
 }
 
-
-/* =========================
-   HIDDEN AUDIO
-========================= */
-
 #audioContainer {
     display: none;
 }
@@ -493,7 +488,7 @@ button:hover {
             id="status"
             class="status"
         >
-            Ready to call
+            Connecting to call system...
         </div>
 
     </div>
@@ -638,7 +633,7 @@ let targetUsername = "";
 
 let callChannel = null;
 
-let pairChannel = null;
+let peerChannel = null;
 
 let incomingCallData = null;
 
@@ -650,15 +645,9 @@ let remoteStream = null;
 
 let remoteAudio = null;
 
-let ringtoneAudio = null;
-
 let isMuted = false;
 
 let isCaller = false;
-
-let currentCallId = null;
-
-let callFinished = false;
 
 
 /* =========================================
@@ -692,300 +681,82 @@ window.addEventListener(
     "load",
     async function() {
 
-        const savedUsername =
-            localStorage.getItem(
-                "chatsapp_username"
-            );
-
-        if(savedUsername) {
-
-            currentUsername =
-                savedUsername;
-
-        }
-
-
-        const {
-            data
-        } =
-            await supabaseClient
-            .auth
-            .getSession();
-
-
-        if(
-            data &&
-            data.session &&
-            data.session.user
-        ) {
-
-            currentUsername =
-                data.session.user
-                .user_metadata?.username ||
-                data.session.user.email
-                    .split("@")[0];
-
-        }
-
-
-        if(!currentUsername) {
-
-            setStatus(
-                "Please log in to ChatsApp first.",
-                "red"
-            );
-
-            return;
-
-        }
-
-
-        setupCallInbox();
-
-        requestNotificationPermission();
-
-    }
-);
-
-
-/* =========================================
-   NOTIFICATIONS
-========================================= */
-
-async function requestNotificationPermission() {
-
-    if(
-        "Notification" in window &&
-        Notification.permission === "default"
-    ) {
-
         try {
 
-            await Notification.requestPermission();
+            const savedUsername =
+                localStorage.getItem(
+                    "chatsapp_username"
+                );
+
+            if(savedUsername) {
+
+                currentUsername =
+                    savedUsername.trim();
+
+            }
+
+
+            const {
+                data
+            } =
+                await supabaseClient
+                .auth
+                .getSession();
+
+
+            if(
+                data &&
+                data.session &&
+                data.session.user
+            ) {
+
+                currentUsername =
+                    data.session.user
+                    .user_metadata?.username ||
+                    data.session.user.email
+                    .split("@")[0];
+
+            }
+
+
+            if(!currentUsername) {
+
+                setStatus(
+                    "Please log in to ChatsApp first.",
+                    "red"
+                );
+
+                return;
+
+            }
+
+
+            console.log(
+                "👤 Current user:",
+                currentUsername
+            );
+
+
+            setupCallInbox();
 
         }
 
         catch(error) {
 
-            console.warn(
-                "Notification permission:",
+            console.error(
+                "START ERROR:",
                 error
+            );
+
+            setStatus(
+                "Could not start call system.",
+                "red"
             );
 
         }
 
     }
-
-}
-
-
-function showCallNotification(
-    caller
-) {
-
-    if(
-        !("Notification" in window)
-    )
-        return;
-
-
-    if(
-        Notification.permission !==
-        "granted"
-    )
-        return;
-
-
-    try {
-
-        new Notification(
-            caller +
-            " is calling you!",
-            {
-                body:
-                    "Incoming ChatsApp voice call 📞",
-                icon:
-                    "https://cdn.jsdelivr.net/gh/twitter/twemoji@latest/assets/svg/1f4de.svg",
-                tag:
-                    "chatsapp-call"
-            }
-        );
-
-    }
-
-    catch(error) {
-
-        console.warn(
-            "Notification failed:",
-            error
-        );
-
-    }
-
-}
-
-
-/* =========================================
-   RINGTONE
-========================================= */
-
-function startRingtone() {
-
-    stopRingtone();
-
-
-    /*
-       We generate a simple ringtone using
-       Web Audio instead of needing an audio file.
-    */
-
-    try {
-
-        const AudioContext =
-            window.AudioContext ||
-            window.webkitAudioContext;
-
-
-        if(!AudioContext)
-            return;
-
-
-        const context =
-            new AudioContext();
-
-
-        const oscillator =
-            context.createOscillator();
-
-
-        const gain =
-            context.createGain();
-
-
-        oscillator.type =
-            "sine";
-
-
-        oscillator.frequency.value =
-            700;
-
-
-        gain.gain.value =
-            0.04;
-
-
-        oscillator.connect(
-            gain
-        );
-
-
-        gain.connect(
-            context.destination
-        );
-
-
-        oscillator.start();
-
-
-        ringtoneAudio = {
-
-            context:
-                context,
-
-            oscillator:
-                oscillator,
-
-            gain:
-                gain
-
-        };
-
-
-        ringtoneAudio.timer =
-            setInterval(
-                function() {
-
-                    if(
-                        !ringtoneAudio
-                    )
-                        return;
-
-
-                    try {
-
-                        const now =
-                            context.currentTime;
-
-
-                        gain.gain.setValueAtTime(
-                            0.04,
-                            now
-                        );
-
-
-                        gain.gain.setValueAtTime(
-                            0,
-                            now + 0.35
-                        );
-
-                    }
-
-                    catch(error) {
-
-                        console.warn(
-                            error
-                        );
-
-                    }
-
-                },
-                1200
-            );
-
-    }
-
-    catch(error) {
-
-        console.warn(
-            "Ringtone unavailable:",
-            error
-        );
-
-    }
-
-}
-
-
-function stopRingtone() {
-
-    if(!ringtoneAudio)
-        return;
-
-
-    try {
-
-        clearInterval(
-            ringtoneAudio.timer
-        );
-
-
-        ringtoneAudio.oscillator.stop();
-
-        ringtoneAudio.context.close();
-
-    }
-
-    catch(error) {
-
-        console.warn(error);
-
-    }
-
-
-    ringtoneAudio =
-        null;
-
-}
+);
 
 
 /* =========================================
@@ -996,25 +767,32 @@ function setupCallInbox() {
 
     const inboxName =
         "chatsapp-call-inbox-" +
-        currentUsername
-        .toLowerCase();
+        currentUsername.toLowerCase();
+
+
+    console.log(
+        "📡 Opening call inbox:",
+        inboxName
+    );
 
 
     callChannel =
         supabaseClient
-        .channel(
-            inboxName
-        );
+        .channel(inboxName);
 
 
     callChannel
         .on(
             "broadcast",
             {
-                event:
-                    "incoming-call"
+                event: "incoming-call"
             },
             payload => {
+
+                console.log(
+                    "📞 INCOMING CALL RECEIVED:",
+                    payload.payload
+                );
 
                 handleIncomingCall(
                     payload.payload
@@ -1022,16 +800,58 @@ function setupCallInbox() {
 
             }
         )
-        .subscribe(
-            status => {
+        .on(
+            "broadcast",
+            {
+                event: "call-ended"
+            },
+            payload => {
 
                 console.log(
-                    "Call inbox:",
-                    status
+                    "📴 CALL ENDED:",
+                    payload.payload
+                );
+
+                if(
+                    payload.payload &&
+                    payload.payload.from
+                ) {
+
+                    if(
+                        targetUsername &&
+                        payload.payload.from
+                        .toLowerCase() ===
+                        targetUsername
+                        .toLowerCase()
+                    ) {
+
+                        endCall(false);
+
+                    }
+
+                }
+
+            }
+        )
+        .subscribe(status => {
+
+            console.log(
+                "📡 Call inbox status:",
+                status
+            );
+
+            if(
+                status === "SUBSCRIBED"
+            ) {
+
+                setStatus(
+                    "Ready to call 📞",
+                    "green"
                 );
 
             }
-        );
+
+        });
 
 }
 
@@ -1042,14 +862,13 @@ function setupCallInbox() {
 
 async function startCall() {
 
-    const input =
-        document.getElementById(
-            "targetUsername"
-        );
-
-
     targetUsername =
-        input.value.trim();
+        document
+        .getElementById(
+            "targetUsername"
+        )
+        .value
+        .trim();
 
 
     if(!targetUsername) {
@@ -1079,36 +898,11 @@ async function startCall() {
     }
 
 
-    if(peerConnection) {
-
-        setStatus(
-            "You are already in a call.",
-            "red"
-        );
-
-        return;
-
-    }
-
-
-    currentCallId =
-        crypto.randomUUID
-        ? crypto.randomUUID()
-        : Date.now().toString();
-
-
-    callFinished =
-        false;
-
-
-    isCaller =
-        true;
-
+    isCaller = true;
 
     showActiveCall(
         targetUsername
     );
-
 
     setCallState(
         "Calling..."
@@ -1138,10 +932,10 @@ async function startCall() {
                 track => {
 
                     peerConnection
-                        .addTrack(
-                            track,
-                            localStream
-                        );
+                    .addTrack(
+                        track,
+                        localStream
+                    );
 
                 }
             );
@@ -1153,18 +947,89 @@ async function startCall() {
 
 
         await peerConnection
-            .setLocalDescription(
-                offer
+        .setLocalDescription(
+            offer
+        );
+
+
+        /* =====================================
+           SEND INITIAL CALL TO TARGET INBOX
+        ===================================== */
+
+        const inboxName =
+            "chatsapp-call-inbox-" +
+            targetUsername.toLowerCase();
+
+
+        console.log(
+            "📞 Sending call to:",
+            inboxName
+        );
+
+
+        const targetInbox =
+            supabaseClient
+            .channel(
+                inboxName
             );
 
 
-        const channel =
-            await getUserChannel(
-                targetUsername
-            );
+        await new Promise(
+            (resolve, reject) => {
+
+                let finished = false;
 
 
-        await channel.send({
+                targetInbox.subscribe(
+                    status => {
+
+                        console.log(
+                            "📡 Target inbox:",
+                            status
+                        );
+
+
+                        if(
+                            status ===
+                            "SUBSCRIBED" &&
+                            !finished
+                        ) {
+
+                            finished = true;
+
+                            resolve();
+
+                        }
+
+
+                        if(
+                            (
+                                status ===
+                                "CHANNEL_ERROR" ||
+                                status ===
+                                "TIMED_OUT"
+                            ) &&
+                            !finished
+                        ) {
+
+                            finished = true;
+
+                            reject(
+                                new Error(
+                                    "Could not connect to target inbox."
+                                )
+                            );
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+
+        await targetInbox.send({
 
             type:
                 "broadcast",
@@ -1177,9 +1042,6 @@ async function startCall() {
                 from:
                     currentUsername,
 
-                callId:
-                    currentCallId,
-
                 offer:
                     offer
 
@@ -1188,28 +1050,41 @@ async function startCall() {
         });
 
 
+        console.log(
+            "✅ Incoming call sent!"
+        );
+
+
         setCallState(
             "Ringing..."
         );
+
+
+        /* =====================================
+           ALSO SET UP PEER SIGNALING
+        ===================================== */
+
+        await setupPeerChannel();
 
     }
 
     catch(error) {
 
         console.error(
-            "Start call error:",
+            "❌ CALL ERROR:",
             error
         );
 
-
         setCallState(
-            "Could not start call."
+            "Call failed."
         );
 
-
-        await endCall(
-            false
+        setStatus(
+            "Could not start the call.",
+            "red"
         );
+
+        await endCall(false);
 
     }
 
@@ -1227,10 +1102,17 @@ function handleIncomingCall(
     if(
         !data ||
         !data.from ||
-        !data.offer ||
-        !data.callId
-    )
+        !data.offer
+    ) {
+
+        console.warn(
+            "Invalid incoming call:",
+            data
+        );
+
         return;
+
+    }
 
 
     if(
@@ -1243,30 +1125,12 @@ function handleIncomingCall(
     }
 
 
-    if(peerConnection) {
-
-        return;
-
-    }
-
-
-    if(incomingCallData) {
-
-        return;
-
-    }
-
-
     incomingCallData =
         data;
 
 
     targetUsername =
         data.from;
-
-
-    currentCallId =
-        data.callId;
 
 
     document.getElementById(
@@ -1293,18 +1157,10 @@ function handleIncomingCall(
     );
 
 
-    showCallNotification(
+    console.log(
+        "🔔 Showing incoming call from:",
         data.from
     );
-
-
-    /*
-       Browsers may block audio until the
-       user interacts with the page.
-       We still attempt the ringtone.
-    */
-
-    startRingtone();
 
 }
 
@@ -1319,9 +1175,6 @@ async function acceptCall() {
         return;
 
 
-    stopRingtone();
-
-
     document.getElementById(
         "incomingCall"
     )
@@ -1330,12 +1183,7 @@ async function acceptCall() {
     );
 
 
-    isCaller =
-        false;
-
-
-    callFinished =
-        false;
+    isCaller = false;
 
 
     showActiveCall(
@@ -1371,21 +1219,21 @@ async function acceptCall() {
                 track => {
 
                     peerConnection
-                        .addTrack(
-                            track,
-                            localStream
-                        );
+                    .addTrack(
+                        track,
+                        localStream
+                    );
 
                 }
             );
 
 
         await peerConnection
-            .setRemoteDescription(
-                new RTCSessionDescription(
-                    incomingCallData.offer
-                )
-            );
+        .setRemoteDescription(
+            new RTCSessionDescription(
+                incomingCallData.offer
+            )
+        );
 
 
         const answer =
@@ -1394,18 +1242,15 @@ async function acceptCall() {
 
 
         await peerConnection
-            .setLocalDescription(
-                answer
-            );
+        .setLocalDescription(
+            answer
+        );
 
 
-        const channel =
-            await getUserChannel(
-                targetUsername
-            );
+        await setupPeerChannel();
 
 
-        await channel.send({
+        await peerChannel.send({
 
             type:
                 "broadcast",
@@ -1418,15 +1263,17 @@ async function acceptCall() {
                 from:
                     currentUsername,
 
-                callId:
-                    currentCallId,
-
                 answer:
                     answer
 
             }
 
         });
+
+
+        console.log(
+            "✅ Answer sent!"
+        );
 
 
         setCallState(
@@ -1442,18 +1289,12 @@ async function acceptCall() {
     catch(error) {
 
         console.error(
-            "Accept call error:",
+            "❌ ACCEPT ERROR:",
             error
         );
 
-
         setCallState(
-            "Could not connect."
-        );
-
-
-        await endCall(
-            true
+            "Could not accept call."
         );
 
     }
@@ -1462,20 +1303,14 @@ async function acceptCall() {
 
 
 /* =========================================
-   CREATE PEER CONNECTION
+   CREATE PEER
 ========================================= */
 
 async function createPeerConnection() {
 
     if(peerConnection) {
 
-        try {
-
-            peerConnection.close();
-
-        }
-
-        catch(error) {}
+        peerConnection.close();
 
     }
 
@@ -1499,10 +1334,11 @@ async function createPeerConnection() {
     remoteAudio.autoplay =
         true;
 
-
     remoteAudio.playsInline =
         true;
 
+    remoteAudio.controls =
+        false;
 
     remoteAudio.srcObject =
         remoteStream;
@@ -1517,130 +1353,220 @@ async function createPeerConnection() {
 
 
     peerConnection
-        .ontrack =
-        function(event) {
+    .ontrack =
+    function(event) {
 
-            if(
-                event.streams &&
-                event.streams[0]
-            ) {
+        console.log(
+            "🔊 Remote audio received!"
+        );
 
-                event.streams[0]
-                    .getTracks()
-                    .forEach(
-                        track => {
 
-                            remoteStream
-                                .addTrack(
-                                    track
-                                );
+        event.streams[0]
+        .getTracks()
+        .forEach(
+            track => {
 
-                        }
-                    );
+                remoteStream
+                .addTrack(
+                    track
+                );
 
             }
+        );
 
 
-            if(remoteAudio) {
+        remoteAudio
+        .play()
+        .catch(
+            error => {
 
-                remoteAudio
-                    .play()
-                    .catch(
-                        error => {
-
-                            console.warn(
-                                "Audio autoplay blocked:",
-                                error
-                            );
-
-                        }
-                    );
+                console.warn(
+                    "Audio play needs user interaction:",
+                    error
+                );
 
             }
+        );
 
-        };
+    };
 
 
     peerConnection
-        .onicecandidate =
-        async function(event) {
+    .onicecandidate =
+    async function(event) {
+
+        if(!event.candidate)
+            return;
+
+
+        if(!peerChannel)
+            await setupPeerChannel();
+
+
+        await peerChannel.send({
+
+            type:
+                "broadcast",
+
+            event:
+                "ice-candidate",
+
+            payload: {
+
+                from:
+                    currentUsername,
+
+                candidate:
+                    event.candidate
+
+            }
+
+        });
+
+    };
+
+
+    peerConnection
+    .onconnectionstatechange =
+    function() {
+
+        console.log(
+            "🔗 Connection state:",
+            peerConnection
+            .connectionState
+        );
+
+
+        if(
+            peerConnection
+            .connectionState ===
+            "connected"
+        ) {
+
+            setCallState(
+                "Connected"
+            );
+
+        }
+
+
+        if(
+            peerConnection
+            .connectionState ===
+            "failed"
+        ) {
+
+            setCallState(
+                "Connection failed."
+            );
+
+        }
+
+
+        if(
+            peerConnection
+            .connectionState ===
+            "disconnected"
+        ) {
+
+            setCallState(
+                "Disconnected."
+            );
+
+        }
+
+    };
+
+}
+
+
+/* =========================================
+   PEER CHANNEL
+========================================= */
+
+async function setupPeerChannel() {
+
+    if(
+        peerChannel &&
+        peerChannel.state ===
+        "joined"
+    ) {
+
+        return peerChannel;
+
+    }
+
+
+    const channelName =
+        "chatsapp-call-" +
+        [
+            currentUsername.toLowerCase(),
+            targetUsername.toLowerCase()
+        ]
+        .sort()
+        .join("-");
+
+
+    console.log(
+        "🔗 Opening peer channel:",
+        channelName
+    );
+
+
+    peerChannel =
+        supabaseClient
+        .channel(
+            channelName
+        );
+
+
+    peerChannel
+    .on(
+        "broadcast",
+        {
+            event:
+                "call-answer"
+        },
+        async payload => {
+
+            console.log(
+                "📩 Answer received:",
+                payload.payload
+            );
+
 
             if(
-                !event.candidate ||
-                !targetUsername ||
-                !currentCallId
+                !isCaller ||
+                !peerConnection
+            )
+                return;
+
+
+            if(
+                !payload.payload ||
+                !payload.payload.from
+            )
+                return;
+
+
+            if(
+                payload.payload.from
+                .toLowerCase() !==
+                targetUsername
+                .toLowerCase()
             )
                 return;
 
 
             try {
 
-                const channel =
-                    await getUserChannel(
-                        targetUsername
-                    );
-
-
-                await channel.send({
-
-                    type:
-                        "broadcast",
-
-                    event:
-                        "ice-candidate",
-
-                    payload: {
-
-                        from:
-                            currentUsername,
-
-                        callId:
-                            currentCallId,
-
-                        candidate:
-                            event.candidate
-
-                    }
-
-                });
-
-            }
-
-            catch(error) {
-
-                console.warn(
-                    "ICE send error:",
-                    error
+                await peerConnection
+                .setRemoteDescription(
+                    new RTCSessionDescription(
+                        payload.payload.answer
+                    )
                 );
 
-            }
-
-        };
-
-
-    peerConnection
-        .onconnectionstatechange =
-        function() {
-
-            if(!peerConnection)
-                return;
-
-
-            const state =
-                peerConnection
-                .connectionState;
-
-
-            console.log(
-                "WebRTC connection:",
-                state
-            );
-
-
-            if(
-                state ===
-                "connected"
-            ) {
 
                 setCallState(
                     "Connected"
@@ -1648,226 +1574,270 @@ async function createPeerConnection() {
 
             }
 
+            catch(error) {
 
-            if(
-                state ===
-                "disconnected"
-            ) {
-
-                setCallState(
-                    "Connection interrupted..."
+                console.error(
+                    "ANSWER ERROR:",
+                    error
                 );
 
             }
 
+        }
+    )
+    .on(
+        "broadcast",
+        {
+            event:
+                "ice-candidate"
+        },
+        async payload => {
 
             if(
-                state ===
-                "failed"
-            ) {
+                !peerConnection ||
+                !payload.payload ||
+                !payload.payload.candidate
+            )
+                return;
 
-                setCallState(
-                    "Connection failed."
+
+            if(
+                !payload.payload.from
+            )
+                return;
+
+
+            if(
+                payload.payload.from
+                .toLowerCase() !==
+                targetUsername
+                .toLowerCase()
+            )
+                return;
+
+
+            try {
+
+                await peerConnection
+                .addIceCandidate(
+                    new RTCIceCandidate(
+                        payload.payload.candidate
+                    )
                 );
 
             }
 
-        };
+            catch(error) {
+
+                console.warn(
+                    "ICE ERROR:",
+                    error
+                );
+
+            }
+
+        }
+    )
+    .on(
+        "broadcast",
+        {
+            event:
+                "call-ended"
+        },
+        payload => {
+
+            if(
+                payload.payload &&
+                payload.payload.from &&
+                payload.payload.from
+                .toLowerCase() ===
+                targetUsername
+                .toLowerCase()
+            ) {
+
+                endCall(false);
+
+            }
+
+        }
+    );
 
 
-    const channel =
-        await getUserChannel(
-            targetUsername
-        );
+    await new Promise(
+        (resolve, reject) => {
+
+            let finished = false;
 
 
-    channel
-        .on(
-            "broadcast",
-            {
-                event:
-                    "call-answer"
-            },
-            async payload => {
+            peerChannel.subscribe(
+                status => {
 
-                if(
-                    !isCaller ||
-                    !peerConnection
-                )
-                    return;
+                    console.log(
+                        "📡 Peer channel:",
+                        status
+                    );
 
 
-                const data =
-                    payload.payload;
+                    if(
+                        status ===
+                        "SUBSCRIBED" &&
+                        !finished
+                    ) {
+
+                        finished = true;
+
+                        resolve();
+
+                    }
 
 
-                if(
-                    !data ||
-                    !data.answer ||
-                    !data.from ||
-                    !data.callId
-                )
-                    return;
+                    if(
+                        (
+                            status ===
+                            "CHANNEL_ERROR" ||
+                            status ===
+                            "TIMED_OUT"
+                        ) &&
+                        !finished
+                    ) {
 
+                        finished = true;
 
-                if(
-                    data.callId !==
-                    currentCallId
-                )
-                    return;
-
-
-                if(
-                    data.from.toLowerCase() !==
-                    targetUsername.toLowerCase()
-                )
-                    return;
-
-
-                try {
-
-                    await peerConnection
-                        .setRemoteDescription(
-                            new RTCSessionDescription(
-                                data.answer
+                        reject(
+                            new Error(
+                                "Peer channel failed."
                             )
                         );
 
-
-                    setCallState(
-                        "Connected"
-                    );
+                    }
 
                 }
+            );
 
-                catch(error) {
-
-                    console.error(
-                        "Answer error:",
-                        error
-                    );
-
-                }
-
-            }
-        )
-        .on(
-            "broadcast",
-            {
-                event:
-                    "ice-candidate"
-            },
-            async payload => {
-
-                if(
-                    !peerConnection
-                )
-                    return;
+        }
+    );
 
 
-                const data =
-                    payload.payload;
-
-
-                if(
-                    !data ||
-                    !data.candidate ||
-                    !data.from ||
-                    !data.callId
-                )
-                    return;
-
-
-                if(
-                    data.callId !==
-                    currentCallId
-                )
-                    return;
-
-
-                if(
-                    data.from.toLowerCase() !==
-                    targetUsername.toLowerCase()
-                )
-                    return;
-
-
-                try {
-
-                    await peerConnection
-                        .addIceCandidate(
-                            new RTCIceCandidate(
-                                data.candidate
-                            )
-                        );
-
-                }
-
-                catch(error) {
-
-                    console.warn(
-                        "ICE candidate error:",
-                        error
-                    );
-
-                }
-
-            }
-        )
-        .on(
-            "broadcast",
-            {
-                event:
-                    "call-ended"
-            },
-            payload => {
-
-                const data =
-                    payload.payload;
-
-
-                if(
-                    !data
-                )
-                    return;
-
-
-                if(
-                    data.callId !==
-                    currentCallId
-                )
-                    return;
-
-
-                if(
-                    !data.from
-                )
-                    return;
-
-
-                if(
-                    targetUsername &&
-                    data.from.toLowerCase() !==
-                    targetUsername.toLowerCase()
-                )
-                    return;
-
-
-                endCall(
-                    false
-                );
-
-            }
-        );
+    return peerChannel;
 
 }
 
 
 /* =========================================
-   CHANNEL
+   MUTE
 ========================================= */
 
-async function getUserChannel(
+function toggleMute() {
+
+    if(!localStream)
+        return;
+
+
+    isMuted =
+        !isMuted;
+
+
+    localStream
+    .getAudioTracks()
+    .forEach(
+        track => {
+
+            track.enabled =
+                !isMuted;
+
+        }
+    );
+
+
+    const button =
+        document.getElementById(
+            "muteButton"
+        );
+
+
+    button.innerText =
+        isMuted
+        ? "🔇"
+        : "🎤";
+
+
+    button.classList.toggle(
+        "muted",
+        isMuted
+    );
+
+}
+
+
+/* =========================================
+   DECLINE
+========================================= */
+
+async function declineCall() {
+
+    if(
+        incomingCallData &&
+        incomingCallData.from
+    ) {
+
+        try {
+
+            const channel =
+                await getTemporaryPeerChannel(
+                    incomingCallData.from
+                );
+
+
+            await channel.send({
+
+                type:
+                    "broadcast",
+
+                event:
+                    "call-ended",
+
+                payload: {
+
+                    from:
+                        currentUsername
+
+                }
+
+            });
+
+        }
+
+        catch(error) {
+
+            console.warn(
+                "Decline signal error:",
+                error
+            );
+
+        }
+
+    }
+
+
+    incomingCallData =
+        null;
+
+
+    document.getElementById(
+        "incomingCall"
+    )
+    .classList.remove(
+        "show"
+    );
+
+}
+
+
+/* =========================================
+   TEMPORARY PEER CHANNEL
+========================================= */
+
+async function getTemporaryPeerChannel(
     username
 ) {
 
@@ -1881,44 +1851,6 @@ async function getUserChannel(
         .join("-");
 
 
-    if(
-        pairChannel &&
-        pairChannel.topic ===
-        "realtime:" +
-        channelName
-    ) {
-
-        return pairChannel;
-
-    }
-
-
-    const existing =
-        supabaseClient
-        .getChannels()
-        .find(
-            channel => {
-
-                return (
-                    channel.topic ===
-                    "realtime:" +
-                    channelName
-                );
-
-            }
-        );
-
-
-    if(existing) {
-
-        pairChannel =
-            existing;
-
-        return existing;
-
-    }
-
-
     const channel =
         supabaseClient
         .channel(
@@ -1929,109 +1861,225 @@ async function getUserChannel(
     await new Promise(
         (resolve, reject) => {
 
-            let finished =
-                false;
+            let finished = false;
 
 
-            const timeout =
-                setTimeout(
-                    function() {
+            channel.subscribe(
+                status => {
 
-                        if(!finished) {
+                    if(
+                        status ===
+                        "SUBSCRIBED" &&
+                        !finished
+                    ) {
 
-                            finished =
-                                true;
+                        finished = true;
 
-                            reject(
-                                new Error(
-                                    "Realtime channel timeout."
-                                )
-                            );
+                        resolve();
 
-                        }
-
-                    },
-                    10000
-                );
+                    }
 
 
-            channel
-                .subscribe(
-                    status => {
-
-                        console.log(
-                            "Call channel:",
-                            status
-                        );
-
-
-                        if(
-                            status ===
-                            "SUBSCRIBED"
-                        ) {
-
-                            if(
-                                finished
-                            )
-                                return;
-
-
-                            finished =
-                                true;
-
-
-                            clearTimeout(
-                                timeout
-                            );
-
-
-                            resolve();
-
-                        }
-
-
-                        if(
+                    if(
+                        (
                             status ===
                             "CHANNEL_ERROR" ||
                             status ===
                             "TIMED_OUT"
-                        ) {
+                        ) &&
+                        !finished
+                    ) {
 
-                            if(
-                                finished
+                        finished = true;
+
+                        reject(
+                            new Error(
+                                "Could not connect."
                             )
-                                return;
-
-
-                            finished =
-                                true;
-
-
-                            clearTimeout(
-                                timeout
-                            );
-
-
-                            reject(
-                                new Error(
-                                    "Could not connect to call channel."
-                                )
-                            );
-
-                        }
+                        );
 
                     }
-                );
+
+                }
+            );
 
         }
     );
 
 
-    pairChannel =
-        channel;
-
-
     return channel;
+
+}
+
+
+/* =========================================
+   END CALL
+========================================= */
+
+async function endCall(
+    notify = true
+) {
+
+    if(
+        notify &&
+        targetUsername
+    ) {
+
+        try {
+
+            if(
+                !peerChannel
+            ) {
+
+                await setupPeerChannel();
+
+            }
+
+
+            await peerChannel.send({
+
+                type:
+                    "broadcast",
+
+                event:
+                    "call-ended",
+
+                payload: {
+
+                    from:
+                        currentUsername
+
+                }
+
+            });
+
+        }
+
+        catch(error) {
+
+            console.warn(
+                "End call signal error:",
+                error
+            );
+
+        }
+
+    }
+
+
+    if(localStream) {
+
+        localStream
+        .getTracks()
+        .forEach(
+            track => track.stop()
+        );
+
+        localStream =
+            null;
+
+    }
+
+
+    if(peerConnection) {
+
+        peerConnection.close();
+
+        peerConnection =
+            null;
+
+    }
+
+
+    if(remoteAudio) {
+
+        remoteAudio.pause();
+
+        remoteAudio.srcObject =
+            null;
+
+        remoteAudio.remove();
+
+        remoteAudio =
+            null;
+
+    }
+
+
+    remoteStream =
+        null;
+
+
+    if(peerChannel) {
+
+        try {
+
+            await supabaseClient
+            .removeChannel(
+                peerChannel
+            );
+
+        }
+
+        catch(error) {
+
+            console.warn(error);
+
+        }
+
+        peerChannel =
+            null;
+
+    }
+
+
+    document.getElementById(
+        "activeCall"
+    )
+    .classList.remove(
+        "show"
+    );
+
+
+    document.getElementById(
+        "incomingCall"
+    )
+    .classList.remove(
+        "show"
+    );
+
+
+    isMuted =
+        false;
+
+
+    document.getElementById(
+        "muteButton"
+    )
+    .innerText =
+        "🎤";
+
+
+    document.getElementById(
+        "muteButton"
+    )
+    .classList.remove(
+        "muted"
+    );
+
+
+    incomingCallData =
+        null;
+
+
+    targetUsername =
+        "";
+
+
+    setStatus(
+        "Call ended.",
+        ""
+    );
 
 }
 
@@ -2088,337 +2136,6 @@ function setCallState(
 
 
 /* =========================================
-   MUTE
-========================================= */
-
-function toggleMute() {
-
-    if(!localStream)
-        return;
-
-
-    isMuted =
-        !isMuted;
-
-
-    localStream
-        .getAudioTracks()
-        .forEach(
-            track => {
-
-                track.enabled =
-                    !isMuted;
-
-            }
-        );
-
-
-    const button =
-        document.getElementById(
-            "muteButton"
-        );
-
-
-    button.innerText =
-        isMuted
-        ? "🔇"
-        : "🎤";
-
-
-    button.classList.toggle(
-        "muted",
-        isMuted
-    );
-
-}
-
-
-/* =========================================
-   DECLINE
-========================================= */
-
-async function declineCall() {
-
-    stopRingtone();
-
-
-    if(
-        incomingCallData &&
-        incomingCallData.from
-    ) {
-
-        try {
-
-            const caller =
-                incomingCallData.from;
-
-
-            const channel =
-                await getUserChannel(
-                    caller
-                );
-
-
-            await channel.send({
-
-                type:
-                    "broadcast",
-
-                event:
-                    "call-ended",
-
-                payload: {
-
-                    from:
-                        currentUsername,
-
-                    callId:
-                        incomingCallData.callId
-
-                }
-
-            });
-
-        }
-
-        catch(error) {
-
-            console.warn(
-                "Decline error:",
-                error
-            );
-
-        }
-
-    }
-
-
-    incomingCallData =
-        null;
-
-
-    currentCallId =
-        null;
-
-
-    targetUsername =
-        "";
-
-
-    document.getElementById(
-        "incomingCall"
-    )
-    .classList.remove(
-        "show"
-    );
-
-
-    setStatus(
-        "Call declined.",
-        ""
-    );
-
-}
-
-
-/* =========================================
-   END CALL
-========================================= */
-
-async function endCall(
-    notify = true
-) {
-
-    if(callFinished)
-        return;
-
-
-    callFinished =
-        true;
-
-
-    stopRingtone();
-
-
-    if(
-        notify &&
-        targetUsername &&
-        currentCallId
-    ) {
-
-        try {
-
-            const channel =
-                await getUserChannel(
-                    targetUsername
-                );
-
-
-            await channel.send({
-
-                type:
-                    "broadcast",
-
-                event:
-                    "call-ended",
-
-                payload: {
-
-                    from:
-                        currentUsername,
-
-                    callId:
-                        currentCallId
-
-                }
-
-            });
-
-        }
-
-        catch(error) {
-
-            console.warn(
-                "End call notification error:",
-                error
-            );
-
-        }
-
-    }
-
-
-    if(localStream) {
-
-        localStream
-            .getTracks()
-            .forEach(
-                track => {
-
-                    track.stop();
-
-                }
-            );
-
-
-        localStream =
-            null;
-
-    }
-
-
-    if(peerConnection) {
-
-        try {
-
-            peerConnection.close();
-
-        }
-
-        catch(error) {}
-
-        peerConnection =
-            null;
-
-    }
-
-
-    if(remoteAudio) {
-
-        try {
-
-            remoteAudio.pause();
-
-            remoteAudio.srcObject =
-                null;
-
-            remoteAudio.remove();
-
-        }
-
-        catch(error) {}
-
-        remoteAudio =
-            null;
-
-    }
-
-
-    remoteStream =
-        null;
-
-
-    document.getElementById(
-        "activeCall"
-    )
-    .classList.remove(
-        "show"
-    );
-
-
-    document.getElementById(
-        "incomingCall"
-    )
-    .classList.remove(
-        "show"
-    );
-
-
-    isMuted =
-        false;
-
-
-    document.getElementById(
-        "muteButton"
-    )
-    .innerText =
-        "🎤";
-
-
-    document.getElementById(
-        "muteButton"
-    )
-    .classList.remove(
-        "muted"
-    );
-
-
-    incomingCallData =
-        null;
-
-
-    targetUsername =
-        "";
-
-
-    currentCallId =
-        null;
-
-
-    setStatus(
-        "Call ended.",
-        ""
-    );
-
-
-    /*
-       Allow a new call after cleanup.
-    */
-
-    setTimeout(
-        function() {
-
-            callFinished =
-                false;
-
-        },
-        500
-    );
-
-}
-
-
-/* =========================================
    STATUS
 ========================================= */
 
@@ -2464,20 +2181,13 @@ window.addEventListener(
     "beforeunload",
     function() {
 
-        stopRingtone();
-
-
         if(localStream) {
 
             localStream
-                .getTracks()
-                .forEach(
-                    track => {
-
-                        track.stop();
-
-                    }
-                );
+            .getTracks()
+            .forEach(
+                track => track.stop()
+            );
 
         }
 
