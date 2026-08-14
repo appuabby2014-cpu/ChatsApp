@@ -1379,15 +1379,10 @@ const supabaseClient =
 ========================================= */
 
 let currentUsername = "";
-
 let currentGroupId = null;
-
 let currentGroup = null;
-
 let groupChannel = null;
-
 let selectedUsers = [];
-
 let searchTimer = null;
 
 
@@ -1404,7 +1399,6 @@ function escapeHTML(text) {
         String(text ?? "");
 
     return div.innerHTML;
-
 }
 
 
@@ -1413,7 +1407,6 @@ function escapeAttribute(text) {
     return String(text)
         .replace(/\\/g, "\\\\")
         .replace(/'/g, "\\'");
-
 }
 
 
@@ -1431,7 +1424,6 @@ function showToast(text) {
         () => toast.classList.remove("show"),
         2500
     );
-
 }
 
 
@@ -1459,7 +1451,6 @@ async function loadSession() {
             "index.html";
 
         return;
-
     }
 
     const user =
@@ -1475,7 +1466,6 @@ async function loadSession() {
         currentUsername;
 
     await loadGroups();
-
 }
 
 
@@ -1523,11 +1513,12 @@ async function loadGroups() {
         list.innerHTML = `
             <div class="no-groups">
                 Could not load groups.
+                <br><br>
+                <small>${escapeHTML(error.message)}</small>
             </div>
         `;
 
         return;
-
     }
 
 
@@ -1550,7 +1541,6 @@ async function loadGroups() {
         `;
 
         return;
-
     }
 
 
@@ -1586,8 +1576,15 @@ async function loadGroups() {
             groupError
         );
 
-        return;
+        list.innerHTML = `
+            <div class="no-groups">
+                Could not load groups.
+                <br><br>
+                <small>${escapeHTML(groupError.message)}</small>
+            </div>
+        `;
 
+        return;
     }
 
 
@@ -1625,7 +1622,6 @@ async function loadGroups() {
                 () => openGroup(group);
 
             list.appendChild(item);
-
         }
     );
 
@@ -1729,7 +1725,6 @@ async function loadGroupMembers() {
         );
 
         return;
-
     }
 
 
@@ -1771,12 +1766,6 @@ async function loadMessages() {
             Loading messages...
         </div>
     `;
-
-
-    console.log(
-        "Loading messages for group:",
-        currentGroupId
-    );
 
 
     const {
@@ -1822,7 +1811,6 @@ async function loadMessages() {
         `;
 
         return;
-
     }
 
 
@@ -1930,7 +1918,6 @@ async function sendMessage() {
         );
 
         return;
-
     }
 
 
@@ -1948,27 +1935,22 @@ async function sendMessage() {
         return;
 
 
-    input.disabled =
-        true;
+    input.disabled = true;
 
 
-    console.log(
-        "Sending message:",
-        {
-            conversation_id:
-                currentGroupId,
+    /*
+       IMPORTANT FIX:
 
-            sender:
-                currentUsername,
+       We DO NOT use .select().single()
+       after INSERT.
 
-            message:
-                text
-        }
-    );
-
+       That can cause Supabase to report
+       an error even when the INSERT itself
+       succeeded, because SELECT permissions
+       may be different from INSERT permissions.
+    */
 
     const {
-        data,
         error
     } =
         await supabaseClient
@@ -1984,13 +1966,10 @@ async function sendMessage() {
             message:
                 text
 
-        })
-        .select()
-        .single();
+        });
 
 
-    input.disabled =
-        false;
+    input.disabled = false;
 
 
     if (error) {
@@ -2010,37 +1989,40 @@ async function sendMessage() {
         );
 
         return;
-
     }
-
-
-    console.log(
-        "MESSAGE SENT:",
-        data
-    );
-
-
-    input.value =
-        "";
-
-    input.focus();
 
 
     /*
-       Normally Realtime will display
-       the message automatically.
+       The INSERT succeeded.
 
-       If Realtime is not enabled, display
-       it immediately here.
+       Display it locally immediately.
+       Realtime ignores our own messages,
+       so the message will not appear twice.
     */
 
-    if (data) {
+    displayMessage({
 
-        displayMessage(data);
+        conversation_id:
+            currentGroupId,
 
-        scrollMessages();
+        sender:
+            currentUsername,
 
-    }
+        message:
+            text,
+
+        created_at:
+            new Date().toISOString()
+
+    });
+
+
+    scrollMessages();
+
+
+    input.value = "";
+
+    input.focus();
 
 }
 
@@ -2060,7 +2042,6 @@ function subscribeToGroup() {
 
         groupChannel =
             null;
-
     }
 
 
@@ -2107,8 +2088,9 @@ function subscribeToGroup() {
 
 
                 /*
-                   Don't display our own message twice.
-                   sendMessage() already displays it.
+                   Our own message is already
+                   displayed immediately by
+                   sendMessage().
                 */
 
                 const sender =
@@ -2123,7 +2105,6 @@ function subscribeToGroup() {
                 ) {
 
                     return;
-
                 }
 
 
@@ -2250,7 +2231,6 @@ document
                 ).innerHTML = "";
 
                 return;
-
             }
 
 
@@ -2306,8 +2286,17 @@ async function searchUsersForGroup(query) {
             error
         );
 
-        return;
+        results.innerHTML = `
+            <div style="
+                color:#ff8585;
+                padding:12px;
+                font-size:12px;
+            ">
+                Could not search users.
+            </div>
+        `;
 
+        return;
     }
 
 
@@ -2327,7 +2316,6 @@ async function searchUsersForGroup(query) {
                 ) {
 
                     return false;
-
                 }
 
 
@@ -2546,7 +2534,6 @@ async function createGroup() {
         );
 
         return;
-
     }
 
 
@@ -2557,18 +2544,17 @@ async function createGroup() {
         );
 
         return;
-
     }
 
 
-    console.log(
-        "Creating group:",
-        name
-    );
+    /*
+       IMPORTANT FIX:
 
+       Do not use .select().single()
+       directly after INSERT.
+    */
 
     const {
-        data: group,
         error: groupError
     } =
         await supabaseClient
@@ -2581,9 +2567,7 @@ async function createGroup() {
             created_by:
                 currentUsername
 
-        })
-        .select()
-        .single();
+        });
 
 
     if (groupError) {
@@ -2599,19 +2583,68 @@ async function createGroup() {
         );
 
         return;
-
     }
 
 
-    if (!group) {
+    /*
+       Get the group we just created.
 
-        alert(
-            "Could not create group!"
+       loadGroups() already requires SELECT
+       access to groups, so this matches the
+       existing database setup.
+    */
+
+    const {
+        data: createdGroups,
+        error: findGroupError
+    } =
+        await supabaseClient
+        .from("groups")
+        .select("*")
+        .eq(
+            "created_by",
+            currentUsername
+        )
+        .eq(
+            "name",
+            name
+        )
+        .order(
+            "created_at",
+            {
+                ascending: false
+            }
+        )
+        .limit(1);
+
+
+    if (
+        findGroupError ||
+        !createdGroups ||
+        !createdGroups.length
+    ) {
+
+        console.error(
+            "GROUP FIND ERROR:",
+            findGroupError
         );
 
-        return;
+        alert(
+            "The group may have been created, but ChatsApp could not find it.\n\n" +
+            (
+                findGroupError?.message ||
+                "Unknown error"
+            )
+        );
 
+        await loadGroups();
+
+        return;
     }
+
+
+    const group =
+        createdGroups[0];
 
 
     console.log(
@@ -2619,12 +2652,6 @@ async function createGroup() {
         group
     );
 
-
-    /*
-       IMPORTANT:
-       group_members still uses group_id.
-       group_members.group_id = groups.id
-    */
 
     const members = [
 
@@ -2687,7 +2714,6 @@ async function createGroup() {
         );
 
         return;
-
     }
 
 
@@ -2774,11 +2800,12 @@ async function openMembersModal() {
                 padding:20px;
             ">
                 Could not load members.
+                <br><br>
+                <small>${escapeHTML(error.message)}</small>
             </div>
         `;
 
         return;
-
     }
 
 
@@ -2888,7 +2915,6 @@ function goHome() {
 
         groupChannel =
             null;
-
     }
 
 
@@ -2927,7 +2953,6 @@ async function logout() {
 
         groupChannel =
             null;
-
     }
 
 
