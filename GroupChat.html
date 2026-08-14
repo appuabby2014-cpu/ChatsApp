@@ -2725,7 +2725,6 @@ async function createGroup() {
         .from("groups")
         .insert({
             name: name,
-            description: description,
             created_by: currentUsername
         })
         .select()
