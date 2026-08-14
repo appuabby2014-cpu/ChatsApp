@@ -32,11 +32,6 @@ body {
     overflow-x: hidden;
 }
 
-
-/* =========================================
-   LOADING SCREEN
-========================================= */
-
 #loadingScreen {
     position: fixed;
     inset: 0;
@@ -64,7 +59,6 @@ body {
 .loading-logo {
     width: 96px;
     height: 96px;
-
     border-radius: 29px;
 
     display: flex;
@@ -128,27 +122,20 @@ body {
 
 .loading-particles {
     position:absolute;
-
     width:280px;
     height:280px;
-
     left:50%;
     top:50%;
-
     transform:translate(-50%,-50%);
-
     pointer-events:none;
     z-index:3;
 }
 
 .loading-particle {
     position:absolute;
-
     width:6px;
     height:6px;
-
     border-radius:50%;
-
     background:#7097ff;
 
     box-shadow:
@@ -157,7 +144,6 @@ body {
 
     left:50%;
     top:50%;
-
     opacity:0;
 
     animation:particleFly 2.2s ease-in-out infinite;
@@ -218,7 +204,6 @@ body {
     width:8px;
     height:8px;
     border-radius:50%;
-
     background:#7097ff;
 
     animation:loadingDot 1.2s infinite ease-in-out;
@@ -243,27 +228,18 @@ body {
 
 }
 
-
-/* =========================================
-   FLOATING EMOJIS
-========================================= */
-
 .floating-emojis {
     position:fixed;
     inset:0;
-
     pointer-events:none;
     overflow:hidden;
-
     z-index:0;
 }
 
 .floating-emojis span {
     position:absolute;
-
     opacity:.12;
     font-size:25px;
-
     animation:floatEmoji 12s linear infinite;
 }
 
@@ -284,11 +260,6 @@ body {
     }
 
 }
-
-
-/* =========================================
-   AUTH
-========================================= */
 
 .auth-screen {
     min-height:100vh;
@@ -352,9 +323,7 @@ body {
 
 .subtitle {
     color:#8d96ad;
-
     margin:10px 0 30px;
-
     font-size:14px;
     line-height:1.5;
 }
@@ -366,11 +335,8 @@ body {
 
 .input-group label {
     display:block;
-
     margin-bottom:7px;
-
     color:#9ca5ba;
-
     font-size:13px;
     font-weight:600;
 }
@@ -439,17 +405,13 @@ input:focus {
 
 .switch {
     margin-top:22px;
-
     color:#7f89a2;
-
     font-size:14px;
 }
 
 .switch span {
     color:#7097ff;
-
     cursor:pointer;
-
     font-weight:600;
 }
 
@@ -484,11 +446,6 @@ input:focus {
 
     color:#71e0a0;
 }
-
-
-/* =========================================
-   APP
-========================================= */
 
 .app {
     display:none;
@@ -622,11 +579,6 @@ input:focus {
     margin-top:4px;
 }
 
-
-/* =========================================
-   MAIN
-========================================= */
-
 .main {
     padding:35px;
 
@@ -747,11 +699,6 @@ input:focus {
 .welcome h2 {
     margin-top:0;
 }
-
-
-/* =========================================
-   USER SEARCH
-========================================= */
 
 .user-search-page {
     display:none;
@@ -1073,11 +1020,6 @@ input:focus {
     margin:0;
 }
 
-
-/* =========================================
-   RECENT SEARCHES
-========================================= */
-
 .recent-searches {
     display:none;
 
@@ -1151,11 +1093,6 @@ input:focus {
     border-color:#5b8cff;
     color:white;
 }
-
-
-/* =========================================
-   PROFILE PREVIEW
-========================================= */
 
 .profile-preview-overlay {
     display:none;
@@ -1288,11 +1225,6 @@ input:focus {
     border:0;
 }
 
-
-/* =========================================
-   GLOBAL CHAT
-========================================= */
-
 .global-chat {
     display:none;
     animation:pageIn .35s ease;
@@ -1423,11 +1355,6 @@ input:focus {
     min-width:90px;
 }
 
-
-/* =========================================
-   MOBILE
-========================================= */
-
 @media(max-width:800px) {
 
     .app {
@@ -1489,11 +1416,6 @@ input:focus {
 
 <body>
 
-
-<!-- =========================================
-     LOADING
-========================================= -->
-
 <div id="loadingScreen">
 
     <div class="loading-particles">
@@ -1534,7 +1456,6 @@ input:focus {
 
 </div>
 
-
 <div class="floating-emojis">
 
     <span>💬</span>
@@ -1544,11 +1465,6 @@ input:focus {
     <span>👋</span>
 
 </div>
-
-
-<!-- =========================================
-     AUTH
-========================================= -->
 
 <div
     class="auth-screen"
@@ -1650,11 +1566,6 @@ input:focus {
 
 </div>
 
-
-<!-- =========================================
-     MAIN APP
-========================================= -->
-
 <div
     class="app"
     id="app"
@@ -1674,11 +1585,9 @@ input:focus {
 
         </div>
 
-
         <div class="nav-title">
             COMMUNICATION
         </div>
-
 
         <button
             class="nav-btn active"
@@ -1695,7 +1604,6 @@ input:focus {
 
         </button>
 
-
         <button
             class="nav-btn"
             onclick="openUserSearch()"
@@ -1710,7 +1618,6 @@ input:focus {
             </span>
 
         </button>
-
 
         <button
             class="nav-btn"
@@ -1727,7 +1634,6 @@ input:focus {
 
         </button>
 
-
         <button
             class="nav-btn"
             onclick="openPrivateChats()"
@@ -1742,7 +1648,6 @@ input:focus {
             </span>
 
         </button>
-
 
         <button
             class="nav-btn"
@@ -1759,7 +1664,6 @@ input:focus {
 
         </button>
 
-
         <button
             class="nav-btn"
             onclick="openGroupChat()"
@@ -1774,23 +1678,25 @@ input:focus {
             </span>
 
         </button>
-<button
-    class="nav-btn"
-    onclick="openCalls()"
->
-    <span class="nav-icon">
-        📞
-    </span>
 
-    <span>
-        Calls
-    </span>
-</button>
+        <button
+            class="nav-btn"
+            onclick="openCalls()"
+        >
+
+            <span class="nav-icon">
+                📞
+            </span>
+
+            <span>
+                Calls
+            </span>
+
+        </button>
 
         <div class="nav-title">
             ACCOUNT
         </div>
-
 
         <button
             class="nav-btn"
@@ -1807,7 +1713,6 @@ input:focus {
 
         </button>
 
-
         <button
             class="nav-btn"
             onclick="logout()"
@@ -1822,7 +1727,6 @@ input:focus {
             </span>
 
         </button>
-
 
         <div class="profile">
 
@@ -1841,13 +1745,7 @@ input:focus {
 
     </aside>
 
-
     <main class="main">
-
-
-        <!-- =====================================
-             HOME
-        ====================================== -->
 
         <div id="homePage">
 
@@ -1874,9 +1772,7 @@ input:focus {
 
             </div>
 
-
             <div class="cards">
-
 
                 <div
                     class="card"
@@ -1897,7 +1793,6 @@ input:focus {
 
                 </div>
 
-
                 <div
                     class="card"
                     onclick="openGlobalChat()"
@@ -1916,7 +1811,6 @@ input:focus {
                     </p>
 
                 </div>
-
 
                 <div
                     class="card"
@@ -1937,7 +1831,6 @@ input:focus {
 
                 </div>
 
-
                 <div
                     class="card"
                     onclick="openMail()"
@@ -1956,7 +1849,6 @@ input:focus {
                     </p>
 
                 </div>
-
 
                 <div
                     class="card"
@@ -1977,6 +1869,28 @@ input:focus {
 
                 </div>
 
+                <!-- =====================================
+                     NEW CALLS HOMEPAGE BUTTON
+                ====================================== -->
+
+                <div
+                    class="card"
+                    onclick="openCalls()"
+                >
+
+                    <div class="card-icon">
+                        📞
+                    </div>
+
+                    <h2>
+                        Calls
+                    </h2>
+
+                    <p>
+                        Call your friends on ChatsApp.
+                    </p>
+
+                </div>
 
                 <div
                     class="card"
@@ -1997,9 +1911,7 @@ input:focus {
 
                 </div>
 
-
             </div>
-
 
             <div class="welcome">
 
@@ -2015,11 +1927,6 @@ input:focus {
             </div>
 
         </div>
-
-
-        <!-- =====================================
-             USER SEARCH
-        ====================================== -->
 
         <div
             id="userSearchPage"
@@ -2049,7 +1956,6 @@ input:focus {
 
             </div>
 
-
             <div class="search-box-wrap">
 
                 <div class="search-icon">
@@ -2073,7 +1979,6 @@ input:focus {
                 </button>
 
             </div>
-
 
             <div
                 id="recentSearches"
@@ -2102,7 +2007,6 @@ input:focus {
 
             </div>
 
-
             <div class="search-info">
 
                 <span id="searchResultText">
@@ -2113,12 +2017,10 @@ input:focus {
 
             </div>
 
-
             <div
                 id="searchResults"
                 class="search-results"
             ></div>
-
 
             <div
                 id="noResults"
@@ -2140,11 +2042,6 @@ input:focus {
             </div>
 
         </div>
-
-
-        <!-- =====================================
-             GLOBAL CHAT
-        ====================================== -->
 
         <div
             id="globalChat"
@@ -2174,7 +2071,6 @@ input:focus {
 
             </div>
 
-
             <div
                 id="usernameBox"
                 class="username-box"
@@ -2203,7 +2099,6 @@ input:focus {
                 </button>
 
             </div>
-
 
             <div
                 id="chatArea"
@@ -2237,15 +2132,9 @@ input:focus {
 
         </div>
 
-
     </main>
 
 </div>
-
-
-<!-- =========================================
-     PROFILE PREVIEW
-========================================= -->
 
 <div
     id="profilePreviewOverlay"
@@ -2300,13 +2189,7 @@ input:focus {
 
 </div>
 
-
 <script>
-
-
-/* =========================================
-   SUPABASE
-========================================= */
 
 const SUPABASE_URL =
     "https://kopzrnpporfdwauwlhni.supabase.co";
@@ -2320,66 +2203,27 @@ const supabaseClient =
         SUPABASE_KEY
     );
 
-
-/* =========================================
-   VARIABLES
-========================================= */
-
 let signupMode = false;
-
 let currentUsername = "";
-
 let chatChannel = null;
-
 let searchTimer = null;
-
 let selectedProfileUsername = "";
-
-
-/* =========================================
-   LOADING
-========================================= */
-
-/*
- * THE LOADING SCREEN ALWAYS PLAYS
- * WHEN INDEX.HTML OPENS.
- *
- * There is intentionally NO referrer check.
- *
- * So:
- *
- * Private Chat → Home = LOADING
- * Mail → Home         = LOADING
- * Group Chat → Home   = LOADING
- * Profile → Home      = LOADING
- * User Search → Home  = LOADING
- *
- * Normal opening of ChatsApp also = LOADING
- */
 
 window.addEventListener(
     "load",
     function() {
 
         const loadingScreen =
-            document.getElementById(
-                "loadingScreen"
-            );
+            document.getElementById("loadingScreen");
 
         const loadingStatus =
-            document.getElementById(
-                "loadingStatus"
-            );
+            document.getElementById("loadingStatus");
 
         const loadingLogo =
-            document.getElementById(
-                "loadingLogo"
-            );
-
+            document.getElementById("loadingLogo");
 
         loadingStatus.innerText =
             "Connecting...";
-
 
         setTimeout(
             function() {
@@ -2390,7 +2234,6 @@ window.addEventListener(
             },
             500
         );
-
 
         setTimeout(
             function() {
@@ -2410,7 +2253,6 @@ window.addEventListener(
             1500
         );
 
-
         setTimeout(
             function() {
 
@@ -2425,82 +2267,46 @@ window.addEventListener(
     }
 );
 
-
-/* =========================================
-   MESSAGE
-========================================= */
-
-function showMessage(
-    text,
-    type
-) {
+function showMessage(text,type) {
 
     const message =
-        document.getElementById(
-            "message"
-        );
+        document.getElementById("message");
 
-    message.innerText =
-        text;
-
-    message.className =
-        "message " + type;
+    message.innerText = text;
+    message.className = "message " + type;
 
 }
-
 
 function clearMessage() {
 
     const message =
-        document.getElementById(
-            "message"
-        );
+        document.getElementById("message");
 
-    message.innerText =
-        "";
-
-    message.className =
-        "message";
+    message.innerText = "";
+    message.className = "message";
 
 }
 
-
-/* =========================================
-   LOGIN / SIGNUP SWITCH
-========================================= */
-
 function toggleAuth() {
 
-    signupMode =
-        !signupMode;
+    signupMode = !signupMode;
 
     clearMessage();
 
     const title =
-        document.getElementById(
-            "authTitle"
-        );
+        document.getElementById("authTitle");
 
     const subtitle =
-        document.getElementById(
-            "authSubtitle"
-        );
+        document.getElementById("authSubtitle");
 
     const button =
-        document.getElementById(
-            "mainButton"
-        );
+        document.getElementById("mainButton");
 
     const switchText =
-        document.getElementById(
-            "switchText"
-        );
+        document.getElementById("switchText");
 
     const confirmGroup =
-        document.getElementById(
-            "confirmGroup"
-        );
-
+        document.getElementById("confirmGroup");
 
     if(signupMode) {
 
@@ -2540,14 +2346,7 @@ function toggleAuth() {
 
 }
 
-
-/* =========================================
-   USERNAME EMAIL
-========================================= */
-
-function usernameToEmail(
-    username
-) {
+function usernameToEmail(username) {
 
     return (
         username.toLowerCase() +
@@ -2556,37 +2355,22 @@ function usernameToEmail(
 
 }
 
-
-/* =========================================
-   AUTH
-========================================= */
-
 async function handleAuth() {
 
     clearMessage();
 
-
     const username =
-        document.getElementById(
-            "username"
-        )
+        document.getElementById("username")
         .value
         .trim();
 
-
     const password =
-        document.getElementById(
-            "password"
-        )
+        document.getElementById("password")
         .value;
-
 
     const confirmPassword =
-        document.getElementById(
-            "confirmPassword"
-        )
+        document.getElementById("confirmPassword")
         .value;
-
 
     if(username === "") {
 
@@ -2599,11 +2383,8 @@ async function handleAuth() {
 
     }
 
-
     if(
-        !/^[a-zA-Z0-9_]{3,20}$/.test(
-            username
-        )
+        !/^[a-zA-Z0-9_]{3,20}$/.test(username)
     ) {
 
         showMessage(
@@ -2614,7 +2395,6 @@ async function handleAuth() {
         return;
 
     }
-
 
     if(password === "") {
 
@@ -2627,7 +2407,6 @@ async function handleAuth() {
 
     }
 
-
     if(password.length < 6) {
 
         showMessage(
@@ -2639,19 +2418,12 @@ async function handleAuth() {
 
     }
 
-
     const internalEmail =
-        usernameToEmail(
-            username
-        );
-
+        usernameToEmail(username);
 
     if(signupMode) {
 
-        if(
-            password !==
-            confirmPassword
-        ) {
+        if(password !== confirmPassword) {
 
             showMessage(
                 "Passwords do not match.",
@@ -2662,12 +2434,10 @@ async function handleAuth() {
 
         }
 
-
         showMessage(
             "Creating your account...",
             "success"
         );
-
 
         const {
             data,
@@ -2677,23 +2447,17 @@ async function handleAuth() {
             .auth
             .signUp({
 
-                email:
-                    internalEmail,
+                email:internalEmail,
 
-                password:
-                    password,
+                password:password,
 
                 options:{
-
                     data:{
-                        username:
-                            username
+                        username:username
                     }
-
                 }
 
             });
-
 
         if(error) {
 
@@ -2706,27 +2470,17 @@ async function handleAuth() {
 
         }
 
+        if(data.session && data.user) {
 
-        if(
-            data.session &&
-            data.user
-        ) {
+            currentUsername = username;
 
-            currentUsername =
-                username;
+            await ensureProfile(username);
 
-            await ensureProfile(
-                username
-            );
-
-            showApp(
-                username
-            );
+            showApp(username);
 
             return;
 
         }
-
 
         showMessage(
             "Account created! You can now log in. 🎉",
@@ -2737,12 +2491,10 @@ async function handleAuth() {
 
     }
 
-
     showMessage(
         "Logging in...",
         "success"
     );
-
 
     const {
         data,
@@ -2752,14 +2504,11 @@ async function handleAuth() {
         .auth
         .signInWithPassword({
 
-            email:
-                internalEmail,
+            email:internalEmail,
 
-            password:
-                password
+            password:password
 
         });
-
 
     if(error) {
 
@@ -2772,37 +2521,23 @@ async function handleAuth() {
 
     }
 
-
     if(data.user) {
 
         currentUsername =
-            data.user
-            .user_metadata?.username ||
+            data.user.user_metadata?.username ||
             username;
 
-        await ensureProfile(
-            currentUsername
-        );
+        await ensureProfile(currentUsername);
 
-        showApp(
-            currentUsername
-        );
+        showApp(currentUsername);
 
     }
 
 }
 
-
-/* =========================================
-   PROFILE TABLE
-========================================= */
-
-async function ensureProfile(
-    username
-) {
+async function ensureProfile(username) {
 
     if(!username) return;
-
 
     const {
         error
@@ -2810,22 +2545,14 @@ async function ensureProfile(
         await supabaseClient
         .from("profiles")
         .upsert(
-
             {
-                username:
-                    username,
-
-                online:
-                    true
+                username:username,
+                online:true
             },
-
             {
-                onConflict:
-                    "username"
+                onConflict:"username"
             }
-
         );
-
 
     if(error) {
 
@@ -2838,18 +2565,10 @@ async function ensureProfile(
 
 }
 
-
-/* =========================================
-   ONLINE STATUS
-========================================= */
-
-async function setProfileOnline(
-    isOnline
-) {
+async function setProfileOnline(isOnline) {
 
     if(!currentUsername)
         return;
-
 
     const {
         error
@@ -2857,93 +2576,50 @@ async function setProfileOnline(
         await supabaseClient
         .from("profiles")
         .update({
-
-            online:
-                isOnline
-
+            online:isOnline
         })
         .eq(
             "username",
             currentUsername
         );
 
-
     if(error) {
 
-        console.warn(
-            error
-        );
+        console.warn(error);
 
     }
 
 }
 
+function showApp(username) {
 
-/* =========================================
-   SHOW APP
-========================================= */
+    currentUsername = username;
 
-function showApp(
-    username
-) {
+    document.getElementById("authScreen")
+        .style.display = "none";
 
-    currentUsername =
-        username;
+    document.getElementById("app")
+        .style.display = "grid";
 
+    document.getElementById("profileName")
+        .innerText = username;
 
-    document.getElementById(
-        "authScreen"
-    )
-    .style.display =
-        "none";
+    document.getElementById("avatar")
+        .innerText =
+        username.charAt(0).toUpperCase();
 
-
-    document.getElementById(
-        "app"
-    )
-    .style.display =
-        "grid";
-
-
-    document.getElementById(
-        "profileName"
-    )
-    .innerText =
-        username;
-
-
-    document.getElementById(
-        "avatar"
-    )
-    .innerText =
-        username
-        .charAt(0)
-        .toUpperCase();
-
-
-    setProfileOnline(
-        true
-    );
-
+    setProfileOnline(true);
 
     showHome();
 
 }
 
-
-/* =========================================
-   SESSION
-========================================= */
-
 async function checkSession() {
 
-    const {
-        data
-    } =
+    const {data} =
         await supabaseClient
         .auth
         .getSession();
-
 
     if(
         data &&
@@ -2952,150 +2628,84 @@ async function checkSession() {
     ) {
 
         const username =
-            data.session.user
-            .user_metadata?.username ||
-            data.session.user.email
-            .split("@")[0];
+            data.session.user.user_metadata?.username ||
+            data.session.user.email.split("@")[0];
 
+        currentUsername = username;
 
-        currentUsername =
-            username;
+        await ensureProfile(username);
 
-
-        await ensureProfile(
-            username
-        );
-
-
-        showApp(
-            username
-        );
+        showApp(username);
 
     }
 
 }
 
-
-/* =========================================
-   PAGE NAVIGATION
-========================================= */
-
 function hideAllPages() {
 
-    document.getElementById(
-        "homePage"
-    )
-    .style.display =
-        "none";
+    document.getElementById("homePage")
+        .style.display = "none";
 
+    document.getElementById("globalChat")
+        .style.display = "none";
 
-    document.getElementById(
-        "globalChat"
-    )
-    .style.display =
-        "none";
-
-
-    document.getElementById(
-        "userSearchPage"
-    )
-    .style.display =
-        "none";
+    document.getElementById("userSearchPage")
+        .style.display = "none";
 
 }
-
 
 function showHome() {
 
     hideAllPages();
 
+    document.getElementById("homePage")
+        .style.display = "block";
 
-    document.getElementById(
-        "homePage"
-    )
-    .style.display =
-        "block";
-
-
-    setActiveNav(
-        "Home"
-    );
+    setActiveNav("Home");
 
 }
 
-
-function setActiveNav(
-    name
-) {
+function setActiveNav(name) {
 
     document
-        .querySelectorAll(
-            ".nav-btn"
-        )
-        .forEach(
-            button => {
+        .querySelectorAll(".nav-btn")
+        .forEach(button => {
 
-                button.classList.remove(
-                    "active"
+            button.classList.remove("active");
+
+            const span =
+                button.querySelector(
+                    "span:last-child"
                 );
 
+            if(
+                span &&
+                span.innerText.trim() === name
+            ) {
 
-                const span =
-                    button.querySelector(
-                        "span:last-child"
-                    );
-
-
-                if(
-                    span &&
-                    span.innerText.trim() ===
-                    name
-                ) {
-
-                    button.classList.add(
-                        "active"
-                    );
-
-                }
+                button.classList.add("active");
 
             }
-        );
+
+        });
 
 }
-
-
-/* =========================================
-   USER SEARCH PAGE
-========================================= */
 
 function openUserSearch() {
 
     hideAllPages();
 
+    document.getElementById("userSearchPage")
+        .style.display = "block";
 
-    document.getElementById(
-        "userSearchPage"
-    )
-    .style.display =
-        "block";
-
-
-    setActiveNav(
-        "Find Users"
-    );
-
+    setActiveNav("Find Users");
 
     const input =
-        document.getElementById(
-            "userSearchInput"
-        );
-
+        document.getElementById("userSearchInput");
 
     input.focus();
 
-
     renderRecentSearches();
-
 
     if(input.value.trim()) {
 
@@ -3107,11 +2717,6 @@ function openUserSearch() {
 
 }
 
-
-/* =========================================
-   LIVE SEARCH
-========================================= */
-
 document.addEventListener(
     "DOMContentLoaded",
     function() {
@@ -3121,9 +2726,7 @@ document.addEventListener(
                 "userSearchInput"
             );
 
-
         if(!input) return;
-
 
         input.addEventListener(
             "input",
@@ -3132,46 +2735,30 @@ document.addEventListener(
                 const query =
                     input.value.trim();
 
-
                 const clearButton =
                     document.getElementById(
                         "clearSearchButton"
                     );
 
-
                 clearButton.style.display =
-                    query
-                    ? "block"
-                    : "none";
+                    query ? "block" : "none";
 
-
-                clearTimeout(
-                    searchTimer
-                );
-
+                clearTimeout(searchTimer);
 
                 if(!query) {
 
                     document.getElementById(
                         "searchResults"
-                    )
-                    .innerHTML =
-                        "";
-
+                    ).innerHTML = "";
 
                     document.getElementById(
                         "noResults"
-                    )
-                    .style.display =
-                        "none";
-
+                    ).style.display = "none";
 
                     document.getElementById(
                         "searchResultText"
-                    )
-                    .innerText =
+                    ).innerText =
                         "Start typing to find users";
-
 
                     renderRecentSearches();
 
@@ -3179,28 +2766,19 @@ document.addEventListener(
 
                 }
 
-
                 document.getElementById(
                     "recentSearches"
-                )
-                .style.display =
-                    "none";
-
+                ).style.display = "none";
 
                 document.getElementById(
                     "searchLoading"
-                )
-                .innerText =
-                    "Searching...";
-
+                ).innerText = "Searching...";
 
                 searchTimer =
                     setTimeout(
                         function() {
 
-                            searchUsers(
-                                query
-                            );
+                            searchUsers(query);
 
                         },
                         220
@@ -3212,46 +2790,31 @@ document.addEventListener(
     }
 );
 
-
-/* =========================================
-   SEARCH USERS
-========================================= */
-
-async function searchUsers(
-    query
-) {
+async function searchUsers(query) {
 
     const results =
         document.getElementById(
             "searchResults"
         );
 
-
     const noResults =
         document.getElementById(
             "noResults"
         );
-
 
     const resultText =
         document.getElementById(
             "searchResultText"
         );
 
-
     const loading =
         document.getElementById(
             "searchLoading"
         );
 
+    loading.innerText = "Searching...";
 
-    loading.innerText =
-        "Searching...";
-
-
-    noResults.style.display =
-        "none";
-
+    noResults.style.display = "none";
 
     const {
         data,
@@ -3259,9 +2822,7 @@ async function searchUsers(
     } =
         await supabaseClient
         .from("profiles")
-        .select(
-            "username, online"
-        )
+        .select("username, online")
         .ilike(
             "username",
             "%" + query + "%"
@@ -3274,10 +2835,7 @@ async function searchUsers(
         )
         .limit(30);
 
-
-    loading.innerText =
-        "";
-
+    loading.innerText = "";
 
     if(error) {
 
@@ -3286,19 +2844,14 @@ async function searchUsers(
             error
         );
 
-
-        results.innerHTML =
-            "";
-
+        results.innerHTML = "";
 
         resultText.innerText =
             "Could not search users.";
 
-
         return;
 
     }
-
 
     const filtered =
         (data || [])
@@ -3309,25 +2862,19 @@ async function searchUsers(
                 currentUsername.toLowerCase()
         );
 
-
-    results.innerHTML =
-        "";
-
+    results.innerHTML = "";
 
     if(filtered.length === 0) {
 
         resultText.innerText =
             "No matching users";
 
-
         noResults.style.display =
             "block";
-
 
         return;
 
     }
-
 
     resultText.innerText =
         filtered.length +
@@ -3337,30 +2884,19 @@ async function searchUsers(
             : " users found"
         );
 
-
     filtered.forEach(
         (user,index) => {
 
             const card =
-                document.createElement(
-                    "div"
-                );
+                document.createElement("div");
 
-
-            card.className =
-                "user-card";
-
+            card.className = "user-card";
 
             card.style.animationDelay =
-                (index * 45) +
-                "ms";
-
+                (index * 45) + "ms";
 
             const username =
-                escapeHTML(
-                    user.username
-                );
-
+                escapeHTML(user.username);
 
             const firstLetter =
                 escapeHTML(
@@ -3369,33 +2905,24 @@ async function searchUsers(
                     .toUpperCase()
                 );
 
-
-            const online =
-                !!user.online;
-
+            const online = !!user.online;
 
             card.innerHTML = `
 
                 <div class="user-card-top">
 
                     <div class="user-avatar">
-
                         ${firstLetter}
-
                     </div>
 
                     <div>
 
                         <div class="user-name">
-
                             ${username}
-
                         </div>
 
                         <div class="user-status ${
-                            online
-                            ? "online"
-                            : ""
+                            online ? "online" : ""
                         }">
 
                             ${
@@ -3410,132 +2937,79 @@ async function searchUsers(
 
                 </div>
 
-
                 <div class="user-actions">
 
                     <button
                         class="user-action"
                         onclick="previewUser(
-                            '${escapeAttribute(
-                                user.username
-                            )}',
+                            '${escapeAttribute(user.username)}',
                             ${online}
                         )"
                     >
-
                         👀 Preview
-
                     </button>
-
 
                     <button
                         class="user-action message-btn"
                         onclick="messageUser(
-                            '${escapeAttribute(
-                                user.username
-                            )}'
+                            '${escapeAttribute(user.username)}'
                         )"
                     >
-
                         💬 Message
-
                     </button>
 
                 </div>
 
             `;
 
-
-            results.appendChild(
-                card
-            );
+            results.appendChild(card);
 
         }
     );
 
-
-    saveSearch(
-        query
-    );
+    saveSearch(query);
 
 }
 
+function previewUser(username,online) {
 
-/* =========================================
-   PROFILE PREVIEW
-========================================= */
+    selectedProfileUsername = username;
 
-function previewUser(
-    username,
-    online
-) {
+    document.getElementById("previewAvatar")
+        .innerText =
+        username.charAt(0).toUpperCase();
 
-    selectedProfileUsername =
-        username;
-
-
-    document.getElementById(
-        "previewAvatar"
-    )
-    .innerText =
-        username
-        .charAt(0)
-        .toUpperCase();
-
-
-    document.getElementById(
-        "previewName"
-    )
-    .innerText =
-        username;
-
+    document.getElementById("previewName")
+        .innerText = username;
 
     const status =
         document.getElementById(
             "previewStatus"
         );
 
-
     status.innerText =
-        online
-        ? "● Online"
-        : "● Offline";
-
+        online ? "● Online" : "● Offline";
 
     status.className =
         "preview-status" +
-        (
-            online
-            ? ""
-            : " offline"
-        );
-
+        (online ? "" : " offline");
 
     document.getElementById(
         "previewMessageButton"
     ).onclick =
         function() {
 
-            messageUser(
-                username
-            );
+            messageUser(username);
 
         };
 
-
     document.getElementById(
         "profilePreviewOverlay"
-    )
-    .classList.add(
-        "show"
-    );
+    ).classList.add("show");
 
 }
 
-
-function closeProfilePreview(
-    event
-) {
+function closeProfilePreview(event) {
 
     if(
         event &&
@@ -3548,43 +3022,25 @@ function closeProfilePreview(
 
     }
 
-
     document.getElementById(
         "profilePreviewOverlay"
-    )
-    .classList.remove(
-        "show"
-    );
+    ).classList.remove("show");
 
 }
 
-
-/* =========================================
-   MESSAGE USER
-========================================= */
-
-function messageUser(
-    username
-) {
+function messageUser(username) {
 
     closeProfilePreview();
-
 
     localStorage.setItem(
         "chatsapp_target_user",
         username
     );
 
-
     window.location.href =
         "UserSearch.html";
 
 }
-
-
-/* =========================================
-   SEARCH HISTORY
-========================================= */
 
 function getSearchHistory() {
 
@@ -3596,9 +3052,7 @@ function getSearchHistory() {
             )
         ) || [];
 
-    }
-
-    catch {
+    } catch {
 
         return [];
 
@@ -3606,24 +3060,15 @@ function getSearchHistory() {
 
 }
 
-
-function saveSearch(
-    query
-) {
+function saveSearch(query) {
 
     if(!query) return;
 
-
-    const normalized =
-        query.trim();
-
+    const normalized = query.trim();
 
     if(!normalized) return;
 
-
-    let history =
-        getSearchHistory();
-
+    let history = getSearchHistory();
 
     history =
         history.filter(
@@ -3632,31 +3077,19 @@ function saveSearch(
                 normalized.toLowerCase()
         );
 
-
-    history.unshift(
-        normalized
-    );
-
+    history.unshift(normalized);
 
     history =
-        history.slice(
-            0,
-            8
-        );
-
+        history.slice(0,8);
 
     localStorage.setItem(
         "chatsapp_recent_searches",
-        JSON.stringify(
-            history
-        )
+        JSON.stringify(history)
     );
-
 
     renderRecentSearches();
 
 }
-
 
 function renderRecentSearches() {
 
@@ -3665,53 +3098,41 @@ function renderRecentSearches() {
             "recentSearches"
         );
 
-
     const list =
         document.getElementById(
             "recentList"
         );
 
-
     const history =
         getSearchHistory();
 
-
     if(!history.length) {
 
-        container.style.display =
-            "none";
+        container.style.display = "none";
 
         return;
 
     }
-
 
     const input =
         document.getElementById(
             "userSearchInput"
         );
 
-
     if(
         input &&
         input.value.trim()
     ) {
 
-        container.style.display =
-            "none";
+        container.style.display = "none";
 
         return;
 
     }
 
+    container.style.display = "block";
 
-    container.style.display =
-        "block";
-
-
-    list.innerHTML =
-        "";
-
+    list.innerHTML = "";
 
     history.forEach(
         query => {
@@ -3721,49 +3142,34 @@ function renderRecentSearches() {
                     "button"
                 );
 
-
             button.className =
                 "recent-item";
-
 
             button.innerText =
                 "🔎 " + query;
 
-
             button.onclick =
                 function() {
 
-                    input.value =
-                        query;
-
+                    input.value = query;
 
                     document.getElementById(
                         "clearSearchButton"
-                    )
-                    .style.display =
-                        "block";
+                    ).style.display = "block";
 
-
-                    searchUsers(
-                        query
-                    );
-
+                    searchUsers(query);
 
                     container.style.display =
                         "none";
 
                 };
 
-
-            list.appendChild(
-                button
-            );
+            list.appendChild(button);
 
         }
     );
 
 }
-
 
 function clearSearchHistory() {
 
@@ -3771,11 +3177,9 @@ function clearSearchHistory() {
         "chatsapp_recent_searches"
     );
 
-
     renderRecentSearches();
 
 }
-
 
 function clearUserSearch() {
 
@@ -3784,50 +3188,30 @@ function clearUserSearch() {
             "userSearchInput"
         );
 
-
-    input.value =
-        "";
-
+    input.value = "";
 
     document.getElementById(
         "clearSearchButton"
-    )
-    .style.display =
-        "none";
-
+    ).style.display = "none";
 
     document.getElementById(
         "searchResults"
-    )
-    .innerHTML =
-        "";
-
+    ).innerHTML = "";
 
     document.getElementById(
         "noResults"
-    )
-    .style.display =
-        "none";
-
+    ).style.display = "none";
 
     document.getElementById(
         "searchResultText"
-    )
-    .innerText =
+    ).innerText =
         "Start typing to find users";
 
-
     renderRecentSearches();
-
 
     input.focus();
 
 }
-
-
-/* =========================================
-   PRIVATE CHATS
-========================================= */
 
 function openPrivateChats() {
 
@@ -3836,11 +3220,6 @@ function openPrivateChats() {
 
 }
 
-
-/* =========================================
-   MAIL
-========================================= */
-
 function openMail() {
 
     window.location.href =
@@ -3848,27 +3227,19 @@ function openMail() {
 
 }
 
-
-/* =========================================
-   GROUP CHATS
-========================================= */
-
 function openGroupChat() {
 
     window.location.href =
         "GroupChat.html";
 
 }
+
 function openCalls() {
 
     window.location.href =
         "Call.html";
 
 }
-
-/* =========================================
-   PROFILE
-========================================= */
 
 function openProfile() {
 
@@ -3877,132 +3248,70 @@ function openProfile() {
         currentUsername
     );
 
-
     window.location.href =
         "Profile.html";
 
 }
 
-
-/* =========================================
-   LOGOUT
-========================================= */
-
 async function logout() {
 
-    await setProfileOnline(
-        false
-    );
-
+    await setProfileOnline(false);
 
     await supabaseClient
         .auth
         .signOut();
 
-
-    currentUsername =
-        "";
-
+    currentUsername = "";
 
     if(chatChannel) {
 
         await supabaseClient
-            .removeChannel(
-                chatChannel
-            );
+            .removeChannel(chatChannel);
 
-        chatChannel =
-            null;
+        chatChannel = null;
 
     }
 
+    document.getElementById("app")
+        .style.display = "none";
 
-    document.getElementById(
-        "app"
-    )
-    .style.display =
-        "none";
+    document.getElementById("authScreen")
+        .style.display = "flex";
 
+    document.getElementById("username")
+        .value = "";
 
-    document.getElementById(
-        "authScreen"
-    )
-    .style.display =
-        "flex";
+    document.getElementById("password")
+        .value = "";
 
-
-    document.getElementById(
-        "username"
-    )
-    .value =
-        "";
-
-
-    document.getElementById(
-        "password"
-    )
-    .value =
-        "";
-
-
-    document.getElementById(
-        "confirmPassword"
-    )
-    .value =
-        "";
-
+    document.getElementById("confirmPassword")
+        .value = "";
 
     clearMessage();
 
 }
 
-
-/* =========================================
-   GLOBAL CHAT
-========================================= */
-
 function openGlobalChat() {
 
     hideAllPages();
 
+    document.getElementById("globalChat")
+        .style.display = "block";
 
-    document.getElementById(
-        "globalChat"
-    )
-    .style.display =
-        "block";
+    setActiveNav("Global Chat");
 
+    document.getElementById("usernameBox")
+        .style.display = "block";
 
-    setActiveNav(
-        "Global Chat"
-    );
+    document.getElementById("chatArea")
+        .style.display = "none";
 
-
-    document.getElementById(
-        "usernameBox"
-    )
-    .style.display =
-        "block";
-
-
-    document.getElementById(
-        "chatArea"
-    )
-    .style.display =
-        "none";
-
-
-    document.getElementById(
-        "chatUsername"
-    )
-    .value =
-        currentUsername;
-
+    document.getElementById("chatUsername")
+        .value = currentUsername;
 
     updateOnlineCount();
 
 }
-
 
 async function joinGlobalChat() {
 
@@ -4013,22 +3322,16 @@ async function joinGlobalChat() {
         .value
         .trim();
 
-
     if(username === "") {
 
-        alert(
-            "Please enter a username."
-        );
+        alert("Please enter a username.");
 
         return;
 
     }
 
-
     if(
-        !/^[a-zA-Z0-9_]{3,20}$/.test(
-            username
-        )
+        !/^[a-zA-Z0-9_]{3,20}$/.test(username)
     ) {
 
         alert(
@@ -4039,35 +3342,23 @@ async function joinGlobalChat() {
 
     }
 
-
-    currentUsername =
-        username;
-
+    currentUsername = username;
 
     document.getElementById(
         "usernameBox"
-    )
-    .style.display =
-        "none";
-
+    ).style.display = "none";
 
     document.getElementById(
         "chatArea"
-    )
-    .style.display =
-        "block";
-
+    ).style.display = "block";
 
     await loadMessages();
 
-
     subscribeToMessages();
-
 
     updateOnlineCount();
 
 }
-
 
 async function loadMessages() {
 
@@ -4085,7 +3376,6 @@ async function loadMessages() {
             }
         );
 
-
     if(error) {
 
         console.error(
@@ -4097,16 +3387,10 @@ async function loadMessages() {
 
     }
 
-
     const box =
-        document.getElementById(
-            "messages"
-        );
+        document.getElementById("messages");
 
-
-    box.innerHTML =
-        "";
-
+    box.innerHTML = "";
 
     data.forEach(
         message => {
@@ -4119,61 +3403,40 @@ async function loadMessages() {
         }
     );
 
-
     box.scrollTop =
         box.scrollHeight;
 
 }
 
-
-function displayMessage(
-    username,
-    text
-) {
+function displayMessage(username,text) {
 
     const box =
-        document.getElementById(
-            "messages"
-        );
-
+        document.getElementById("messages");
 
     const item =
-        document.createElement(
-            "div"
-        );
-
+        document.createElement("div");
 
     item.className =
         "message-item";
 
-
     item.innerHTML = `
 
         <div class="message-user">
-
             ${escapeHTML(username)}
-
         </div>
 
         <div class="message-text">
-
             ${escapeHTML(text)}
-
         </div>
 
     `;
 
-
-    box.appendChild(
-        item
-    );
-
+    box.appendChild(item);
 
     box.scrollTop =
         box.scrollHeight;
 
 }
-
 
 async function sendGlobalMessage() {
 
@@ -4182,14 +3445,11 @@ async function sendGlobalMessage() {
             "chatMessage"
         );
 
-
     const text =
         input.value.trim();
 
-
     if(text === "")
         return;
-
 
     const {
         error
@@ -4206,63 +3466,46 @@ async function sendGlobalMessage() {
 
         });
 
-
     if(error) {
 
-        console.error(
-            error
-        );
-
+        console.error(error);
 
         alert(
             "Message could not be sent!\n\n" +
             error.message
         );
 
-
         return;
 
     }
 
-
-    input.value =
-        "";
+    input.value = "";
 
 }
-
 
 function subscribeToMessages() {
 
     if(chatChannel) {
 
         supabaseClient
-            .removeChannel(
-                chatChannel
-            );
+            .removeChannel(chatChannel);
 
     }
 
-
     chatChannel =
         supabaseClient
-        .channel(
-            "global-chat-room"
-        )
+        .channel("global-chat-room")
         .on(
             "postgres_changes",
             {
 
-                event:
-                    "INSERT",
+                event:"INSERT",
 
-                schema:
-                    "public",
+                schema:"public",
 
-                table:
-                    "global_messages"
+                table:"global_messages"
 
             },
-
             payload => {
 
                 displayMessage(
@@ -4276,84 +3519,50 @@ function subscribeToMessages() {
 
 }
 
-
 function updateOnlineCount() {
 
     document.getElementById(
         "onlineCount"
-    )
-    .innerText =
+    ).innerText =
         "🟢 Global Chat";
 
 }
 
-
-/* =========================================
-   ESCAPE HTML
-========================================= */
-
-function escapeHTML(
-    text
-) {
+function escapeHTML(text) {
 
     const div =
-        document.createElement(
-            "div"
-        );
+        document.createElement("div");
 
-
-    div.innerText =
-        text;
-
+    div.innerText = text;
 
     return div.innerHTML;
 
 }
 
-
-function escapeAttribute(
-    text
-) {
+function escapeAttribute(text) {
 
     return String(text)
-        .replace(
-            /\\/g,
-            "\\\\"
-        )
-        .replace(
-            /'/g,
-            "\\'"
-        );
+        .replace(/\\/g,"\\\\")
+        .replace(/'/g,"\\'");
 
 }
-
-
-/* =========================================
-   ENTER KEY
-========================================= */
 
 document.addEventListener(
     "keydown",
     function(event) {
 
-        if(
-            event.key !==
-            "Enter"
-        ) {
+        if(event.key !== "Enter") {
 
             return;
 
         }
 
-
         const active =
             document.activeElement;
 
-
         if(
             active &&
-            active.id ===
-            "chatMessage"
+            active.id === "chatMessage"
         ) {
 
             event.preventDefault();
@@ -4364,18 +3573,12 @@ document.addEventListener(
 
         }
 
-
         if(
             active &&
             (
-                active.id ===
-                "username" ||
-
-                active.id ===
-                "password" ||
-
-                active.id ===
-                "confirmPassword"
+                active.id === "username" ||
+                active.id === "password" ||
+                active.id === "confirmPassword"
             )
         ) {
 
@@ -4390,19 +3593,12 @@ document.addEventListener(
     }
 );
 
-
-/* =========================================
-   ONLINE STATUS
-========================================= */
-
 setInterval(
     function() {
 
         if(currentUsername) {
 
-            setProfileOnline(
-                true
-            );
+            setProfileOnline(true);
 
         }
 
@@ -4410,26 +3606,18 @@ setInterval(
     30000
 );
 
-
 window.addEventListener(
     "beforeunload",
     function() {
 
         if(currentUsername) {
 
-            setProfileOnline(
-                false
-            );
+            setProfileOnline(false);
 
         }
 
     }
 );
-
-
-/* =========================================
-   START
-========================================= */
 
 checkSession();
 
