@@ -2697,155 +2697,118 @@ function renderSelectedUsers() {
 async function createGroup() {
 
     const name =
-        document.getElementById(
-            "groupNameInput"
-        )
+        document.getElementById("groupNameInput")
         .value
         .trim();
-
 
     const description =
-        document.getElementById(
-            "groupDescriptionInput"
-        )
+        document.getElementById("groupDescriptionInput")
         .value
         .trim();
 
-
-    if(!name) {
-
-        showToast(
-            "⚠️ Enter a group name"
-        );
-
+    if (!name) {
+        showToast("⚠️ Enter a group name");
         return;
-
     }
 
-
-    if(name.length < 2) {
-
-        showToast(
-            "⚠️ Group name is too short"
-        );
-
+    if (name.length < 2) {
+        showToast("⚠️ Group name is too short");
         return;
-
     }
 
+    console.log("Creating group:", name);
 
     const {
         data: group,
         error: groupError
-    } =
-        await supabaseClient
+    } = await supabaseClient
         .from("groups")
         .insert({
-
-            name:
-                name,
-
-            description:
-                description,
-
-            created_by:
-                currentUsername
-
+            name: name,
+            description: description,
+            created_by: currentUsername
         })
         .select()
         .single();
 
+    // IMPORTANT: check groupError, NOT error
+    if (groupError) {
 
-   if (error) {
-    console.error("GROUP CREATE ERROR:", error);
+        console.error("GROUP CREATE ERROR:", groupError);
 
-    alert(
-        "Could not create group!\n\n" +
-        error.message
-    );
-
-    return;
-}
-
-
-    const members = [
-
-        {
-            group_id:
-                group.id,
-
-            username:
-                currentUsername
-        }
-
-    ];
-
-
-    selectedUsers.forEach(
-        username => {
-
-            members.push({
-
-                group_id:
-                    group.id,
-
-                username:
-                    username
-
-            });
-
-        }
-    );
-
-
-    const {
-        error: memberError
-    } =
-        await supabaseClient
-        .from("group_members")
-        .insert(
-            members
-        );
-
-
-    if(memberError) {
-
-        console.error(memberError);
-
-
-        await supabaseClient
-            .from("groups")
-            .delete()
-            .eq(
-                "id",
-                group.id
-            );
-
-
-        showToast(
-            "❌ Could not add members"
+        alert(
+            "Could not create group!\n\n" +
+            groupError.message
         );
 
         return;
-
     }
 
+    if (!group) {
+
+        console.error("No group returned!");
+
+        alert("Could not create group!");
+
+        return;
+    }
+
+    console.log("GROUP CREATED:", group);
+
+    const members = [
+        {
+            group_id: group.id,
+            username: currentUsername
+        }
+    ];
+
+    selectedUsers.forEach(username => {
+
+        members.push({
+            group_id: group.id,
+            username: username
+        });
+
+    });
+
+    console.log("Adding members:", members);
+
+    const {
+        error: memberError
+    } = await supabaseClient
+        .from("group_members")
+        .insert(members);
+
+    if (memberError) {
+
+        console.error(
+            "MEMBER INSERT ERROR:",
+            memberError
+        );
+
+        // Delete the group if members couldn't be added
+        await supabaseClient
+            .from("groups")
+            .delete()
+            .eq("id", group.id);
+
+        alert(
+            "Group was created, but members could not be added.\n\n" +
+            memberError.message
+        );
+
+        return;
+    }
+
+    console.log("GROUP + MEMBERS CREATED SUCCESSFULLY!");
 
     closeCreateModal();
 
-
-    showToast(
-        "🎉 Group created!"
-    );
-
+    showToast("🎉 Group created!");
 
     await loadGroups();
 
-
-    openGroup(
-        group
-    );
-
+    openGroup(group);
 }
 
 
@@ -2855,23 +2818,17 @@ async function createGroup() {
 
 async function openMembersModal() {
 
-    if(!currentGroupId)
+    if (!currentGroupId)
         return;
-
 
     document.getElementById(
         "membersModal"
     ).classList.add("show");
 
-
     const list =
-        document.getElementById(
-            "memberList"
-        );
+        document.getElementById("memberList");
 
-
-    list.innerHTML =
-        `
+    list.innerHTML = `
         <div style="
             color:#737d95;
             padding:20px;
@@ -2879,14 +2836,12 @@ async function openMembersModal() {
         ">
             Loading...
         </div>
-        `;
-
+    `;
 
     const {
         data,
         error
-    } =
-        await supabaseClient
+    } = await supabaseClient
         .from("group_members")
         .select("username")
         .eq(
@@ -2896,19 +2851,19 @@ async function openMembersModal() {
         .order(
             "joined_at",
             {
-                ascending:true
+                ascending: true
             }
         );
 
+    if (error) {
 
-    if(error) {
-
-        console.error(error);
+        console.error(
+            "MEMBERS LOAD ERROR:",
+            error
+        );
 
         return;
-
     }
-
 
     document.getElementById(
         "membersSubtitle"
@@ -2916,70 +2871,56 @@ async function openMembersModal() {
         data.length +
         (
             data.length === 1
-            ? " member"
-            : " members"
+                ? " member"
+                : " members"
         );
 
+    list.innerHTML = "";
 
-    list.innerHTML =
-        "";
+    data.forEach(member => {
 
+        const item =
+            document.createElement("div");
 
-    data.forEach(
-        member => {
+        item.className = "member";
 
-            const item =
-                document.createElement(
-                    "div"
-                );
+        item.innerHTML = `
 
-
-            item.className =
-                "member";
-
-
-            item.innerHTML = `
-
-                <div class="member-avatar">
-                    ${escapeHTML(
-                        member.username
-                            .charAt(0)
-                            .toUpperCase()
-                    )}
-                </div>
-
-                <div class="member-name">
-                    ${escapeHTML(member.username)}
-                </div>
-
-                ${
+            <div class="member-avatar">
+                ${escapeHTML(
                     member.username
-                        .toLowerCase() ===
-                    currentGroup.created_by
-                        .toLowerCase()
+                        .charAt(0)
+                        .toUpperCase()
+                )}
+            </div>
 
-                    ? `
-                        <span style="
-                            margin-left:auto;
-                            color:#7097ff;
-                            font-size:10px;
-                        ">
-                            OWNER
-                        </span>
-                      `
+            <div class="member-name">
+                ${escapeHTML(member.username)}
+            </div>
 
-                    : ""
-                }
+            ${
+                currentGroup &&
+                member.username.toLowerCase() ===
+                currentGroup.created_by.toLowerCase()
 
-            `;
+                ? `
+                    <span style="
+                        margin-left:auto;
+                        color:#7097ff;
+                        font-size:10px;
+                    ">
+                        OWNER
+                    </span>
+                  `
 
+                : ""
+            }
 
-            list.appendChild(
-                item
-            );
+        `;
 
-        }
-    );
+        list.appendChild(item);
+
+    });
 
 }
 
@@ -2999,22 +2940,16 @@ function closeMembersModal() {
 
 function goHome() {
 
-    if(groupChannel) {
+    if (groupChannel) {
 
         supabaseClient
-            .removeChannel(
-                groupChannel
-            );
+            .removeChannel(groupChannel);
 
-        groupChannel =
-            null;
+        groupChannel = null;
 
     }
 
-
-    window.location.href =
-        "index.html";
-
+    window.location.href = "index.html";
 }
 
 
@@ -3025,10 +2960,8 @@ function goProfile() {
         currentUsername
     );
 
-
     window.location.href =
         "Profile.html";
-
 }
 
 
@@ -3038,27 +2971,20 @@ function goProfile() {
 
 async function logout() {
 
-    if(groupChannel) {
+    if (groupChannel) {
 
         await supabaseClient
-            .removeChannel(
-                groupChannel
-            );
+            .removeChannel(groupChannel);
 
-        groupChannel =
-            null;
-
+        groupChannel = null;
     }
-
 
     await supabaseClient
         .auth
         .signOut();
 
-
     window.location.href =
         "index.html";
-
 }
 
 
@@ -3069,14 +2995,8 @@ async function logout() {
 function escapeAttribute(text) {
 
     return String(text)
-        .replace(
-            /\\/g,
-            "\\\\"
-        )
-        .replace(
-            /'/g,
-            "\\'"
-        );
+        .replace(/\\/g, "\\\\")
+        .replace(/'/g, "\\'");
 
 }
 
@@ -3091,9 +3011,7 @@ document.getElementById(
     "keydown",
     function(event) {
 
-        if(
-            event.key === "Enter"
-        ) {
+        if (event.key === "Enter") {
 
             event.preventDefault();
 
@@ -3115,10 +3033,7 @@ document
         "click",
         function(event) {
 
-            if(
-                event.target ===
-                this
-            ) {
+            if (event.target === this) {
 
                 closeCreateModal();
 
@@ -3134,10 +3049,745 @@ document
         "click",
         function(event) {
 
-            if(
-                event.target ===
-                this
-            ) {
+            if (event.target === this) {
+
+                closeMembersModal();
+
+            }
+
+        }
+    );
+
+
+/* =========================================
+   START
+========================================= */
+
+async function createGroup() {
+
+    const name =
+        document.getElementById("groupNameInput")
+        .value
+        .trim();
+
+    const description =
+        document.getElementById("groupDescriptionInput")
+        .value
+        .trim();
+
+    if (!name) {
+        showToast("⚠️ Enter a group name");
+        return;
+    }
+
+    if (name.length < 2) {
+        showToast("⚠️ Group name is too short");
+        return;
+    }
+
+    console.log("Creating group:", name);
+
+    const {
+        data: group,
+        error: groupError
+    } = await supabaseClient
+        .from("groups")
+        .insert({
+            name: name,
+            description: description,
+            created_by: currentUsername
+        })
+        .select()
+        .single();
+
+    // IMPORTANT: check groupError, NOT error
+    if (groupError) {
+
+        console.error("GROUP CREATE ERROR:", groupError);
+
+        alert(
+            "Could not create group!\n\n" +
+            groupError.message
+        );
+
+        return;
+    }
+
+    if (!group) {
+
+        console.error("No group returned!");
+
+        alert("Could not create group!");
+
+        return;
+    }
+
+    console.log("GROUP CREATED:", group);
+
+    const members = [
+        {
+            group_id: group.id,
+            username: currentUsername
+        }
+    ];
+
+    selectedUsers.forEach(username => {
+
+        members.push({
+            group_id: group.id,
+            username: username
+        });
+
+    });
+
+    console.log("Adding members:", members);
+
+    const {
+        error: memberError
+    } = await supabaseClient
+        .from("group_members")
+        .insert(members);
+
+    if (memberError) {
+
+        console.error(
+            "MEMBER INSERT ERROR:",
+            memberError
+        );
+
+        // Delete the group if members couldn't be added
+        await supabaseClient
+            .from("groups")
+            .delete()
+            .eq("id", group.id);
+
+        alert(
+            "Group was created, but members could not be added.\n\n" +
+            memberError.message
+        );
+
+        return;
+    }
+
+    console.log("GROUP + MEMBERS CREATED SUCCESSFULLY!");
+
+    closeCreateModal();
+
+    showToast("🎉 Group created!");
+
+    await loadGroups();
+
+    openGroup(group);
+}
+
+
+/* =========================================
+   MEMBERS MODAL
+========================================= */
+
+async function openMembersModal() {
+
+    if (!currentGroupId)
+        return;
+
+    document.getElementById(
+        "membersModal"
+    ).classList.add("show");
+
+    const list =
+        document.getElementById("memberList");
+
+    list.innerHTML = `
+        <div style="
+            color:#737d95;
+            padding:20px;
+            text-align:center;
+        ">
+            Loading...
+        </div>
+    `;
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("group_members")
+        .select("username")
+        .eq(
+            "group_id",
+            currentGroupId
+        )
+        .order(
+            "joined_at",
+            {
+                ascending: true
+            }
+        );
+
+    if (error) {
+
+        console.error(
+            "MEMBERS LOAD ERROR:",
+            error
+        );
+
+        return;
+    }
+
+    document.getElementById(
+        "membersSubtitle"
+    ).innerText =
+        data.length +
+        (
+            data.length === 1
+                ? " member"
+                : " members"
+        );
+
+    list.innerHTML = "";
+
+    data.forEach(member => {
+
+        const item =
+            document.createElement("div");
+
+        item.className = "member";
+
+        item.innerHTML = `
+
+            <div class="member-avatar">
+                ${escapeHTML(
+                    member.username
+                        .charAt(0)
+                        .toUpperCase()
+                )}
+            </div>
+
+            <div class="member-name">
+                ${escapeHTML(member.username)}
+            </div>
+
+            ${
+                currentGroup &&
+                member.username.toLowerCase() ===
+                currentGroup.created_by.toLowerCase()
+
+                ? `
+                    <span style="
+                        margin-left:auto;
+                        color:#7097ff;
+                        font-size:10px;
+                    ">
+                        OWNER
+                    </span>
+                  `
+
+                : ""
+            }
+
+        `;
+
+        list.appendChild(item);
+
+    });
+
+}
+
+
+function closeMembersModal() {
+
+    document.getElementById(
+        "membersModal"
+    ).classList.remove("show");
+
+}
+
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+function goHome() {
+
+    if (groupChannel) {
+
+        supabaseClient
+            .removeChannel(groupChannel);
+
+        groupChannel = null;
+
+    }
+
+    window.location.href = "index.html";
+}
+
+
+function goProfile() {
+
+    localStorage.setItem(
+        "chatsapp_username",
+        currentUsername
+    );
+
+    window.location.href =
+        "Profile.html";
+}
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+async function logout() {
+
+    if (groupChannel) {
+
+        await supabaseClient
+            .removeChannel(groupChannel);
+
+        groupChannel = null;
+    }
+
+    await supabaseClient
+        .auth
+        .signOut();
+
+    window.location.href =
+        "index.html";
+}
+
+
+/* =========================================
+   ATTRIBUTE ESCAPE
+========================================= */
+
+function escapeAttribute(text) {
+
+    return String(text)
+        .replace(/\\/g, "\\\\")
+        .replace(/'/g, "\\'");
+
+}
+
+
+/* =========================================
+   ENTER KEY
+========================================= */
+
+document.getElementById(
+    "messageInput"
+).addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.key === "Enter") {
+
+            event.preventDefault();
+
+            sendMessage();
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   CLOSE MODALS
+========================================= */
+
+document
+    .getElementById("createModal")
+    .addEventListener(
+        "click",
+        function(event) {
+
+            if (event.target === this) {
+
+                closeCreateModal();
+
+            }
+
+        }
+    );
+
+
+document
+    .getElementById("membersModal")
+    .addEventListener(
+        "click",
+        function(event) {
+
+            if (event.target === this) {
+
+                closeMembersModal();
+
+            }
+
+        }
+    );
+
+
+/* =========================================
+   START
+========================================= */
+
+async function createGroup() {
+
+    const name =
+        document.getElementById("groupNameInput")
+        .value
+        .trim();
+
+    const description =
+        document.getElementById("groupDescriptionInput")
+        .value
+        .trim();
+
+    if (!name) {
+        showToast("⚠️ Enter a group name");
+        return;
+    }
+
+    if (name.length < 2) {
+        showToast("⚠️ Group name is too short");
+        return;
+    }
+
+    console.log("Creating group:", name);
+
+    const {
+        data: group,
+        error: groupError
+    } = await supabaseClient
+        .from("groups")
+        .insert({
+            name: name,
+            description: description,
+            created_by: currentUsername
+        })
+        .select()
+        .single();
+
+    // IMPORTANT: check groupError, NOT error
+    if (groupError) {
+
+        console.error("GROUP CREATE ERROR:", groupError);
+
+        alert(
+            "Could not create group!\n\n" +
+            groupError.message
+        );
+
+        return;
+    }
+
+    if (!group) {
+
+        console.error("No group returned!");
+
+        alert("Could not create group!");
+
+        return;
+    }
+
+    console.log("GROUP CREATED:", group);
+
+    const members = [
+        {
+            group_id: group.id,
+            username: currentUsername
+        }
+    ];
+
+    selectedUsers.forEach(username => {
+
+        members.push({
+            group_id: group.id,
+            username: username
+        });
+
+    });
+
+    console.log("Adding members:", members);
+
+    const {
+        error: memberError
+    } = await supabaseClient
+        .from("group_members")
+        .insert(members);
+
+    if (memberError) {
+
+        console.error(
+            "MEMBER INSERT ERROR:",
+            memberError
+        );
+
+        // Delete the group if members couldn't be added
+        await supabaseClient
+            .from("groups")
+            .delete()
+            .eq("id", group.id);
+
+        alert(
+            "Group was created, but members could not be added.\n\n" +
+            memberError.message
+        );
+
+        return;
+    }
+
+    console.log("GROUP + MEMBERS CREATED SUCCESSFULLY!");
+
+    closeCreateModal();
+
+    showToast("🎉 Group created!");
+
+    await loadGroups();
+
+    openGroup(group);
+}
+
+
+/* =========================================
+   MEMBERS MODAL
+========================================= */
+
+async function openMembersModal() {
+
+    if (!currentGroupId)
+        return;
+
+    document.getElementById(
+        "membersModal"
+    ).classList.add("show");
+
+    const list =
+        document.getElementById("memberList");
+
+    list.innerHTML = `
+        <div style="
+            color:#737d95;
+            padding:20px;
+            text-align:center;
+        ">
+            Loading...
+        </div>
+    `;
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("group_members")
+        .select("username")
+        .eq(
+            "group_id",
+            currentGroupId
+        )
+        .order(
+            "joined_at",
+            {
+                ascending: true
+            }
+        );
+
+    if (error) {
+
+        console.error(
+            "MEMBERS LOAD ERROR:",
+            error
+        );
+
+        return;
+    }
+
+    document.getElementById(
+        "membersSubtitle"
+    ).innerText =
+        data.length +
+        (
+            data.length === 1
+                ? " member"
+                : " members"
+        );
+
+    list.innerHTML = "";
+
+    data.forEach(member => {
+
+        const item =
+            document.createElement("div");
+
+        item.className = "member";
+
+        item.innerHTML = `
+
+            <div class="member-avatar">
+                ${escapeHTML(
+                    member.username
+                        .charAt(0)
+                        .toUpperCase()
+                )}
+            </div>
+
+            <div class="member-name">
+                ${escapeHTML(member.username)}
+            </div>
+
+            ${
+                currentGroup &&
+                member.username.toLowerCase() ===
+                currentGroup.created_by.toLowerCase()
+
+                ? `
+                    <span style="
+                        margin-left:auto;
+                        color:#7097ff;
+                        font-size:10px;
+                    ">
+                        OWNER
+                    </span>
+                  `
+
+                : ""
+            }
+
+        `;
+
+        list.appendChild(item);
+
+    });
+
+}
+
+
+function closeMembersModal() {
+
+    document.getElementById(
+        "membersModal"
+    ).classList.remove("show");
+
+}
+
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+function goHome() {
+
+    if (groupChannel) {
+
+        supabaseClient
+            .removeChannel(groupChannel);
+
+        groupChannel = null;
+
+    }
+
+    window.location.href = "index.html";
+}
+
+
+function goProfile() {
+
+    localStorage.setItem(
+        "chatsapp_username",
+        currentUsername
+    );
+
+    window.location.href =
+        "Profile.html";
+}
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+async function logout() {
+
+    if (groupChannel) {
+
+        await supabaseClient
+            .removeChannel(groupChannel);
+
+        groupChannel = null;
+    }
+
+    await supabaseClient
+        .auth
+        .signOut();
+
+    window.location.href =
+        "index.html";
+}
+
+
+/* =========================================
+   ATTRIBUTE ESCAPE
+========================================= */
+
+function escapeAttribute(text) {
+
+    return String(text)
+        .replace(/\\/g, "\\\\")
+        .replace(/'/g, "\\'");
+
+}
+
+
+/* =========================================
+   ENTER KEY
+========================================= */
+
+document.getElementById(
+    "messageInput"
+).addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.key === "Enter") {
+
+            event.preventDefault();
+
+            sendMessage();
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   CLOSE MODALS
+========================================= */
+
+document
+    .getElementById("createModal")
+    .addEventListener(
+        "click",
+        function(event) {
+
+            if (event.target === this) {
+
+                closeCreateModal();
+
+            }
+
+        }
+    );
+
+
+document
+    .getElementById("membersModal")
+    .addEventListener(
+        "click",
+        function(event) {
+
+            if (event.target === this) {
 
                 closeMembersModal();
 
