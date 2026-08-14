@@ -2756,17 +2756,16 @@ async function createGroup() {
         .single();
 
 
-    if(groupError) {
+   if (error) {
+    console.error("GROUP CREATE ERROR:", error);
 
-        console.error(groupError);
+    alert(
+        "Could not create group!\n\n" +
+        error.message
+    );
 
-        showToast(
-            "❌ Could not create group"
-        );
-
-        return;
-
-    }
+    return;
+}
 
 
     const members = [
