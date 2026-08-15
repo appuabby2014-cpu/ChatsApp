@@ -1,0 +1,973 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ChatsApp — Parent Control</title>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    font-family: "Inter", sans-serif;
+
+    color: white;
+
+    background:
+        radial-gradient(circle at 15% 20%, #253b6e 0%, transparent 35%),
+        radial-gradient(circle at 85% 80%, #34205d 0%, transparent 35%),
+        #080b14;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 520px;
+}
+
+.logo {
+    width: 76px;
+    height: 76px;
+
+    margin: 0 auto 20px;
+
+    border-radius: 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 34px;
+    font-weight: 800;
+
+    background:
+        linear-gradient(
+            135deg,
+            #5b8cff,
+            #8d5cff
+        );
+
+    box-shadow:
+        0 0 30px rgba(91,140,255,.45);
+}
+
+.title {
+    text-align: center;
+    font-size: 30px;
+    font-weight: 800;
+
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    text-align: center;
+
+    color: #8d96ad;
+
+    font-size: 14px;
+
+    margin-bottom: 28px;
+}
+
+.panel {
+    padding: 30px;
+
+    border-radius: 24px;
+
+    background: rgba(18,22,38,.92);
+
+    border: 1px solid rgba(255,255,255,.1);
+
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.55),
+        inset 0 1px rgba(255,255,255,.05);
+
+    backdrop-filter: blur(20px);
+}
+
+.section {
+    margin-bottom: 24px;
+}
+
+.label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #9ca5ba;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+input,
+select {
+    width: 100%;
+
+    padding: 14px 16px;
+
+    border-radius: 13px;
+
+    border: 1px solid #2c3348;
+
+    background: #0e1220;
+
+    color: white;
+
+    outline: none;
+
+    font-size: 15px;
+
+    transition: .2s;
+}
+
+input:focus,
+select:focus {
+    border-color: #638cff;
+
+    box-shadow:
+        0 0 0 3px rgba(99,140,255,.1);
+}
+
+select {
+    cursor: pointer;
+}
+
+select option {
+    background: #0e1220;
+    color: white;
+}
+
+.pin-wrap {
+    position: relative;
+}
+
+.pin-wrap input {
+    padding-right: 50px;
+}
+
+.toggle-pin {
+    position: absolute;
+
+    right: 10px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    border: none;
+
+    background: #252d42;
+
+    color: #aab3c8;
+
+    width: 34px;
+    height: 34px;
+
+    border-radius: 9px;
+
+    cursor: pointer;
+}
+
+.timer-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 10px;
+}
+
+.timer-button {
+    padding: 13px 8px;
+
+    border-radius: 12px;
+
+    border: 1px solid #30384f;
+
+    background: #151a2a;
+
+    color: #c5ccdb;
+
+    cursor: pointer;
+
+    font-weight: 700;
+
+    transition: .2s;
+}
+
+.timer-button:hover {
+    background: #202a43;
+
+    transform: translateY(-1px);
+}
+
+.timer-button.selected {
+    background:
+        linear-gradient(
+            135deg,
+            #5b8cff,
+            #795cff
+        );
+
+    border-color: transparent;
+
+    color: white;
+
+    box-shadow:
+        0 8px 25px rgba(91,140,255,.25);
+}
+
+.custom-wrap {
+    margin-top: 12px;
+}
+
+.custom-wrap.hidden {
+    display: none;
+}
+
+.primary {
+    width: 100%;
+
+    padding: 15px;
+
+    border: none;
+
+    border-radius: 13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #5b8cff,
+            #795cff
+        );
+
+    color: white;
+
+    font-weight: 800;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.primary:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 30px rgba(91,140,255,.3);
+}
+
+.primary:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.status {
+    display: none;
+
+    margin-top: 20px;
+
+    padding: 16px;
+
+    border-radius: 14px;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+.status.show {
+    display: block;
+}
+
+.status.success {
+    background: rgba(70,210,130,.1);
+
+    border: 1px solid rgba(70,210,130,.25);
+
+    color: #71e0a0;
+}
+
+.status.error {
+    background: rgba(255,75,75,.1);
+
+    border: 1px solid rgba(255,75,75,.25);
+
+    color: #ff8585;
+}
+
+.status.info {
+    background: rgba(91,140,255,.1);
+
+    border: 1px solid rgba(91,140,255,.25);
+
+    color: #9db6ff;
+}
+
+.current-lock {
+    display: none;
+
+    margin-top: 20px;
+
+    padding: 20px;
+
+    border-radius: 17px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(91,140,255,.14),
+            rgba(121,92,255,.08)
+        );
+
+    border: 1px solid rgba(91,140,255,.2);
+}
+
+.current-lock.show {
+    display: block;
+}
+
+.lock-title {
+    font-size: 14px;
+    font-weight: 800;
+
+    margin-bottom: 8px;
+}
+
+.lock-time {
+    font-size: 25px;
+    font-weight: 800;
+
+    margin-top: 8px;
+}
+
+.lock-subtitle {
+    color: #78829a;
+
+    font-size: 12px;
+
+    margin-top: 7px;
+}
+
+.footer {
+    text-align: center;
+
+    color: #525b72;
+
+    font-size: 11px;
+
+    margin-top: 18px;
+}
+
+@media(max-width:500px) {
+
+    .panel {
+        padding: 22px;
+    }
+
+    .timer-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="logo">
+        C
+    </div>
+
+    <div class="title">
+        Parent Control
+    </div>
+
+    <div class="subtitle">
+        Manage ChatsApp access and screen-time limits.
+    </div>
+
+    <div class="panel">
+
+        <div class="section">
+
+            <label class="label">
+                Parent PIN
+            </label>
+
+            <div class="pin-wrap">
+
+                <input
+                    id="parentPin"
+                    type="password"
+                    placeholder="Enter parent PIN"
+                    autocomplete="off"
+                >
+
+                <button
+                    class="toggle-pin"
+                    onclick="togglePin()"
+                    type="button"
+                >
+                    👁
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="section">
+
+            <label class="label">
+                Account to control
+            </label>
+
+            <input
+                id="username"
+                type="text"
+                value="x_abby_x"
+                placeholder="Enter username"
+                maxlength="20"
+            >
+
+        </div>
+
+        <div class="section">
+
+            <label class="label">
+                Lock duration
+            </label>
+
+            <div class="timer-grid">
+
+                <button
+                    class="timer-button"
+                    onclick="selectTimer(1,this)"
+                    type="button"
+                >
+                    1 min
+                </button>
+
+                <button
+                    class="timer-button"
+                    onclick="selectTimer(5,this)"
+                    type="button"
+                >
+                    5 min
+                </button>
+
+                <button
+                    class="timer-button"
+                    onclick="selectTimer(10,this)"
+                    type="button"
+                >
+                    10 min
+                </button>
+
+                <button
+                    class="timer-button"
+                    onclick="selectTimer(15,this)"
+                    type="button"
+                >
+                    15 min
+                </button>
+
+                <button
+                    class="timer-button"
+                    onclick="selectTimer(30,this)"
+                    type="button"
+                >
+                    30 min
+                </button>
+
+                <button
+                    class="timer-button"
+                    onclick="selectTimer(60,this)"
+                    type="button"
+                >
+                    1 hour
+                </button>
+
+                <button
+                    class="timer-button"
+                    onclick="selectTimer(120,this)"
+                    type="button"
+                >
+                    2 hours
+                </button>
+
+                <button
+                    class="timer-button"
+                    onclick="selectTimer(1440,this)"
+                    type="button"
+                >
+                    24 hours
+                </button>
+
+                <button
+                    class="timer-button"
+                    onclick="selectCustom(this)"
+                    type="button"
+                >
+                    Custom
+                </button>
+
+            </div>
+
+            <div
+                id="customWrap"
+                class="custom-wrap hidden"
+            >
+
+                <input
+                    id="customMinutes"
+                    type="number"
+                    min="1"
+                    max="1440"
+                    placeholder="Custom minutes (1–1440)"
+                >
+
+            </div>
+
+        </div>
+
+        <button
+            id="lockButton"
+            class="primary"
+            onclick="setLockdown()"
+            type="button"
+        >
+            🔒 Set Lock Timer
+        </button>
+
+        <div
+            id="status"
+            class="status"
+        ></div>
+
+        <div
+            id="currentLock"
+            class="current-lock"
+        >
+
+            <div class="lock-title">
+                🔒 Current Lockdown
+            </div>
+
+            <div
+                id="lockTime"
+                class="lock-time"
+            >
+                --
+            </div>
+
+            <div class="lock-subtitle">
+                ChatsApp access is currently locked for this account.
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="footer">
+        ChatsApp Parent Controls
+    </div>
+
+</div>
+
+<script>
+
+const FUNCTION_URL =
+    "https://kopzrnpporfdwauwlhni.supabase.co/functions/v1/parent_control";
+
+let selectedMinutes = null;
+let countdownTimer = null;
+
+function togglePin() {
+
+    const input =
+        document.getElementById("parentPin");
+
+    if(input.type === "password") {
+
+        input.type = "text";
+
+    } else {
+
+        input.type = "password";
+
+    }
+
+}
+
+function selectTimer(minutes,button) {
+
+    selectedMinutes = minutes;
+
+    document
+        .querySelectorAll(".timer-button")
+        .forEach(
+            btn => btn.classList.remove("selected")
+        );
+
+    button.classList.add("selected");
+
+    document
+        .getElementById("customWrap")
+        .classList.add("hidden");
+
+    document
+        .getElementById("customMinutes")
+        .value = "";
+
+}
+
+function selectCustom(button) {
+
+    selectedMinutes = null;
+
+    document
+        .querySelectorAll(".timer-button")
+        .forEach(
+            btn => btn.classList.remove("selected")
+        );
+
+    button.classList.add("selected");
+
+    document
+        .getElementById("customWrap")
+        .classList.remove("hidden");
+
+    document
+        .getElementById("customMinutes")
+        .focus();
+
+}
+
+function showStatus(message,type) {
+
+    const status =
+        document.getElementById("status");
+
+    status.innerText = message;
+
+    status.className =
+        "status show " + type;
+
+}
+
+function getSelectedMinutes() {
+
+    if(
+        document
+            .getElementById("customWrap")
+            .classList.contains("hidden")
+    ) {
+
+        return selectedMinutes;
+
+    }
+
+    const custom =
+        Number(
+            document
+                .getElementById("customMinutes")
+                .value
+        );
+
+    return custom;
+
+}
+
+async function setLockdown() {
+
+    const pin =
+        document
+            .getElementById("parentPin")
+            .value
+            .trim();
+
+    const username =
+        document
+            .getElementById("username")
+            .value
+            .trim();
+
+    const minutes =
+        getSelectedMinutes();
+
+    if(!pin) {
+
+        showStatus(
+            "Please enter the parent PIN.",
+            "error"
+        );
+
+        return;
+
+    }
+
+    if(!username) {
+
+        showStatus(
+            "Please enter a username.",
+            "error"
+        );
+
+        return;
+
+    }
+
+    if(
+        !/^[a-zA-Z0-9_]{3,20}$/.test(username)
+    ) {
+
+        showStatus(
+            "Username must be 3–20 characters.",
+            "error"
+        );
+
+        return;
+
+    }
+
+    if(
+        !Number.isFinite(minutes) ||
+        minutes < 1 ||
+        minutes > 1440
+    ) {
+
+        showStatus(
+            "Choose a valid timer from 1 to 1440 minutes.",
+            "error"
+        );
+
+        return;
+
+    }
+
+    const button =
+        document.getElementById("lockButton");
+
+    button.disabled = true;
+
+    button.innerText =
+        "🔄 Setting timer...";
+
+    showStatus(
+        "Contacting ChatsApp...",
+        "info"
+    );
+
+    try {
+
+        const response =
+            await fetch(
+                FUNCTION_URL,
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:JSON.stringify({
+                        username:username,
+                        action:"parent_set_timer",
+                        minutes:minutes,
+                        pin:pin
+                    })
+                }
+            );
+
+        const result =
+            await response.json();
+
+        if(!response.ok) {
+
+            showStatus(
+                result.error ||
+                "Could not set the timer.",
+                "error"
+            );
+
+            return;
+
+        }
+
+        showStatus(
+            "🔒 Lockdown activated successfully!",
+            "success"
+        );
+
+        showCurrentLock(
+            result.lockdown_until
+        );
+
+    }
+
+    catch(error) {
+
+        console.error(error);
+
+        showStatus(
+            "Could not connect to Parent Control.",
+            "error"
+        );
+
+    }
+
+    finally {
+
+        button.disabled = false;
+
+        button.innerText =
+            "🔒 Set Lock Timer";
+
+    }
+
+}
+
+function showCurrentLock(lockdownUntil) {
+
+    const currentLock =
+        document.getElementById("currentLock");
+
+    currentLock.classList.add("show");
+
+    if(countdownTimer) {
+
+        clearInterval(countdownTimer);
+
+    }
+
+    const endTime =
+        new Date(lockdownUntil).getTime();
+
+    function updateCountdown() {
+
+        const remaining =
+            endTime - Date.now();
+
+        if(remaining <= 0) {
+
+            document.getElementById(
+                "lockTime"
+            ).innerText =
+                "Unlocked ✓";
+
+            clearInterval(countdownTimer);
+
+            return;
+
+        }
+
+        const totalSeconds =
+            Math.floor(
+                remaining / 1000
+            );
+
+        const hours =
+            Math.floor(
+                totalSeconds / 3600
+            );
+
+        const minutes =
+            Math.floor(
+                (totalSeconds % 3600) / 60
+            );
+
+        const seconds =
+            totalSeconds % 60;
+
+        let text = "";
+
+        if(hours > 0) {
+
+            text += hours + "h ";
+
+        }
+
+        text +=
+            String(minutes).padStart(2,"0") +
+            "m " +
+            String(seconds).padStart(2,"0") +
+            "s";
+
+        document.getElementById(
+            "lockTime"
+        ).innerText = text;
+
+    }
+
+    updateCountdown();
+
+    countdownTimer =
+        setInterval(
+            updateCountdown,
+            1000
+        );
+
+}
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if(event.key !== "Enter") {
+            return;
+        }
+
+        const active =
+            document.activeElement;
+
+        if(
+            active &&
+            (
+                active.id === "parentPin" ||
+                active.id === "customMinutes"
+            )
+        ) {
+
+            event.preventDefault();
+
+            setLockdown();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+
+</html>
+
