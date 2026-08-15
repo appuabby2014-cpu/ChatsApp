@@ -2644,33 +2644,7 @@ async function ensureProfile(username) {
 
 }
 
-async function setProfileOnline(isOnline) {
 
-    if(!currentUsername)
-        return;
-
-    const {
-        error
-    } =
-        await supabaseClient
-        .from("profiles")
-        .update({
-            online:isOnline
-        })
-        .eq(
-            "username",
-            currentUsername
-        );
-
-    if(error) {
-
-        console.warn(error);
-
-    }
-
-}
-
-function showApp(username) {
 
     currentUsername = username;
 
