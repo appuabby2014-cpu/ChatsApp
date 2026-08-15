@@ -1,0 +1,10 @@
+{
+  "name": "ChatsApp",
+  "short_name": "ChatsApp",
+  "description": "ChatsApp - Chat, connect and communicate.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0f0a1f",
+  "theme_color": "#7c3aed",
+  "orientation": "portrait-primary"
+}
