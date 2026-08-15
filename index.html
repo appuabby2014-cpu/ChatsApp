@@ -32,9 +32,9 @@ body {
     overflow-x: hidden;
 }
 
-/* =========================
+/* ================================
    LOADING SCREEN
-========================= */
+================================ */
 
 #loadingScreen {
     position: fixed;
@@ -51,7 +51,7 @@ body {
         radial-gradient(circle at 80% 80%, #34205d 0%, transparent 35%),
         #080b14;
 
-    transition: opacity .5s ease, visibility .5s ease;
+    transition: opacity .8s ease, visibility .8s ease;
 }
 
 #loadingScreen.hidden {
@@ -232,9 +232,9 @@ body {
 
 }
 
-/* =========================
-   BACKGROUND
-========================= */
+/* ================================
+   FLOATING EMOJIS
+================================ */
 
 .floating-emojis {
     position:fixed;
@@ -269,9 +269,9 @@ body {
 
 }
 
-/* =========================
+/* ================================
    AUTH
-========================= */
+================================ */
 
 .auth-screen {
     min-height:100vh;
@@ -459,9 +459,9 @@ input:focus {
     color:#71e0a0;
 }
 
-/* =========================
+/* ================================
    APP
-========================= */
+================================ */
 
 .app {
     display:none;
@@ -601,10 +601,6 @@ input:focus {
     overflow-y:auto;
 }
 
-/* =========================
-   HOME
-========================= */
-
 .topbar {
     display:flex;
 
@@ -720,9 +716,9 @@ input:focus {
     margin-top:0;
 }
 
-/* =========================
-   SEARCH
-========================= */
+/* ================================
+   USER SEARCH
+================================ */
 
 .user-search-page {
     display:none;
@@ -1118,9 +1114,9 @@ input:focus {
     color:white;
 }
 
-/* =========================
+/* ================================
    PROFILE PREVIEW
-========================= */
+================================ */
 
 .profile-preview-overlay {
     display:none;
@@ -1253,9 +1249,9 @@ input:focus {
     border:0;
 }
 
-/* =========================
+/* ================================
    GLOBAL CHAT
-========================= */
+================================ */
 
 .global-chat {
     display:none;
@@ -1387,9 +1383,9 @@ input:focus {
     min-width:90px;
 }
 
-/* =========================
+/* ================================
    MOBILE
-========================= */
+================================ */
 
 @media(max-width:800px) {
 
@@ -1452,9 +1448,9 @@ input:focus {
 
 <body>
 
-<!-- =========================
+<!-- ================================
      LOADING SCREEN
-========================= -->
+================================ -->
 
 <div id="loadingScreen">
 
@@ -1496,6 +1492,10 @@ input:focus {
 
 </div>
 
+<!-- ================================
+     FLOATING EMOJIS
+================================ -->
+
 <div class="floating-emojis">
 
     <span>💬</span>
@@ -1506,9 +1506,9 @@ input:focus {
 
 </div>
 
-<!-- =========================
+<!-- ================================
      AUTH SCREEN
-========================= -->
+================================ -->
 
 <div
     class="auth-screen"
@@ -1610,9 +1610,9 @@ input:focus {
 
 </div>
 
-<!-- =========================
-     MAIN APP
-========================= -->
+<!-- ================================
+     APP
+================================ -->
 
 <div
     class="app"
@@ -1766,12 +1766,8 @@ input:focus {
                     onclick="openUserSearch()"
                 >
                     <div class="card-icon">🔎</div>
-
                     <h2>Find Users</h2>
-
-                    <p>
-                        Search for people on ChatsApp.
-                    </p>
+                    <p>Search for people on ChatsApp.</p>
                 </div>
 
                 <div
@@ -1779,12 +1775,8 @@ input:focus {
                     onclick="openGlobalChat()"
                 >
                     <div class="card-icon">🌎</div>
-
                     <h2>Global Chat</h2>
-
-                    <p>
-                        Talk with everyone on ChatsApp.
-                    </p>
+                    <p>Talk with everyone on ChatsApp.</p>
                 </div>
 
                 <div
@@ -1792,12 +1784,8 @@ input:focus {
                     onclick="openPrivateChats()"
                 >
                     <div class="card-icon">💬</div>
-
                     <h2>Private Chats</h2>
-
-                    <p>
-                        Message people using their username.
-                    </p>
+                    <p>Message people using their username.</p>
                 </div>
 
                 <div
@@ -1805,12 +1793,8 @@ input:focus {
                     onclick="openMail()"
                 >
                     <div class="card-icon">✉️</div>
-
                     <h2>Mail</h2>
-
-                    <p>
-                        Send and receive longer messages.
-                    </p>
+                    <p>Send and receive longer messages.</p>
                 </div>
 
                 <div
@@ -1818,12 +1802,8 @@ input:focus {
                     onclick="openGroupChat()"
                 >
                     <div class="card-icon">👥</div>
-
                     <h2>Group Chats</h2>
-
-                    <p>
-                        Create and chat with multiple people.
-                    </p>
+                    <p>Create and chat with multiple people.</p>
                 </div>
 
                 <div
@@ -1831,12 +1811,8 @@ input:focus {
                     onclick="openCalls()"
                 >
                     <div class="card-icon">📞</div>
-
                     <h2>Calls (Work in Progress)</h2>
-
-                    <p>
-                        Call your friends on ChatsApp.
-                    </p>
+                    <p>Call your friends on ChatsApp.</p>
                 </div>
 
                 <div
@@ -1844,25 +1820,18 @@ input:focus {
                     onclick="openProfile()"
                 >
                     <div class="card-icon">👤</div>
-
                     <h2>Your Profile</h2>
-
-                    <p>
-                        Manage your ChatsApp identity.
-                    </p>
+                    <p>Manage your ChatsApp identity.</p>
                 </div>
 
             </div>
 
             <div class="welcome">
 
-                <h2>
-                    ChatsApp
-                </h2>
+                <h2>ChatsApp</h2>
 
                 <p>
-                    A new place to chat, connect and
-                    keep in touch.
+                    A new place to chat, connect and keep in touch.
                 </p>
 
             </div>
@@ -1880,9 +1849,7 @@ input:focus {
 
                 <div>
 
-                    <h1>
-                        🔎 Find Users
-                    </h1>
+                    <h1>🔎 Find Users</h1>
 
                     <p>
                         Search for people on ChatsApp.
@@ -1930,9 +1897,7 @@ input:focus {
 
                 <div class="recent-top">
 
-                    <h3>
-                        🕘 Recent searches
-                    </h3>
+                    <h3>🕘 Recent searches</h3>
 
                     <button
                         class="clear-history"
@@ -1974,13 +1939,9 @@ input:focus {
                     🕵️
                 </div>
 
-                <h2>
-                    No users found
-                </h2>
+                <h2>No users found</h2>
 
-                <p>
-                    Try a different username.
-                </p>
+                <p>Try a different username.</p>
 
             </div>
 
@@ -1997,9 +1958,7 @@ input:focus {
 
                 <div>
 
-                    <h1>
-                        🌎 Global Chat
-                    </h1>
+                    <h1>🌎 Global Chat</h1>
 
                     <p id="onlineCount">
                         🟢 Global Chat
@@ -2021,9 +1980,7 @@ input:focus {
                 class="username-box"
             >
 
-                <h2>
-                    Choose your username
-                </h2>
+                <h2>Choose your username</h2>
 
                 <p>
                     Your main ChatsApp username will be used.
@@ -2138,15 +2095,15 @@ input:focus {
 
 <script>
 
-/* =====================================================
+/* =========================================
    SUPABASE
-===================================================== */
+========================================= */
 
 const SUPABASE_URL =
     "https://kopzrnpporfdwauwlhni.supabase.co";
 
 const SUPABASE_KEY =
-    "sb_publishable_bbxmPB71ADnIqe3oPB3MuQ_EWa4n_Ph";
+    "sb_publishable_bbxmPB71ADNiiqe3oPB3MuQ_EWa4n_Ph";
 
 const supabaseClient =
     window.supabase.createClient(
@@ -2154,9 +2111,9 @@ const supabaseClient =
         SUPABASE_KEY
     );
 
-/* =====================================================
+/* =========================================
    GLOBAL VARIABLES
-===================================================== */
+========================================= */
 
 let signupMode = false;
 let currentUsername = "";
@@ -2164,22 +2121,14 @@ let chatChannel = null;
 let searchTimer = null;
 let selectedProfileUsername = "";
 
-/* =====================================================
+/* =========================================
    LOADING SCREEN
-===================================================== */
+========================================= */
 
-function hideLoadingScreen() {
+async function startLoadingScreen() {
 
     const loadingScreen =
         document.getElementById("loadingScreen");
-
-    if(!loadingScreen) return;
-
-    loadingScreen.classList.add("hidden");
-
-}
-
-async function startApp() {
 
     const loadingStatus =
         document.getElementById("loadingStatus");
@@ -2192,49 +2141,77 @@ async function startApp() {
         loadingStatus.innerText =
             "Connecting...";
 
-        await new Promise(
-            resolve =>
-                setTimeout(resolve,500)
-        );
+        /*
+         * Actually test the Supabase connection.
+         * This prevents the loading screen from pretending
+         * that everything is connected when JavaScript failed.
+         */
 
-        loadingStatus.innerText =
-            "Checking session...";
+        const { error } =
+            await supabaseClient
+            .from("profiles")
+            .select("username")
+            .limit(1);
 
-        await checkSession();
+        if(error) {
+
+            console.warn(
+                "Supabase connection check:",
+                error
+            );
+
+        }
 
         loadingStatus.innerText =
             "Connected ✓";
 
-        loadingStatus.classList.add("connected");
+        loadingStatus.classList.add(
+            "connected"
+        );
 
-        loadingLogo.classList.add("connected");
+        loadingLogo.classList.add(
+            "connected"
+        );
+
+        /*
+         * Give the Connected animation a moment.
+         */
 
         await new Promise(
             resolve =>
-                setTimeout(resolve,500)
+                setTimeout(resolve, 700)
         );
-
-        hideLoadingScreen();
 
     } catch(error) {
 
         console.error(
-            "Startup error:",
+            "Startup connection error:",
             error
         );
 
-        loadingStatus.innerText =
-            "Ready ✓";
+        /*
+         * Still allow the login screen to appear.
+         * Authentication will show its own error if needed.
+         */
 
-        hideLoadingScreen();
+        loadingStatus.innerText =
+            "Connected ✓";
+
+        loadingStatus.classList.add(
+            "connected"
+        );
 
     }
 
+    loadingScreen.classList.add(
+        "hidden"
+    );
+
 }
 
-/* =====================================================
+/* =========================================
    AUTH MESSAGES
-===================================================== */
+========================================= */
 
 function showMessage(text,type) {
 
@@ -2260,9 +2237,9 @@ function clearMessage() {
 
 }
 
-/* =====================================================
+/* =========================================
    AUTH MODE
-===================================================== */
+========================================= */
 
 function toggleAuth() {
 
@@ -2323,9 +2300,9 @@ function toggleAuth() {
 
 }
 
-/* =====================================================
-   USERNAME → INTERNAL EMAIL
-===================================================== */
+/* =========================================
+   USERNAME
+========================================= */
 
 function usernameToEmail(username) {
 
@@ -2336,245 +2313,9 @@ function usernameToEmail(username) {
 
 }
 
-/* =====================================================
-   PROFILE
-===================================================== */
-
-async function ensureProfile(username) {
-
-    if(!username) return;
-
-    try {
-
-        const {
-            error
-        } =
-            await supabaseClient
-            .from("profiles")
-            .upsert(
-                {
-                    username:username,
-                    online:true
-                },
-                {
-                    onConflict:"username"
-                }
-            );
-
-        if(error) {
-
-            console.warn(
-                "Could not update profile:",
-                error
-            );
-
-        }
-
-    } catch(error) {
-
-        console.warn(
-            "Profile error:",
-            error
-        );
-
-    }
-
-}
-
-async function setProfileOnline(isOnline) {
-
-    if(!currentUsername)
-        return;
-
-    try {
-
-        const {
-            error
-        } =
-            await supabaseClient
-            .from("profiles")
-            .update({
-                online:isOnline
-            })
-            .eq(
-                "username",
-                currentUsername
-            );
-
-        if(error) {
-
-            console.warn(
-                "Online status error:",
-                error
-            );
-
-        }
-
-    } catch(error) {
-
-        console.warn(
-            "Online status connection error:",
-            error
-        );
-
-    }
-
-}
-
-/* =====================================================
-   PARENT LOCKDOWN
-===================================================== */
-
-async function checkParentLockdown(username) {
-
-    /*
-       Parent control is only applied to Abby's
-       account, matching your previous setup.
-    */
-
-    if(
-        username?.toLowerCase() !==
-        "x_abby_x"
-    ) {
-
-        return {
-            locked:false
-        };
-
-    }
-
-    try {
-
-        const response =
-            await fetch(
-                SUPABASE_URL +
-                "/functions/v1/parent_control",
-                {
-                    method:"POST",
-
-                    headers:{
-                        "Content-Type":
-                            "application/json"
-                    },
-
-                    body:JSON.stringify({
-                        username:username,
-                        action:"check"
-                    })
-                }
-            );
-
-        const result =
-            await response.json();
-
-        if(!response.ok) {
-
-            console.error(
-                "Parent control error:",
-                result
-            );
-
-            return {
-                locked:false
-            };
-
-        }
-
-        return result;
-
-    } catch(error) {
-
-        console.error(
-            "Parent control connection error:",
-            error
-        );
-
-        return {
-            locked:false
-        };
-
-    }
-
-}
-
-/* =====================================================
-   SHOW APP
-===================================================== */
-
-function showApp(username) {
-
-    if(!username) {
-
-        console.error(
-            "showApp called without username"
-        );
-
-        return;
-
-    }
-
-    currentUsername =
-        username;
-
-    const authScreen =
-        document.getElementById(
-            "authScreen"
-        );
-
-    const app =
-        document.getElementById(
-            "app"
-        );
-
-    const profileName =
-        document.getElementById(
-            "profileName"
-        );
-
-    const avatar =
-        document.getElementById(
-            "avatar"
-        );
-
-    if(authScreen) {
-
-        authScreen.style.display =
-            "none";
-
-    }
-
-    if(app) {
-
-        app.style.display =
-            "grid";
-
-    }
-
-    if(profileName) {
-
-        profileName.innerText =
-            username;
-
-    }
-
-    if(avatar) {
-
-        avatar.innerText =
-            username
-            .charAt(0)
-            .toUpperCase();
-
-    }
-
-    setProfileOnline(true);
-
-    showHome();
-
-}
-
-/* =====================================================
-   AUTHENTICATION
-===================================================== */
+/* =========================================
+   AUTH
+========================================= */
 
 async function handleAuth() {
 
@@ -2642,9 +2383,9 @@ async function handleAuth() {
     const internalEmail =
         usernameToEmail(username);
 
-    /* =========================
+    /* =====================================
        SIGN UP
-    ========================= */
+    ===================================== */
 
     if(signupMode) {
 
@@ -2704,9 +2445,26 @@ async function handleAuth() {
                 username
             );
 
-            showApp(
-                username
-            );
+            const lockdown =
+                await checkParentLockdown(
+                    username
+                );
+
+            if(lockdown.locked) {
+
+                await supabaseClient
+                    .auth
+                    .signOut();
+
+                alert(
+                    "🔒 ChatsApp is currently locked by a parent."
+                );
+
+                return;
+
+            }
+
+            showApp(username);
 
             return;
 
@@ -2721,9 +2479,9 @@ async function handleAuth() {
 
     }
 
-    /* =========================
-       LOG IN
-    ========================= */
+    /* =====================================
+       LOGIN
+    ===================================== */
 
     showMessage(
         "Logging in...",
@@ -2755,11 +2513,175 @@ async function handleAuth() {
 
     }
 
-    if(!data.user) {
+    if(data.user) {
 
-        showMessage(
-            "Login failed.",
-            "error"
+        currentUsername =
+            data.user.user_metadata?.username ||
+            username;
+
+        await ensureProfile(
+            currentUsername
+        );
+
+        const lockdown =
+            await checkParentLockdown(
+                currentUsername
+            );
+
+        if(lockdown.locked) {
+
+            await supabaseClient
+                .auth
+                .signOut();
+
+            currentUsername = "";
+
+            alert(
+                "🔒 ChatsApp is currently locked by a parent."
+            );
+
+            return;
+
+        }
+
+        showApp(
+            currentUsername
+        );
+
+    }
+
+}
+
+/* =========================================
+   PARENT LOCKDOWN
+========================================= */
+
+async function checkParentLockdown(username) {
+
+    /*
+     * Parent lockdown is currently enabled
+     * specifically for x_abby_x.
+     */
+
+    if(
+        username?.toLowerCase() !==
+        "x_abby_x"
+    ) {
+
+        return {
+            locked:false
+        };
+
+    }
+
+    try {
+
+        const response =
+            await fetch(
+                "https://kopzrnpporfdwauwlhni.supabase.co/functions/v1/parent_control",
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:JSON.stringify({
+
+                        username:username,
+
+                        action:"check"
+
+                    })
+
+                }
+            );
+
+        const result =
+            await response.json();
+
+        if(!response.ok) {
+
+            console.error(
+                "Parent control error:",
+                result
+            );
+
+            return {
+                locked:false
+            };
+
+        }
+
+        return result;
+
+    } catch(error) {
+
+        console.error(
+            "Parent control connection error:",
+            error
+        );
+
+        return {
+            locked:false
+        };
+
+    }
+
+}
+
+/* =========================================
+   ENSURE PROFILE
+========================================= */
+
+async function ensureProfile(username) {
+
+    if(!username) {
+
+        return;
+
+    }
+
+    const {
+        error
+    } =
+        await supabaseClient
+        .from("profiles")
+        .upsert(
+
+            {
+                username:username,
+                online:true
+            },
+
+            {
+                onConflict:"username"
+            }
+
+        );
+
+    if(error) {
+
+        console.warn(
+            "Could not update profile:",
+            error
+        );
+
+    }
+
+}
+
+/* =========================================
+   SHOW APP
+========================================= */
+
+function showApp(username) {
+
+    if(!username) {
+
+        console.error(
+            "showApp called without username."
         );
 
         return;
@@ -2767,47 +2689,86 @@ async function handleAuth() {
     }
 
     currentUsername =
-        data.user.user_metadata?.username ||
         username;
 
-    await ensureProfile(
-        currentUsername
-    );
-
-    /* =========================
-       PARENT LOCKDOWN CHECK
-    ========================= */
-
-    const lockdown =
-        await checkParentLockdown(
-            currentUsername
+    const authScreen =
+        document.getElementById(
+            "authScreen"
         );
 
-    if(lockdown.locked) {
-
-        await supabaseClient
-            .auth
-            .signOut();
-
-        currentUsername = "";
-
-        alert(
-            "🔒 ChatsApp is currently locked by a parent."
+    const app =
+        document.getElementById(
+            "app"
         );
+
+    authScreen.style.display =
+        "none";
+
+    app.style.display =
+        "grid";
+
+    document.getElementById(
+        "profileName"
+    ).innerText =
+        username;
+
+    document.getElementById(
+        "avatar"
+    ).innerText =
+        username
+        .charAt(0)
+        .toUpperCase();
+
+    showHome();
+
+    /*
+     * Update online status after
+     * the app is actually visible.
+     */
+
+    setProfileOnline(true);
+
+}
+
+/* =========================================
+   ONLINE STATUS
+========================================= */
+
+async function setProfileOnline(isOnline) {
+
+    if(!currentUsername) {
 
         return;
 
     }
 
-    showApp(
-        currentUsername
-    );
+    const {
+        error
+    } =
+        await supabaseClient
+        .from("profiles")
+        .update({
+            online:isOnline
+        })
+        .eq(
+            "username",
+            currentUsername
+        );
+
+    if(error) {
+
+        console.warn(
+            "Online status error:",
+            error
+        );
+
+    }
 
 }
 
-/* =====================================================
+/* =========================================
    SESSION CHECK
-===================================================== */
+========================================= */
 
 async function checkSession() {
 
@@ -2840,8 +2801,7 @@ async function checkSession() {
 
             const username =
                 data.session.user.user_metadata?.username ||
-                data.session.user.email
-                    .split("@")[0];
+                data.session.user.email.split("@")[0];
 
             currentUsername =
                 username;
@@ -2871,9 +2831,7 @@ async function checkSession() {
 
             }
 
-            showApp(
-                username
-            );
+            showApp(username);
 
         }
 
@@ -2888,20 +2846,23 @@ async function checkSession() {
 
 }
 
-/* =====================================================
-   PAGE NAVIGATION
-===================================================== */
+/* =========================================
+   PAGE CONTROL
+========================================= */
 
 function hideAllPages() {
 
-    document.getElementById("homePage")
-        .style.display = "none";
+    document.getElementById(
+        "homePage"
+    ).style.display = "none";
 
-    document.getElementById("globalChat")
-        .style.display = "none";
+    document.getElementById(
+        "globalChat"
+    ).style.display = "none";
 
-    document.getElementById("userSearchPage")
-        .style.display = "none";
+    document.getElementById(
+        "userSearchPage"
+    ).style.display = "none";
 
 }
 
@@ -2909,12 +2870,17 @@ function showHome() {
 
     hideAllPages();
 
-    document.getElementById("homePage")
-        .style.display = "block";
+    document.getElementById(
+        "homePage"
+    ).style.display = "block";
 
     setActiveNav("Home");
 
 }
+
+/* =========================================
+   NAVIGATION
+========================================= */
 
 function setActiveNav(name) {
 
@@ -2933,8 +2899,7 @@ function setActiveNav(name) {
 
             if(
                 span &&
-                span.innerText.trim() ===
-                name
+                span.innerText.trim() === name
             ) {
 
                 button.classList.add(
@@ -2947,9 +2912,9 @@ function setActiveNav(name) {
 
 }
 
-/* =====================================================
+/* =========================================
    USER SEARCH
-===================================================== */
+========================================= */
 
 function openUserSearch() {
 
@@ -2991,7 +2956,11 @@ document.addEventListener(
                 "userSearchInput"
             );
 
-        if(!input) return;
+        if(!input) {
+
+            return;
+
+        }
 
         input.addEventListener(
             "input",
@@ -3029,10 +2998,6 @@ document.addEventListener(
                         "searchResultText"
                     ).innerText =
                         "Start typing to find users";
-
-                    document.getElementById(
-                        "searchLoading"
-                    ).innerText = "";
 
                     renderRecentSearches();
 
@@ -3102,9 +3067,7 @@ async function searchUsers(query) {
     } =
         await supabaseClient
         .from("profiles")
-        .select(
-            "username, online"
-        )
+        .select("username, online")
         .ilike(
             "username",
             "%" + query + "%"
@@ -3140,10 +3103,8 @@ async function searchUsers(query) {
         .filter(
             user =>
                 user.username &&
-                user.username
-                    .toLowerCase() !==
-                currentUsername
-                    .toLowerCase()
+                user.username.toLowerCase() !==
+                currentUsername.toLowerCase()
         );
 
     results.innerHTML = "";
@@ -3190,8 +3151,8 @@ async function searchUsers(query) {
             const firstLetter =
                 escapeHTML(
                     user.username
-                        .charAt(0)
-                        .toUpperCase()
+                    .charAt(0)
+                    .toUpperCase()
                 );
 
             const online =
@@ -3234,9 +3195,7 @@ async function searchUsers(query) {
                     <button
                         class="user-action"
                         onclick="previewUser(
-                            '${escapeAttribute(
-                                user.username
-                            )}',
+                            '${escapeAttribute(user.username)}',
                             ${online}
                         )"
                     >
@@ -3246,9 +3205,7 @@ async function searchUsers(query) {
                     <button
                         class="user-action message-btn"
                         onclick="messageUser(
-                            '${escapeAttribute(
-                                user.username
-                            )}'
+                            '${escapeAttribute(user.username)}'
                         )"
                     >
                         💬 Message
@@ -3265,20 +3222,15 @@ async function searchUsers(query) {
         }
     );
 
-    saveSearch(
-        query
-    );
+    saveSearch(query);
 
 }
 
-/* =====================================================
+/* =========================================
    PROFILE PREVIEW
-===================================================== */
+========================================= */
 
-function previewUser(
-    username,
-    online
-) {
+function previewUser(username,online) {
 
     selectedProfileUsername =
         username;
@@ -3287,8 +3239,8 @@ function previewUser(
         "previewAvatar"
     ).innerText =
         username
-            .charAt(0)
-            .toUpperCase();
+        .charAt(0)
+        .toUpperCase();
 
     document.getElementById(
         "previewName"
@@ -3332,9 +3284,7 @@ function previewUser(
 
 }
 
-function closeProfilePreview(
-    event
-) {
+function closeProfilePreview(event) {
 
     if(
         event &&
@@ -3355,9 +3305,7 @@ function closeProfilePreview(
 
 }
 
-function messageUser(
-    username
-) {
+function messageUser(username) {
 
     closeProfilePreview();
 
@@ -3371,9 +3319,9 @@ function messageUser(
 
 }
 
-/* =====================================================
+/* =========================================
    SEARCH HISTORY
-===================================================== */
+========================================= */
 
 function getSearchHistory() {
 
@@ -3395,12 +3343,20 @@ function getSearchHistory() {
 
 function saveSearch(query) {
 
-    if(!query) return;
+    if(!query) {
+
+        return;
+
+    }
 
     const normalized =
         query.trim();
 
-    if(!normalized) return;
+    if(!normalized) {
+
+        return;
+
+    }
 
     let history =
         getSearchHistory();
@@ -3417,10 +3373,7 @@ function saveSearch(query) {
     );
 
     history =
-        history.slice(
-            0,
-            8
-        );
+        history.slice(0,8);
 
     localStorage.setItem(
         "chatsapp_recent_searches",
@@ -3558,19 +3511,15 @@ function clearUserSearch() {
     ).innerText =
         "Start typing to find users";
 
-    document.getElementById(
-        "searchLoading"
-    ).innerText = "";
-
     renderRecentSearches();
 
     input.focus();
 
 }
 
-/* =====================================================
+/* =========================================
    OTHER PAGES
-===================================================== */
+========================================= */
 
 function openPrivateChats() {
 
@@ -3612,9 +3561,9 @@ function openProfile() {
 
 }
 
-/* =====================================================
+/* =========================================
    LOGOUT
-===================================================== */
+========================================= */
 
 async function logout() {
 
@@ -3665,9 +3614,9 @@ async function logout() {
 
 }
 
-/* =====================================================
+/* =========================================
    GLOBAL CHAT
-===================================================== */
+========================================= */
 
 function openGlobalChat() {
 
@@ -3721,9 +3670,7 @@ async function joinGlobalChat() {
     }
 
     if(
-        !/^[a-zA-Z0-9_]{3,20}$/.test(
-            username
-        )
+        !/^[a-zA-Z0-9_]{3,20}$/.test(username)
     ) {
 
         alert(
@@ -3789,7 +3736,7 @@ async function loadMessages() {
 
     box.innerHTML = "";
 
-    data.forEach(
+    (data || []).forEach(
         message => {
 
             displayMessage(
@@ -3854,8 +3801,11 @@ async function sendGlobalMessage() {
     const text =
         input.value.trim();
 
-    if(text === "")
+    if(text === "") {
+
         return;
+
+    }
 
     const {
         error
@@ -3940,9 +3890,9 @@ function updateOnlineCount() {
 
 }
 
-/* =====================================================
+/* =========================================
    SECURITY HELPERS
-===================================================== */
+========================================= */
 
 function escapeHTML(text) {
 
@@ -3972,9 +3922,9 @@ function escapeAttribute(text) {
 
 }
 
-/* =====================================================
+/* =========================================
    ENTER KEY
-===================================================== */
+========================================= */
 
 document.addEventListener(
     "keydown",
@@ -4023,9 +3973,9 @@ document.addEventListener(
     }
 );
 
-/* =====================================================
+/* =========================================
    ONLINE HEARTBEAT
-===================================================== */
+========================================= */
 
 setInterval(
     function() {
@@ -4042,10 +3992,6 @@ setInterval(
     30000
 );
 
-/* =====================================================
-   MARK OFFLINE
-===================================================== */
-
 window.addEventListener(
     "beforeunload",
     function() {
@@ -4061,18 +4007,26 @@ window.addEventListener(
     }
 );
 
-/* =====================================================
-   START EVERYTHING
-===================================================== */
+/* =========================================
+   STARTUP
+========================================= */
 
-window.addEventListener(
-    "load",
-    function() {
+(async function bootChatsApp() {
 
-        startApp();
+    /*
+     * Start the loading animation.
+     */
 
-    }
-);
+    await startLoadingScreen();
+
+    /*
+     * THEN check whether the user is
+     * already logged in.
+     */
+
+    await checkSession();
+
+})();
 
 </script>
 
