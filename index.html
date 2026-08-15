@@ -2529,7 +2529,22 @@ async function handleAuth() {
 
         await ensureProfile(currentUsername);
 
-        showApp(currentUsername);
+const lockdown =
+    await checkParentLockdown(currentUsername);
+
+if (lockdown.locked) {
+
+    await supabaseClient.auth.signOut();
+
+    alert(
+        "🔒 ChatsApp is currently locked by a parent."
+    );
+
+    return;
+
+}
+
+showApp(currentUsername);
 
     }
 
@@ -2699,7 +2714,22 @@ async function checkSession() {
 
         await ensureProfile(username);
 
-        showApp(username);
+const lockdown =
+    await checkParentLockdown(username);
+
+if (lockdown.locked) {
+
+    await supabaseClient.auth.signOut();
+
+    alert(
+        "🔒 ChatsApp is currently locked by a parent."
+    );
+
+    return;
+
+}
+
+showApp(username);
 
     }
 
