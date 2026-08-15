@@ -1,8 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -11,369 +11,715 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+
+/* =========================================
+   GLOBAL
+========================================= */
+
 * {
     box-sizing: border-box;
 }
 
 body {
+
     margin: 0;
+
     min-height: 100vh;
-    font-family: Inter, Arial, sans-serif;
+
+    font-family:
+        Inter,
+        Arial,
+        sans-serif;
+
     color: white;
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     background:
-        radial-gradient(circle at 20% 20%, #253b6e 0%, transparent 35%),
-        radial-gradient(circle at 80% 80%, #34205d 0%, transparent 35%),
+        radial-gradient(
+            circle at 20% 20%,
+            #253b6e 0%,
+            transparent 35%
+        ),
+
+        radial-gradient(
+            circle at 80% 80%,
+            #34205d 0%,
+            transparent 35%
+        ),
+
         #080b14;
+
 }
+
+
+/* =========================================
+   MAIN APP
+========================================= */
 
 .call-app {
+
     width: 100%;
+
     max-width: 520px;
+
     padding: 30px;
+
 }
 
+
+/* =========================================
+   LOGO
+========================================= */
+
 .logo {
+
     width: 70px;
     height: 70px;
+
     margin: 0 auto 20px;
+
     border-radius: 22px;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
     font-size: 32px;
+
     font-weight: 800;
 
-    background: linear-gradient(135deg, #5b8cff, #795cff);
+    background:
+        linear-gradient(
+            135deg,
+            #5b8cff,
+            #795cff
+        );
 
-    box-shadow: 0 10px 35px rgba(91,140,255,.35);
+    box-shadow:
+        0 10px 35px
+        rgba(91,140,255,.35);
+
 }
 
+
+/* =========================================
+   TITLE
+========================================= */
+
 h1 {
+
     text-align: center;
+
     margin: 0;
+
     font-size: 32px;
+
 }
 
 .subtitle {
+
     text-align: center;
+
     color: #818ba3;
-    margin: 10px 0 30px;
+
+    margin:
+        10px 0
+        30px;
+
 }
+
+
+/* =========================================
+   CARD
+========================================= */
 
 .card {
+
     padding: 25px;
+
     border-radius: 22px;
 
-    background: rgba(18,23,38,.9);
-    border: 1px solid #283149;
+    background:
+        rgba(18,23,38,.9);
 
-    box-shadow: 0 25px 70px rgba(0,0,0,.45);
+    border:
+        1px solid #283149;
+
+    box-shadow:
+        0 25px 70px
+        rgba(0,0,0,.45);
+
 }
 
+
+/* =========================================
+   INPUT
+========================================= */
+
 label {
+
     display: block;
+
     color: #9ca5ba;
+
     font-size: 13px;
+
     font-weight: 600;
+
     margin-bottom: 8px;
+
 }
 
 input {
+
     width: 100%;
+
     padding: 15px;
 
     border-radius: 13px;
-    border: 1px solid #30384f;
+
+    border:
+        1px solid #30384f;
 
     background: #0e1220;
+
     color: white;
 
     outline: none;
+
     font-size: 15px;
+
 }
 
 input:focus {
+
     border-color: #638cff;
-    box-shadow: 0 0 0 3px rgba(99,140,255,.1);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(99,140,255,.1);
+
 }
 
+
+/* =========================================
+   BUTTONS
+========================================= */
+
 button {
+
     border: 0;
+
     cursor: pointer;
+
     color: white;
+
     font-weight: 700;
+
     border-radius: 13px;
+
     transition: .2s;
+
 }
 
 button:hover {
-    transform: translateY(-2px);
+
+    transform:
+        translateY(-2px);
+
 }
 
 button:disabled {
+
     opacity: .5;
+
     cursor: not-allowed;
+
     transform: none;
+
 }
+
+
+/* =========================================
+   CALL BUTTON
+========================================= */
 
 .call-button {
+
     width: 100%;
+
     margin-top: 15px;
+
     padding: 15px;
 
-    background: linear-gradient(135deg, #5b8cff, #795cff);
+    background:
+        linear-gradient(
+            135deg,
+            #5b8cff,
+            #795cff
+        );
+
     font-size: 15px;
+
 }
 
+
+/* =========================================
+   HOME BUTTON
+========================================= */
+
 .home-button {
+
     width: 100%;
+
     margin-top: 12px;
+
     padding: 13px;
 
     background: #191f31;
-    border: 1px solid #30384f;
+
+    border:
+        1px solid #30384f;
+
 }
 
+
+/* =========================================
+   STATUS
+========================================= */
+
 .status {
+
     text-align: center;
+
     margin-top: 20px;
+
     min-height: 22px;
 
     color: #7f89a2;
+
     font-size: 14px;
+
 }
 
 .status.green {
+
     color: #55d88a;
+
 }
 
 .status.red {
+
     color: #ff8585;
+
 }
 
-/* =========================
+
+/* =========================================
    INCOMING CALL
-========================= */
+========================================= */
 
 .incoming {
+
     display: none;
 
     position: fixed;
+
     inset: 0;
+
     z-index: 100;
 
     background:
-        radial-gradient(circle at center, #172448, #080b14 65%);
+        radial-gradient(
+            circle at center,
+            #172448,
+            #080b14 65%
+        );
 
     align-items: center;
+
     justify-content: center;
 
     padding: 25px;
+
 }
 
 .incoming.show {
+
     display: flex;
+
 }
 
 .incoming-box {
+
     text-align: center;
+
     width: 100%;
+
     max-width: 400px;
 
-    padding: 40px 25px;
+    padding:
+        40px 25px;
+
     border-radius: 28px;
 
-    background: rgba(18,23,38,.95);
-    border: 1px solid #30384f;
+    background:
+        rgba(18,23,38,.95);
 
-    box-shadow: 0 30px 100px rgba(0,0,0,.65);
+    border:
+        1px solid #30384f;
+
+    box-shadow:
+        0 30px 100px
+        rgba(0,0,0,.65);
+
 }
 
+
+/* =========================================
+   CALLER AVATAR
+========================================= */
+
 .caller-avatar {
+
     width: 100px;
+
     height: 100px;
 
-    margin: 0 auto 20px;
+    margin:
+        0 auto 20px;
+
     border-radius: 50%;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     font-size: 40px;
+
     font-weight: 800;
 
-    background: linear-gradient(135deg, #5b8cff, #9c5cff);
+    background:
+        linear-gradient(
+            135deg,
+            #5b8cff,
+            #9c5cff
+        );
 
-    animation: callerPulse 1.5s infinite;
+    animation:
+        callerPulse 1.5s infinite;
+
 }
 
 @keyframes callerPulse {
-    0%,100% {
-        box-shadow: 0 0 0 0 rgba(91,140,255,.35);
+
+    0%, 100% {
+
+        box-shadow:
+            0 0 0 0
+            rgba(91,140,255,.35);
+
     }
 
     50% {
-        box-shadow: 0 0 0 18px rgba(91,140,255,0);
+
+        box-shadow:
+            0 0 0 18px
+            rgba(91,140,255,0);
+
     }
+
 }
 
+
+/* =========================================
+   INCOMING TEXT
+========================================= */
+
 .incoming-box h2 {
+
     margin: 0;
+
     font-size: 27px;
+
 }
 
 .incoming-box p {
+
     color: #818ba3;
-    margin: 10px 0 30px;
+
+    margin:
+        10px 0
+        30px;
+
 }
 
+
+/* =========================================
+   INCOMING BUTTONS
+========================================= */
+
 .incoming-buttons {
+
     display: flex;
+
     gap: 12px;
+
 }
 
 .accept {
+
     flex: 1;
+
     padding: 15px;
+
     background: #39c878;
+
 }
 
 .decline {
+
     flex: 1;
+
     padding: 15px;
+
     background: #e34f5f;
+
 }
 
-/* =========================
+
+/* =========================================
    ACTIVE CALL
-========================= */
+========================================= */
 
 .active-call {
+
     display: none;
 
     position: fixed;
+
     inset: 0;
+
     z-index: 90;
 
     background:
-        radial-gradient(circle at center, #172448, #080b14 70%);
+        radial-gradient(
+            circle at center,
+            #172448,
+            #080b14 70%
+        );
 
     align-items: center;
+
     justify-content: center;
+
 }
 
 .active-call.show {
+
     display: flex;
+
 }
 
 .active-box {
+
     text-align: center;
+
 }
 
+
+/* =========================================
+   ACTIVE AVATAR
+========================================= */
+
 .active-avatar {
+
     width: 130px;
+
     height: 130px;
 
-    margin: 0 auto 25px;
+    margin:
+        0 auto 25px;
+
     border-radius: 50%;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     font-size: 50px;
+
     font-weight: 800;
 
-    background: linear-gradient(135deg, #5b8cff, #9c5cff);
+    background:
+        linear-gradient(
+            135deg,
+            #5b8cff,
+            #9c5cff
+        );
 
-    animation: activePulse 2s infinite;
+    animation:
+        activePulse 2s infinite;
+
 }
 
 @keyframes activePulse {
-    0%,100% {
-        box-shadow: 0 0 35px rgba(91,140,255,.25);
+
+    0%, 100% {
+
+        box-shadow:
+            0 0 35px
+            rgba(91,140,255,.25);
+
     }
 
     50% {
-        box-shadow: 0 0 70px rgba(91,140,255,.55);
+
+        box-shadow:
+            0 0 70px
+            rgba(91,140,255,.55);
+
     }
+
 }
 
+
+/* =========================================
+   ACTIVE CALL TEXT
+========================================= */
+
 .active-name {
+
     font-size: 28px;
+
     font-weight: 800;
+
 }
 
 .call-state {
+
     margin-top: 8px;
+
     color: #55d88a;
+
 }
 
+
+/* =========================================
+   CALL CONTROLS
+========================================= */
+
 .call-controls {
+
     margin-top: 35px;
 
     display: flex;
+
     justify-content: center;
+
     gap: 15px;
+
 }
 
 .control {
+
     width: 58px;
+
     height: 58px;
 
     border-radius: 50%;
+
     background: #20283d;
-    border: 1px solid #35405c;
+
+    border:
+        1px solid #35405c;
 
     font-size: 22px;
+
 }
 
 .control.muted {
+
     background: #5b6380;
+
 }
 
 .end-call {
+
     width: 65px;
+
     height: 65px;
 
     border-radius: 50%;
+
     background: #e34f5f;
 
     font-size: 24px;
+
 }
 
+
+/* =========================================
+   AUDIO
+========================================= */
+
 #audioContainer {
+
     position: fixed;
+
     width: 1px;
+
     height: 1px;
+
     opacity: 0;
+
     pointer-events: none;
+
 }
+
 </style>
+
 </head>
+
 
 <body>
 
+
+<!-- =========================================
+     MAIN CALL PAGE
+========================================= -->
+
 <div class="call-app">
 
-    <div class="logo">C</div>
+    <div class="logo">
+        C
+    </div>
 
-    <h1>ChatsApp Call</h1>
+    <h1>
+        ChatsApp Call
+    </h1>
 
     <p class="subtitle">
         Voice calls with your ChatsApp friends 📞
     </p>
 
+
     <div class="card">
 
-        <label>Username to call</label>
+        <label>
+            Username to call
+        </label>
+
 
         <input
             id="targetUsername"
@@ -383,6 +729,7 @@ button:disabled {
             autocomplete="off"
         >
 
+
         <button
             id="callButton"
             class="call-button"
@@ -391,6 +738,7 @@ button:disabled {
             📞 Call
         </button>
 
+
         <button
             class="home-button"
             onclick="goHome()"
@@ -398,7 +746,11 @@ button:disabled {
             ← Back to ChatsApp
         </button>
 
-        <div id="status" class="status">
+
+        <div
+            id="status"
+            class="status"
+        >
             Ready to call
         </div>
 
@@ -407,27 +759,38 @@ button:disabled {
 </div>
 
 
-<!-- =========================
+<!-- =========================================
      INCOMING CALL
-========================= -->
+========================================= -->
 
-<div id="incomingCall" class="incoming">
+<div
+    id="incomingCall"
+    class="incoming"
+>
 
     <div class="incoming-box">
 
-        <div id="callerAvatar" class="caller-avatar">
+
+        <div
+            id="callerAvatar"
+            class="caller-avatar"
+        >
             C
         </div>
+
 
         <h2 id="callerName">
             Someone
         </h2>
 
+
         <p>
             📞 Incoming voice call...
         </p>
 
+
         <div class="incoming-buttons">
+
 
             <button
                 class="accept"
@@ -436,12 +799,14 @@ button:disabled {
                 ✓ Accept
             </button>
 
+
             <button
                 class="decline"
                 onclick="declineCall()"
             >
                 ✕ Decline
             </button>
+
 
         </div>
 
@@ -450,27 +815,44 @@ button:disabled {
 </div>
 
 
-<!-- =========================
+<!-- =========================================
      ACTIVE CALL
-========================= -->
+========================================= -->
 
-<div id="activeCall" class="active-call">
+<div
+    id="activeCall"
+    class="active-call"
+>
 
     <div class="active-box">
 
-        <div id="activeAvatar" class="active-avatar">
+
+        <div
+            id="activeAvatar"
+            class="active-avatar"
+        >
             C
         </div>
 
-        <div id="activeName" class="active-name">
+
+        <div
+            id="activeName"
+            class="active-name"
+        >
             User
         </div>
 
-        <div id="callState" class="call-state">
+
+        <div
+            id="callState"
+            class="call-state"
+        >
             Connecting...
         </div>
 
+
         <div class="call-controls">
+
 
             <button
                 id="muteButton"
@@ -480,12 +862,14 @@ button:disabled {
                 🎤
             </button>
 
+
             <button
                 class="end-call"
                 onclick="endCall()"
             >
                 ☎
             </button>
+
 
         </div>
 
@@ -499,6 +883,7 @@ button:disabled {
 
 <script>
 
+
 /* =========================================
    SUPABASE
 ========================================= */
@@ -508,6 +893,7 @@ const SUPABASE_URL =
 
 const SUPABASE_KEY =
     "sb_publishable_bbxmPB71ADnIqe3oPB3MuQ_EWa4n_Ph";
+
 
 const supabaseClient =
     window.supabase.createClient(
@@ -521,11 +907,15 @@ const supabaseClient =
 ========================================= */
 
 let currentUsername = "";
+
 let targetUsername = "";
 
 let callId = "";
 
+let inboxChannel = null;
+
 let callChannel = null;
+
 let callChannelReady = false;
 
 let incomingCallData = null;
@@ -533,20 +923,38 @@ let incomingCallData = null;
 let peerConnection = null;
 
 let localStream = null;
+
 let remoteStream = null;
+
 let remoteAudio = null;
 
 let isMuted = false;
+
 let isCaller = false;
+
 let callActive = false;
+
 let callEnding = false;
 
-let pendingIceCandidates = [];
 let remoteDescriptionSet = false;
 
 
+/*
+ * We deliberately use non-trickle ICE.
+ *
+ * That means we wait until ICE gathering
+ * has finished before sending the SDP.
+ *
+ * This prevents candidates from being lost
+ * while the other person is still joining
+ * the call channel.
+ */
+
+let iceGatheringComplete = false;
+
+
 /* =========================================
-   WEBRTC
+   RTC CONFIG
 ========================================= */
 
 const rtcConfiguration = {
@@ -554,11 +962,13 @@ const rtcConfiguration = {
     iceServers: [
 
         {
-            urls: "stun:stun.l.google.com:19302"
+            urls:
+                "stun:stun.l.google.com:19302"
         },
 
         {
-            urls: "stun:stun1.l.google.com:19302"
+            urls:
+                "stun:stun1.l.google.com:19302"
         }
 
     ]
@@ -567,7 +977,7 @@ const rtcConfiguration = {
 
 
 /* =========================================
-   START
+   STARTUP
 ========================================= */
 
 window.addEventListener(
@@ -580,6 +990,7 @@ window.addEventListener(
                 localStorage.getItem(
                     "chatsapp_username"
                 );
+
 
             if(savedUsername) {
 
@@ -606,6 +1017,7 @@ window.addEventListener(
                 currentUsername =
                     data.session.user
                     .user_metadata?.username ||
+
                     data.session.user.email
                     .split("@")[0];
 
@@ -624,14 +1036,26 @@ window.addEventListener(
             }
 
 
+            console.log(
+                "CALL PAGE USER:",
+                currentUsername
+            );
+
+
             await setupCallInbox();
+
+
+            setStatus(
+                "Ready to call",
+                ""
+            );
 
         }
 
         catch(error) {
 
             console.error(
-                "Startup error:",
+                "STARTUP ERROR:",
                 error
             );
 
@@ -647,125 +1071,113 @@ window.addEventListener(
 
 
 /* =========================================
-   CALL INBOX
+   PERMANENT CALL INBOX
 ========================================= */
 
 async function setupCallInbox() {
 
-    if(callChannel) {
+    if(inboxChannel) {
 
         try {
+
             await supabaseClient
-                .removeChannel(callChannel);
+                .removeChannel(
+                    inboxChannel
+                );
+
         }
 
-        catch(error) {
-            console.warn(error);
-        }
+        catch(error) {}
 
-        callChannel = null;
+        inboxChannel = null;
+
     }
+
+
+    const safeUsername =
+        currentUsername
+        .toLowerCase()
+        .replace(
+            /[^a-z0-9_-]/g,
+            "_"
+        );
 
 
     const inboxName =
         "chatsapp-call-inbox-" +
-        currentUsername
-        .toLowerCase()
-        .replace(/[^a-z0-9_-]/g, "_");
+        safeUsername;
 
 
-    callChannel =
+    console.log(
+        "JOINING INBOX:",
+        inboxName
+    );
+
+
+    inboxChannel =
         supabaseClient.channel(
-            inboxName
+            inboxName,
+            {
+                config: {
+
+                    broadcast: {
+
+                        ack: true
+
+                    }
+
+                }
+
+            }
         );
 
 
-    callChannel.on(
+    inboxChannel.on(
+
         "broadcast",
+
         {
-            event: "incoming-call"
+            event:
+                "incoming-call"
+
         },
+
         payload => {
 
             console.log(
-                "INCOMING CALL SIGNAL:",
+                "INCOMING CALL:",
                 payload
             );
+
 
             handleIncomingCall(
                 payload.payload
             );
 
         }
+
     );
 
 
-    await new Promise(
-        (resolve, reject) => {
-
-            let finished = false;
-
-            const timeout =
-                setTimeout(
-                    () => {
-
-                        if(!finished) {
-
-                            finished = true;
-
-                            reject(
-                                new Error(
-                                    "Call inbox timeout."
-                                )
-                            );
-
-                        }
-
-                    },
-                    10000
-                );
+    await waitForChannelSubscription(
+        inboxChannel
+    );
 
 
-            callChannel.subscribe(
-                status => {
-
-                    console.log(
-                        "Call inbox status:",
-                        status
-                    );
-
-
-                    if(
-                        status === "SUBSCRIBED" &&
-                        !finished
-                    ) {
-
-                        finished = true;
-
-                        clearTimeout(
-                            timeout
-                        );
-
-                        callChannelReady = true;
-
-                        resolve();
-
-                    }
-
-                }
-            );
-
-        }
+    console.log(
+        "CALL INBOX READY"
     );
 
 }
 
 
 /* =========================================
-   VALIDATE USERNAME
+   USERNAME VALIDATION
 ========================================= */
 
-async function validateUsername(username) {
+async function validateUsername(
+    username
+) {
 
     try {
 
@@ -786,7 +1198,7 @@ async function validateUsername(username) {
         if(error) {
 
             console.error(
-                "Username validation error:",
+                "USERNAME ERROR:",
                 error
             );
 
@@ -811,7 +1223,9 @@ async function validateUsername(username) {
 
     catch(error) {
 
-        console.error(error);
+        console.error(
+            error
+        );
 
         return null;
 
@@ -830,6 +1244,18 @@ async function startCall() {
 
         setStatus(
             "You are already in a call.",
+            "red"
+        );
+
+        return;
+
+    }
+
+
+    if(!currentUsername) {
+
+        setStatus(
+            "You are not logged in.",
             "red"
         );
 
@@ -875,6 +1301,9 @@ async function startCall() {
     }
 
 
+    setCallButtonDisabled(true);
+
+
     setStatus(
         "Checking username...",
         ""
@@ -888,6 +1317,8 @@ async function startCall() {
 
 
     if(!validUsername) {
+
+        setCallButtonDisabled(false);
 
         setStatus(
             "Invalid username ❌",
@@ -908,38 +1339,56 @@ async function startCall() {
 
 
     isCaller = true;
+
     callActive = true;
+
     callEnding = false;
 
-    pendingIceCandidates = [];
     remoteDescriptionSet = false;
 
+    iceGatheringComplete = false;
 
-    setCallButtonDisabled(true);
 
-    showActiveCall(targetUsername);
+    showActiveCall(
+        targetUsername
+    );
 
-    setCallState("Connecting...");
+
+    setCallState(
+        "Preparing call..."
+    );
 
 
     try {
 
         /*
-         * IMPORTANT:
-         * Create the unique call channel BEFORE
-         * sending the incoming-call signal.
+         * Create the unique signaling channel.
          */
 
-        await createCallChannel(callId);
+        await createCallChannel(
+            callId
+        );
 
+
+        /*
+         * Create WebRTC.
+         */
 
         await createPeerConnection();
 
 
+        /*
+         * Ask for microphone.
+         */
+
         localStream =
-            await navigator.mediaDevices.getUserMedia({
+            await navigator.mediaDevices
+            .getUserMedia({
+
                 audio: true,
+
                 video: false
+
             });
 
 
@@ -957,6 +1406,10 @@ async function startCall() {
             );
 
 
+        /*
+         * Create offer.
+         */
+
         const offer =
             await peerConnection.createOffer();
 
@@ -967,44 +1420,142 @@ async function startCall() {
 
 
         /*
-         * Send the call invitation through
-         * the receiver's permanent inbox.
+         * WAIT FOR ICE GATHERING.
+         *
+         * This is one of the biggest fixes.
          */
 
-        await waitForChannelReady(
-            callChannel
+        setCallState(
+            "Preparing connection..."
         );
 
 
-        const sent =
-            await callChannel.send({
+        await waitForIceGatheringComplete();
 
-                type: "broadcast",
 
-                event: "incoming-call",
+        /*
+         * Get the final local description.
+         */
 
-                payload: {
+        const finalOffer =
+            peerConnection.localDescription;
 
-                    callId: callId,
 
-                    from: currentUsername,
+        if(!finalOffer) {
 
-                    to: targetUsername,
+            throw new Error(
+                "Local offer was not created."
+            );
 
-                    offer: offer
+        }
+
+
+        /*
+         * Send invitation through
+         * receiver's permanent inbox.
+         */
+
+        const invitePayload = {
+
+            callId:
+
+                callId,
+
+            from:
+
+                currentUsername,
+
+            to:
+
+                targetUsername,
+
+            offer: {
+
+                type:
+                    finalOffer.type,
+
+                sdp:
+                    finalOffer.sdp
+
+            }
+
+        };
+
+
+        const inviteChannel =
+            supabaseClient.channel(
+
+                "chatsapp-call-inbox-" +
+
+                targetUsername
+                .toLowerCase()
+                .replace(
+                    /[^a-z0-9_-]/g,
+                    "_"
+                ),
+
+                {
+
+                    config: {
+
+                        broadcast: {
+
+                            ack: true
+
+                        }
+
+                    }
 
                 }
+
+            );
+
+
+        await waitForChannelSubscription(
+            inviteChannel
+        );
+
+
+        const result =
+            await inviteChannel.send({
+
+                type:
+                    "broadcast",
+
+                event:
+                    "incoming-call",
+
+                payload:
+                    invitePayload
 
             });
 
 
         console.log(
-            "CALL INVITE SENT:",
-            sent
+            "INVITE RESULT:",
+            result
         );
 
 
-        setCallState("Ringing...");
+        await supabaseClient
+            .removeChannel(
+                inviteChannel
+            );
+
+
+        if(result === "error") {
+
+            throw new Error(
+                "Supabase rejected the call invitation."
+            );
+
+        }
+
+
+        setCallState(
+            "Ringing..."
+        );
+
 
         setStatus(
             "Calling " +
@@ -1022,14 +1573,16 @@ async function startCall() {
             error
         );
 
-        setCallState(
-            "Call failed."
+
+        await resetCallState(
+            false
         );
 
-        await resetCallState(false);
 
         setStatus(
-            "Could not start the call.",
+            getCallErrorMessage(
+                error
+            ),
             "red"
         );
 
@@ -1042,7 +1595,9 @@ async function startCall() {
    INCOMING CALL
 ========================================= */
 
-function handleIncomingCall(data) {
+function handleIncomingCall(
+    data
+) {
 
     if(
         !data ||
@@ -1052,7 +1607,7 @@ function handleIncomingCall(data) {
     ) {
 
         console.warn(
-            "Invalid incoming call data:",
+            "INVALID CALL:",
             data
         );
 
@@ -1131,13 +1686,20 @@ function handleIncomingCall(data) {
 
 async function acceptCall() {
 
-    if(!incomingCallData)
+    if(!incomingCallData) {
+
         return;
+
+    }
 
 
     const acceptedCall =
         incomingCallData;
 
+
+    /*
+     * Clear the incoming state immediately.
+     */
 
     incomingCallData = null;
 
@@ -1153,7 +1715,9 @@ async function acceptCall() {
 
 
     isCaller = false;
+
     callActive = true;
+
     callEnding = false;
 
     targetUsername =
@@ -1162,20 +1726,31 @@ async function acceptCall() {
     callId =
         acceptedCall.callId;
 
-    pendingIceCandidates = [];
     remoteDescriptionSet = false;
 
+    iceGatheringComplete = false;
 
-    showActiveCall(targetUsername);
 
-    setCallState("Connecting...");
+    showActiveCall(
+        targetUsername
+    );
+
+
+    setCallState(
+        "Connecting..."
+    );
+
+
+    setStatus(
+        "Accepting call...",
+        ""
+    );
 
 
     try {
 
         /*
-         * JOIN THE EXACT SAME UNIQUE CALL CHANNEL
-         * THAT THE CALLER IS LISTENING ON.
+         * Join exact call session.
          */
 
         await createCallChannel(
@@ -1183,13 +1758,25 @@ async function acceptCall() {
         );
 
 
+        /*
+         * Create peer connection.
+         */
+
         await createPeerConnection();
 
 
+        /*
+         * Microphone permission.
+         */
+
         localStream =
-            await navigator.mediaDevices.getUserMedia({
+            await navigator.mediaDevices
+            .getUserMedia({
+
                 audio: true,
+
                 video: false
+
             });
 
 
@@ -1208,25 +1795,34 @@ async function acceptCall() {
 
 
         /*
-         * Set the caller's offer as our
-         * remote description.
+         * Set caller offer.
          */
 
         await peerConnection.setRemoteDescription(
-            new RTCSessionDescription(
-                acceptedCall.offer
-            )
+
+            new RTCSessionDescription({
+
+                type:
+                    acceptedCall.offer.type,
+
+                sdp:
+                    acceptedCall.offer.sdp
+
+            })
+
         );
 
 
         remoteDescriptionSet = true;
 
 
-        await flushPendingIceCandidates();
+        console.log(
+            "REMOTE OFFER SET"
+        );
 
 
         /*
-         * Create our answer.
+         * Create answer.
          */
 
         const answer =
@@ -1238,32 +1834,69 @@ async function acceptCall() {
         );
 
 
+        /*
+         * Wait for ALL local ICE.
+         */
+
+        setCallState(
+            "Preparing connection..."
+        );
+
+
+        await waitForIceGatheringComplete();
+
+
+        const finalAnswer =
+            peerConnection.localDescription;
+
+
+        if(!finalAnswer) {
+
+            throw new Error(
+                "Local answer was not created."
+            );
+
+        }
+
+
+        /*
+         * Send answer.
+         */
+
         await waitForChannelReady(
             callChannel
         );
 
 
-        /*
-         * Send answer directly through the
-         * unique call channel.
-         */
-
-        const sent =
+        const result =
             await callChannel.send({
 
-                type: "broadcast",
+                type:
+                    "broadcast",
 
-                event: "call-answer",
+                event:
+                    "call-answer",
 
                 payload: {
 
-                    callId: callId,
+                    callId:
+                        callId,
 
-                    from: currentUsername,
+                    from:
+                        currentUsername,
 
-                    to: targetUsername,
+                    to:
+                        targetUsername,
 
-                    answer: answer
+                    answer: {
+
+                        type:
+                            finalAnswer.type,
+
+                        sdp:
+                            finalAnswer.sdp
+
+                    }
 
                 }
 
@@ -1271,13 +1904,28 @@ async function acceptCall() {
 
 
         console.log(
-            "ANSWER SENT:",
-            sent
+            "ANSWER RESULT:",
+            result
         );
+
+
+        if(result === "error") {
+
+            throw new Error(
+                "Supabase rejected the call answer."
+            );
+
+        }
 
 
         setCallState(
             "Connecting..."
+        );
+
+
+        setStatus(
+            "Call accepted. Connecting...",
+            ""
         );
 
     }
@@ -1290,11 +1938,15 @@ async function acceptCall() {
         );
 
 
-        await resetCallState(true);
+        await resetCallState(
+            false
+        );
 
 
         setStatus(
-            "Could not accept the call.",
+            getCallErrorMessage(
+                error
+            ),
             "red"
         );
 
@@ -1304,12 +1956,16 @@ async function acceptCall() {
 
 
 /* =========================================
-   UNIQUE CALL CHANNEL
+   CREATE CALL CHANNEL
 ========================================= */
 
 async function createCallChannel(
     id
 ) {
+
+    /*
+     * Remove previous call channel.
+     */
 
     if(callChannel) {
 
@@ -1322,11 +1978,7 @@ async function createCallChannel(
 
         }
 
-        catch(error) {
-
-            console.warn(error);
-
-        }
+        catch(error) {}
 
         callChannel = null;
 
@@ -1354,67 +2006,69 @@ async function createCallChannel(
 
     callChannel =
         supabaseClient.channel(
-            channelName
+
+            channelName,
+
+            {
+
+                config: {
+
+                    broadcast: {
+
+                        ack: true
+
+                    }
+
+                }
+
+            }
+
         );
 
 
     /*
-     * ANSWER
+     * CALL ANSWER
      */
 
     callChannel.on(
+
         "broadcast",
+
         {
-            event: "call-answer"
+            event:
+                "call-answer"
         },
+
         async payload => {
 
             console.log(
-                "CALL ANSWER RECEIVED:",
+                "ANSWER RECEIVED:",
                 payload
             );
+
 
             await handleCallAnswer(
                 payload.payload
             );
 
         }
+
     );
 
 
     /*
-     * ICE
+     * CALL END
      */
 
     callChannel.on(
+
         "broadcast",
+
         {
-            event: "ice-candidate"
+            event:
+                "call-ended"
         },
-        async payload => {
 
-            console.log(
-                "ICE RECEIVED:",
-                payload
-            );
-
-            await handleIceCandidate(
-                payload.payload
-            );
-
-        }
-    );
-
-
-    /*
-     * END CALL
-     */
-
-    callChannel.on(
-        "broadcast",
-        {
-            event: "call-ended"
-        },
         payload => {
 
             const data =
@@ -1442,12 +2096,16 @@ async function createCallChannel(
             );
 
         }
+
     );
 
 
     await waitForChannelSubscription(
         callChannel
     );
+
+
+    callChannelReady = true;
 
 
     console.log(
@@ -1459,7 +2117,7 @@ async function createCallChannel(
 
 
 /* =========================================
-   WAIT FOR SUBSCRIPTION
+   CHANNEL SUBSCRIPTION
 ========================================= */
 
 function waitForChannelSubscription(
@@ -1500,20 +2158,23 @@ function waitForChannelSubscription(
                 setTimeout(
                     () => {
 
-                        if(!finished) {
+                        if(finished)
+                            return;
 
-                            finished = true;
 
-                            reject(
-                                new Error(
-                                    "Realtime channel timeout."
-                                )
-                            );
+                        finished = true;
 
-                        }
+
+                        reject(
+                            new Error(
+                                "Realtime channel timed out."
+                            )
+                        );
 
                     },
-                    10000
+
+                    12000
+
                 );
 
 
@@ -1521,7 +2182,7 @@ function waitForChannelSubscription(
                 status => {
 
                     console.log(
-                        "CALL CHANNEL STATUS:",
+                        "CHANNEL STATUS:",
                         status
                     );
 
@@ -1591,7 +2252,7 @@ function waitForChannelSubscription(
 
 
 /* =========================================
-   WAIT FOR CHANNEL
+   CHANNEL READY
 ========================================= */
 
 function waitForChannelReady(
@@ -1605,7 +2266,7 @@ function waitForChannelReady(
 
                 reject(
                     new Error(
-                        "No channel."
+                        "No call channel."
                     )
                 );
 
@@ -1629,14 +2290,19 @@ function waitForChannelReady(
                 setTimeout(
                     () => {
 
+                        clearInterval(
+                            interval
+                        );
+
                         reject(
                             new Error(
-                                "Channel was not ready."
+                                "Call channel was not ready."
                             )
                         );
 
                     },
-                    10000
+
+                    12000
                 );
 
 
@@ -1662,7 +2328,9 @@ function waitForChannelReady(
                         }
 
                     },
+
                     50
+
                 );
 
         }
@@ -1672,7 +2340,7 @@ function waitForChannelReady(
 
 
 /* =========================================
-   CREATE PEER CONNECTION
+   PEER CONNECTION
 ========================================= */
 
 async function createPeerConnection() {
@@ -1680,8 +2348,11 @@ async function createPeerConnection() {
     if(peerConnection) {
 
         try {
+
             peerConnection.close();
+
         }
+
         catch(error) {}
 
         peerConnection = null;
@@ -1700,8 +2371,13 @@ async function createPeerConnection() {
 
 
     remoteAudio.autoplay = true;
+
     remoteAudio.playsInline = true;
+
     remoteAudio.controls = false;
+
+    remoteAudio.muted = false;
+
 
     remoteAudio.srcObject =
         remoteStream;
@@ -1721,14 +2397,14 @@ async function createPeerConnection() {
 
 
     /*
-     * REMOTE AUDIO
+     * REMOTE TRACK
      */
 
     peerConnection.ontrack =
         async function(event) {
 
             console.log(
-                "REMOTE TRACK RECEIVED:",
+                "REMOTE AUDIO TRACK:",
                 event
             );
 
@@ -1738,35 +2414,25 @@ async function createPeerConnection() {
                 event.streams[0]
             ) {
 
-                event.streams[0]
-                    .getTracks()
-                    .forEach(
-                        track => {
-
-                            if(
-                                !remoteStream
-                                .getTracks()
-                                .some(
-                                    existing =>
-                                        existing.id ===
-                                        track.id
-                                )
-                            ) {
-
-                                remoteStream.addTrack(
-                                    track
-                                );
-
-                            }
-
-                        }
-                    );
+                remoteAudio.srcObject =
+                    event.streams[0];
 
             }
 
+            else {
 
-            remoteAudio.srcObject =
-                remoteStream;
+                if(event.track) {
+
+                    remoteStream.addTrack(
+                        event.track
+                    );
+
+                }
+
+                remoteAudio.srcObject =
+                    remoteStream;
+
+            }
 
 
             try {
@@ -1778,7 +2444,7 @@ async function createPeerConnection() {
             catch(error) {
 
                 console.warn(
-                    "Remote audio play:",
+                    "AUTOPLAY WARNING:",
                     error
                 );
 
@@ -1788,59 +2454,33 @@ async function createPeerConnection() {
 
 
     /*
-     * ICE CANDIDATES
+     * IMPORTANT:
+     *
+     * We DO NOT immediately send ICE
+     * candidates here.
+     *
+     * We wait for ICE gathering to complete.
      */
 
     peerConnection.onicecandidate =
-        async function(event) {
+        function(event) {
 
-            if(
-                !event.candidate ||
-                !callChannel ||
-                !targetUsername ||
-                !callId
-            ) {
+            if(event.candidate) {
 
-                return;
+                console.log(
+                    "ICE CANDIDATE GATHERED"
+                );
 
             }
 
+            else {
 
-            try {
-
-                await waitForChannelReady(
-                    callChannel
+                console.log(
+                    "ICE GATHERING COMPLETE"
                 );
 
-
-                await callChannel.send({
-
-                    type: "broadcast",
-
-                    event: "ice-candidate",
-
-                    payload: {
-
-                        callId: callId,
-
-                        from: currentUsername,
-
-                        to: targetUsername,
-
-                        candidate: event.candidate
-
-                    }
-
-                });
-
-            }
-
-            catch(error) {
-
-                console.warn(
-                    "ICE send error:",
-                    error
-                );
+                iceGatheringComplete =
+                    true;
 
             }
 
@@ -1863,7 +2503,7 @@ async function createPeerConnection() {
 
 
             console.log(
-                "WebRTC connection state:",
+                "WEBRTC CONNECTION:",
                 state
             );
 
@@ -1892,11 +2532,21 @@ async function createPeerConnection() {
             }
 
 
+            if(state === "disconnected") {
+
+                setCallState(
+                    "Connection interrupted..."
+                );
+
+            }
+
+
             if(state === "failed") {
 
                 setCallState(
                     "Connection failed."
                 );
+
 
                 setStatus(
                     "WebRTC connection failed.",
@@ -1906,10 +2556,10 @@ async function createPeerConnection() {
             }
 
 
-            if(state === "disconnected") {
+            if(state === "closed") {
 
-                setCallState(
-                    "Connection interrupted..."
+                console.log(
+                    "Peer connection closed."
                 );
 
             }
@@ -1918,7 +2568,7 @@ async function createPeerConnection() {
 
 
     /*
-     * ICE STATE
+     * ICE CONNECTION STATE
      */
 
     peerConnection.oniceconnectionstatechange =
@@ -1929,7 +2579,7 @@ async function createPeerConnection() {
 
 
             console.log(
-                "ICE connection state:",
+                "ICE STATE:",
                 peerConnection.iceConnectionState
             );
 
@@ -1939,10 +2589,141 @@ async function createPeerConnection() {
 
 
 /* =========================================
+   WAIT FOR ICE GATHERING
+========================================= */
+
+function waitForIceGatheringComplete() {
+
+    return new Promise(
+        (resolve, reject) => {
+
+            if(!peerConnection) {
+
+                reject(
+                    new Error(
+                        "No peer connection."
+                    )
+                );
+
+                return;
+
+            }
+
+
+            if(
+                peerConnection.iceGatheringState ===
+                "complete"
+            ) {
+
+                iceGatheringComplete = true;
+
+                resolve();
+
+                return;
+
+            }
+
+
+            let finished = false;
+
+
+            const timeout =
+                setTimeout(
+                    () => {
+
+                        if(finished)
+                            return;
+
+
+                        finished = true;
+
+
+                        peerConnection.removeEventListener(
+                            "icegatheringstatechange",
+                            checkState
+                        );
+
+
+                        /*
+                         * Do NOT fail immediately.
+                         *
+                         * Some networks can take longer.
+                         * If the state has not completed,
+                         * continue with the current SDP.
+                         */
+
+                        console.warn(
+                            "ICE gathering timeout; continuing."
+                        );
+
+
+                        resolve();
+
+                    },
+
+                    15000
+
+                );
+
+
+            function checkState() {
+
+                if(!peerConnection)
+                    return;
+
+
+                if(
+                    peerConnection.iceGatheringState ===
+                    "complete"
+                ) {
+
+                    if(finished)
+                        return;
+
+
+                    finished = true;
+
+
+                    clearTimeout(
+                        timeout
+                    );
+
+
+                    iceGatheringComplete =
+                        true;
+
+
+                    peerConnection.removeEventListener(
+                        "icegatheringstatechange",
+                        checkState
+                    );
+
+
+                    resolve();
+
+                }
+
+            }
+
+
+            peerConnection.addEventListener(
+                "icegatheringstatechange",
+                checkState
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================
    HANDLE ANSWER
 ========================================= */
 
-async function handleCallAnswer(data) {
+async function handleCallAnswer(
+    data
+) {
 
     if(!data)
         return;
@@ -1978,28 +2759,32 @@ async function handleCallAnswer(data) {
     try {
 
         console.log(
-            "SETTING REMOTE ANSWER"
+            "SETTING REMOTE ANSWER..."
         );
 
 
         await peerConnection.setRemoteDescription(
-            new RTCSessionDescription(
-                data.answer
-            )
+
+            new RTCSessionDescription({
+
+                type:
+                    data.answer.type,
+
+                sdp:
+                    data.answer.sdp
+
+            })
+
         );
 
 
         remoteDescriptionSet = true;
 
 
-        await flushPendingIceCandidates();
+        console.log(
+            "REMOTE ANSWER SET"
+        );
 
-
-        /*
-         * DO NOT say "Connected" here.
-         * WebRTC itself decides when we're
-         * actually connected.
-         */
 
         setCallState(
             "Connecting..."
@@ -2024,126 +2809,6 @@ async function handleCallAnswer(data) {
             "Could not process the answer.",
             "red"
         );
-
-    }
-
-}
-
-
-/* =========================================
-   HANDLE ICE
-========================================= */
-
-async function handleIceCandidate(data) {
-
-    if(!data)
-        return;
-
-
-    if(data.callId !== callId)
-        return;
-
-
-    if(
-        !data.from ||
-        data.from.toLowerCase() !==
-        targetUsername.toLowerCase()
-    ) {
-
-        return;
-
-    }
-
-
-    if(!data.candidate)
-        return;
-
-
-    const candidate =
-        new RTCIceCandidate(
-            data.candidate
-        );
-
-
-    if(
-        peerConnection &&
-        remoteDescriptionSet
-    ) {
-
-        try {
-
-            await peerConnection.addIceCandidate(
-                candidate
-            );
-
-        }
-
-        catch(error) {
-
-            console.warn(
-                "ICE candidate error:",
-                error
-            );
-
-        }
-
-    }
-
-    else {
-
-        pendingIceCandidates.push(
-            candidate
-        );
-
-    }
-
-}
-
-
-/* =========================================
-   FLUSH ICE
-========================================= */
-
-async function flushPendingIceCandidates() {
-
-    if(
-        !peerConnection ||
-        !remoteDescriptionSet
-    ) {
-
-        return;
-
-    }
-
-
-    const candidates =
-        pendingIceCandidates;
-
-
-    pendingIceCandidates = [];
-
-
-    for(
-        const candidate
-        of candidates
-    ) {
-
-        try {
-
-            await peerConnection.addIceCandidate(
-                candidate
-            );
-
-        }
-
-        catch(error) {
-
-            console.warn(
-                "Queued ICE error:",
-                error
-            );
-
-        }
 
     }
 
@@ -2197,7 +2862,7 @@ function toggleMute() {
 
 
 /* =========================================
-   DECLINE
+   DECLINE CALL
 ========================================= */
 
 async function declineCall() {
@@ -2210,23 +2875,65 @@ async function declineCall() {
         incomingCallData;
 
 
+    incomingCallData = null;
+
+
+    stopRingtone();
+
+
+    document.getElementById(
+        "incomingCall"
+    ).classList.remove(
+        "show"
+    );
+
+
     try {
 
-        /*
-         * Join the unique call channel
-         * so the caller receives the decline.
-         */
+        const safeId =
+            String(
+                declined.callId
+            ).replace(
+                /[^a-zA-Z0-9_-]/g,
+                "_"
+            );
+
 
         const channel =
             supabaseClient.channel(
+
                 "chatsapp-call-session-" +
-                String(
-                    declined.callId
-                ).replace(
-                    /[^a-zA-Z0-9_-]/g,
-                    "_"
-                )
+                safeId,
+
+                {
+
+                    config: {
+
+                        broadcast: {
+
+                            ack: true
+
+                        }
+
+                    }
+
+                }
+
             );
+
+
+        channel.on(
+
+            "broadcast",
+
+            {
+                event:
+                    "call-ended"
+            },
+
+            () => {}
+
+        );
 
 
         await waitForChannelSubscription(
@@ -2234,26 +2941,35 @@ async function declineCall() {
         );
 
 
-        await channel.send({
+        const result =
+            await channel.send({
 
-            type: "broadcast",
+                type:
+                    "broadcast",
 
-            event: "call-ended",
+                event:
+                    "call-ended",
 
-            payload: {
+                payload: {
 
-                callId:
-                    declined.callId,
+                    callId:
+                        declined.callId,
 
-                from:
-                    currentUsername,
+                    from:
+                        currentUsername,
 
-                to:
-                    declined.from
+                    to:
+                        declined.from
 
-            }
+                }
 
-        });
+            });
+
+
+        console.log(
+            "DECLINE RESULT:",
+            result
+        );
 
 
         await supabaseClient
@@ -2266,26 +2982,15 @@ async function declineCall() {
     catch(error) {
 
         console.warn(
-            "Decline signaling error:",
+            "DECLINE ERROR:",
             error
         );
 
     }
 
 
-    incomingCallData = null;
-
-    stopRingtone();
-
-
-    document.getElementById(
-        "incomingCall"
-    ).classList.remove(
-        "show"
-    );
-
-
     targetUsername = "";
+
     callId = "";
 
 
@@ -2321,44 +3026,60 @@ async function endCall(
         callId;
 
 
+    const oldChannel =
+        callChannel;
+
+
     if(
         notify &&
         oldTarget &&
         oldCallId &&
-        callChannel
+        oldChannel
     ) {
 
         try {
 
             await waitForChannelReady(
-                callChannel
+                oldChannel
             );
 
 
-            await callChannel.send({
+            const result =
+                await oldChannel.send({
 
-                type: "broadcast",
+                    type:
+                        "broadcast",
 
-                event: "call-ended",
+                    event:
+                        "call-ended",
 
-                payload: {
+                    payload: {
 
-                    callId: oldCallId,
+                        callId:
+                            oldCallId,
 
-                    from: currentUsername,
+                        from:
+                            currentUsername,
 
-                    to: oldTarget
+                        to:
+                            oldTarget
 
-                }
+                    }
 
-            });
+                });
+
+
+            console.log(
+                "END CALL RESULT:",
+                result
+            );
 
         }
 
         catch(error) {
 
             console.warn(
-                "End-call signaling:",
+                "END CALL SIGNALING:",
                 error
             );
 
@@ -2375,7 +3096,7 @@ async function endCall(
 
 
 /* =========================================
-   RESET EVERYTHING
+   RESET CALL
 ========================================= */
 
 async function resetCallState(
@@ -2385,6 +3106,10 @@ async function resetCallState(
     stopRingtone();
 
 
+    /*
+     * Stop microphone.
+     */
+
     if(localStream) {
 
         localStream
@@ -2393,8 +3118,11 @@ async function resetCallState(
                 track => {
 
                     try {
+
                         track.stop();
+
                     }
+
                     catch(error) {}
 
                 }
@@ -2405,12 +3133,18 @@ async function resetCallState(
     }
 
 
+    /*
+     * Close WebRTC.
+     */
+
     if(peerConnection) {
 
         try {
 
             peerConnection.ontrack = null;
+
             peerConnection.onicecandidate = null;
+
             peerConnection.close();
 
         }
@@ -2421,6 +3155,10 @@ async function resetCallState(
 
     }
 
+
+    /*
+     * Remove remote audio.
+     */
 
     if(remoteAudio) {
 
@@ -2444,9 +3182,9 @@ async function resetCallState(
     remoteStream = null;
 
 
-    pendingIceCandidates = [];
-    remoteDescriptionSet = false;
-
+    /*
+     * Remove call channel.
+     */
 
     if(callChannel) {
 
@@ -2461,7 +3199,9 @@ async function resetCallState(
 
         catch(error) {
 
-            console.warn(error);
+            console.warn(
+                error
+            );
 
         }
 
@@ -2469,6 +3209,17 @@ async function resetCallState(
 
     }
 
+
+    callChannelReady = false;
+
+    remoteDescriptionSet = false;
+
+    iceGatheringComplete = false;
+
+
+    /*
+     * Hide screens.
+     */
 
     document.getElementById(
         "activeCall"
@@ -2484,34 +3235,48 @@ async function resetCallState(
     );
 
 
+    /*
+     * Reset mute.
+     */
+
     isMuted = false;
 
 
-    document.getElementById(
-        "muteButton"
-    ).innerText = "🎤";
+    const muteButton =
+        document.getElementById(
+            "muteButton"
+        );
 
 
-    document.getElementById(
-        "muteButton"
-    ).classList.remove(
+    muteButton.innerText =
+        "🎤";
+
+
+    muteButton.classList.remove(
         "muted"
     );
 
 
+    /*
+     * Reset variables.
+     */
+
     incomingCallData = null;
 
     targetUsername = "";
+
     callId = "";
 
     isCaller = false;
+
     callActive = false;
 
-    callChannelReady = false;
-
-    setCallButtonDisabled(false);
-
     callEnding = false;
+
+
+    setCallButtonDisabled(
+        false
+    );
 
 
     if(remoteEnded) {
@@ -2539,7 +3304,9 @@ async function resetCallState(
    SHOW ACTIVE CALL
 ========================================= */
 
-function showActiveCall(username) {
+function showActiveCall(
+    username
+) {
 
     document.getElementById(
         "activeName"
@@ -2568,7 +3335,9 @@ function showActiveCall(username) {
    CALL STATE
 ========================================= */
 
-function setCallState(text) {
+function setCallState(
+    text
+) {
 
     document.getElementById(
         "callState"
@@ -2605,7 +3374,7 @@ function setStatus(
 
 
 /* =========================================
-   BUTTON
+   CALL BUTTON
 ========================================= */
 
 function setCallButtonDisabled(
@@ -2621,10 +3390,71 @@ function setCallButtonDisabled(
 
 
 /* =========================================
+   CALL ERROR MESSAGE
+========================================= */
+
+function getCallErrorMessage(
+    error
+) {
+
+    console.error(
+        "CALL FAILURE:",
+        error
+    );
+
+
+    if(
+        error &&
+        error.name ===
+        "NotAllowedError"
+    ) {
+
+        return (
+            "Microphone permission was denied."
+        );
+
+    }
+
+
+    if(
+        error &&
+        error.name ===
+        "NotFoundError"
+    ) {
+
+        return (
+            "No microphone was found."
+        );
+
+    }
+
+
+    if(
+        error &&
+        error.message
+    ) {
+
+        return (
+            "Call failed: " +
+            error.message
+        );
+
+    }
+
+
+    return (
+        "Could not start the call."
+    );
+
+}
+
+
+/* =========================================
    RINGTONE
 ========================================= */
 
 let ringtoneContext = null;
+
 let ringtoneTimer = null;
 
 
@@ -2681,8 +3511,11 @@ function playRingtone() {
 
 
                 oscillator.stop(
-                    ringtoneContext.currentTime +
+
+                    ringtoneContext
+                    .currentTime +
                     0.25
+
                 );
 
             };
@@ -2702,7 +3535,7 @@ function playRingtone() {
     catch(error) {
 
         console.warn(
-            "Ringtone error:",
+            "RINGTONE ERROR:",
             error
         );
 
@@ -2727,8 +3560,11 @@ function stopRingtone() {
     if(ringtoneContext) {
 
         try {
+
             ringtoneContext.close();
+
         }
+
         catch(error) {}
 
         ringtoneContext = null;
@@ -2766,7 +3602,17 @@ window.addEventListener(
             localStream
                 .getTracks()
                 .forEach(
-                    track => track.stop()
+                    track => {
+
+                        try {
+
+                            track.stop();
+
+                        }
+
+                        catch(error) {}
+
+                    }
                 );
 
         }
@@ -2774,7 +3620,13 @@ window.addEventListener(
 
         if(peerConnection) {
 
-            peerConnection.close();
+            try {
+
+                peerConnection.close();
+
+            }
+
+            catch(error) {}
 
         }
 
@@ -2784,5 +3636,5 @@ window.addEventListener(
 </script>
 
 </body>
-</html>
 
+</html>
