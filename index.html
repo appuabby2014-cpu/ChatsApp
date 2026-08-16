@@ -3,16 +3,8 @@
 
 <head>
 
-<link rel="manifest" href="./manifest.json">
-
-<meta name="theme-color" content="#7c3aed">
-
 <meta charset="UTF-8">
-
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>ChatsApp</title>
 
@@ -20,566 +12,72 @@
 
 <style>
 
-/* =========================================================
-   CHATSAPP BASE
-========================================================= */
-
-@import url(
-    'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap'
-);
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 * {
     box-sizing: border-box;
 }
 
 body {
-
     margin: 0;
-
     min-height: 100vh;
-
     font-family: "Inter", sans-serif;
 
     background:
-        radial-gradient(
-            circle at 15% 20%,
-            #253b6e 0%,
-            transparent 35%
-        ),
-        radial-gradient(
-            circle at 85% 80%,
-            #34205d 0%,
-            transparent 35%
-        ),
+        radial-gradient(circle at 15% 20%, #253b6e 0%, transparent 35%),
+        radial-gradient(circle at 85% 80%, #34205d 0%, transparent 35%),
         #080b14;
 
     color: white;
-
     overflow-x: hidden;
-
-    transition:
-        background 1s ease,
-        filter .5s ease;
-
 }
-
-/* =========================================================
-   STRANGER THINGS WALLPAPER
-========================================================= */
-
-body.stranger-wallpaper {
-
-    background:
-        radial-gradient(
-            ellipse at 50% 115%,
-            rgba(130,0,0,.55),
-            transparent 48%
-        ),
-        radial-gradient(
-            ellipse at 10% 10%,
-            rgba(100,0,0,.28),
-            transparent 40%
-        ),
-        radial-gradient(
-            ellipse at 90% 20%,
-            rgba(80,0,0,.25),
-            transparent 40%
-        ),
-        #050204;
-
-}
-
-/* Red atmospheric overlay */
-
-body.stranger-wallpaper::before {
-
-    content: "";
-
-    position: fixed;
-
-    inset: 0;
-
-    pointer-events: none;
-
-    z-index: 9990;
-
-    background:
-        radial-gradient(
-            ellipse at center,
-            transparent 20%,
-            rgba(40,0,0,.18) 60%,
-            rgba(0,0,0,.62) 100%
-        );
-
-    animation:
-        upsideDownPulse
-        5s
-        ease-in-out
-        infinite;
-
-}
-
-@keyframes upsideDownPulse {
-
-    0%,100% {
-        opacity: .65;
-    }
-
-    50% {
-        opacity: 1;
-    }
-
-}
-
-/* =========================================================
-   UPSIDE DOWN VINES
-========================================================= */
-
-.upside-vines {
-
-    position: fixed;
-
-    inset: 0;
-
-    pointer-events: none;
-
-    overflow: hidden;
-
-    z-index: 9991;
-
-    display: none;
-
-}
-
-body.stranger-wallpaper .upside-vines {
-    display: block;
-}
-
-.vine {
-
-    position: absolute;
-
-    width: 3px;
-
-    height: 130%;
-
-    background:
-        linear-gradient(
-            to bottom,
-            transparent,
-            rgba(100,0,0,.6),
-            #280006,
-            rgba(130,0,0,.5),
-            transparent
-        );
-
-    opacity: .45;
-
-    transform-origin: top;
-
-    filter:
-        drop-shadow(
-            0 0 7px
-            rgba(150,0,0,.55)
-        );
-
-}
-
-.vine:nth-child(1) {
-
-    left: 3%;
-
-    transform:
-        rotate(14deg);
-
-}
-
-.vine:nth-child(2) {
-
-    left: 12%;
-
-    transform:
-        rotate(-9deg);
-
-}
-
-.vine:nth-child(3) {
-
-    left: 28%;
-
-    transform:
-        rotate(12deg);
-
-}
-
-.vine:nth-child(4) {
-
-    right: 5%;
-
-    transform:
-        rotate(-15deg);
-
-}
-
-.vine:nth-child(5) {
-
-    right: 17%;
-
-    transform:
-        rotate(8deg);
-
-}
-
-.vine:nth-child(6) {
-
-    right: 31%;
-
-    transform:
-        rotate(-11deg);
-
-}
-
-/* =========================================================
-   STRANGER THINGS SKETCH LAYER
-========================================================= */
-
-.stranger-sketches {
-
-    position: fixed;
-
-    inset: 0;
-
-    pointer-events: none;
-
-    overflow: hidden;
-
-    z-index: 9992;
-
-    display: none;
-
-}
-
-body.stranger-wallpaper .stranger-sketches {
-    display: block;
-}
-
-/* Original monster sketch */
-
-.monster-sketch {
-
-    position: absolute;
-
-    width: 210px;
-
-    height: 300px;
-
-    opacity: .17;
-
-    filter:
-        drop-shadow(
-            0 0 10px
-            rgba(180,0,0,.5)
-        );
-
-    animation:
-        monsterFloat
-        8s
-        ease-in-out
-        infinite;
-
-}
-
-.monster-sketch.left {
-
-    left: -35px;
-
-    bottom: 3%;
-
-    transform:
-        rotate(-7deg);
-
-}
-
-.monster-sketch.right {
-
-    right: -40px;
-
-    top: 8%;
-
-    transform:
-        rotate(8deg)
-        scale(.85);
-
-    animation-delay: 2s;
-
-}
-
-.monster-sketch.center {
-
-    left: 50%;
-
-    top: 48%;
-
-    transform:
-        translate(-50%,-50%)
-        scale(.7);
-
-    opacity: .08;
-
-    animation-delay: 4s;
-
-}
-
-@keyframes monsterFloat {
-
-    0%,100% {
-        translate: 0 0;
-    }
-
-    50% {
-        translate: 0 -14px;
-    }
-
-}
-
-/* =========================================================
-   SKETCH LINES
-========================================================= */
-
-.sketch-line {
-
-    fill: none;
-
-    stroke:
-        rgba(205,25,25,.9);
-
-    stroke-width: 2;
-
-    stroke-linecap: round;
-
-    stroke-linejoin: round;
-
-}
-
-.sketch-dark {
-
-    fill:
-        rgba(20,0,3,.72);
-
-    stroke:
-        rgba(170,20,20,.8);
-
-    stroke-width: 2;
-
-}
-
-/* =========================================================
-   STRANGER PARTICLES
-========================================================= */
-
-.stranger-particles {
-
-    position: fixed;
-
-    inset: 0;
-
-    pointer-events: none;
-
-    overflow: hidden;
-
-    z-index: 9993;
-
-    display: none;
-
-}
-
-body.stranger-wallpaper .stranger-particles {
-    display: block;
-}
-
-.stranger-particle {
-
-    position: absolute;
-
-    width: 3px;
-
-    height: 3px;
-
-    border-radius: 50%;
-
-    background: #b1000c;
-
-    box-shadow:
-        0 0 7px #ff1b2d;
-
-    animation:
-        strangerDust
-        6s
-        linear
-        infinite;
-
-}
-
-.stranger-particle:nth-child(1) {
-    left: 8%;
-    top: 90%;
-    animation-delay: 0s;
-}
-
-.stranger-particle:nth-child(2) {
-    left: 17%;
-    top: 70%;
-    animation-delay: 1s;
-}
-
-.stranger-particle:nth-child(3) {
-    left: 29%;
-    top: 85%;
-    animation-delay: 2s;
-}
-
-.stranger-particle:nth-child(4) {
-    left: 41%;
-    top: 65%;
-    animation-delay: 3s;
-}
-
-.stranger-particle:nth-child(5) {
-    left: 57%;
-    top: 92%;
-    animation-delay: 1.5s;
-}
-
-.stranger-particle:nth-child(6) {
-    left: 68%;
-    top: 72%;
-    animation-delay: 4s;
-}
-
-.stranger-particle:nth-child(7) {
-    left: 81%;
-    top: 88%;
-    animation-delay: 2.5s;
-}
-
-.stranger-particle:nth-child(8) {
-    left: 92%;
-    top: 62%;
-    animation-delay: 3.5s;
-}
-
-@keyframes strangerDust {
-
-    0% {
-        transform:
-            translateY(20px)
-            scale(.4);
-
-        opacity: 0;
-    }
-
-    25% {
-        opacity: .8;
-    }
-
-    100% {
-        transform:
-            translateY(-180px)
-            scale(1);
-
-        opacity: 0;
-    }
-
-}
-
-/* =========================================================
-   LOADING SCREEN
-========================================================= */
 
 #loadingScreen {
-
     position: fixed;
-
     inset: 0;
-
     z-index: 99999;
 
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     flex-direction: column;
 
     background:
-        radial-gradient(
-            circle at 20% 20%,
-            #253b6e 0%,
-            transparent 35%
-        ),
-        radial-gradient(
-            circle at 80% 80%,
-            #34205d 0%,
-            transparent 35%
-        ),
+        radial-gradient(circle at 20% 20%, #253b6e 0%, transparent 35%),
+        radial-gradient(circle at 80% 80%, #34205d 0%, transparent 35%),
         #080b14;
 
-    transition:
-        opacity .8s ease,
-        visibility .8s ease;
-
+    transition: opacity .8s ease, visibility .8s ease;
 }
 
 #loadingScreen.hidden {
-
     opacity: 0;
-
     visibility: hidden;
-
     pointer-events: none;
-
 }
 
 .loading-logo {
-
     width: 96px;
-
     height: 96px;
-
     border-radius: 29px;
 
     display: flex;
-
     align-items: center;
-
     justify-content: center;
 
     font-size: 45px;
-
     font-weight: 800;
 
-    background:
-        linear-gradient(
-            135deg,
-            #5b8cff,
-            #8d5cff
-        );
+    background: linear-gradient(135deg,#5b8cff,#8d5cff);
 
     box-shadow:
         0 0 25px rgba(91,140,255,.55),
         0 0 60px rgba(121,92,255,.3);
 
-    animation:
-        loadingLogoGlow
-        2s
-        ease-in-out
-        infinite;
+    animation: loadingLogoGlow 2s ease-in-out infinite;
 
     position: relative;
-
     z-index: 5;
-
 }
 
 .loading-logo.connected {
@@ -589,23 +87,19 @@ body.stranger-wallpaper .stranger-particles {
 @keyframes loadingLogoGlow {
 
     0%,100% {
-
         transform: scale(1);
 
         box-shadow:
             0 0 25px rgba(91,140,255,.55),
             0 0 60px rgba(121,92,255,.3);
-
     }
 
     50% {
-
         transform: scale(1.045);
 
         box-shadow:
             0 0 38px rgba(91,140,255,.75),
             0 0 85px rgba(121,92,255,.45);
-
     }
 
 }
@@ -613,123 +107,61 @@ body.stranger-wallpaper .stranger-particles {
 @keyframes connectedPulse {
 
     0% {
-        transform: scale(1);
+        transform:scale(1);
     }
 
     45% {
-        transform: scale(1.14);
+        transform:scale(1.14);
     }
 
     100% {
-        transform: scale(1);
+        transform:scale(1);
     }
 
 }
 
 .loading-particles {
-
-    position: absolute;
-
-    width: 280px;
-
-    height: 280px;
-
-    left: 50%;
-
-    top: 50%;
-
-    transform:
-        translate(-50%,-50%);
-
-    pointer-events: none;
-
-    z-index: 3;
-
+    position:absolute;
+    width:280px;
+    height:280px;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    pointer-events:none;
+    z-index:3;
 }
 
 .loading-particle {
-
-    position: absolute;
-
-    width: 6px;
-
-    height: 6px;
-
-    border-radius: 50%;
-
-    background: #7097ff;
+    position:absolute;
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:#7097ff;
 
     box-shadow:
         0 0 10px #7097ff,
         0 0 20px rgba(112,151,255,.8);
 
-    left: 50%;
+    left:50%;
+    top:50%;
+    opacity:0;
 
-    top: 50%;
-
-    opacity: 0;
-
-    animation:
-        particleFly
-        2.2s
-        ease-in-out
-        infinite;
-
+    animation:particleFly 2.2s ease-in-out infinite;
 }
 
-.loading-particle:nth-child(1) {
-    --x:-110px;
-    --y:-90px;
-}
-
-.loading-particle:nth-child(2) {
-    --x:105px;
-    --y:-75px;
-    animation-delay:.25s;
-}
-
-.loading-particle:nth-child(3) {
-    --x:-125px;
-    --y:55px;
-    animation-delay:.5s;
-}
-
-.loading-particle:nth-child(4) {
-    --x:120px;
-    --y:70px;
-    animation-delay:.75s;
-}
-
-.loading-particle:nth-child(5) {
-    --x:-70px;
-    --y:115px;
-    animation-delay:1s;
-}
-
-.loading-particle:nth-child(6) {
-    --x:75px;
-    --y:-120px;
-    animation-delay:1.25s;
-}
-
-.loading-particle:nth-child(7) {
-    --x:130px;
-    --y:0;
-    animation-delay:1.5s;
-}
-
-.loading-particle:nth-child(8) {
-    --x:-130px;
-    --y:0;
-    animation-delay:1.75s;
-}
+.loading-particle:nth-child(1){--x:-110px;--y:-90px;animation-delay:0s}
+.loading-particle:nth-child(2){--x:105px;--y:-75px;animation-delay:.25s}
+.loading-particle:nth-child(3){--x:-125px;--y:55px;animation-delay:.5s}
+.loading-particle:nth-child(4){--x:120px;--y:70px;animation-delay:.75s}
+.loading-particle:nth-child(5){--x:-70px;--y:115px;animation-delay:1s}
+.loading-particle:nth-child(6){--x:75px;--y:-120px;animation-delay:1.25s}
+.loading-particle:nth-child(7){--x:130px;--y:0;animation-delay:1.5s}
+.loading-particle:nth-child(8){--x:-130px;--y:0;animation-delay:1.75s}
 
 @keyframes particleFly {
 
     0% {
-        transform:
-            translate(var(--x),var(--y))
-            scale(.4);
+        transform:translate(var(--x),var(--y)) scale(.4);
         opacity:0;
     }
 
@@ -738,36 +170,24 @@ body.stranger-wallpaper .stranger-particles {
     }
 
     100% {
-        transform:
-            translate(0,0)
-            scale(.05);
+        transform:translate(0,0) scale(.05);
         opacity:0;
     }
 
 }
 
 .loading-title {
-
     margin-top:25px;
-
     font-size:32px;
-
     font-weight:800;
-
 }
 
 .loading-subtitle {
-
     margin-top:8px;
-
     color:#8d96ad;
-
     font-size:14px;
-
     min-height:20px;
-
     transition:.3s;
-
 }
 
 .loading-subtitle.connected {
@@ -775,40 +195,24 @@ body.stranger-wallpaper .stranger-particles {
 }
 
 .loading-dots {
-
     display:flex;
-
     gap:7px;
-
     margin-top:25px;
-
 }
 
 .loading-dots span {
-
     width:8px;
-
     height:8px;
-
     border-radius:50%;
-
     background:#7097ff;
 
-    animation:
-        loadingDot
-        1.2s
-        infinite
-        ease-in-out;
+    animation:loadingDot 1.2s infinite ease-in-out;
 
+    box-shadow:0 0 8px rgba(112,151,255,.6);
 }
 
-.loading-dots span:nth-child(2) {
-    animation-delay:.15s;
-}
-
-.loading-dots span:nth-child(3) {
-    animation-delay:.3s;
-}
+.loading-dots span:nth-child(2){animation-delay:.15s}
+.loading-dots span:nth-child(3){animation-delay:.3s}
 
 @keyframes loadingDot {
 
@@ -824,111 +228,54 @@ body.stranger-wallpaper .stranger-particles {
 
 }
 
-/* =========================================================
-   FLOATING EMOJIS
-========================================================= */
-
 .floating-emojis {
-
     position:fixed;
-
     inset:0;
-
     pointer-events:none;
-
     overflow:hidden;
-
     z-index:0;
-
 }
 
 .floating-emojis span {
-
     position:absolute;
-
     opacity:.12;
-
     font-size:25px;
-
-    animation:
-        floatEmoji
-        12s
-        linear
-        infinite;
-
+    animation:floatEmoji 12s linear infinite;
 }
 
-.floating-emojis span:nth-child(1) {
-    left:10%;
-    top:20%;
-}
-
-.floating-emojis span:nth-child(2) {
-    left:80%;
-    top:15%;
-    animation-delay:3s;
-}
-
-.floating-emojis span:nth-child(3) {
-    left:25%;
-    top:75%;
-    animation-delay:6s;
-}
-
-.floating-emojis span:nth-child(4) {
-    left:70%;
-    top:70%;
-    animation-delay:2s;
-}
-
-.floating-emojis span:nth-child(5) {
-    left:50%;
-    top:40%;
-    animation-delay:8s;
-}
+.floating-emojis span:nth-child(1){left:10%;top:20%}
+.floating-emojis span:nth-child(2){left:80%;top:15%;animation-delay:3s}
+.floating-emojis span:nth-child(3){left:25%;top:75%;animation-delay:6s}
+.floating-emojis span:nth-child(4){left:70%;top:70%;animation-delay:2s}
+.floating-emojis span:nth-child(5){left:50%;top:40%;animation-delay:8s}
 
 @keyframes floatEmoji {
 
     0%,100% {
-        transform:
-            translateY(20px)
-            rotate(0deg);
+        transform:translateY(20px) rotate(0deg);
     }
 
     50% {
-        transform:
-            translateY(-30px)
-            rotate(10deg);
+        transform:translateY(-30px) rotate(10deg);
     }
 
 }
 
-/* =========================================================
-   AUTH
-========================================================= */
-
 .auth-screen {
-
     min-height:100vh;
 
     display:flex;
-
     align-items:center;
-
     justify-content:center;
 
     padding:20px;
 
     position:relative;
-
     z-index:1;
-
 }
 
 .auth-box {
-
     width:100%;
-
     max-width:440px;
 
     padding:42px;
@@ -946,13 +293,10 @@ body.stranger-wallpaper .stranger-particles {
     backdrop-filter:blur(20px);
 
     text-align:center;
-
 }
 
 .logo {
-
     width:70px;
-
     height:70px;
 
     margin:0 auto 20px;
@@ -960,22 +304,16 @@ body.stranger-wallpaper .stranger-particles {
     border-radius:22px;
 
     display:flex;
-
     align-items:center;
-
     justify-content:center;
 
     font-size:32px;
-
     font-weight:800;
 
-    background:
-        linear-gradient(
-            135deg,
-            #5b8cff,
-            #8d5cff
-        );
+    background:linear-gradient(135deg,#5b8cff,#8d5cff);
 
+    box-shadow:
+        0 10px 30px rgba(91,140,255,.35);
 }
 
 .auth-box h1 {
@@ -984,41 +322,26 @@ body.stranger-wallpaper .stranger-particles {
 }
 
 .subtitle {
-
     color:#8d96ad;
-
     margin:10px 0 30px;
-
     font-size:14px;
-
     line-height:1.5;
-
 }
 
 .input-group {
-
     text-align:left;
-
     margin-bottom:15px;
-
 }
 
 .input-group label {
-
     display:block;
-
     margin-bottom:7px;
-
     color:#9ca5ba;
-
     font-size:13px;
-
     font-weight:600;
-
 }
 
 input {
-
     width:100%;
 
     padding:15px 17px;
@@ -1035,20 +358,17 @@ input {
 
     font-size:15px;
 
+    transition:.2s;
 }
 
 input:focus {
-
     border-color:#638cff;
 
     box-shadow:
-        0 0 0 3px
-        rgba(99,140,255,.1);
-
+        0 0 0 3px rgba(99,140,255,.1);
 }
 
 .primary {
-
     width:100%;
 
     padding:15px;
@@ -1067,7 +387,6 @@ input:focus {
     color:white;
 
     font-weight:700;
-
     font-size:15px;
 
     cursor:pointer;
@@ -1075,41 +394,28 @@ input:focus {
     margin-top:8px;
 
     transition:.2s;
-
 }
 
 .primary:hover {
-
     transform:translateY(-2px);
 
     box-shadow:
-        0 10px 30px
-        rgba(91,140,255,.3);
-
+        0 10px 30px rgba(91,140,255,.3);
 }
 
 .switch {
-
     margin-top:22px;
-
     color:#7f89a2;
-
     font-size:14px;
-
 }
 
 .switch span {
-
     color:#7097ff;
-
     cursor:pointer;
-
     font-weight:600;
-
 }
 
 .message {
-
     display:none;
 
     margin-bottom:18px;
@@ -1119,45 +425,29 @@ input:focus {
     border-radius:11px;
 
     font-size:13px;
-
 }
 
 .message.error {
-
     display:block;
 
-    background:
-        rgba(255,75,75,.1);
+    background:rgba(255,75,75,.1);
 
-    border:
-        1px solid
-        rgba(255,75,75,.25);
+    border:1px solid rgba(255,75,75,.25);
 
     color:#ff8585;
-
 }
 
 .message.success {
-
     display:block;
 
-    background:
-        rgba(70,210,130,.1);
+    background:rgba(70,210,130,.1);
 
-    border:
-        1px solid
-        rgba(70,210,130,.25);
+    border:1px solid rgba(70,210,130,.25);
 
     color:#71e0a0;
-
 }
 
-/* =========================================================
-   APP
-========================================================= */
-
 .app {
-
     display:none;
 
     min-height:100vh;
@@ -1167,11 +457,9 @@ input:focus {
     position:relative;
 
     z-index:1;
-
 }
 
 .sidebar {
-
     background:rgba(10,13,23,.94);
 
     border-right:1px solid #202638;
@@ -1179,35 +467,26 @@ input:focus {
     padding:25px 16px;
 
     display:flex;
-
     flex-direction:column;
-
 }
 
 .brand {
-
     display:flex;
-
     align-items:center;
 
     gap:12px;
 
     padding:5px 12px 30px;
-
 }
 
 .brand-icon {
-
     width:42px;
-
     height:42px;
 
     border-radius:13px;
 
     display:flex;
-
     align-items:center;
-
     justify-content:center;
 
     background:
@@ -1218,33 +497,25 @@ input:focus {
         );
 
     font-weight:800;
-
 }
 
 .brand-name {
-
     font-size:20px;
-
     font-weight:800;
-
 }
 
 .nav-title {
-
     color:#525b72;
 
     font-size:11px;
-
     font-weight:700;
 
     letter-spacing:1.5px;
 
     padding:10px 13px;
-
 }
 
 .nav-btn {
-
     width:100%;
 
     padding:13px;
@@ -1266,28 +537,20 @@ input:focus {
     cursor:pointer;
 
     transition:.2s;
-
 }
 
 .nav-btn:hover,
 .nav-btn.active {
-
     background:#1b2235;
-
     color:white;
-
 }
 
 .nav-icon {
-
     display:inline-block;
-
     width:25px;
-
 }
 
 .profile {
-
     margin-top:auto;
 
     background:#151a2a;
@@ -1297,41 +560,32 @@ input:focus {
     border-radius:15px;
 
     padding:13px;
-
 }
 
 .profile-name {
-
     font-weight:600;
-
     font-size:14px;
 
     overflow:hidden;
 
     text-overflow:ellipsis;
-
 }
 
 .profile-status {
-
     color:#55d88a;
 
     font-size:11px;
 
     margin-top:4px;
-
 }
 
 .main {
-
     padding:35px;
 
     overflow-y:auto;
-
 }
 
 .topbar {
-
     display:flex;
 
     align-items:center;
@@ -1339,37 +593,26 @@ input:focus {
     justify-content:space-between;
 
     margin-bottom:35px;
-
 }
 
 .topbar h1 {
-
     margin:0;
-
     font-size:30px;
-
 }
 
 .topbar p {
-
     margin:7px 0 0;
-
     color:#747e96;
-
 }
 
 .avatar {
-
     width:45px;
-
     height:45px;
 
     border-radius:50%;
 
     display:flex;
-
     align-items:center;
-
     justify-content:center;
 
     background:
@@ -1380,25 +623,18 @@ input:focus {
         );
 
     font-weight:700;
-
 }
 
 .cards {
-
     display:grid;
 
     grid-template-columns:
-        repeat(
-            auto-fit,
-            minmax(230px,1fr)
-        );
+        repeat(auto-fit,minmax(230px,1fr));
 
     gap:20px;
-
 }
 
 .card {
-
     min-height:180px;
 
     padding:25px;
@@ -1412,39 +648,28 @@ input:focus {
     cursor:pointer;
 
     transition:.25s;
-
 }
 
 .card:hover {
-
     transform:translateY(-5px);
 
     border-color:#3c4b70;
 
     box-shadow:
-        0 15px 40px
-        rgba(0,0,0,.25);
-
+        0 15px 40px rgba(0,0,0,.25);
 }
 
 .card-icon {
-
     font-size:30px;
-
     margin-bottom:20px;
-
 }
 
 .card h2 {
-
     margin:0 0 8px;
-
     font-size:19px;
-
 }
 
 .card p {
-
     margin:0;
 
     color:#78829a;
@@ -1452,105 +677,9 @@ input:focus {
     font-size:13px;
 
     line-height:1.5;
-
 }
-
-/* =========================================================
-   STRANGER THINGS EVENT CARD
-========================================================= */
-
-.stranger-event-card {
-
-    position:relative;
-
-    overflow:hidden;
-
-    background:
-        radial-gradient(
-            circle at 80% 20%,
-            rgba(160,0,0,.28),
-            transparent 40%
-        ),
-        linear-gradient(
-            135deg,
-            #17070b,
-            #100b16
-        );
-
-    border:
-        1px solid
-        rgba(190,30,45,.55);
-
-}
-
-.stranger-event-card::before {
-
-    content:"";
-
-    position:absolute;
-
-    inset:-100%;
-
-    background:
-        repeating-linear-gradient(
-            110deg,
-            transparent 0px,
-            transparent 18px,
-            rgba(150,0,0,.08) 20px,
-            transparent 23px
-        );
-
-    animation:
-        eventVines
-        12s
-        linear
-        infinite;
-
-}
-
-@keyframes eventVines {
-
-    from {
-        transform:translateX(-20%);
-    }
-
-    to {
-        transform:translateX(20%);
-    }
-
-}
-
-.stranger-event-card > * {
-    position:relative;
-    z-index:2;
-}
-
-.stranger-event-card .card-icon {
-
-    text-shadow:
-        0 0 12px #ff172d,
-        0 0 30px rgba(180,0,0,.8);
-
-}
-
-.stranger-event-card:hover {
-
-    border-color:#ff2438;
-
-    box-shadow:
-        0 0 30px
-        rgba(180,0,0,.22),
-        0 15px 40px
-        rgba(0,0,0,.35);
-
-}
-
-/* =========================================================
-   WELCOME
-========================================================= */
 
 .welcome {
-
     margin-top:25px;
 
     padding:25px;
@@ -1564,420 +693,33 @@ input:focus {
             rgba(121,92,255,.08)
         );
 
-    border:
-        1px solid
-        rgba(91,140,255,.2);
-
+    border:1px solid rgba(91,140,255,.2);
 }
 
 .welcome h2 {
     margin-top:0;
 }
 
-/* =========================================================
-   EVENT MODAL
-========================================================= */
-
-.event-overlay {
-
-    position:fixed;
-
-    inset:0;
-
-    z-index:50000;
-
-    display:none;
-
-    align-items:center;
-
-    justify-content:center;
-
-    padding:20px;
-
-    background:
-        rgba(0,0,0,.84);
-
-    backdrop-filter:
-        blur(12px);
-
-}
-
-.event-overlay.show {
-
-    display:flex;
-
-}
-
-.event-window {
-
-    position:relative;
-
-    width:100%;
-
-    max-width:850px;
-
-    max-height:90vh;
-
-    overflow:hidden;
-
-    border-radius:28px;
-
-    border:
-        1px solid
-        rgba(220,30,45,.65);
-
-    background:
-        radial-gradient(
-            circle at 50% 10%,
-            rgba(120,0,0,.3),
-            transparent 45%
-        ),
-        #080306;
-
-    box-shadow:
-        0 0 80px
-        rgba(170,0,20,.28),
-        0 30px 100px
-        rgba(0,0,0,.8);
-
-    animation:
-        eventOpen
-        .45s
-        ease;
-
-}
-
-@keyframes eventOpen {
-
-    from {
-
-        opacity:0;
-
-        transform:
-            translateY(30px)
-            scale(.94);
-
-    }
-
-    to {
-
-        opacity:1;
-
-        transform:
-            translateY(0)
-            scale(1);
-
-    }
-
-}
-
-.event-art {
-
-    position:absolute;
-
-    inset:0;
-
-    pointer-events:none;
-
-    overflow:hidden;
-
-}
-
-.event-art::before {
-
-    content:"";
-
-    position:absolute;
-
-    width:500px;
-
-    height:500px;
-
-    left:50%;
-
-    top:40%;
-
-    transform:
-        translate(-50%,-50%);
-
-    border-radius:50%;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(130,0,0,.35),
-            transparent 65%
-        );
-
-    animation:
-        eventGlow
-        4s
-        ease-in-out
-        infinite;
-
-}
-
-@keyframes eventGlow {
-
-    0%,100% {
-        opacity:.45;
-        transform:
-            translate(-50%,-50%)
-            scale(.9);
-    }
-
-    50% {
-        opacity:1;
-        transform:
-            translate(-50%,-50%)
-            scale(1.1);
-    }
-
-}
-
-.event-content {
-
-    position:relative;
-
-    z-index:5;
-
-    padding:45px;
-
-    text-align:center;
-
-    overflow-y:auto;
-
-    max-height:90vh;
-
-}
-
-.event-small {
-
-    color:#e22a38;
-
-    font-size:12px;
-
-    font-weight:800;
-
-    letter-spacing:4px;
-
-    text-transform:uppercase;
-
-}
-
-.event-title {
-
-    margin:10px 0;
-
-    font-family:Georgia,serif;
-
-    font-size:
-        clamp(
-            42px,
-            8vw,
-            82px
-        );
-
-    letter-spacing:3px;
-
-    color:#e7d8d8;
-
-    text-shadow:
-        3px 3px 0 #5b0007,
-        0 0 15px #a00010,
-        0 0 45px rgba(170,0,0,.75);
-
-}
-
-.event-subtitle {
-
-    max-width:600px;
-
-    margin:0 auto;
-
-    color:#a79ba0;
-
-    line-height:1.6;
-
-}
-
-.event-art-row {
-
-    display:flex;
-
-    justify-content:center;
-
-    gap:25px;
-
-    margin:25px 0;
-
-    flex-wrap:wrap;
-
-}
-
-.event-mini-sketch {
-
-    width:160px;
-
-    height:170px;
-
-    opacity:.85;
-
-    filter:
-        drop-shadow(
-            0 0 12px
-            rgba(190,0,20,.4)
-        );
-
-}
-
-.event-warning {
-
-    margin:20px auto;
-
-    max-width:550px;
-
-    padding:14px;
-
-    border:
-        1px solid
-        rgba(180,20,35,.4);
-
-    border-radius:12px;
-
-    background:
-        rgba(100,0,10,.12);
-
-    color:#c5afb2;
-
-    font-size:13px;
-
-}
-
-.equip-button {
-
-    border:none;
-
-    padding:16px 28px;
-
-    border-radius:14px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #8c0815,
-            #d21c2e
-        );
-
-    color:white;
-
-    font-size:15px;
-
-    font-weight:800;
-
-    cursor:pointer;
-
-    box-shadow:
-        0 0 25px
-        rgba(200,0,20,.28);
-
-    transition:.25s;
-
-}
-
-.equip-button:hover {
-
-    transform:
-        translateY(-3px)
-        scale(1.02);
-
-    box-shadow:
-        0 0 40px
-        rgba(220,0,25,.5);
-
-}
-
-.equip-button.equipped {
-
-    background:
-        linear-gradient(
-            135deg,
-            #176c43,
-            #22a663
-        );
-
-}
-
-.event-close {
-
-    position:absolute;
-
-    right:18px;
-
-    top:18px;
-
-    z-index:10;
-
-    width:38px;
-
-    height:38px;
-
-    border-radius:50%;
-
-    border:
-        1px solid
-        rgba(255,255,255,.12);
-
-    background:
-        rgba(0,0,0,.45);
-
-    color:white;
-
-    font-size:20px;
-
-    cursor:pointer;
-
-}
-
-/* =========================================================
-   USER SEARCH
-========================================================= */
-
 .user-search-page {
-
     display:none;
-
-    animation:
-        pageIn
-        .35s
-        ease;
-
+    animation:pageIn .35s ease;
 }
 
 @keyframes pageIn {
 
     from {
-
         opacity:0;
-
-        transform:
-            translateY(12px);
-
+        transform:translateY(12px);
     }
 
     to {
-
         opacity:1;
-
-        transform:
-            translateY(0);
-
+        transform:translateY(0);
     }
 
 }
 
 .search-header {
-
     display:flex;
 
     justify-content:space-between;
@@ -1985,30 +727,20 @@ input:focus {
     align-items:center;
 
     margin-bottom:25px;
-
 }
 
 .search-header h1 {
-
     margin:0;
-
     font-size:30px;
-
 }
 
 .search-header p {
-
     color:#747e96;
-
     margin:7px 0 0;
-
 }
 
 .search-back {
-
-    border:
-        1px solid
-        #30384f;
+    border:1px solid #30384f;
 
     background:#151a2a;
 
@@ -2019,60 +751,44 @@ input:focus {
     border-radius:11px;
 
     cursor:pointer;
-
 }
 
 .search-box-wrap {
-
     position:relative;
-
     margin-bottom:20px;
-
 }
 
 .search-icon {
-
     position:absolute;
 
     left:17px;
-
     top:50%;
 
-    transform:
-        translateY(-50%);
+    transform:translateY(-50%);
 
     font-size:20px;
 
     pointer-events:none;
-
 }
 
 #userSearchInput {
-
     padding-left:50px;
-
     padding-right:45px;
 
     font-size:16px;
 
-    background:
-        rgba(14,18,32,.9);
-
+    background:rgba(14,18,32,.9);
 }
 
 .clear-search {
-
     position:absolute;
 
     right:12px;
-
     top:50%;
 
-    transform:
-        translateY(-50%);
+    transform:translateY(-50%);
 
     width:30px;
-
     height:30px;
 
     border:0;
@@ -2086,11 +802,9 @@ input:focus {
     cursor:pointer;
 
     display:none;
-
 }
 
 .search-info {
-
     display:flex;
 
     justify-content:space-between;
@@ -2102,54 +816,66 @@ input:focus {
     font-size:13px;
 
     margin-bottom:15px;
-
 }
 
 .search-results {
-
     display:grid;
 
     grid-template-columns:
-        repeat(
-            auto-fill,
-            minmax(250px,1fr)
-        );
+        repeat(auto-fill,minmax(250px,1fr));
 
     gap:15px;
-
 }
 
 .user-card {
-
     position:relative;
 
     padding:20px;
 
     border-radius:18px;
 
-    background:
-        rgba(18,23,38,.86);
+    background:rgba(18,23,38,.86);
 
-    border:
-        1px solid
-        #252d42;
+    border:1px solid #252d42;
+
+    transition:.25s;
+
+    animation:userCardIn .35s ease both;
+}
+
+.user-card:hover {
+    transform:translateY(-4px);
+
+    border-color:#4a5e8d;
+
+    box-shadow:
+        0 15px 35px rgba(0,0,0,.25);
+}
+
+@keyframes userCardIn {
+
+    from {
+        opacity:0;
+        transform:translateY(12px) scale(.98);
+    }
+
+    to {
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
 
 }
 
 .user-card-top {
-
     display:flex;
 
     align-items:center;
 
     gap:13px;
-
 }
 
 .user-avatar {
-
     width:52px;
-
     height:52px;
 
     flex-shrink:0;
@@ -2159,7 +885,6 @@ input:focus {
     display:flex;
 
     align-items:center;
-
     justify-content:center;
 
     background:
@@ -2170,27 +895,24 @@ input:focus {
         );
 
     font-size:20px;
-
     font-weight:800;
 
+    box-shadow:
+        0 7px 20px rgba(91,140,255,.25);
 }
 
 .user-name {
-
     font-weight:700;
-
     font-size:16px;
-
+    word-break:break-word;
 }
 
 .user-status {
-
     margin-top:5px;
 
     font-size:12px;
 
     color:#7d879f;
-
 }
 
 .user-status.online {
@@ -2198,26 +920,21 @@ input:focus {
 }
 
 .user-actions {
-
     display:flex;
 
     gap:8px;
 
     margin-top:17px;
-
 }
 
 .user-action {
-
     flex:1;
 
     padding:10px;
 
     border-radius:10px;
 
-    border:
-        1px solid
-        #30384f;
+    border:1px solid #30384f;
 
     background:#151a2a;
 
@@ -2225,10 +942,19 @@ input:focus {
 
     cursor:pointer;
 
+    font-size:12px;
+    font-weight:600;
+
+    transition:.2s;
+}
+
+.user-action:hover {
+    background:#202a43;
+
+    transform:translateY(-1px);
 }
 
 .user-action.message-btn {
-
     background:
         linear-gradient(
             135deg,
@@ -2237,31 +963,64 @@ input:focus {
         );
 
     border:none;
-
 }
 
 .no-results {
-
     display:none;
 
     text-align:center;
 
     padding:70px 20px;
 
+    animation:noResultsIn .4s ease;
+}
+
+@keyframes noResultsIn {
+
+    from {
+        opacity:0;
+        transform:scale(.9);
+    }
+
+    to {
+        opacity:1;
+        transform:scale(1);
+    }
+
 }
 
 .no-results-icon {
-
     font-size:55px;
+
+    animation:
+        noResultsBounce
+        1.5s
+        ease-in-out
+        infinite;
+}
+
+@keyframes noResultsBounce {
+
+    0%,100% {
+        transform:translateY(0);
+    }
+
+    50% {
+        transform:translateY(-8px);
+    }
 
 }
 
-/* =========================================================
-   RECENT SEARCH
-========================================================= */
+.no-results h2 {
+    margin:15px 0 7px;
+}
+
+.no-results p {
+    color:#737d95;
+    margin:0;
+}
 
 .recent-searches {
-
     display:none;
 
     margin-top:20px;
@@ -2270,17 +1029,14 @@ input:focus {
 
     border-radius:17px;
 
-    background:
-        rgba(18,23,38,.75);
+    background:rgba(18,23,38,.75);
 
-    border:
-        1px solid
-        #252d42;
+    border:1px solid #252d42;
 
+    animation:pageIn .3s ease;
 }
 
 .recent-top {
-
     display:flex;
 
     justify-content:space-between;
@@ -2288,7 +1044,6 @@ input:focus {
     align-items:center;
 
     margin-bottom:12px;
-
 }
 
 .recent-top h3 {
@@ -2297,7 +1052,6 @@ input:focus {
 }
 
 .clear-history {
-
     border:0;
 
     background:none;
@@ -2306,23 +1060,19 @@ input:focus {
 
     cursor:pointer;
 
+    font-size:12px;
 }
 
 .recent-list {
-
     display:flex;
 
     flex-wrap:wrap;
 
     gap:8px;
-
 }
 
 .recent-item {
-
-    border:
-        1px solid
-        #30384f;
+    border:1px solid #30384f;
 
     background:#151a2a;
 
@@ -2334,33 +1084,32 @@ input:focus {
 
     cursor:pointer;
 
+    font-size:12px;
+
+    transition:.2s;
 }
 
-/* =========================================================
-   PROFILE PREVIEW
-========================================================= */
+.recent-item:hover {
+    border-color:#5b8cff;
+    color:white;
+}
 
 .profile-preview-overlay {
-
     display:none;
 
     position:fixed;
-
     inset:0;
 
     z-index:10000;
 
-    background:
-        rgba(0,0,0,.65);
+    background:rgba(0,0,0,.65);
 
     backdrop-filter:blur(7px);
 
     align-items:center;
-
     justify-content:center;
 
     padding:20px;
-
 }
 
 .profile-preview-overlay.show {
@@ -2368,9 +1117,7 @@ input:focus {
 }
 
 .profile-preview {
-
     width:100%;
-
     max-width:390px;
 
     padding:30px;
@@ -2381,14 +1128,30 @@ input:focus {
 
     border:1px solid #30384f;
 
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.6);
+
     text-align:center;
+
+    animation:previewIn .3s ease;
+}
+
+@keyframes previewIn {
+
+    from {
+        opacity:0;
+        transform:translateY(20px) scale(.94);
+    }
+
+    to {
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
 
 }
 
 .preview-avatar {
-
     width:90px;
-
     height:90px;
 
     margin:0 auto 15px;
@@ -2396,9 +1159,7 @@ input:focus {
     border-radius:50%;
 
     display:flex;
-
     align-items:center;
-
     justify-content:center;
 
     background:
@@ -2409,25 +1170,20 @@ input:focus {
         );
 
     font-size:34px;
-
     font-weight:800;
-
 }
 
 .preview-name {
-
     font-size:22px;
-
     font-weight:800;
-
 }
 
 .preview-status {
-
     margin-top:6px;
 
     color:#55d88a;
 
+    font-size:13px;
 }
 
 .preview-status.offline {
@@ -2435,17 +1191,14 @@ input:focus {
 }
 
 .preview-actions {
-
     display:flex;
 
     gap:10px;
 
     margin-top:25px;
-
 }
 
 .preview-actions button {
-
     flex:1;
 
     padding:12px;
@@ -2456,16 +1209,12 @@ input:focus {
 
     color:white;
 
-    border:
-        1px solid
-        #30384f;
+    border:1px solid #30384f;
 
     background:#191f31;
-
 }
 
 .preview-actions .preview-message {
-
     background:
         linear-gradient(
             135deg,
@@ -2474,26 +1223,14 @@ input:focus {
         );
 
     border:0;
-
 }
 
-/* =========================================================
-   GLOBAL CHAT
-========================================================= */
-
 .global-chat {
-
     display:none;
-
-    animation:
-        pageIn
-        .35s
-        ease;
-
+    animation:pageIn .35s ease;
 }
 
 .chat-header {
-
     display:flex;
 
     align-items:center;
@@ -2501,32 +1238,23 @@ input:focus {
     justify-content:space-between;
 
     margin-bottom:25px;
-
 }
 
 .chat-header h1 {
-
     margin:0;
-
     font-size:28px;
-
 }
 
 .chat-header p {
-
     color:#55d88a;
 
     margin:7px 0 0;
 
     font-size:13px;
-
 }
 
 .chat-back {
-
-    border:
-        1px solid
-        #30384f;
+    border:1px solid #30384f;
 
     background:#151a2a;
 
@@ -2537,11 +1265,9 @@ input:focus {
     border-radius:11px;
 
     cursor:pointer;
-
 }
 
 .username-box {
-
     max-width:600px;
 
     margin:50px auto;
@@ -2550,15 +1276,11 @@ input:focus {
 
     border-radius:20px;
 
-    background:
-        rgba(18,23,38,.85);
+    background:rgba(18,23,38,.85);
 
-    border:
-        1px solid
-        #242b3e;
+    border:1px solid #242b3e;
 
     text-align:center;
-
 }
 
 .username-box h2 {
@@ -2566,17 +1288,14 @@ input:focus {
 }
 
 .username-box p {
-
     color:#78829a;
 
     font-size:14px;
 
     margin-bottom:25px;
-
 }
 
 .messages {
-
     height:55vh;
 
     overflow-y:auto;
@@ -2585,19 +1304,14 @@ input:focus {
 
     border-radius:18px;
 
-    background:
-        rgba(10,13,23,.75);
+    background:rgba(10,13,23,.75);
 
-    border:
-        1px solid
-        #242b3e;
+    border:1px solid #242b3e;
 
     margin-bottom:15px;
-
 }
 
 .message-item {
-
     margin-bottom:15px;
 
     padding:12px 15px;
@@ -2605,11 +1319,9 @@ input:focus {
     border-radius:13px;
 
     background:#151b2c;
-
 }
 
 .message-user {
-
     color:#7097ff;
 
     font-size:12px;
@@ -2617,25 +1329,20 @@ input:focus {
     font-weight:700;
 
     margin-bottom:4px;
-
 }
 
 .message-text {
-
     color:#e8ebf3;
 
     font-size:14px;
 
     word-break:break-word;
-
 }
 
 .chat-input {
-
     display:flex;
 
     gap:10px;
-
 }
 
 .chat-input input {
@@ -2643,164 +1350,62 @@ input:focus {
 }
 
 .chat-input .primary {
-
     width:auto;
 
     min-width:90px;
-
 }
-
-/* =========================================================
-   MOBILE
-========================================================= */
 
 @media(max-width:800px) {
 
     .app {
-
-        grid-template-columns:
-            75px 1fr;
-
+        grid-template-columns:75px 1fr;
     }
 
     .brand-name,
     .nav-title,
     .nav-btn span,
     .profile {
-
         display:none;
-
     }
 
     .brand {
-
         justify-content:center;
-
     }
 
     .nav-btn {
-
         text-align:center;
-
     }
 
     .nav-icon {
-
         width:auto;
-
     }
 
     .main {
-
         padding:22px;
-
     }
 
     .auth-box {
-
         padding:30px 22px;
-
     }
 
     .chat-input {
-
         flex-direction:column;
-
     }
 
     .chat-input .primary {
-
         width:100%;
-
     }
 
     .search-header {
-
         align-items:flex-start;
-
     }
 
     .search-header h1 {
-
         font-size:24px;
-
     }
 
-    .event-content {
-
-        padding:35px 20px;
-
-    }
-
-    .event-title {
-
-        font-size:45px;
-
-    }
-
-    .event-mini-sketch {
-
-        width:120px;
-
-        height:130px;
-
-    }
-
-}
-
-/* =========================================================
-   RED LIGHTNING
-========================================================= */
-
-.stranger-lightning {
-
-    position:fixed;
-
-    inset:0;
-
-    z-index:9994;
-
-    pointer-events:none;
-
-    display:none;
-
-    background:
-        rgba(255,0,0,.08);
-
-    animation:
-        lightningFlash
-        7s
-        infinite;
-
-}
-
-body.stranger-wallpaper
-.stranger-lightning {
-
-    display:block;
-
-}
-
-@keyframes lightningFlash {
-
-    0%,94%,100% {
-        opacity:0;
-    }
-
-    95% {
-        opacity:.9;
-    }
-
-    96% {
-        opacity:.15;
-    }
-
-    97% {
-        opacity:.75;
-    }
-
-    98% {
-        opacity:0;
+    .search-back {
+        padding:9px 12px;
     }
 
 }
@@ -2810,311 +1415,6 @@ body.stranger-wallpaper
 </head>
 
 <body>
-
-<!-- =======================================================
-     STRANGER THINGS WALLPAPER ART
-======================================================= -->
-
-<div class="upside-vines">
-
-    <div class="vine"></div>
-    <div class="vine"></div>
-    <div class="vine"></div>
-    <div class="vine"></div>
-    <div class="vine"></div>
-    <div class="vine"></div>
-
-</div>
-
-<div class="stranger-particles">
-
-    <span class="stranger-particle"></span>
-    <span class="stranger-particle"></span>
-    <span class="stranger-particle"></span>
-    <span class="stranger-particle"></span>
-    <span class="stranger-particle"></span>
-    <span class="stranger-particle"></span>
-    <span class="stranger-particle"></span>
-    <span class="stranger-particle"></span>
-
-</div>
-
-<div class="stranger-lightning"></div>
-
-<!-- ORIGINAL SKETCH CREATURES -->
-
-<div class="stranger-sketches">
-
-    <!-- LEFT MONSTER -->
-
-    <svg
-        class="monster-sketch left"
-        viewBox="0 0 220 310"
-        aria-hidden="true"
-    >
-
-        <!-- body -->
-
-        <path
-            class="sketch-dark"
-            d="
-            M105 295
-            C75 265 65 225 75 190
-            C50 175 42 145 55 118
-            C35 98 48 70 72 72
-            C62 43 84 27 103 45
-            C118 15 142 25 145 52
-            C174 32 190 55 172 79
-            C199 76 210 101 184 118
-            C198 147 176 173 151 184
-            C165 222 154 265 130 295
-            Z
-            "
-        />
-
-        <!-- flower mouth -->
-
-        <path
-            class="sketch-line"
-            d="
-            M75 116
-            C60 95 73 76 91 88
-            C90 62 112 56 119 82
-            C130 57 151 66 144 91
-            C166 79 179 98 159 116
-            "
-        />
-
-        <path
-            class="sketch-line"
-            d="
-            M78 117
-            C92 145 143 145 159 116
-            C146 160 91 160 78 117
-            "
-        />
-
-        <!-- mouth petals -->
-
-        <path
-            class="sketch-line"
-            d="M86 117 L102 104"
-        />
-
-        <path
-            class="sketch-line"
-            d="M100 128 L108 105"
-        />
-
-        <path
-            class="sketch-line"
-            d="M120 133 L120 104"
-        />
-
-        <path
-            class="sketch-line"
-            d="M140 128 L132 105"
-        />
-
-        <path
-            class="sketch-line"
-            d="M153 117 L139 104"
-        />
-
-        <!-- arms -->
-
-        <path
-            class="sketch-line"
-            d="
-            M74 178
-            C47 190 28 220 17 250
-            "
-        />
-
-        <path
-            class="sketch-line"
-            d="
-            M150 177
-            C177 193 193 222 204 250
-            "
-        />
-
-        <!-- claws -->
-
-        <path
-            class="sketch-line"
-            d="
-            M17 250
-            L5 263
-            M17 250
-            L15 269
-            M17 250
-            L27 263
-            "
-        />
-
-        <path
-            class="sketch-line"
-            d="
-            M204 250
-            L194 263
-            M204 250
-            L205 269
-            M204 250
-            L216 262
-            "
-        />
-
-        <!-- legs -->
-
-        <path
-            class="sketch-line"
-            d="
-            M91 236
-            C88 263 78 282 65 301
-            "
-        />
-
-        <path
-            class="sketch-line"
-            d="
-            M135 236
-            C138 263 149 282 161 301
-            "
-        />
-
-    </svg>
-
-
-    <!-- RIGHT MONSTER -->
-
-    <svg
-        class="monster-sketch right"
-        viewBox="0 0 220 310"
-        aria-hidden="true"
-    >
-
-        <path
-            class="sketch-dark"
-            d="
-            M108 300
-            C80 265 73 224 80 184
-            C54 168 48 138 63 112
-            C42 91 54 66 78 70
-            C70 42 92 27 108 47
-            C123 18 147 28 148 55
-            C175 35 194 58 174 83
-            C199 80 211 104 187 121
-            C201 149 181 174 155 185
-            C164 226 150 269 132 300
-            Z
-            "
-        />
-
-        <path
-            class="sketch-line"
-            d="
-            M81 113
-            C68 91 81 73 97 86
-            C96 61 118 55 124 82
-            C135 58 156 67 148 91
-            C169 81 182 100 160 116
-            "
-        />
-
-        <path
-            class="sketch-line"
-            d="
-            M82 116
-            C97 148 145 146 160 116
-            C149 160 95 160 82 116
-            "
-        />
-
-        <path
-            class="sketch-line"
-            d="M91 118 L104 104"
-        />
-
-        <path
-            class="sketch-line"
-            d="M106 130 L112 105"
-        />
-
-        <path
-            class="sketch-line"
-            d="M124 133 L124 105"
-        />
-
-        <path
-            class="sketch-line"
-            d="M143 128 L135 104"
-        />
-
-        <path
-            class="sketch-line"
-            d="M155 117 L141 104"
-        />
-
-        <path
-            class="sketch-line"
-            d="
-            M78 180
-            C47 197 35 224 19 255
-            "
-        />
-
-        <path
-            class="sketch-line"
-            d="
-            M153 180
-            C181 195 194 224 207 255
-            "
-        />
-
-    </svg>
-
-
-    <!-- CENTER SHADOW -->
-
-    <svg
-        class="monster-sketch center"
-        viewBox="0 0 220 310"
-        aria-hidden="true"
-    >
-
-        <path
-            class="sketch-dark"
-            d="
-            M108 300
-            C75 260 65 220 75 180
-            C45 160 40 125 60 100
-            C45 70 70 45 92 62
-            C90 30 115 20 125 50
-            C140 22 166 36 155 66
-            C185 48 205 75 178 98
-            C202 108 196 145 164 163
-            C175 215 150 260 132 300
-            Z
-            "
-        />
-
-        <path
-            class="sketch-line"
-            d="
-            M65 110
-            C88 145 150 145 178 110
-            "
-        />
-
-    </svg>
-
-</div>
-
-
-<!-- =======================================================
-     LOADING SCREEN
-======================================================= -->
 
 <div id="loadingScreen">
 
@@ -3131,10 +1431,7 @@ body.stranger-wallpaper
 
     </div>
 
-    <div
-        class="loading-logo"
-        id="loadingLogo"
-    >
+    <div class="loading-logo" id="loadingLogo">
         C
     </div>
 
@@ -3159,11 +1456,6 @@ body.stranger-wallpaper
 
 </div>
 
-
-<!-- =======================================================
-     FLOATING EMOJIS
-======================================================= -->
-
 <div class="floating-emojis">
 
     <span>💬</span>
@@ -3173,11 +1465,6 @@ body.stranger-wallpaper
     <span>👋</span>
 
 </div>
-
-
-<!-- =======================================================
-     AUTH
-======================================================= -->
 
 <div
     class="auth-screen"
@@ -3279,11 +1566,6 @@ body.stranger-wallpaper
 
 </div>
 
-
-<!-- =======================================================
-     APP
-======================================================= -->
-
 <div
     class="app"
     id="app"
@@ -3312,7 +1594,9 @@ body.stranger-wallpaper
             onclick="showHome()"
         >
 
-            <span class="nav-icon">⌂</span>
+            <span class="nav-icon">
+                ⌂
+            </span>
 
             <span>
                 Home
@@ -3325,7 +1609,9 @@ body.stranger-wallpaper
             onclick="openUserSearch()"
         >
 
-            <span class="nav-icon">🔎</span>
+            <span class="nav-icon">
+                🔎
+            </span>
 
             <span>
                 Find Users
@@ -3338,7 +1624,9 @@ body.stranger-wallpaper
             onclick="openGlobalChat()"
         >
 
-            <span class="nav-icon">🌎</span>
+            <span class="nav-icon">
+                🌎
+            </span>
 
             <span>
                 Global Chat
@@ -3351,7 +1639,9 @@ body.stranger-wallpaper
             onclick="openPrivateChats()"
         >
 
-            <span class="nav-icon">💬</span>
+            <span class="nav-icon">
+                💬
+            </span>
 
             <span>
                 Private Chats
@@ -3364,7 +1654,9 @@ body.stranger-wallpaper
             onclick="openMail()"
         >
 
-            <span class="nav-icon">✉</span>
+            <span class="nav-icon">
+                ✉
+            </span>
 
             <span>
                 Mail
@@ -3377,7 +1669,9 @@ body.stranger-wallpaper
             onclick="openGroupChat()"
         >
 
-            <span class="nav-icon">👥</span>
+            <span class="nav-icon">
+                👥
+            </span>
 
             <span>
                 Group Chats
@@ -3387,52 +1681,18 @@ body.stranger-wallpaper
 
         <button
             class="nav-btn"
-            onclick="window.location.href='GroupBattle.html'"
-        >
-
-            <span class="nav-icon">🏆</span>
-
-            <span>
-                Group Battles
-            </span>
-
-        </button>
-
-        <!-- =================================================
-             CALLS
-        ================================================= -->
-
-        <button
-            class="nav-btn"
             onclick="openCalls()"
         >
 
-            <span class="nav-icon">📞</span>
+            <span class="nav-icon">
+                📞
+            </span>
 
             <span>
                 Calls (Work-In-Progress)
             </span>
 
         </button>
-
-
-        <!-- =================================================
-             NEWSLETTER
-        ================================================= -->
-
-        <button
-            class="nav-btn"
-            onclick="window.location.href='Newsletter.html'"
-        >
-
-            <span class="nav-icon">📰</span>
-
-            <span>
-                Newsletter
-            </span>
-
-        </button>
-
 
         <div class="nav-title">
             ACCOUNT
@@ -3443,7 +1703,9 @@ body.stranger-wallpaper
             onclick="openProfile()"
         >
 
-            <span class="nav-icon">●</span>
+            <span class="nav-icon">
+                ●
+            </span>
 
             <span>
                 My Profile
@@ -3456,7 +1718,9 @@ body.stranger-wallpaper
             onclick="logout()"
         >
 
-            <span class="nav-icon">↪</span>
+            <span class="nav-icon">
+                ↪
+            </span>
 
             <span>
                 Log Out
@@ -3481,12 +1745,7 @@ body.stranger-wallpaper
 
     </aside>
 
-
     <main class="main">
-
-        <!-- =================================================
-             HOME
-        ================================================= -->
 
         <div id="homePage">
 
@@ -3513,7 +1772,6 @@ body.stranger-wallpaper
 
             </div>
 
-
             <div class="cards">
 
                 <div
@@ -3535,7 +1793,6 @@ body.stranger-wallpaper
 
                 </div>
 
-
                 <div
                     class="card"
                     onclick="openGlobalChat()"
@@ -3554,7 +1811,6 @@ body.stranger-wallpaper
                     </p>
 
                 </div>
-
 
                 <div
                     class="card"
@@ -3575,7 +1831,6 @@ body.stranger-wallpaper
 
                 </div>
 
-
                 <div
                     class="card"
                     onclick="openMail()"
@@ -3594,7 +1849,6 @@ body.stranger-wallpaper
                     </p>
 
                 </div>
-
 
                 <div
                     class="card"
@@ -3615,26 +1869,9 @@ body.stranger-wallpaper
 
                 </div>
 
-
-                <div
-                    class="card"
-                    onclick="window.location.href='GroupBattle.html'"
-                >
-
-                    <div class="card-icon">
-                        🏆
-                    </div>
-
-                    <h2>
-                        Group Battles
-                    </h2>
-
-                    <p>
-                        Battle other groups and prove who types fastest.
-                    </p>
-
-                </div>
-
+                <!-- =====================================
+                     NEW CALLS HOMEPAGE BUTTON
+                ====================================== -->
 
                 <div
                     class="card"
@@ -3655,31 +1892,6 @@ body.stranger-wallpaper
 
                 </div>
 
-
-                <!-- =================================================
-                     NEWSLETTER HOMEPAGE BUTTON
-                ================================================= -->
-
-                <div
-                    class="card"
-                    onclick="window.location.href='Newsletter.html'"
-                >
-
-                    <div class="card-icon">
-                        📰
-                    </div>
-
-                    <h2>
-                        Newsletter
-                    </h2>
-
-                    <p>
-                        Read the latest ChatsApp news and updates.
-                    </p>
-
-                </div>
-
-
                 <div
                     class="card"
                     onclick="openProfile()"
@@ -3699,32 +1911,7 @@ body.stranger-wallpaper
 
                 </div>
 
-
-                <!-- =================================================
-                     STRANGER THINGS EVENT BUTTON
-                ================================================= -->
-
-                <div
-                    class="card stranger-event-card"
-                    onclick="openStrangerEvent()"
-                >
-
-                    <div class="card-icon">
-                        🔴
-                    </div>
-
-                    <h2>
-                        Stranger Things Event
-                    </h2>
-
-                    <p>
-                        Enter the Upside Down and equip the limited-time wallpaper.
-                    </p>
-
-                </div>
-
             </div>
-
 
             <div class="welcome">
 
@@ -3733,17 +1920,13 @@ body.stranger-wallpaper
                 </h2>
 
                 <p>
-                    A new place to chat, connect and keep in touch.
+                    A new place to chat, connect and
+                    keep in touch.
                 </p>
 
             </div>
 
         </div>
-
-
-        <!-- =================================================
-             USER SEARCH
-        ================================================= -->
 
         <div
             id="userSearchPage"
@@ -3773,7 +1956,6 @@ body.stranger-wallpaper
 
             </div>
 
-
             <div class="search-box-wrap">
 
                 <div class="search-icon">
@@ -3797,7 +1979,6 @@ body.stranger-wallpaper
                 </button>
 
             </div>
-
 
             <div
                 id="recentSearches"
@@ -3826,7 +2007,6 @@ body.stranger-wallpaper
 
             </div>
 
-
             <div class="search-info">
 
                 <span id="searchResultText">
@@ -3837,12 +2017,10 @@ body.stranger-wallpaper
 
             </div>
 
-
             <div
                 id="searchResults"
                 class="search-results"
             ></div>
-
 
             <div
                 id="noResults"
@@ -3864,11 +2042,6 @@ body.stranger-wallpaper
             </div>
 
         </div>
-
-
-        <!-- =================================================
-             GLOBAL CHAT
-        ================================================= -->
 
         <div
             id="globalChat"
@@ -3898,7 +2071,6 @@ body.stranger-wallpaper
 
             </div>
 
-
             <div
                 id="usernameBox"
                 class="username-box"
@@ -3927,7 +2099,6 @@ body.stranger-wallpaper
                 </button>
 
             </div>
-
 
             <div
                 id="chatArea"
@@ -3964,11 +2135,6 @@ body.stranger-wallpaper
     </main>
 
 </div>
-
-
-<!-- =======================================================
-     PROFILE PREVIEW
-======================================================= -->
 
 <div
     id="profilePreviewOverlay"
@@ -4023,266 +2189,16 @@ body.stranger-wallpaper
 
 </div>
 
-
-<!-- =======================================================
-     STRANGER THINGS EVENT MODAL
-======================================================= -->
-
-<div
-    id="strangerEventOverlay"
-    class="event-overlay"
-    onclick="closeStrangerEvent(event)"
->
-
-    <div
-        class="event-window"
-        onclick="event.stopPropagation()"
-    >
-
-        <button
-            class="event-close"
-            onclick="closeStrangerEvent()"
-        >
-            ×
-        </button>
-
-
-        <div class="event-art">
-
-            <!-- BACKGROUND SKETCH -->
-
-            <svg
-                style="
-                    position:absolute;
-                    left:-40px;
-                    bottom:-80px;
-                    width:280px;
-                    opacity:.18;
-                "
-                viewBox="0 0 220 310"
-            >
-
-                <path
-                    class="sketch-dark"
-                    d="
-                    M108 300
-                    C75 260 65 220 75 180
-                    C45 160 40 125 60 100
-                    C45 70 70 45 92 62
-                    C90 30 115 20 125 50
-                    C140 22 166 36 155 66
-                    C185 48 205 75 178 98
-                    C202 108 196 145 164 163
-                    C175 215 150 260 132 300
-                    Z
-                    "
-                />
-
-                <path
-                    class="sketch-line"
-                    d="
-                    M65 110
-                    C88 145 150 145 178 110
-                    "
-                />
-
-            </svg>
-
-        </div>
-
-
-        <div class="event-content">
-
-            <div class="event-small">
-                LIMITED TIME EVENT
-            </div>
-
-            <div class="event-title">
-                STRANGER<br>
-                THINGS
-            </div>
-
-            <p class="event-subtitle">
-
-                Something has entered ChatsApp...
-
-                <br>
-
-                The Upside Down has opened.
-
-            </p>
-
-
-            <!-- MINI SKETCHES -->
-
-            <div class="event-art-row">
-
-                <svg
-                    class="event-mini-sketch"
-                    viewBox="0 0 220 310"
-                >
-
-                    <path
-                        class="sketch-dark"
-                        d="
-                        M108 300
-                        C75 260 65 220 75 180
-                        C45 160 40 125 60 100
-                        C45 70 70 45 92 62
-                        C90 30 115 20 125 50
-                        C140 22 166 36 155 66
-                        C185 48 205 75 178 98
-                        C202 108 196 145 164 163
-                        C175 215 150 260 132 300
-                        Z
-                        "
-                    />
-
-                    <path
-                        class="sketch-line"
-                        d="
-                        M65 110
-                        C88 145 150 145 178 110
-                        "
-                    />
-
-                    <path
-                        class="sketch-line"
-                        d="
-                        M78 111
-                        C65 90 80 72 96 86
-                        C96 60 118 55 124 82
-                        C135 58 156 67 148 91
-                        C169 81 182 100 160 116
-                        "
-                    />
-
-                </svg>
-
-
-                <!-- VINE SKETCH -->
-
-                <svg
-                    class="event-mini-sketch"
-                    viewBox="0 0 180 200"
-                >
-
-                    <path
-                        class="sketch-line"
-                        d="
-                        M90 205
-                        C55 170 120 150 72 120
-                        C35 96 80 73 55 43
-                        C40 25 57 8 75 25
-                        "
-                    />
-
-                    <path
-                        class="sketch-line"
-                        d="
-                        M95 190
-                        C120 165 75 150 110 126
-                        C145 101 100 78 130 52
-                        C148 36 135 18 120 9
-                        "
-                    />
-
-                    <path
-                        class="sketch-line"
-                        d="
-                        M55 43
-                        L28 28
-                        M55 43
-                        L32 58
-                        M130 52
-                        L157 35
-                        M130 52
-                        L158 65
-                        "
-                    />
-
-                </svg>
-
-
-                <!-- PARTICLE / MONSTER FACE -->
-
-                <svg
-                    class="event-mini-sketch"
-                    viewBox="0 0 200 200"
-                >
-
-                    <circle
-                        cx="100"
-                        cy="100"
-                        r="72"
-                        fill="none"
-                        stroke="rgba(205,25,25,.9)"
-                        stroke-width="2"
-                    />
-
-                    <path
-                        class="sketch-line"
-                        d="
-                        M45 92
-                        C70 115 130 115 155 92
-                        "
-                    />
-
-                    <path
-                        class="sketch-line"
-                        d="
-                        M52 83
-                        C67 60 87 72 100 88
-                        C113 70 135 61 148 83
-                        "
-                    />
-
-                    <path
-                        class="sketch-line"
-                        d="
-                        M65 110
-                        L77 128
-                        L87 110
-                        L100 130
-                        L113 110
-                        L124 128
-                        L137 108
-                        "
-                    />
-
-                </svg>
-
-            </div>
-
-
-            <div class="event-warning">
-
-                ⚠ The event ends tomorrow.
-                Equip the limited-time wallpaper before it disappears.
-
-            </div>
-
-
-            <button
-                id="equipStrangerButton"
-                class="equip-button"
-                onclick="toggleStrangerWallpaper()"
-            >
-                🔴 EQUIP STRANGER THINGS WALLPAPER
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
-
-
 <script>
-
 /* =========================================================
-   SUPABASE
+   CHATsAPP SINGLE-JS INITIALIZATION GUARD
+   Prevents duplicate JavaScript initialization, duplicate
+   event listeners, and duplicate Supabase realtime channels.
 ========================================================= */
+if (!window.__CHATSAPP_MAIN_LOADED__) {
+    window.__CHATSAPP_MAIN_LOADED__ = true;
+
+
 
 const SUPABASE_URL =
     "https://kopzrnpporfdwauwlhni.supabase.co";
@@ -4296,298 +2212,110 @@ const supabaseClient =
         SUPABASE_KEY
     );
 
-
-/* =========================================================
-   GLOBAL VARIABLES
-========================================================= */
-
 let signupMode = false;
-
 let currentUsername = "";
-
 let chatChannel = null;
-
 let searchTimer = null;
-
 let selectedProfileUsername = "";
 
+window.addEventListener(
+    "load",
+    function() {
 
-/* =========================================================
-   STRANGER THINGS EVENT
-========================================================= */
+        const loadingScreen =
+            document.getElementById("loadingScreen");
 
-function openStrangerEvent() {
+        const loadingStatus =
+            document.getElementById("loadingStatus");
 
-    const overlay =
-        document.getElementById(
-            "strangerEventOverlay"
-        );
-
-    overlay.classList.add(
-        "show"
-    );
-
-    updateStrangerButton();
-
-}
-
-
-function closeStrangerEvent(event) {
-
-    if(
-        event &&
-        event.target &&
-        event.target.id !==
-        "strangerEventOverlay"
-    ) {
-
-        return;
-
-    }
-
-    document
-        .getElementById(
-            "strangerEventOverlay"
-        )
-        .classList.remove(
-            "show"
-        );
-
-}
-
-
-function toggleStrangerWallpaper() {
-
-    const enabled =
-        document.body.classList.toggle(
-            "stranger-wallpaper"
-        );
-
-    localStorage.setItem(
-        "chatsapp_stranger_wallpaper",
-        enabled
-            ? "true"
-            : "false"
-    );
-
-    updateStrangerButton();
-
-}
-
-
-function updateStrangerButton() {
-
-    const button =
-        document.getElementById(
-            "equipStrangerButton"
-        );
-
-    if(!button) {
-        return;
-    }
-
-    const equipped =
-        document.body.classList.contains(
-            "stranger-wallpaper"
-        );
-
-    if(equipped) {
-
-        button.classList.add(
-            "equipped"
-        );
-
-        button.innerText =
-            "✓ STRANGER THINGS WALLPAPER EQUIPPED";
-
-    } else {
-
-        button.classList.remove(
-            "equipped"
-        );
-
-        button.innerText =
-            "🔴 EQUIP STRANGER THINGS WALLPAPER";
-
-    }
-
-}
-
-
-function loadStrangerWallpaper() {
-
-    const enabled =
-        localStorage.getItem(
-            "chatsapp_stranger_wallpaper"
-        ) === "true";
-
-    if(enabled) {
-
-        document.body.classList.add(
-            "stranger-wallpaper"
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   LOADING SCREEN
-========================================================= */
-
-async function startLoadingScreen() {
-
-    const loadingScreen =
-        document.getElementById(
-            "loadingScreen"
-        );
-
-    const loadingStatus =
-        document.getElementById(
-            "loadingStatus"
-        );
-
-    const loadingLogo =
-        document.getElementById(
-            "loadingLogo"
-        );
-
-    try {
+        const loadingLogo =
+            document.getElementById("loadingLogo");
 
         loadingStatus.innerText =
             "Connecting...";
 
-        const {
-            error
-        } =
-            await supabaseClient
-                .from("profiles")
-                .select("username")
-                .limit(1);
+        setTimeout(
+            function() {
 
-        if(error) {
+                loadingStatus.innerText =
+                    "Connecting...";
 
-            console.warn(
-                "Supabase connection check:",
-                error
-            );
-
-        }
-
-        loadingStatus.innerText =
-            "Connected ✓";
-
-        loadingStatus.classList.add(
-            "connected"
+            },
+            500
         );
 
-        loadingLogo.classList.add(
-            "connected"
+        setTimeout(
+            function() {
+
+                loadingStatus.innerText =
+                    "Connected ✓";
+
+                loadingStatus.classList.add(
+                    "connected"
+                );
+
+                loadingLogo.classList.add(
+                    "connected"
+                );
+
+            },
+            1500
         );
 
-        await new Promise(
-            resolve =>
-                setTimeout(
-                    resolve,
-                    700
-                )
-        );
+        setTimeout(
+            function() {
 
-    } catch(error) {
+                loadingScreen.classList.add(
+                    "hidden"
+                );
 
-        console.error(
-            "Startup connection error:",
-            error
-        );
-
-        loadingStatus.innerText =
-            "Connected ✓";
-
-        loadingStatus.classList.add(
-            "connected"
+            },
+            2200
         );
 
     }
-
-    loadingScreen.classList.add(
-        "hidden"
-    );
-
-}
-
-
-/* =========================================================
-   AUTH MESSAGES
-========================================================= */
+);
 
 function showMessage(text,type) {
 
     const message =
-        document.getElementById(
-            "message"
-        );
+        document.getElementById("message");
 
-    message.innerText =
-        text;
-
-    message.className =
-        "message " + type;
+    message.innerText = text;
+    message.className = "message " + type;
 
 }
-
 
 function clearMessage() {
 
     const message =
-        document.getElementById(
-            "message"
-        );
+        document.getElementById("message");
 
-    message.innerText =
-        "";
-
-    message.className =
-        "message";
+    message.innerText = "";
+    message.className = "message";
 
 }
 
-
-/* =========================================================
-   AUTH MODE
-========================================================= */
-
 function toggleAuth() {
 
-    signupMode =
-        !signupMode;
+    signupMode = !signupMode;
 
     clearMessage();
 
     const title =
-        document.getElementById(
-            "authTitle"
-        );
+        document.getElementById("authTitle");
 
     const subtitle =
-        document.getElementById(
-            "authSubtitle"
-        );
+        document.getElementById("authSubtitle");
 
     const button =
-        document.getElementById(
-            "mainButton"
-        );
+        document.getElementById("mainButton");
 
     const switchText =
-        document.getElementById(
-            "switchText"
-        );
+        document.getElementById("switchText");
 
     const confirmGroup =
-        document.getElementById(
-            "confirmGroup"
-        );
+        document.getElementById("confirmGroup");
 
     if(signupMode) {
 
@@ -4627,11 +2355,6 @@ function toggleAuth() {
 
 }
 
-
-/* =========================================================
-   USERNAME → EMAIL
-========================================================= */
-
 function usernameToEmail(username) {
 
     return (
@@ -4641,31 +2364,22 @@ function usernameToEmail(username) {
 
 }
 
-
-/* =========================================================
-   AUTH
-========================================================= */
-
 async function handleAuth() {
 
     clearMessage();
 
     const username =
-        document.getElementById(
-            "username"
-        )
+        document.getElementById("username")
         .value
         .trim();
 
     const password =
-        document.getElementById(
-            "password"
-        ).value;
+        document.getElementById("password")
+        .value;
 
     const confirmPassword =
-        document.getElementById(
-            "confirmPassword"
-        ).value;
+        document.getElementById("confirmPassword")
+        .value;
 
     if(username === "") {
 
@@ -4679,9 +2393,7 @@ async function handleAuth() {
     }
 
     if(
-        !/^[a-zA-Z0-9_]{3,20}$/.test(
-            username
-        )
+        !/^[a-zA-Z0-9_]{3,20}$/.test(username)
     ) {
 
         showMessage(
@@ -4716,17 +2428,11 @@ async function handleAuth() {
     }
 
     const internalEmail =
-        usernameToEmail(
-            username
-        );
-
+        usernameToEmail(username);
 
     if(signupMode) {
 
-        if(
-            password !==
-            confirmPassword
-        ) {
+        if(password !== confirmPassword) {
 
             showMessage(
                 "Passwords do not match.",
@@ -4747,25 +2453,20 @@ async function handleAuth() {
             error
         } =
             await supabaseClient
-                .auth
-                .signUp({
+            .auth
+            .signUp({
 
-                    email:
-                        internalEmail,
+                email:internalEmail,
 
-                    password:
-                        password,
+                password:password,
 
-                    options: {
-
-                        data: {
-                            username:
-                                username
-                        }
-
+                options:{
+                    data:{
+                        username:username
                     }
+                }
 
-                });
+            });
 
         if(error) {
 
@@ -4778,21 +2479,13 @@ async function handleAuth() {
 
         }
 
-        if(
-            data.session &&
-            data.user
-        ) {
+        if(data.session && data.user) {
 
-            currentUsername =
-                username;
+            currentUsername = username;
 
-            await ensureProfile(
-                username
-            );
+            await ensureProfile(username);
 
-            showApp(
-                username
-            );
+            showApp(username);
 
             return;
 
@@ -4807,7 +2500,6 @@ async function handleAuth() {
 
     }
 
-
     showMessage(
         "Logging in...",
         "success"
@@ -4818,16 +2510,14 @@ async function handleAuth() {
         error
     } =
         await supabaseClient
-            .auth
-            .signInWithPassword({
+        .auth
+        .signInWithPassword({
 
-                email:
-                    internalEmail,
+            email:internalEmail,
 
-                password:
-                    password
+            password:password
 
-            });
+        });
 
     if(error) {
 
@@ -4843,52 +2533,35 @@ async function handleAuth() {
     if(data.user) {
 
         currentUsername =
-            data.user
-                .user_metadata
-                ?.username ||
+            data.user.user_metadata?.username ||
             username;
 
-        await ensureProfile(
-            currentUsername
-        );
+        await ensureProfile(currentUsername);
 
-        showApp(
-            currentUsername
-        );
+        showApp(currentUsername);
 
     }
 
 }
 
-
-/* =========================================================
-   ENSURE PROFILE
-========================================================= */
-
 async function ensureProfile(username) {
 
-    if(!username) {
-        return;
-    }
+    if(!username) return;
 
     const {
         error
     } =
         await supabaseClient
-            .from("profiles")
-            .upsert(
-                {
-                    username:
-                        username,
-
-                    online:
-                        true
-                },
-                {
-                    onConflict:
-                        "username"
-                }
-            );
+        .from("profiles")
+        .upsert(
+            {
+                username:username,
+                online:true
+            },
+            {
+                onConflict:"username"
+            }
+        );
 
     if(error) {
 
@@ -4901,262 +2574,143 @@ async function ensureProfile(username) {
 
 }
 
+async function setProfileOnline(isOnline) {
 
-/* =========================================================
-   SHOW APP
-========================================================= */
-
-function showApp(username) {
-
-    if(!username) {
-
-        console.error(
-            "showApp called without username."
-        );
-
+    if(!currentUsername)
         return;
-
-    }
-
-    currentUsername =
-        username;
-
-    document.getElementById(
-        "authScreen"
-    ).style.display =
-        "none";
-
-    document.getElementById(
-        "app"
-    ).style.display =
-        "grid";
-
-    document.getElementById(
-        "profileName"
-    ).innerText =
-        username;
-
-    document.getElementById(
-        "avatar"
-    ).innerText =
-        username
-            .charAt(0)
-            .toUpperCase();
-
-    showHome();
-
-    setProfileOnline(
-        true
-    );
-
-}
-
-
-/* =========================================================
-   ONLINE STATUS
-========================================================= */
-
-async function setProfileOnline(
-    isOnline
-) {
-
-    if(!currentUsername) {
-        return;
-    }
 
     const {
         error
     } =
         await supabaseClient
-            .from("profiles")
-            .update({
-                online:
-                    isOnline
-            })
-            .eq(
-                "username",
-                currentUsername
-            );
+        .from("profiles")
+        .update({
+            online:isOnline
+        })
+        .eq(
+            "username",
+            currentUsername
+        );
 
     if(error) {
 
-        console.warn(
-            "Online status error:",
-            error
-        );
+        console.warn(error);
 
     }
 
 }
 
+function showApp(username) {
 
-/* =========================================================
-   SESSION
-========================================================= */
+    currentUsername = username;
+
+    document.getElementById("authScreen")
+        .style.display = "none";
+
+    document.getElementById("app")
+        .style.display = "grid";
+
+    document.getElementById("profileName")
+        .innerText = username;
+
+    document.getElementById("avatar")
+        .innerText =
+        username.charAt(0).toUpperCase();
+
+    setProfileOnline(true);
+
+    showHome();
+
+}
 
 async function checkSession() {
 
-    try {
+    const {data} =
+        await supabaseClient
+        .auth
+        .getSession();
 
-        const {
-            data,
-            error
-        } =
-            await supabaseClient
-                .auth
-                .getSession();
+    if(
+        data &&
+        data.session &&
+        data.session.user
+    ) {
 
-        if(error) {
+        const username =
+            data.session.user.user_metadata?.username ||
+            data.session.user.email.split("@")[0];
 
-            console.error(
-                "Session check error:",
-                error
-            );
+        currentUsername = username;
 
-            return;
+        await ensureProfile(username);
 
-        }
-
-        if(
-            data &&
-            data.session &&
-            data.session.user
-        ) {
-
-            const username =
-                data.session.user
-                    .user_metadata
-                    ?.username ||
-                data.session.user
-                    .email
-                    .split("@")[0];
-
-            currentUsername =
-                username;
-
-            await ensureProfile(
-                username
-            );
-
-            showApp(
-                username
-            );
-
-        }
-
-    } catch(error) {
-
-        console.error(
-            "Session startup error:",
-            error
-        );
+        showApp(username);
 
     }
 
 }
 
-
-/* =========================================================
-   PAGE CONTROL
-========================================================= */
-
 function hideAllPages() {
 
-    document.getElementById(
-        "homePage"
-    ).style.display =
-        "none";
+    document.getElementById("homePage")
+        .style.display = "none";
 
-    document.getElementById(
-        "globalChat"
-    ).style.display =
-        "none";
+    document.getElementById("globalChat")
+        .style.display = "none";
 
-    document.getElementById(
-        "userSearchPage"
-    ).style.display =
-        "none";
+    document.getElementById("userSearchPage")
+        .style.display = "none";
 
 }
-
 
 function showHome() {
 
     hideAllPages();
 
-    document.getElementById(
-        "homePage"
-    ).style.display =
-        "block";
+    document.getElementById("homePage")
+        .style.display = "block";
 
-    setActiveNav(
-        "Home"
-    );
+    setActiveNav("Home");
 
 }
-
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
 
 function setActiveNav(name) {
 
     document
-        .querySelectorAll(
-            ".nav-btn"
-        )
-        .forEach(
-            button => {
+        .querySelectorAll(".nav-btn")
+        .forEach(button => {
 
-                button.classList.remove(
-                    "active"
+            button.classList.remove("active");
+
+            const span =
+                button.querySelector(
+                    "span:last-child"
                 );
 
-                const span =
-                    button.querySelector(
-                        "span:last-child"
-                    );
+            if(
+                span &&
+                span.innerText.trim() === name
+            ) {
 
-                if(
-                    span &&
-                    span.innerText.trim() ===
-                    name
-                ) {
-
-                    button.classList.add(
-                        "active"
-                    );
-
-                }
+                button.classList.add("active");
 
             }
-        );
+
+        });
 
 }
-
-
-/* =========================================================
-   USER SEARCH
-========================================================= */
 
 function openUserSearch() {
 
     hideAllPages();
 
-    document.getElementById(
-        "userSearchPage"
-    ).style.display =
-        "block";
+    document.getElementById("userSearchPage")
+        .style.display = "block";
 
-    setActiveNav(
-        "Find Users"
-    );
+    setActiveNav("Find Users");
 
     const input =
-        document.getElementById(
-            "userSearchInput"
-        );
+        document.getElementById("userSearchInput");
 
     input.focus();
 
@@ -5172,7 +2726,6 @@ function openUserSearch() {
 
 }
 
-
 document.addEventListener(
     "DOMContentLoaded",
     function() {
@@ -5182,9 +2735,7 @@ document.addEventListener(
                 "userSearchInput"
             );
 
-        if(!input) {
-            return;
-        }
+        if(!input) return;
 
         input.addEventListener(
             "input",
@@ -5199,25 +2750,19 @@ document.addEventListener(
                     );
 
                 clearButton.style.display =
-                    query
-                    ? "block"
-                    : "none";
+                    query ? "block" : "none";
 
-                clearTimeout(
-                    searchTimer
-                );
+                clearTimeout(searchTimer);
 
                 if(!query) {
 
                     document.getElementById(
                         "searchResults"
-                    ).innerHTML =
-                        "";
+                    ).innerHTML = "";
 
                     document.getElementById(
                         "noResults"
-                    ).style.display =
-                        "none";
+                    ).style.display = "none";
 
                     document.getElementById(
                         "searchResultText"
@@ -5232,21 +2777,17 @@ document.addEventListener(
 
                 document.getElementById(
                     "recentSearches"
-                ).style.display =
-                    "none";
+                ).style.display = "none";
 
                 document.getElementById(
                     "searchLoading"
-                ).innerText =
-                    "Searching...";
+                ).innerText = "Searching...";
 
                 searchTimer =
                     setTimeout(
                         function() {
 
-                            searchUsers(
-                                query
-                            );
+                            searchUsers(query);
 
                         },
                         220
@@ -5257,7 +2798,6 @@ document.addEventListener(
 
     }
 );
-
 
 async function searchUsers(query) {
 
@@ -5281,35 +2821,30 @@ async function searchUsers(query) {
             "searchLoading"
         );
 
-    loading.innerText =
-        "Searching...";
+    loading.innerText = "Searching...";
 
-    noResults.style.display =
-        "none";
+    noResults.style.display = "none";
 
     const {
         data,
         error
     } =
         await supabaseClient
-            .from("profiles")
-            .select(
-                "username, online"
-            )
-            .ilike(
-                "username",
-                "%" + query + "%"
-            )
-            .order(
-                "username",
-                {
-                    ascending:true
-                }
-            )
-            .limit(30);
+        .from("profiles")
+        .select("username, online")
+        .ilike(
+            "username",
+            "%" + query + "%"
+        )
+        .order(
+            "username",
+            {
+                ascending:true
+            }
+        )
+        .limit(30);
 
-    loading.innerText =
-        "";
+    loading.innerText = "";
 
     if(error) {
 
@@ -5318,8 +2853,7 @@ async function searchUsers(query) {
             error
         );
 
-        results.innerHTML =
-            "";
+        results.innerHTML = "";
 
         resultText.innerText =
             "Could not search users.";
@@ -5330,17 +2864,14 @@ async function searchUsers(query) {
 
     const filtered =
         (data || [])
-            .filter(
-                user =>
-                    user.username &&
-                    user.username
-                        .toLowerCase() !==
-                    currentUsername
-                        .toLowerCase()
-            );
+        .filter(
+            user =>
+                user.username &&
+                user.username.toLowerCase() !==
+                currentUsername.toLowerCase()
+        );
 
-    results.innerHTML =
-        "";
+    results.innerHTML = "";
 
     if(filtered.length === 0) {
 
@@ -5366,27 +2897,24 @@ async function searchUsers(query) {
         (user,index) => {
 
             const card =
-                document.createElement(
-                    "div"
-                );
+                document.createElement("div");
 
-            card.className =
-                "user-card";
+            card.className = "user-card";
+
+            card.style.animationDelay =
+                (index * 45) + "ms";
 
             const username =
-                escapeHTML(
-                    user.username
-                );
+                escapeHTML(user.username);
 
             const firstLetter =
                 escapeHTML(
                     user.username
-                        .charAt(0)
-                        .toUpperCase()
+                    .charAt(0)
+                    .toUpperCase()
                 );
 
-            const online =
-                !!user.online;
+            const online = !!user.online;
 
             card.innerHTML = `
 
@@ -5403,9 +2931,7 @@ async function searchUsers(query) {
                         </div>
 
                         <div class="user-status ${
-                            online
-                            ? "online"
-                            : ""
+                            online ? "online" : ""
                         }">
 
                             ${
@@ -5425,9 +2951,7 @@ async function searchUsers(query) {
                     <button
                         class="user-action"
                         onclick="previewUser(
-                            '${escapeAttribute(
-                                user.username
-                            )}',
+                            '${escapeAttribute(user.username)}',
                             ${online}
                         )"
                     >
@@ -5437,1620 +2961,7 @@ async function searchUsers(query) {
                     <button
                         class="user-action message-btn"
                         onclick="messageUser(
-                            '${escapeAttribute(
-                                user.username
-                            )}'
-                        )"
-                    >
-                        💬 Message
-                    </button>
-
-                </div>
-
-            `;
-
-            results.appendChild(
-                card
-            );
-
-        }
-    );
-
-    saveSearch(
-        query
-    );
-
-}
-
-
-/* =========================================================
-   PROFILE PREVIEW
-========================================================= */
-
-function previewUser(
-    username,
-    online
-) {
-
-    selectedProfileUsername =
-        username;
-
-    document.getElementById(
-        "previewAvatar"
-    ).innerText =
-        username
-            .charAt(0)
-            .toUpperCase();
-
-    document.getElementById(
-        "previewName"
-    ).innerText =
-        username;
-
-    const status =
-        document.getElementById(
-            "previewStatus"
-        );
-
-    status.innerText =
-        online
-        ? "● Online"
-        : "● Offline";
-
-    status.className =
-        "preview-status" +
-        (
-            online
-            ? ""
-            : " offline"
-        );
-
-    document.getElementById(
-        "previewMessageButton"
-    ).onclick =
-        function() {
-
-            messageUser(
-                username
-            );
-
-        };
-
-    document.getElementById(
-        "profilePreviewOverlay"
-    ).classList.add(
-        "show"
-    );
-
-}
-
-
-function closeProfilePreview(
-    event
-) {
-
-    if(
-        event &&
-        event.target &&
-        event.target.id !==
-        "profilePreviewOverlay"
-    ) {
-
-        return;
-
-    }
-
-    document.getElementById(
-        "profilePreviewOverlay"
-    ).classList.remove(
-        "show"
-    );
-
-}
-
-
-function messageUser(username) {
-
-    closeProfilePreview();
-
-    localStorage.setItem(
-        "chatsapp_target_user",
-        username
-    );
-
-    window.location.href =
-        "UserSearch.html";
-
-}
-
-
-/* =========================================================
-   SEARCH HISTORY
-========================================================= */
-
-function getSearchHistory() {
-
-    try {
-
-        return JSON.parse(
-            localStorage.getItem(
-                "chatsapp_recent_searches"
-            )
-        ) || [];
-
-    } catch {
-
-        return [];
-
-    }
-
-}
-
-
-function saveSearch(query) {
-
-    if(!query) {
-        return;
-    }
-
-    const normalized =
-        query.trim();
-
-    if(!normalized) {
-        return;
-    }
-
-    let history =
-        getSearchHistory();
-
-    history =
-        history.filter(
-            item =>
-                item.toLowerCase() !==
-                normalized.toLowerCase()
-        );
-
-    history.unshift(
-        normalized
-    );
-
-    history =
-        history.slice(
-            0,
-            8
-        );
-
-    localStorage.setItem(
-        "chatsapp_recent_searches",
-        JSON.stringify(history)
-    );
-
-    renderRecentSearches();
-
-}
-
-
-function renderRecentSearches() {
-
-    const container =
-        document.getElementById(
-            "recentSearches"
-        );
-
-    const list =
-        document.getElementById(
-            "recentList"
-        );
-
-    const history =
-        getSearchHistory();
-
-    if(!history.length) {
-
-        container.style.display =
-            "none";
-
-        return;
-
-    }
-
-    const input =
-        document.getElementById(
-            "userSearchInput"
-        );
-
-    if(
-        input &&
-        input.value.trim()
-    ) {
-
-        container.style.display =
-            "none";
-
-        return;
-
-    }
-
-    container.style.display =
-        "block";
-
-    list.innerHTML =
-        "";
-
-    history.forEach(
-        query => {
-
-            const button =
-                document.createElement(
-                    "button"
-                );
-
-            button.className =
-                "recent-item";
-
-            button.innerText =
-                "🔎 " + query;
-
-            button.onclick =
-                function() {
-
-                    input.value =
-                        query;
-
-                    document.getElementById(
-                        "clearSearchButton"
-                    ).style.display =
-                        "block";
-
-                    searchUsers(
-                        query
-                    );
-
-                    container.style.display =
-                        "none";
-
-                };
-
-            list.appendChild(
-                button
-            );
-
-        }
-    );
-
-}
-
-
-function clearSearchHistory() {
-
-    localStorage.removeItem(
-        "chatsapp_recent_searches"
-    );
-
-    renderRecentSearches();
-
-}
-
-
-function clearUserSearch() {
-
-    const input =
-        document.getElementById(
-            "userSearchInput"
-        );
-
-    input.value =
-        "";
-
-    document.getElementById(
-        "clearSearchButton"
-    ).style.display =
-        "none";
-
-    document.getElementById(
-        "searchResults"
-    ).innerHTML =
-        "";
-
-    document.getElementById(
-        "noResults"
-    ).style.display =
-        "none";
-
-    document.getElementById(
-        "searchResultText"
-    ).innerText =
-        "Start typing to find users";
-
-    renderRecentSearches();
-
-    input.focus();
-
-}
-   <!-- =======================================================
-     PART 2 — JAVASCRIPT / FUNCTIONALITY
-======================================================= -->
-
-<script>
-
-/* =========================================================
-   SUPABASE
-========================================================= */
-
-const SUPABASE_URL =
-    "https://kopzrnpporfdwauwlhni.supabase.co";
-
-const SUPABASE_KEY =
-    "sb_publishable_bbxmPB71ADnIqe3oPB3MuQ_EWa4n_Ph";
-
-const supabaseClient =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-    );
-
-
-/* =========================================================
-   GLOBAL VARIABLES
-========================================================= */
-
-let signupMode = false;
-let currentUsername = "";
-let chatChannel = null;
-let searchTimer = null;
-let selectedProfileUsername = "";
-
-
-/* =========================================================
-   STRANGER THINGS EVENT
-========================================================= */
-
-function openStrangerEvent() {
-
-    const overlay =
-        document.getElementById("strangerEventOverlay");
-
-    if (!overlay) return;
-
-    overlay.classList.add("show");
-
-    updateStrangerButton();
-
-}
-
-
-function closeStrangerEvent(event) {
-
-    if (
-        event &&
-        event.target &&
-        event.target.id !== "strangerEventOverlay"
-    ) {
-        return;
-    }
-
-    const overlay =
-        document.getElementById("strangerEventOverlay");
-
-    if (overlay) {
-        overlay.classList.remove("show");
-    }
-
-}
-
-
-function toggleStrangerWallpaper() {
-
-    const enabled =
-        document.body.classList.toggle(
-            "stranger-wallpaper"
-        );
-
-    localStorage.setItem(
-        "chatsapp_stranger_wallpaper",
-        enabled ? "true" : "false"
-    );
-
-    updateStrangerButton();
-
-}
-
-
-function updateStrangerButton() {
-
-    const button =
-        document.getElementById(
-            "equipStrangerButton"
-        );
-
-    if (!button) return;
-
-    const equipped =
-        document.body.classList.contains(
-            "stranger-wallpaper"
-        );
-
-    if (equipped) {
-
-        button.classList.add("equipped");
-
-        button.innerText =
-            "✓ STRANGER THINGS WALLPAPER EQUIPPED";
-
-    } else {
-
-        button.classList.remove("equipped");
-
-        button.innerText =
-            "🔴 EQUIP STRANGER THINGS WALLPAPER";
-
-    }
-
-}
-
-
-function loadStrangerWallpaper() {
-
-    const enabled =
-        localStorage.getItem(
-            "chatsapp_stranger_wallpaper"
-        ) === "true";
-
-    if (enabled) {
-
-        document.body.classList.add(
-            "stranger-wallpaper"
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   LOADING SCREEN
-========================================================= */
-
-async function startLoadingScreen() {
-
-    const loadingScreen =
-        document.getElementById("loadingScreen");
-
-    const loadingStatus =
-        document.getElementById("loadingStatus");
-
-    const loadingLogo =
-        document.getElementById("loadingLogo");
-
-    if (!loadingScreen) return;
-
-    try {
-
-        if (loadingStatus) {
-            loadingStatus.innerText =
-                "Connecting...";
-        }
-
-        const {
-            error
-        } =
-            await supabaseClient
-                .from("profiles")
-                .select("username")
-                .limit(1);
-
-        if (error) {
-
-            console.warn(
-                "Supabase connection check:",
-                error
-            );
-
-        }
-
-        if (loadingStatus) {
-
-            loadingStatus.innerText =
-                "Connected ✓";
-
-            loadingStatus.classList.add(
-                "connected"
-            );
-
-        }
-
-        if (loadingLogo) {
-
-            loadingLogo.classList.add(
-                "connected"
-            );
-
-        }
-
-        await new Promise(
-            resolve =>
-                setTimeout(
-                    resolve,
-                    700
-                )
-        );
-
-    } catch (error) {
-
-        console.error(
-            "Startup connection error:",
-            error
-        );
-
-        if (loadingStatus) {
-
-            loadingStatus.innerText =
-                "Connected ✓";
-
-            loadingStatus.classList.add(
-                "connected"
-            );
-
-        }
-
-    }
-
-    loadingScreen.classList.add("hidden");
-
-}
-
-
-/* =========================================================
-   AUTH MESSAGES
-========================================================= */
-
-function showMessage(text, type) {
-
-    const message =
-        document.getElementById("message");
-
-    if (!message) return;
-
-    message.innerText = text;
-
-    message.className =
-        "message " + type;
-
-}
-
-
-function clearMessage() {
-
-    const message =
-        document.getElementById("message");
-
-    if (!message) return;
-
-    message.innerText = "";
-
-    message.className = "message";
-
-}
-
-
-/* =========================================================
-   AUTH MODE
-========================================================= */
-
-function toggleAuth() {
-
-    signupMode = !signupMode;
-
-    clearMessage();
-
-    const title =
-        document.getElementById("authTitle");
-
-    const subtitle =
-        document.getElementById("authSubtitle");
-
-    const button =
-        document.getElementById("mainButton");
-
-    const switchText =
-        document.getElementById("switchText");
-
-    const confirmGroup =
-        document.getElementById("confirmGroup");
-
-    if (
-        !title ||
-        !subtitle ||
-        !button ||
-        !switchText ||
-        !confirmGroup
-    ) {
-        return;
-    }
-
-    if (signupMode) {
-
-        title.innerText =
-            "Create your ChatsApp";
-
-        subtitle.innerText =
-            "Create your account and join the conversation.";
-
-        button.innerText =
-            "Create Account";
-
-        switchText.innerText =
-            "Already have an account? Log in";
-
-        confirmGroup.style.display =
-            "block";
-
-    } else {
-
-        title.innerText =
-            "Welcome to ChatsApp";
-
-        subtitle.innerText =
-            "Your conversations. Your world.";
-
-        button.innerText =
-            "Log In";
-
-        switchText.innerText =
-            "Don't have an account? Sign up";
-
-        confirmGroup.style.display =
-            "none";
-
-    }
-
-}
-
-
-/* =========================================================
-   USERNAME → EMAIL
-========================================================= */
-
-function usernameToEmail(username) {
-
-    return (
-        username.toLowerCase() +
-        "@chatsapp.local"
-    );
-
-}
-
-
-/* =========================================================
-   AUTHENTICATION
-========================================================= */
-
-async function handleAuth() {
-
-    clearMessage();
-
-    const usernameInput =
-        document.getElementById("username");
-
-    const passwordInput =
-        document.getElementById("password");
-
-    const confirmInput =
-        document.getElementById("confirmPassword");
-
-    if (
-        !usernameInput ||
-        !passwordInput ||
-        !confirmInput
-    ) {
-        return;
-    }
-
-    const username =
-        usernameInput.value.trim();
-
-    const password =
-        passwordInput.value;
-
-    const confirmPassword =
-        confirmInput.value;
-
-    if (username === "") {
-
-        showMessage(
-            "Please enter a username.",
-            "error"
-        );
-
-        return;
-
-    }
-
-    if (
-        !/^[a-zA-Z0-9_]{3,20}$/.test(username)
-    ) {
-
-        showMessage(
-            "Username must be 3–20 characters and use only letters, numbers, or underscores.",
-            "error"
-        );
-
-        return;
-
-    }
-
-    if (password === "") {
-
-        showMessage(
-            "Please enter your password.",
-            "error"
-        );
-
-        return;
-
-    }
-
-    if (password.length < 6) {
-
-        showMessage(
-            "Password must be at least 6 characters.",
-            "error"
-        );
-
-        return;
-
-    }
-
-    const internalEmail =
-        usernameToEmail(username);
-
-
-    /* =====================================================
-       SIGN UP
-    ===================================================== */
-
-    if (signupMode) {
-
-        if (
-            password !== confirmPassword
-        ) {
-
-            showMessage(
-                "Passwords do not match.",
-                "error"
-            );
-
-            return;
-
-        }
-
-        showMessage(
-            "Creating your account...",
-            "success"
-        );
-
-        const {
-            data,
-            error
-        } =
-            await supabaseClient
-                .auth
-                .signUp({
-
-                    email:
-                        internalEmail,
-
-                    password:
-                        password,
-
-                    options: {
-
-                        data: {
-                            username:
-                                username
-                        }
-
-                    }
-
-                });
-
-        if (error) {
-
-            showMessage(
-                error.message,
-                "error"
-            );
-
-            return;
-
-        }
-
-        if (
-            data &&
-            data.session &&
-            data.user
-        ) {
-
-            currentUsername =
-                username;
-
-            await ensureProfile(
-                username
-            );
-
-            showApp(
-                username
-            );
-
-            return;
-
-        }
-
-        showMessage(
-            "Account created! You can now log in. 🎉",
-            "success"
-        );
-
-        return;
-
-    }
-
-
-    /* =====================================================
-       LOGIN
-    ===================================================== */
-
-    showMessage(
-        "Logging in...",
-        "success"
-    );
-
-    const {
-        data,
-        error
-    } =
-        await supabaseClient
-            .auth
-            .signInWithPassword({
-
-                email:
-                    internalEmail,
-
-                password:
-                    password
-
-            });
-
-    if (error) {
-
-        showMessage(
-            "Invalid username or password.",
-            "error"
-        );
-
-        return;
-
-    }
-
-    if (data && data.user) {
-
-        currentUsername =
-            data.user
-                .user_metadata
-                ?.username ||
-            username;
-
-        await ensureProfile(
-            currentUsername
-        );
-
-        showApp(
-            currentUsername
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   ENSURE PROFILE
-========================================================= */
-
-async function ensureProfile(username) {
-
-    if (!username) return;
-
-    const {
-        error
-    } =
-        await supabaseClient
-            .from("profiles")
-            .upsert(
-                {
-                    username:
-                        username,
-
-                    online:
-                        true
-                },
-                {
-                    onConflict:
-                        "username"
-                }
-            );
-
-    if (error) {
-
-        console.warn(
-            "Could not update profile:",
-            error
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   SHOW APP
-========================================================= */
-
-function showApp(username) {
-
-    if (!username) {
-
-        console.error(
-            "showApp called without username."
-        );
-
-        return;
-
-    }
-
-    currentUsername =
-        username;
-
-    const authScreen =
-        document.getElementById("authScreen");
-
-    const app =
-        document.getElementById("app");
-
-    const profileName =
-        document.getElementById("profileName");
-
-    const avatar =
-        document.getElementById("avatar");
-
-    if (authScreen) {
-        authScreen.style.display =
-            "none";
-    }
-
-    if (app) {
-        app.style.display =
-            "grid";
-    }
-
-    if (profileName) {
-        profileName.innerText =
-            username;
-    }
-
-    if (avatar) {
-
-        avatar.innerText =
-            username
-                .charAt(0)
-                .toUpperCase();
-
-    }
-
-    showHome();
-
-    setProfileOnline(true);
-
-}
-
-
-/* =========================================================
-   ONLINE STATUS
-========================================================= */
-
-async function setProfileOnline(
-    isOnline
-) {
-
-    if (!currentUsername) return;
-
-    const {
-        error
-    } =
-        await supabaseClient
-            .from("profiles")
-            .update({
-                online:
-                    isOnline
-            })
-            .eq(
-                "username",
-                currentUsername
-            );
-
-    if (error) {
-
-        console.warn(
-            "Online status error:",
-            error
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   SESSION CHECK
-========================================================= */
-
-async function checkSession() {
-
-    try {
-
-        const {
-            data,
-            error
-        } =
-            await supabaseClient
-                .auth
-                .getSession();
-
-        if (error) {
-
-            console.error(
-                "Session check error:",
-                error
-            );
-
-            return;
-
-        }
-
-        if (
-            data &&
-            data.session &&
-            data.session.user
-        ) {
-
-            const username =
-                data.session.user
-                    .user_metadata
-                    ?.username ||
-                data.session.user
-                    .email
-                    .split("@")[0];
-
-            currentUsername =
-                username;
-
-            await ensureProfile(
-                username
-            );
-
-            showApp(
-                username
-            );
-
-        }
-
-    } catch (error) {
-
-        console.error(
-            "Session startup error:",
-            error
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   PAGE CONTROL
-========================================================= */
-
-function hideAllPages() {
-
-    const pages = [
-        "homePage",
-        "globalChat",
-        "userSearchPage"
-    ];
-
-    pages.forEach(
-        id => {
-
-            const page =
-                document.getElementById(id);
-
-            if (page) {
-
-                page.style.display =
-                    "none";
-
-            }
-
-        }
-    );
-
-}
-
-
-function showHome() {
-
-    hideAllPages();
-
-    const home =
-        document.getElementById("homePage");
-
-    if (home) {
-
-        home.style.display =
-            "block";
-
-    }
-
-    setActiveNav("Home");
-
-}
-
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-function setActiveNav(name) {
-
-    document
-        .querySelectorAll(".nav-btn")
-        .forEach(
-            button => {
-
-                button.classList.remove(
-                    "active"
-                );
-
-                const spans =
-                    button.querySelectorAll(
-                        "span"
-                    );
-
-                const label =
-                    spans.length
-                        ? spans[spans.length - 1]
-                        : null;
-
-                if (
-                    label &&
-                    label.innerText.trim() === name
-                ) {
-
-                    button.classList.add(
-                        "active"
-                    );
-
-                }
-
-            }
-        );
-
-}
-
-
-/* =========================================================
-   NEWSLETTER
-========================================================= */
-
-/*
-   IMPORTANT:
-   This is the button/page connection.
-
-   Your homepage card should use:
-
-   onclick="openNewsletter()"
-
-   And your sidebar Newsletter button should use:
-
-   onclick="openNewsletter()"
-*/
-
-function openNewsletter() {
-
-    window.location.href =
-        "Newsletter.html";
-
-}
-
-
-/* =========================================================
-   USER SEARCH
-========================================================= */
-
-function openUserSearch() {
-
-    hideAllPages();
-
-    const page =
-        document.getElementById(
-            "userSearchPage"
-        );
-
-    if (page) {
-
-        page.style.display =
-            "block";
-
-    }
-
-    setActiveNav(
-        "Find Users"
-    );
-
-    const input =
-        document.getElementById(
-            "userSearchInput"
-        );
-
-    if (input) {
-
-        input.focus();
-
-        renderRecentSearches();
-
-        if (input.value.trim()) {
-
-            searchUsers(
-                input.value.trim()
-            );
-
-        }
-
-    }
-
-}
-
-
-/* =========================================================
-   SEARCH INPUT
-========================================================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function() {
-
-        const input =
-            document.getElementById(
-                "userSearchInput"
-            );
-
-        if (!input) return;
-
-        input.addEventListener(
-            "input",
-            function() {
-
-                const query =
-                    input.value.trim();
-
-                const clearButton =
-                    document.getElementById(
-                        "clearSearchButton"
-                    );
-
-                if (clearButton) {
-
-                    clearButton.style.display =
-                        query
-                            ? "block"
-                            : "none";
-
-                }
-
-                clearTimeout(
-                    searchTimer
-                );
-
-                if (!query) {
-
-                    const results =
-                        document.getElementById(
-                            "searchResults"
-                        );
-
-                    const noResults =
-                        document.getElementById(
-                            "noResults"
-                        );
-
-                    const resultText =
-                        document.getElementById(
-                            "searchResultText"
-                        );
-
-                    const recent =
-                        document.getElementById(
-                            "recentSearches"
-                        );
-
-                    if (results) {
-                        results.innerHTML = "";
-                    }
-
-                    if (noResults) {
-                        noResults.style.display =
-                            "none";
-                    }
-
-                    if (resultText) {
-                        resultText.innerText =
-                            "Start typing to find users";
-                    }
-
-                    if (recent) {
-                        renderRecentSearches();
-                    }
-
-                    return;
-
-                }
-
-                const recent =
-                    document.getElementById(
-                        "recentSearches"
-                    );
-
-                const loading =
-                    document.getElementById(
-                        "searchLoading"
-                    );
-
-                if (recent) {
-                    recent.style.display =
-                        "none";
-                }
-
-                if (loading) {
-                    loading.innerText =
-                        "Searching...";
-                }
-
-                searchTimer =
-                    setTimeout(
-                        function() {
-
-                            searchUsers(
-                                query
-                            );
-
-                        },
-                        220
-                    );
-
-            }
-        );
-
-    }
-);
-
-
-/* =========================================================
-   SEARCH USERS
-========================================================= */
-
-async function searchUsers(query) {
-
-    const results =
-        document.getElementById(
-            "searchResults"
-        );
-
-    const noResults =
-        document.getElementById(
-            "noResults"
-        );
-
-    const resultText =
-        document.getElementById(
-            "searchResultText"
-        );
-
-    const loading =
-        document.getElementById(
-            "searchLoading"
-        );
-
-    if (!results) return;
-
-    if (loading) {
-        loading.innerText =
-            "Searching...";
-    }
-
-    if (noResults) {
-        noResults.style.display =
-            "none";
-    }
-
-    const {
-        data,
-        error
-    } =
-        await supabaseClient
-            .from("profiles")
-            .select(
-                "username, online"
-            )
-            .ilike(
-                "username",
-                "%" + query + "%"
-            )
-            .order(
-                "username",
-                {
-                    ascending:
-                        true
-                }
-            )
-            .limit(30);
-
-    if (loading) {
-        loading.innerText = "";
-    }
-
-    if (error) {
-
-        console.error(
-            "User search error:",
-            error
-        );
-
-        results.innerHTML = "";
-
-        if (resultText) {
-
-            resultText.innerText =
-                "Could not search users.";
-
-        }
-
-        return;
-
-    }
-
-    const filtered =
-        (data || [])
-            .filter(
-                user =>
-                    user.username &&
-                    user.username
-                        .toLowerCase() !==
-                    currentUsername
-                        .toLowerCase()
-            );
-
-    results.innerHTML = "";
-
-    if (filtered.length === 0) {
-
-        if (resultText) {
-
-            resultText.innerText =
-                "No matching users";
-
-        }
-
-        if (noResults) {
-
-            noResults.style.display =
-                "block";
-
-        }
-
-        return;
-
-    }
-
-    if (resultText) {
-
-        resultText.innerText =
-            filtered.length +
-            (
-                filtered.length === 1
-                    ? " user found"
-                    : " users found"
-            );
-
-    }
-
-    filtered.forEach(
-        user => {
-
-            const card =
-                document.createElement(
-                    "div"
-                );
-
-            card.className =
-                "user-card";
-
-            const username =
-                escapeHTML(
-                    user.username
-                );
-
-            const firstLetter =
-                escapeHTML(
-                    user.username
-                        .charAt(0)
-                        .toUpperCase()
-                );
-
-            const online =
-                !!user.online;
-
-            card.innerHTML = `
-
-                <div class="user-card-top">
-
-                    <div class="user-avatar">
-                        ${firstLetter}
-                    </div>
-
-                    <div>
-
-                        <div class="user-name">
-                            ${username}
-                        </div>
-
-                        <div class="user-status ${
-                            online
-                                ? "online"
-                                : ""
-                        }">
-
-                            ${
-                                online
-                                    ? "● Online"
-                                    : "● Offline"
-                            }
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="user-actions">
-
-                    <button
-                        class="user-action"
-                        onclick="previewUser(
-                            '${escapeAttribute(
-                                user.username
-                            )}',
-                            ${online}
-                        )"
-                    >
-                        👀 Preview
-                    </button>
-
-                    <button
-                        class="user-action message-btn"
-                        onclick="messageUser(
-                            '${escapeAttribute(
-                                user.username
-                            )}'
+                            '${escapeAttribute(user.username)}'
                         )"
                     >
                         💬 Message
@@ -7069,127 +2980,62 @@ async function searchUsers(query) {
 
 }
 
+function previewUser(username,online) {
 
-/* =========================================================
-   PROFILE PREVIEW
-========================================================= */
+    selectedProfileUsername = username;
 
-function previewUser(
-    username,
-    online
-) {
+    document.getElementById("previewAvatar")
+        .innerText =
+        username.charAt(0).toUpperCase();
 
-    selectedProfileUsername =
-        username;
-
-    const avatar =
-        document.getElementById(
-            "previewAvatar"
-        );
-
-    const name =
-        document.getElementById(
-            "previewName"
-        );
+    document.getElementById("previewName")
+        .innerText = username;
 
     const status =
         document.getElementById(
             "previewStatus"
         );
 
-    const messageButton =
-        document.getElementById(
-            "previewMessageButton"
-        );
+    status.innerText =
+        online ? "● Online" : "● Offline";
 
-    const overlay =
-        document.getElementById(
-            "profilePreviewOverlay"
-        );
+    status.className =
+        "preview-status" +
+        (online ? "" : " offline");
 
-    if (avatar) {
+    document.getElementById(
+        "previewMessageButton"
+    ).onclick =
+        function() {
 
-        avatar.innerText =
-            username
-                .charAt(0)
-                .toUpperCase();
+            messageUser(username);
 
-    }
+        };
 
-    if (name) {
-
-        name.innerText =
-            username;
-
-    }
-
-    if (status) {
-
-        status.innerText =
-            online
-                ? "● Online"
-                : "● Offline";
-
-        status.className =
-            "preview-status" +
-            (
-                online
-                    ? ""
-                    : " offline"
-            );
-
-    }
-
-    if (messageButton) {
-
-        messageButton.onclick =
-            function() {
-
-                messageUser(
-                    username
-                );
-
-            };
-
-    }
-
-    if (overlay) {
-
-        overlay.classList.add(
-            "show"
-        );
-
-    }
+    document.getElementById(
+        "profilePreviewOverlay"
+    ).classList.add("show");
 
 }
-
 
 function closeProfilePreview(event) {
 
-    if (
+    if(
         event &&
         event.target &&
         event.target.id !==
-            "profilePreviewOverlay"
+        "profilePreviewOverlay"
     ) {
+
         return;
-    }
-
-    const overlay =
-        document.getElementById(
-            "profilePreviewOverlay"
-        );
-
-    if (overlay) {
-
-        overlay.classList.remove(
-            "show"
-        );
 
     }
+
+    document.getElementById(
+        "profilePreviewOverlay"
+    ).classList.remove("show");
 
 }
-
 
 function messageUser(username) {
 
@@ -7204,11 +3050,6 @@ function messageUser(username) {
         "UserSearch.html";
 
 }
-
-
-/* =========================================================
-   SEARCH HISTORY
-========================================================= */
 
 function getSearchHistory() {
 
@@ -7228,18 +3069,15 @@ function getSearchHistory() {
 
 }
 
-
 function saveSearch(query) {
 
-    if (!query) return;
+    if(!query) return;
 
-    const normalized =
-        query.trim();
+    const normalized = query.trim();
 
-    if (!normalized) return;
+    if(!normalized) return;
 
-    let history =
-        getSearchHistory();
+    let history = getSearchHistory();
 
     history =
         history.filter(
@@ -7248,15 +3086,10 @@ function saveSearch(query) {
                 normalized.toLowerCase()
         );
 
-    history.unshift(
-        normalized
-    );
+    history.unshift(normalized);
 
     history =
-        history.slice(
-            0,
-            8
-        );
+        history.slice(0,8);
 
     localStorage.setItem(
         "chatsapp_recent_searches",
@@ -7266,7 +3099,6 @@ function saveSearch(query) {
     renderRecentSearches();
 
 }
-
 
 function renderRecentSearches() {
 
@@ -7280,15 +3112,12 @@ function renderRecentSearches() {
             "recentList"
         );
 
-    if (!container || !list) return;
-
     const history =
         getSearchHistory();
 
-    if (!history.length) {
+    if(!history.length) {
 
-        container.style.display =
-            "none";
+        container.style.display = "none";
 
         return;
 
@@ -7299,20 +3128,18 @@ function renderRecentSearches() {
             "userSearchInput"
         );
 
-    if (
+    if(
         input &&
         input.value.trim()
     ) {
 
-        container.style.display =
-            "none";
+        container.style.display = "none";
 
         return;
 
     }
 
-    container.style.display =
-        "block";
+    container.style.display = "block";
 
     list.innerHTML = "";
 
@@ -7333,43 +3160,25 @@ function renderRecentSearches() {
             button.onclick =
                 function() {
 
-                    if (input) {
+                    input.value = query;
 
-                        input.value =
-                            query;
+                    document.getElementById(
+                        "clearSearchButton"
+                    ).style.display = "block";
 
-                    }
-
-                    const clearButton =
-                        document.getElementById(
-                            "clearSearchButton"
-                        );
-
-                    if (clearButton) {
-
-                        clearButton.style.display =
-                            "block";
-
-                    }
-
-                    searchUsers(
-                        query
-                    );
+                    searchUsers(query);
 
                     container.style.display =
                         "none";
 
                 };
 
-            list.appendChild(
-                button
-            );
+            list.appendChild(button);
 
         }
     );
 
 }
-
 
 function clearSearchHistory() {
 
@@ -7381,7 +3190,6 @@ function clearSearchHistory() {
 
 }
 
-
 function clearUserSearch() {
 
     const input =
@@ -7389,63 +3197,30 @@ function clearUserSearch() {
             "userSearchInput"
         );
 
-    if (!input) return;
-
     input.value = "";
 
-    const clearButton =
-        document.getElementById(
-            "clearSearchButton"
-        );
+    document.getElementById(
+        "clearSearchButton"
+    ).style.display = "none";
 
-    if (clearButton) {
+    document.getElementById(
+        "searchResults"
+    ).innerHTML = "";
 
-        clearButton.style.display =
-            "none";
+    document.getElementById(
+        "noResults"
+    ).style.display = "none";
 
-    }
-
-    const results =
-        document.getElementById(
-            "searchResults"
-        );
-
-    const noResults =
-        document.getElementById(
-            "noResults"
-        );
-
-    const resultText =
-        document.getElementById(
-            "searchResultText"
-        );
-
-    if (results) {
-        results.innerHTML = "";
-    }
-
-    if (noResults) {
-        noResults.style.display =
-            "none";
-    }
-
-    if (resultText) {
-
-        resultText.innerText =
-            "Start typing to find users";
-
-    }
+    document.getElementById(
+        "searchResultText"
+    ).innerText =
+        "Start typing to find users";
 
     renderRecentSearches();
 
     input.focus();
 
 }
-
-
-/* =========================================================
-   OTHER PAGES
-========================================================= */
 
 function openPrivateChats() {
 
@@ -7454,14 +3229,12 @@ function openPrivateChats() {
 
 }
 
-
 function openMail() {
 
     window.location.href =
         "Mail.html";
 
 }
-
 
 function openGroupChat() {
 
@@ -7470,14 +3243,12 @@ function openGroupChat() {
 
 }
 
-
 function openCalls() {
 
     window.location.href =
         "Call.html";
 
 }
-
 
 function openProfile() {
 
@@ -7491,11 +3262,6 @@ function openProfile() {
 
 }
 
-
-/* =========================================================
-   LOGOUT
-========================================================= */
-
 async function logout() {
 
     await setProfileOnline(false);
@@ -7506,150 +3272,75 @@ async function logout() {
 
     currentUsername = "";
 
-    if (chatChannel) {
+    if(chatChannel) {
 
         await supabaseClient
-            .removeChannel(
-                chatChannel
-            );
+            .removeChannel(chatChannel);
 
         chatChannel = null;
 
     }
 
-    const app =
-        document.getElementById("app");
+    document.getElementById("app")
+        .style.display = "none";
 
-    const authScreen =
-        document.getElementById(
-            "authScreen"
-        );
+    document.getElementById("authScreen")
+        .style.display = "flex";
 
-    if (app) {
+    document.getElementById("username")
+        .value = "";
 
-        app.style.display =
-            "none";
+    document.getElementById("password")
+        .value = "";
 
-    }
-
-    if (authScreen) {
-
-        authScreen.style.display =
-            "flex";
-
-    }
-
-    const username =
-        document.getElementById(
-            "username"
-        );
-
-    const password =
-        document.getElementById(
-            "password"
-        );
-
-    const confirm =
-        document.getElementById(
-            "confirmPassword"
-        );
-
-    if (username) username.value = "";
-    if (password) password.value = "";
-    if (confirm) confirm.value = "";
+    document.getElementById("confirmPassword")
+        .value = "";
 
     clearMessage();
 
 }
 
-
-/* =========================================================
-   GLOBAL CHAT
-========================================================= */
-
 function openGlobalChat() {
 
     hideAllPages();
 
-    const chat =
-        document.getElementById(
-            "globalChat"
-        );
+    document.getElementById("globalChat")
+        .style.display = "block";
 
-    if (chat) {
+    setActiveNav("Global Chat");
 
-        chat.style.display =
-            "block";
+    document.getElementById("usernameBox")
+        .style.display = "block";
 
-    }
+    document.getElementById("chatArea")
+        .style.display = "none";
 
-    setActiveNav(
-        "Global Chat"
-    );
-
-    const usernameBox =
-        document.getElementById(
-            "usernameBox"
-        );
-
-    const chatArea =
-        document.getElementById(
-            "chatArea"
-        );
-
-    const chatUsername =
-        document.getElementById(
-            "chatUsername"
-        );
-
-    if (usernameBox) {
-        usernameBox.style.display =
-            "block";
-    }
-
-    if (chatArea) {
-        chatArea.style.display =
-            "none";
-    }
-
-    if (chatUsername) {
-
-        chatUsername.value =
-            currentUsername;
-
-    }
+    document.getElementById("chatUsername")
+        .value = currentUsername;
 
     updateOnlineCount();
 
 }
 
-
 async function joinGlobalChat() {
 
-    const input =
+    const username =
         document.getElementById(
             "chatUsername"
-        );
+        )
+        .value
+        .trim();
 
-    if (!input) return;
+    if(username === "") {
 
-    const username =
-        input.value.trim();
-
-    if (username === "") {
-
-        alert(
-            "Please enter a username."
-        );
+        alert("Please enter a username.");
 
         return;
 
     }
 
-    if (
-        !/^[a-zA-Z0-9_]{3,20}$/.test(
-            username
-        )
+    if(
+        !/^[a-zA-Z0-9_]{3,20}$/.test(username)
     ) {
 
         alert(
@@ -7660,32 +3351,15 @@ async function joinGlobalChat() {
 
     }
 
-    currentUsername =
-        username;
+    currentUsername = username;
 
-    const usernameBox =
-        document.getElementById(
-            "usernameBox"
-        );
+    document.getElementById(
+        "usernameBox"
+    ).style.display = "none";
 
-    const chatArea =
-        document.getElementById(
-            "chatArea"
-        );
-
-    if (usernameBox) {
-
-        usernameBox.style.display =
-            "none";
-
-    }
-
-    if (chatArea) {
-
-        chatArea.style.display =
-            "block";
-
-    }
+    document.getElementById(
+        "chatArea"
+    ).style.display = "block";
 
     await loadMessages();
 
@@ -7695,7 +3369,6 @@ async function joinGlobalChat() {
 
 }
 
-
 async function loadMessages() {
 
     const {
@@ -7703,17 +3376,16 @@ async function loadMessages() {
         error
     } =
         await supabaseClient
-            .from("global_messages")
-            .select("*")
-            .order(
-                "created_at",
-                {
-                    ascending:
-                        true
-                }
-            );
+        .from("global_messages")
+        .select("*")
+        .order(
+            "created_at",
+            {
+                ascending:true
+            }
+        );
 
-    if (error) {
+    if(error) {
 
         console.error(
             "Could not load messages:",
@@ -7725,15 +3397,11 @@ async function loadMessages() {
     }
 
     const box =
-        document.getElementById(
-            "messages"
-        );
-
-    if (!box) return;
+        document.getElementById("messages");
 
     box.innerHTML = "";
 
-    (data || []).forEach(
+    data.forEach(
         message => {
 
             displayMessage(
@@ -7749,23 +3417,13 @@ async function loadMessages() {
 
 }
 
-
-function displayMessage(
-    username,
-    text
-) {
+function displayMessage(username,text) {
 
     const box =
-        document.getElementById(
-            "messages"
-        );
-
-    if (!box) return;
+        document.getElementById("messages");
 
     const item =
-        document.createElement(
-            "div"
-        );
+        document.createElement("div");
 
     item.className =
         "message-item";
@@ -7782,15 +3440,12 @@ function displayMessage(
 
     `;
 
-    box.appendChild(
-        item
-    );
+    box.appendChild(item);
 
     box.scrollTop =
         box.scrollHeight;
 
 }
-
 
 async function sendGlobalMessage() {
 
@@ -7799,44 +3454,30 @@ async function sendGlobalMessage() {
             "chatMessage"
         );
 
-    if (!input) return;
-
     const text =
         input.value.trim();
 
-    if (text === "") return;
-
-    if (!currentUsername) {
-
-        alert(
-            "Please join Global Chat first."
-        );
-
+    if(text === "")
         return;
-
-    }
 
     const {
         error
     } =
         await supabaseClient
-            .from("global_messages")
-            .insert({
+        .from("global_messages")
+        .insert({
 
-                username:
-                    currentUsername,
+            username:
+                currentUsername,
 
-                message:
-                    text
+            message:
+                text
 
-            });
+        });
 
-    if (error) {
+    if(error) {
 
-        console.error(
-            "Global message error:",
-            error
-        );
+        console.error(error);
 
         alert(
             "Message could not be sent!\n\n" +
@@ -7851,135 +3492,92 @@ async function sendGlobalMessage() {
 
 }
 
+async function subscribeToMessages() {
 
-function subscribeToMessages() {
-
-    if (chatChannel) {
-
-        supabaseClient
-            .removeChannel(
-                chatChannel
-            );
-
+    if(chatChannel) {
+        try {
+            await supabaseClient.removeChannel(chatChannel);
+        } catch(error) {
+            console.warn("Could not remove old chat channel:", error);
+        }
+        chatChannel = null;
     }
 
     chatChannel =
         supabaseClient
-            .channel(
-                "global-chat-room"
-            )
-            .on(
-                "postgres_changes",
-                {
+        .channel("global-chat-room-" + Date.now())
+        .on(
+            "postgres_changes",
+            {
 
-                    event:
-                        "INSERT",
+                event:"INSERT",
 
-                    schema:
-                        "public",
+                schema:"public",
 
-                    table:
-                        "global_messages"
+                table:"global_messages"
 
-                },
-                payload => {
+            },
+            payload => {
 
-                    displayMessage(
-                        payload.new.username,
-                        payload.new.message
-                    );
+                displayMessage(
+                    payload.new.username,
+                    payload.new.message
+                );
 
-                }
-            )
-            .subscribe();
+            }
+        )
+        .subscribe((status) => {
+        if (status === "CHANNEL_ERROR") {
+            console.error("Global chat realtime channel error.");
+        }
+    });
 
 }
-
 
 function updateOnlineCount() {
 
-    const onlineCount =
-        document.getElementById(
-            "onlineCount"
-        );
-
-    if (onlineCount) {
-
-        onlineCount.innerText =
-            "🟢 Global Chat";
-
-    }
+    document.getElementById(
+        "onlineCount"
+    ).innerText =
+        "🟢 Global Chat";
 
 }
-
-
-/* =========================================================
-   SECURITY HELPERS
-========================================================= */
 
 function escapeHTML(text) {
 
     const div =
-        document.createElement(
-            "div"
-        );
+        document.createElement("div");
 
-    div.innerText =
-        text;
+    div.innerText = text;
 
     return div.innerHTML;
 
 }
 
-
 function escapeAttribute(text) {
 
     return String(text)
-        .replace(
-            /\\/g,
-            "\\\\"
-        )
-        .replace(
-            /'/g,
-            "\\'"
-        );
+        .replace(/\\/g,"\\\\")
+        .replace(/'/g,"\\'");
 
 }
-
-
-/* =========================================================
-   ENTER KEY
-========================================================= */
 
 document.addEventListener(
     "keydown",
     function(event) {
 
-        if (
-            event.key === "Escape"
-        ) {
-
-            closeStrangerEvent();
-
-            closeProfilePreview();
+        if(event.key !== "Enter") {
 
             return;
 
-        }
-
-        if (
-            event.key !== "Enter"
-        ) {
-            return;
         }
 
         const active =
             document.activeElement;
 
-        if (
+        if(
             active &&
-            active.id ===
-                "chatMessage"
+            active.id === "chatMessage"
         ) {
 
             event.preventDefault();
@@ -7990,7 +3588,7 @@ document.addEventListener(
 
         }
 
-        if (
+        if(
             active &&
             (
                 active.id === "username" ||
@@ -8010,15 +3608,10 @@ document.addEventListener(
     }
 );
 
-
-/* =========================================================
-   ONLINE HEARTBEAT
-========================================================= */
-
 setInterval(
     function() {
 
-        if (currentUsername) {
+        if(currentUsername) {
 
             setProfileOnline(true);
 
@@ -8028,12 +3621,11 @@ setInterval(
     30000
 );
 
-
 window.addEventListener(
     "beforeunload",
     function() {
 
-        if (currentUsername) {
+        if(currentUsername) {
 
             setProfileOnline(false);
 
@@ -8042,69 +3634,14 @@ window.addEventListener(
     }
 );
 
-
-/* =========================================================
-   STARTUP
-========================================================= */
-
-(async function bootChatsApp() {
-
-    loadStrangerWallpaper();
-
-    await startLoadingScreen();
-
-    await checkSession();
-
-})();
-
-</script>
-
-
-<script>
-
-/* =======================================================
-   SERVICE WORKER
-======================================================= */
-
-if (
-    "serviceWorker" in navigator
-) {
-
-    window.addEventListener(
-        "load",
-        () => {
-
-            navigator.serviceWorker
-                .register(
-                    "./service-worker.js"
-                )
-                .then(
-                    registration => {
-
-                        console.log(
-                            "ChatsApp service worker registered:",
-                            registration.scope
-                        );
-
-                    }
-                )
-                .catch(
-                    error => {
-
-                        console.error(
-                            "ChatsApp service worker failed:",
-                            error
-                        );
-
-                    }
-                );
-
-        }
-    );
-
-}
+checkSession();
 
 </script>
 
 </body>
-</html> 
+}
+</script>
+
+</body>
+
+</html>
