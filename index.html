@@ -2,10 +2,17 @@
 <html lang="en">
 
 <head>
+
 <link rel="manifest" href="./manifest.json">
+
 <meta name="theme-color" content="#7c3aed">
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
 <title>ChatsApp</title>
 
@@ -13,98 +20,265 @@
 
 <style>
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url(
+    'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap'
+);
 
 * {
     box-sizing: border-box;
 }
 
 body {
+
     margin: 0;
+
     min-height: 100vh;
+
     font-family: "Inter", sans-serif;
 
     background:
-        radial-gradient(circle at 15% 20%, #253b6e 0%, transparent 35%),
-        radial-gradient(circle at 85% 80%, #34205d 0%, transparent 35%),
+        radial-gradient(
+            circle at 15% 20%,
+            #253b6e 0%,
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 85% 80%,
+            #34205d 0%,
+            transparent 35%
+        ),
         #080b14;
 
     color: white;
+
     overflow-x: hidden;
+
+    transition:
+        background 0.5s ease;
 }
 
-/* =========================================
+
+/* =====================================================
+   STRANGER THINGS WALLPAPER
+===================================================== */
+
+body.stranger-wallpaper {
+
+    background:
+        radial-gradient(
+            circle at 50% 45%,
+            rgba(150,0,0,.28),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 10% 90%,
+            rgba(100,0,0,.35),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 90% 10%,
+            rgba(120,0,0,.3),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            #020102,
+            #160204,
+            #030102
+        );
+
+}
+
+body.stranger-wallpaper::before {
+
+    content: "STRANGER  THINGS";
+
+    position: fixed;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%,-50%);
+
+    z-index: -1;
+
+    white-space: nowrap;
+
+    font-family: Georgia, serif;
+
+    font-size: clamp(
+        35px,
+        9vw,
+        110px
+    );
+
+    font-weight: 900;
+
+    letter-spacing: 7px;
+
+    color: rgba(
+        190,
+        10,
+        10,
+        .12
+    );
+
+    text-shadow:
+        0 0 15px rgba(255,0,0,.12),
+        0 0 45px rgba(255,0,0,.08);
+
+    pointer-events: none;
+
+}
+
+body.stranger-wallpaper::after {
+
+    content: "";
+
+    position: fixed;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: -1;
+
+    background:
+        repeating-linear-gradient(
+            115deg,
+            transparent 0,
+            transparent 70px,
+            rgba(130,0,0,.035) 72px,
+            transparent 75px
+        );
+
+    animation:
+        strangerVines 12s linear infinite;
+
+}
+
+@keyframes strangerVines {
+
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(80px);
+    }
+
+}
+
+
+/* =====================================================
    LOADING SCREEN
-========================================= */
+===================================================== */
 
 #loadingScreen {
+
     position: fixed;
+
     inset: 0;
+
     z-index: 99999;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
+
     flex-direction: column;
 
     background:
-        radial-gradient(circle at 20% 20%, #253b6e 0%, transparent 35%),
-        radial-gradient(circle at 80% 80%, #34205d 0%, transparent 35%),
+        radial-gradient(
+            circle at 20% 20%,
+            #253b6e 0%,
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 80% 80%,
+            #34205d 0%,
+            transparent 35%
+        ),
         #080b14;
 
-    transition: opacity .8s ease, visibility .8s ease;
+    transition:
+        opacity .8s ease,
+        visibility .8s ease;
+
 }
 
 #loadingScreen.hidden {
+
     opacity: 0;
+
     visibility: hidden;
+
     pointer-events: none;
+
 }
 
 .loading-logo {
+
     width: 96px;
     height: 96px;
+
     border-radius: 29px;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     font-size: 45px;
+
     font-weight: 800;
 
-    background: linear-gradient(135deg, #5b8cff, #8d5cff);
+    background:
+        linear-gradient(
+            135deg,
+            #5b8cff,
+            #8d5cff
+        );
 
     box-shadow:
         0 0 25px rgba(91,140,255,.55),
         0 0 60px rgba(121,92,255,.3);
 
-    animation: loadingLogoGlow 2s ease-in-out infinite;
+    animation:
+        loadingLogoGlow 2s ease-in-out infinite;
 
-    position: relative;
-    z-index: 5;
 }
 
 .loading-logo.connected {
-    animation: connectedPulse .65s ease-out;
+
+    animation:
+        connectedPulse .65s ease-out;
+
 }
 
 @keyframes loadingLogoGlow {
 
-    0%, 100% {
+    0%,100% {
+
         transform: scale(1);
 
         box-shadow:
             0 0 25px rgba(91,140,255,.55),
             0 0 60px rgba(121,92,255,.3);
+
     }
 
     50% {
+
         transform: scale(1.045);
 
         box-shadow:
             0 0 38px rgba(91,140,255,.75),
             0 0 85px rgba(121,92,255,.45);
+
     }
 
 }
@@ -126,21 +300,31 @@ body {
 }
 
 .loading-particles {
+
     position: absolute;
+
     width: 280px;
     height: 280px;
+
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%);
+
+    transform:
+        translate(-50%,-50%);
+
     pointer-events: none;
-    z-index: 3;
+
 }
 
 .loading-particle {
+
     position: absolute;
+
     width: 6px;
     height: 6px;
+
     border-radius: 50%;
+
     background: #7097ff;
 
     box-shadow:
@@ -149,313 +333,306 @@ body {
 
     left: 50%;
     top: 50%;
+
     opacity: 0;
 
-    animation: particleFly 2.2s ease-in-out infinite;
+    animation:
+        particleFly 2.2s ease-in-out infinite;
+
 }
 
 .loading-particle:nth-child(1) {
-    --x: -110px;
-    --y: -90px;
-    animation-delay: 0s;
+    --x:-110px;
+    --y:-90px;
 }
 
 .loading-particle:nth-child(2) {
-    --x: 105px;
-    --y: -75px;
-    animation-delay: .25s;
+    --x:105px;
+    --y:-75px;
+    animation-delay:.25s;
 }
 
 .loading-particle:nth-child(3) {
-    --x: -125px;
-    --y: 55px;
-    animation-delay: .5s;
+    --x:-125px;
+    --y:55px;
+    animation-delay:.5s;
 }
 
 .loading-particle:nth-child(4) {
-    --x: 120px;
-    --y: 70px;
-    animation-delay: .75s;
+    --x:120px;
+    --y:70px;
+    animation-delay:.75s;
 }
 
 .loading-particle:nth-child(5) {
-    --x: -70px;
-    --y: 115px;
-    animation-delay: 1s;
+    --x:-70px;
+    --y:115px;
+    animation-delay:1s;
 }
 
 .loading-particle:nth-child(6) {
-    --x: 75px;
-    --y: -120px;
-    animation-delay: 1.25s;
+    --x:75px;
+    --y:-120px;
+    animation-delay:1.25s;
 }
 
 .loading-particle:nth-child(7) {
-    --x: 130px;
-    --y: 0;
-    animation-delay: 1.5s;
+    --x:130px;
+    --y:0;
+    animation-delay:1.5s;
 }
 
 .loading-particle:nth-child(8) {
-    --x: -130px;
-    --y: 0;
-    animation-delay: 1.75s;
+    --x:-130px;
+    --y:0;
+    animation-delay:1.75s;
 }
 
 @keyframes particleFly {
 
     0% {
-        transform: translate(var(--x), var(--y)) scale(.4);
-        opacity: 0;
+
+        transform:
+            translate(var(--x),var(--y))
+            scale(.4);
+
+        opacity:0;
+
     }
 
-    25%, 70% {
-        opacity: 1;
+    25%,70% {
+        opacity:1;
     }
 
     100% {
-        transform: translate(0, 0) scale(.05);
-        opacity: 0;
+
+        transform:
+            translate(0,0)
+            scale(.05);
+
+        opacity:0;
+
     }
 
 }
 
 .loading-title {
-    margin-top: 25px;
-    font-size: 32px;
-    font-weight: 800;
+
+    margin-top:25px;
+
+    font-size:32px;
+
+    font-weight:800;
+
 }
 
 .loading-subtitle {
-    margin-top: 8px;
-    color: #8d96ad;
-    font-size: 14px;
-    min-height: 20px;
-    transition: .3s;
+
+    margin-top:8px;
+
+    color:#8d96ad;
+
+    font-size:14px;
+
 }
 
 .loading-subtitle.connected {
-    color: #63e6a0;
+
+    color:#63e6a0;
+
 }
 
 .loading-dots {
-    display: flex;
-    gap: 7px;
-    margin-top: 25px;
+
+    display:flex;
+
+    gap:7px;
+
+    margin-top:25px;
+
 }
 
 .loading-dots span {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #7097ff;
 
-    animation: loadingDot 1.2s infinite ease-in-out;
+    width:8px;
+    height:8px;
 
-    box-shadow: 0 0 8px rgba(112,151,255,.6);
+    border-radius:50%;
+
+    background:#7097ff;
+
+    animation:
+        loadingDot 1.2s infinite ease-in-out;
+
 }
 
 .loading-dots span:nth-child(2) {
-    animation-delay: .15s;
+    animation-delay:.15s;
 }
 
 .loading-dots span:nth-child(3) {
-    animation-delay: .3s;
+    animation-delay:.3s;
 }
 
 @keyframes loadingDot {
 
-    0%, 100% {
-        transform: translateY(0);
-        opacity: .35;
+    0%,100% {
+        transform:translateY(0);
+        opacity:.35;
     }
 
     50% {
-        transform: translateY(-7px);
-        opacity: 1;
+        transform:translateY(-7px);
+        opacity:1;
     }
 
 }
 
-/* =========================================
-   FLOATING EMOJIS
-========================================= */
 
-.floating-emojis {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    overflow: hidden;
-    z-index: 0;
-}
-
-.floating-emojis span {
-    position: absolute;
-    opacity: .12;
-    font-size: 25px;
-    animation: floatEmoji 12s linear infinite;
-}
-
-.floating-emojis span:nth-child(1) {
-    left: 10%;
-    top: 20%;
-}
-
-.floating-emojis span:nth-child(2) {
-    left: 80%;
-    top: 15%;
-    animation-delay: 3s;
-}
-
-.floating-emojis span:nth-child(3) {
-    left: 25%;
-    top: 75%;
-    animation-delay: 6s;
-}
-
-.floating-emojis span:nth-child(4) {
-    left: 70%;
-    top: 70%;
-    animation-delay: 2s;
-}
-
-.floating-emojis span:nth-child(5) {
-    left: 50%;
-    top: 40%;
-    animation-delay: 8s;
-}
-
-@keyframes floatEmoji {
-
-    0%, 100% {
-        transform: translateY(20px) rotate(0deg);
-    }
-
-    50% {
-        transform: translateY(-30px) rotate(10deg);
-    }
-
-}
-
-/* =========================================
+/* =====================================================
    AUTH
-========================================= */
+===================================================== */
 
 .auth-screen {
-    min-height: 100vh;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    min-height:100vh;
 
-    padding: 20px;
+    display:flex;
 
-    position: relative;
-    z-index: 1;
+    align-items:center;
+
+    justify-content:center;
+
+    padding:20px;
+
 }
 
 .auth-box {
-    width: 100%;
-    max-width: 440px;
 
-    padding: 42px;
+    width:100%;
 
-    border-radius: 25px;
+    max-width:440px;
 
-    background: rgba(18,22,38,.9);
+    padding:42px;
 
-    border: 1px solid rgba(255,255,255,.1);
+    border-radius:25px;
+
+    background:rgba(18,22,38,.9);
+
+    border:1px solid rgba(255,255,255,.1);
 
     box-shadow:
-        0 30px 80px rgba(0,0,0,.55),
-        inset 0 1px rgba(255,255,255,.06);
+        0 30px 80px rgba(0,0,0,.55);
 
-    backdrop-filter: blur(20px);
+    backdrop-filter:blur(20px);
 
-    text-align: center;
+    text-align:center;
+
 }
 
 .logo {
-    width: 70px;
-    height: 70px;
 
-    margin: 0 auto 20px;
+    width:70px;
+    height:70px;
 
-    border-radius: 22px;
+    margin:0 auto 20px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border-radius:22px;
 
-    font-size: 32px;
-    font-weight: 800;
+    display:flex;
 
-    background: linear-gradient(135deg,#5b8cff,#8d5cff);
+    align-items:center;
 
-    box-shadow:
-        0 10px 30px rgba(91,140,255,.35);
+    justify-content:center;
+
+    font-size:32px;
+
+    font-weight:800;
+
+    background:
+        linear-gradient(
+            135deg,
+            #5b8cff,
+            #8d5cff
+        );
+
 }
 
 .auth-box h1 {
-    margin: 0;
-    font-size: 32px;
+    margin:0;
+    font-size:32px;
 }
 
 .subtitle {
-    color: #8d96ad;
-    margin: 10px 0 30px;
-    font-size: 14px;
-    line-height: 1.5;
+
+    color:#8d96ad;
+
+    margin:10px 0 30px;
+
+    font-size:14px;
+
 }
 
 .input-group {
-    text-align: left;
-    margin-bottom: 15px;
+
+    text-align:left;
+
+    margin-bottom:15px;
+
 }
 
 .input-group label {
-    display: block;
-    margin-bottom: 7px;
-    color: #9ca5ba;
-    font-size: 13px;
-    font-weight: 600;
+
+    display:block;
+
+    margin-bottom:7px;
+
+    color:#9ca5ba;
+
+    font-size:13px;
+
+    font-weight:600;
+
 }
 
 input {
-    width: 100%;
 
-    padding: 15px 17px;
+    width:100%;
 
-    border-radius: 13px;
+    padding:15px 17px;
 
-    border: 1px solid #2c3348;
+    border-radius:13px;
 
-    background: #0e1220;
+    border:1px solid #2c3348;
 
-    color: white;
+    background:#0e1220;
 
-    outline: none;
+    color:white;
 
-    font-size: 15px;
+    outline:none;
 
-    transition: .2s;
+    font-size:15px;
+
 }
 
 input:focus {
-    border-color: #638cff;
+
+    border-color:#638cff;
 
     box-shadow:
         0 0 0 3px rgba(99,140,255,.1);
+
 }
 
 .primary {
-    width: 100%;
 
-    padding: 15px;
+    width:100%;
 
-    border: none;
+    padding:15px;
 
-    border-radius: 13px;
+    border:none;
+
+    border-radius:13px;
 
     background:
         linear-gradient(
@@ -464,114 +641,141 @@ input:focus {
             #795cff
         );
 
-    color: white;
+    color:white;
 
-    font-weight: 700;
-    font-size: 15px;
+    font-weight:700;
 
-    cursor: pointer;
+    font-size:15px;
 
-    margin-top: 8px;
+    cursor:pointer;
 
-    transition: .2s;
+    margin-top:8px;
+
+    transition:.2s;
+
 }
 
 .primary:hover {
-    transform: translateY(-2px);
 
-    box-shadow:
-        0 10px 30px rgba(91,140,255,.3);
+    transform:translateY(-2px);
+
 }
 
 .switch {
-    margin-top: 22px;
-    color: #7f89a2;
-    font-size: 14px;
+
+    margin-top:22px;
+
+    color:#7f89a2;
+
+    font-size:14px;
+
 }
 
 .switch span {
-    color: #7097ff;
-    cursor: pointer;
-    font-weight: 600;
+
+    color:#7097ff;
+
+    cursor:pointer;
+
+    font-weight:600;
+
 }
 
 .message {
-    display: none;
 
-    margin-bottom: 18px;
+    display:none;
 
-    padding: 12px 15px;
+    margin-bottom:18px;
 
-    border-radius: 11px;
+    padding:12px 15px;
 
-    font-size: 13px;
+    border-radius:11px;
+
+    font-size:13px;
+
 }
 
 .message.error {
-    display: block;
 
-    background: rgba(255,75,75,.1);
+    display:block;
 
-    border: 1px solid rgba(255,75,75,.25);
+    background:rgba(255,75,75,.1);
 
-    color: #ff8585;
+    border:1px solid rgba(255,75,75,.25);
+
+    color:#ff8585;
+
 }
 
 .message.success {
-    display: block;
 
-    background: rgba(70,210,130,.1);
+    display:block;
 
-    border: 1px solid rgba(70,210,130,.25);
+    background:rgba(70,210,130,.1);
 
-    color: #71e0a0;
+    border:1px solid rgba(70,210,130,.25);
+
+    color:#71e0a0;
+
 }
 
-/* =========================================
+
+/* =====================================================
    APP
-========================================= */
+===================================================== */
 
 .app {
-    display: none;
 
-    min-height: 100vh;
+    display:none;
 
-    grid-template-columns: 260px 1fr;
+    min-height:100vh;
 
-    position: relative;
+    grid-template-columns:260px 1fr;
 
-    z-index: 1;
+    position:relative;
+
+    z-index:1;
+
 }
 
 .sidebar {
-    background: rgba(10,13,23,.94);
 
-    border-right: 1px solid #202638;
+    background:rgba(10,13,23,.94);
 
-    padding: 25px 16px;
+    border-right:1px solid #202638;
 
-    display: flex;
-    flex-direction: column;
+    padding:25px 16px;
+
+    display:flex;
+
+    flex-direction:column;
+
 }
 
 .brand {
-    display: flex;
-    align-items: center;
 
-    gap: 12px;
+    display:flex;
 
-    padding: 5px 12px 30px;
+    align-items:center;
+
+    gap:12px;
+
+    padding:5px 12px 30px;
+
 }
 
 .brand-icon {
-    width: 42px;
-    height: 42px;
 
-    border-radius: 13px;
+    width:42px;
+    height:42px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border-radius:13px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
 
     background:
         linear-gradient(
@@ -580,124 +784,155 @@ input:focus {
             #795cff
         );
 
-    font-weight: 800;
+    font-weight:800;
+
 }
 
 .brand-name {
-    font-size: 20px;
-    font-weight: 800;
+
+    font-size:20px;
+
+    font-weight:800;
+
 }
 
 .nav-title {
-    color: #525b72;
 
-    font-size: 11px;
-    font-weight: 700;
+    color:#525b72;
 
-    letter-spacing: 1.5px;
+    font-size:11px;
 
-    padding: 10px 13px;
+    font-weight:700;
+
+    letter-spacing:1.5px;
+
+    padding:10px 13px;
+
 }
 
 .nav-btn {
-    width: 100%;
 
-    padding: 13px;
+    width:100%;
 
-    margin: 3px 0;
+    padding:13px;
 
-    border: none;
+    margin:3px 0;
 
-    border-radius: 12px;
+    border:none;
 
-    background: transparent;
+    border-radius:12px;
 
-    color: #8d96ad;
+    background:transparent;
 
-    text-align: left;
+    color:#8d96ad;
 
-    font-size: 14px;
+    text-align:left;
 
-    cursor: pointer;
+    font-size:14px;
 
-    transition: .2s;
+    cursor:pointer;
+
+    transition:.2s;
+
 }
 
 .nav-btn:hover,
 .nav-btn.active {
-    background: #1b2235;
-    color: white;
+
+    background:#1b2235;
+
+    color:white;
+
 }
 
 .nav-icon {
-    display: inline-block;
-    width: 25px;
+
+    display:inline-block;
+
+    width:25px;
+
 }
 
 .profile {
-    margin-top: auto;
 
-    background: #151a2a;
+    margin-top:auto;
 
-    border: 1px solid #252c40;
+    background:#151a2a;
 
-    border-radius: 15px;
+    border:1px solid #252c40;
 
-    padding: 13px;
+    border-radius:15px;
+
+    padding:13px;
+
 }
 
 .profile-name {
-    font-weight: 600;
-    font-size: 14px;
 
-    overflow: hidden;
+    font-weight:600;
 
-    text-overflow: ellipsis;
+    font-size:14px;
+
 }
 
 .profile-status {
-    color: #55d88a;
 
-    font-size: 11px;
+    color:#55d88a;
 
-    margin-top: 4px;
+    font-size:11px;
+
+    margin-top:4px;
+
 }
 
 .main {
-    padding: 35px;
 
-    overflow-y: auto;
+    padding:35px;
+
+    overflow-y:auto;
+
 }
 
 .topbar {
-    display: flex;
 
-    align-items: center;
+    display:flex;
 
-    justify-content: space-between;
+    align-items:center;
 
-    margin-bottom: 35px;
+    justify-content:space-between;
+
+    margin-bottom:35px;
+
 }
 
 .topbar h1 {
-    margin: 0;
-    font-size: 30px;
+
+    margin:0;
+
+    font-size:30px;
+
 }
 
 .topbar p {
-    margin: 7px 0 0;
-    color: #747e96;
+
+    margin:7px 0 0;
+
+    color:#747e96;
+
 }
 
 .avatar {
-    width: 45px;
-    height: 45px;
 
-    border-radius: 50%;
+    width:45px;
+    height:45px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
 
     background:
         linear-gradient(
@@ -706,69 +941,244 @@ input:focus {
             #9c5cff
         );
 
-    font-weight: 700;
+    font-weight:700;
+
 }
 
+
+/* =====================================================
+   HOME CARDS
+===================================================== */
+
 .cards {
-    display: grid;
+
+    display:grid;
 
     grid-template-columns:
-        repeat(auto-fit,minmax(230px,1fr));
+        repeat(
+            auto-fit,
+            minmax(230px,1fr)
+        );
 
-    gap: 20px;
+    gap:20px;
+
 }
 
 .card {
-    min-height: 180px;
 
-    padding: 25px;
+    min-height:180px;
 
-    border-radius: 20px;
+    padding:25px;
 
-    background: rgba(18,23,38,.85);
+    border-radius:20px;
 
-    border: 1px solid #242b3e;
+    background:rgba(18,23,38,.85);
 
-    cursor: pointer;
+    border:1px solid #242b3e;
 
-    transition: .25s;
+    cursor:pointer;
+
+    transition:.25s;
+
 }
 
 .card:hover {
-    transform: translateY(-5px);
 
-    border-color: #3c4b70;
+    transform:translateY(-5px);
+
+    border-color:#3c4b70;
 
     box-shadow:
         0 15px 40px rgba(0,0,0,.25);
+
 }
 
 .card-icon {
-    font-size: 30px;
-    margin-bottom: 20px;
+
+    font-size:30px;
+
+    margin-bottom:20px;
+
 }
 
 .card h2 {
-    margin: 0 0 8px;
-    font-size: 19px;
+
+    margin:0 0 8px;
+
+    font-size:19px;
+
 }
 
 .card p {
-    margin: 0;
 
-    color: #78829a;
+    margin:0;
 
-    font-size: 13px;
+    color:#78829a;
 
-    line-height: 1.5;
+    font-size:13px;
+
+    line-height:1.5;
+
+}
+
+
+/* =====================================================
+   STRANGER THINGS EVENT CARD
+===================================================== */
+
+.stranger-event-card {
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(180,0,0,.35),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 80% 80%,
+            rgba(255,0,0,.18),
+            transparent 40%
+        ),
+        #090306;
+
+    border-color:
+        rgba(255,50,50,.4);
+
+    box-shadow:
+        inset 0 0 35px rgba(120,0,0,.18);
+
+}
+
+.stranger-event-card::before {
+
+    content:"";
+
+    position:absolute;
+
+    width:180px;
+    height:180px;
+
+    right:-80px;
+    top:-80px;
+
+    border-radius:50%;
+
+    background:
+        rgba(255,0,0,.15);
+
+    filter:blur(30px);
+
+    animation:
+        strangerGlow 3s ease-in-out infinite;
+
+}
+
+.stranger-event-card::after {
+
+    content:"⚡";
+
+    position:absolute;
+
+    right:20px;
+    bottom:15px;
+
+    font-size:55px;
+
+    opacity:.12;
+
+    animation:
+        strangerFloat 3s ease-in-out infinite;
+
+}
+
+.stranger-event-card h2,
+.stranger-event-card p,
+.stranger-event-card .card-icon,
+.stranger-event-badge {
+
+    position:relative;
+
+    z-index:2;
+
+}
+
+.stranger-event-badge {
+
+    display:inline-block;
+
+    margin-bottom:12px;
+
+    padding:5px 9px;
+
+    border-radius:8px;
+
+    background:
+        rgba(255,30,30,.12);
+
+    border:
+        1px solid rgba(255,60,60,.3);
+
+    color:#ff7777;
+
+    font-size:10px;
+
+    font-weight:800;
+
+    letter-spacing:1px;
+
+}
+
+@keyframes strangerGlow {
+
+    0%,100% {
+
+        transform:scale(1);
+
+        opacity:.5;
+
+    }
+
+    50% {
+
+        transform:scale(1.3);
+
+        opacity:.9;
+
+    }
+
+}
+
+@keyframes strangerFloat {
+
+    0%,100% {
+
+        transform:
+            translateY(0)
+            rotate(-15deg);
+
+    }
+
+    50% {
+
+        transform:
+            translateY(-8px)
+            rotate(-8deg);
+
+    }
+
 }
 
 .welcome {
-    margin-top: 25px;
 
-    padding: 25px;
+    margin-top:25px;
 
-    border-radius: 20px;
+    padding:25px;
+
+    border-radius:20px;
 
     background:
         linear-gradient(
@@ -777,203 +1187,511 @@ input:focus {
             rgba(121,92,255,.08)
         );
 
-    border: 1px solid rgba(91,140,255,.2);
+    border:
+        1px solid rgba(91,140,255,.2);
+
 }
 
-.welcome h2 {
-    margin-top: 0;
+
+/* =====================================================
+   STRANGER THINGS EVENT POPUP
+===================================================== */
+
+.stranger-event-overlay {
+
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:50000;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:20px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(100,0,0,.25),
+            rgba(0,0,0,.96) 70%
+        );
+
+    backdrop-filter:blur(8px);
+
 }
 
-/* =========================================
-   USER SEARCH
-========================================= */
+.stranger-event-overlay.show {
+
+    display:flex;
+
+}
+
+.stranger-event-box {
+
+    width:100%;
+
+    max-width:600px;
+
+    padding:42px 30px;
+
+    border-radius:25px;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(180,0,0,.25),
+            transparent 50%
+        ),
+        #090306;
+
+    border:
+        1px solid rgba(255,40,40,.4);
+
+    box-shadow:
+        0 0 40px rgba(180,0,0,.2),
+        0 30px 100px rgba(0,0,0,.8);
+
+    text-align:center;
+
+    animation:
+        strangerBoxIn .45s ease;
+
+}
+
+@keyframes strangerBoxIn {
+
+    from {
+
+        opacity:0;
+
+        transform:
+            scale(.9)
+            translateY(20px);
+
+    }
+
+    to {
+
+        opacity:1;
+
+        transform:
+            scale(1)
+            translateY(0);
+
+    }
+
+}
+
+.stranger-title {
+
+    font-family:Georgia,serif;
+
+    font-size:
+        clamp(
+            34px,
+            8vw,
+            65px
+        );
+
+    font-weight:900;
+
+    letter-spacing:4px;
+
+    color:#d71919;
+
+    text-shadow:
+        0 0 5px #ff0000,
+        0 0 15px rgba(255,0,0,.7),
+        0 0 35px rgba(255,0,0,.35);
+
+    margin-bottom:10px;
+
+}
+
+.stranger-subtitle {
+
+    color:#aaa;
+
+    font-size:14px;
+
+    margin-bottom:25px;
+
+}
+
+.stranger-countdown {
+
+    display:inline-block;
+
+    padding:8px 14px;
+
+    margin-bottom:25px;
+
+    border-radius:10px;
+
+    background:
+        rgba(255,0,0,.1);
+
+    border:
+        1px solid rgba(255,0,0,.25);
+
+    color:#ff6969;
+
+    font-size:12px;
+
+    font-weight:800;
+
+    letter-spacing:1px;
+
+}
+
+.stranger-wallpaper-preview {
+
+    height:190px;
+
+    margin:0 auto 25px;
+
+    border-radius:17px;
+
+    border:
+        1px solid rgba(255,40,40,.35);
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(160,0,0,.3),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            #050103,
+            #240306,
+            #030102
+        );
+
+}
+
+.stranger-wallpaper-preview::before {
+
+    content:"STRANGER";
+
+    position:absolute;
+
+    left:50%;
+    top:38%;
+
+    transform:
+        translate(-50%,-50%);
+
+    font-family:Georgia,serif;
+
+    font-size:
+        clamp(
+            27px,
+            7vw,
+            52px
+        );
+
+    font-weight:900;
+
+    letter-spacing:5px;
+
+    color:#b91515;
+
+    text-shadow:
+        0 0 7px red,
+        0 0 20px rgba(255,0,0,.65);
+
+}
+
+.stranger-wallpaper-preview::after {
+
+    content:"THINGS";
+
+    position:absolute;
+
+    left:50%;
+    top:67%;
+
+    transform:
+        translate(-50%,-50%);
+
+    font-family:Georgia,serif;
+
+    font-size:
+        clamp(
+            27px,
+            7vw,
+            52px
+        );
+
+    font-weight:900;
+
+    letter-spacing:5px;
+
+    color:#b91515;
+
+    text-shadow:
+        0 0 7px red,
+        0 0 20px rgba(255,0,0,.65);
+
+}
+
+.stranger-buttons {
+
+    display:flex;
+
+    gap:10px;
+
+}
+
+.stranger-equip,
+.stranger-close {
+
+    flex:1;
+
+    padding:14px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-weight:800;
+
+}
+
+.stranger-equip {
+
+    border:none;
+
+    background:
+        linear-gradient(
+            135deg,
+            #b51212,
+            #620707
+        );
+
+    color:white;
+
+}
+
+.stranger-close {
+
+    border:
+        1px solid #34343c;
+
+    background:#151218;
+
+    color:white;
+
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
 
 .user-search-page {
-    display: none;
-    animation: pageIn .35s ease;
+
+    display:none;
+
+    animation:
+        pageIn .35s ease;
+
 }
 
 @keyframes pageIn {
 
     from {
-        opacity: 0;
-        transform: translateY(12px);
+
+        opacity:0;
+
+        transform:
+            translateY(12px);
+
     }
 
     to {
-        opacity: 1;
-        transform: translateY(0);
+
+        opacity:1;
+
+        transform:
+            translateY(0);
+
     }
 
 }
 
 .search-header {
-    display: flex;
 
-    justify-content: space-between;
+    display:flex;
 
-    align-items: center;
+    justify-content:space-between;
 
-    margin-bottom: 25px;
+    align-items:center;
+
+    margin-bottom:25px;
+
 }
 
 .search-header h1 {
-    margin: 0;
-    font-size: 30px;
+
+    margin:0;
+
+    font-size:30px;
+
 }
 
 .search-header p {
-    color: #747e96;
-    margin: 7px 0 0;
+
+    color:#747e96;
+
 }
 
-.search-back {
-    border: 1px solid #30384f;
+.search-back,
+.chat-back {
 
-    background: #151a2a;
+    border:
+        1px solid #30384f;
 
-    color: white;
+    background:#151a2a;
 
-    padding: 11px 17px;
+    color:white;
 
-    border-radius: 11px;
+    padding:11px 17px;
 
-    cursor: pointer;
+    border-radius:11px;
+
+    cursor:pointer;
+
 }
 
 .search-box-wrap {
-    position: relative;
-    margin-bottom: 20px;
+
+    position:relative;
+
+    margin-bottom:20px;
+
 }
 
 .search-icon {
-    position: absolute;
 
-    left: 17px;
-    top: 50%;
+    position:absolute;
 
-    transform: translateY(-50%);
+    left:17px;
 
-    font-size: 20px;
+    top:50%;
 
-    pointer-events: none;
+    transform:
+        translateY(-50%);
+
 }
 
 #userSearchInput {
-    padding-left: 50px;
-    padding-right: 45px;
 
-    font-size: 16px;
+    padding-left:50px;
 
-    background: rgba(14,18,32,.9);
 }
 
 .clear-search {
-    position: absolute;
 
-    right: 12px;
-    top: 50%;
+    position:absolute;
 
-    transform: translateY(-50%);
+    right:12px;
 
-    width: 30px;
-    height: 30px;
+    top:50%;
 
-    border: 0;
+    transform:
+        translateY(-50%);
 
-    border-radius: 50%;
+    width:30px;
 
-    background: #252d42;
+    height:30px;
 
-    color: #aab3c8;
+    border:0;
 
-    cursor: pointer;
+    border-radius:50%;
 
-    display: none;
+    background:#252d42;
+
+    color:#aab3c8;
+
+    cursor:pointer;
+
+    display:none;
+
 }
 
 .search-info {
-    display: flex;
 
-    justify-content: space-between;
+    display:flex;
 
-    align-items: center;
+    justify-content:space-between;
 
-    color: #737d95;
+    color:#737d95;
 
-    font-size: 13px;
+    font-size:13px;
 
-    margin-bottom: 15px;
+    margin-bottom:15px;
+
 }
 
 .search-results {
-    display: grid;
+
+    display:grid;
 
     grid-template-columns:
-        repeat(auto-fill,minmax(250px,1fr));
+        repeat(
+            auto-fill,
+            minmax(250px,1fr)
+        );
 
-    gap: 15px;
+    gap:15px;
+
 }
 
 .user-card {
-    position: relative;
 
-    padding: 20px;
+    padding:20px;
 
-    border-radius: 18px;
+    border-radius:18px;
 
-    background: rgba(18,23,38,.86);
+    background:
+        rgba(18,23,38,.86);
 
-    border: 1px solid #252d42;
-
-    transition: .25s;
-
-    animation: userCardIn .35s ease both;
-}
-
-.user-card:hover {
-    transform: translateY(-4px);
-
-    border-color: #4a5e8d;
-
-    box-shadow:
-        0 15px 35px rgba(0,0,0,.25);
-}
-
-@keyframes userCardIn {
-
-    from {
-        opacity: 0;
-        transform: translateY(12px) scale(.98);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
+    border:1px solid #252d42;
 
 }
 
 .user-card-top {
-    display: flex;
 
-    align-items: center;
+    display:flex;
 
-    gap: 13px;
+    align-items:center;
+
+    gap:13px;
+
 }
 
 .user-avatar {
-    width: 52px;
-    height: 52px;
 
-    flex-shrink: 0;
+    width:52px;
+    height:52px;
 
-    border-radius: 50%;
+    border-radius:50%;
 
-    display: flex;
+    display:flex;
 
-    align-items: center;
-    justify-content: center;
+    align-items:center;
+
+    justify-content:center;
 
     background:
         linear-gradient(
@@ -982,67 +1700,67 @@ input:focus {
             #9c5cff
         );
 
-    font-size: 20px;
-    font-weight: 800;
+    font-size:20px;
 
-    box-shadow:
-        0 7px 20px rgba(91,140,255,.25);
+    font-weight:800;
+
 }
 
 .user-name {
-    font-weight: 700;
-    font-size: 16px;
-    word-break: break-word;
+
+    font-weight:700;
+
+    font-size:16px;
+
 }
 
 .user-status {
-    margin-top: 5px;
 
-    font-size: 12px;
+    margin-top:5px;
 
-    color: #7d879f;
+    font-size:12px;
+
+    color:#7d879f;
+
 }
 
 .user-status.online {
-    color: #55d88a;
+
+    color:#55d88a;
+
 }
 
 .user-actions {
-    display: flex;
 
-    gap: 8px;
+    display:flex;
 
-    margin-top: 17px;
+    gap:8px;
+
+    margin-top:17px;
+
 }
 
 .user-action {
-    flex: 1;
 
-    padding: 10px;
+    flex:1;
 
-    border-radius: 10px;
+    padding:10px;
 
-    border: 1px solid #30384f;
+    border-radius:10px;
 
-    background: #151a2a;
+    border:
+        1px solid #30384f;
 
-    color: white;
+    background:#151a2a;
 
-    cursor: pointer;
+    color:white;
 
-    font-size: 12px;
-    font-weight: 600;
+    cursor:pointer;
 
-    transition: .2s;
-}
-
-.user-action:hover {
-    background: #202a43;
-
-    transform: translateY(-1px);
 }
 
 .user-action.message-btn {
+
     background:
         linear-gradient(
             135deg,
@@ -1050,462 +1768,257 @@ input:focus {
             #795cff
         );
 
-    border: none;
+    border:none;
+
 }
 
 .no-results {
-    display: none;
 
-    text-align: center;
+    display:none;
 
-    padding: 70px 20px;
+    text-align:center;
 
-    animation: noResultsIn .4s ease;
-}
-
-@keyframes noResultsIn {
-
-    from {
-        opacity: 0;
-        transform: scale(.9);
-    }
-
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+    padding:70px 20px;
 
 }
 
 .no-results-icon {
-    font-size: 55px;
 
-    animation:
-        noResultsBounce
-        1.5s
-        ease-in-out
-        infinite;
-}
-
-@keyframes noResultsBounce {
-
-    0%, 100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-8px);
-    }
+    font-size:55px;
 
 }
 
-.no-results h2 {
-    margin: 15px 0 7px;
-}
 
-.no-results p {
-    color: #737d95;
-    margin: 0;
-}
-
-.recent-searches {
-    display: none;
-
-    margin-top: 20px;
-
-    padding: 18px;
-
-    border-radius: 17px;
-
-    background: rgba(18,23,38,.75);
-
-    border: 1px solid #252d42;
-
-    animation: pageIn .3s ease;
-}
-
-.recent-top {
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    margin-bottom: 12px;
-}
-
-.recent-top h3 {
-    margin: 0;
-    font-size: 14px;
-}
-
-.clear-history {
-    border: 0;
-
-    background: none;
-
-    color: #7097ff;
-
-    cursor: pointer;
-
-    font-size: 12px;
-}
-
-.recent-list {
-    display: flex;
-
-    flex-wrap: wrap;
-
-    gap: 8px;
-}
-
-.recent-item {
-    border: 1px solid #30384f;
-
-    background: #151a2a;
-
-    color: #b7bfd1;
-
-    border-radius: 20px;
-
-    padding: 7px 11px;
-
-    cursor: pointer;
-
-    font-size: 12px;
-
-    transition: .2s;
-}
-
-.recent-item:hover {
-    border-color: #5b8cff;
-    color: white;
-}
-
-/* =========================================
-   PROFILE PREVIEW
-========================================= */
-
-.profile-preview-overlay {
-    display: none;
-
-    position: fixed;
-    inset: 0;
-
-    z-index: 10000;
-
-    background: rgba(0,0,0,.65);
-
-    backdrop-filter: blur(7px);
-
-    align-items: center;
-    justify-content: center;
-
-    padding: 20px;
-}
-
-.profile-preview-overlay.show {
-    display: flex;
-}
-
-.profile-preview {
-    width: 100%;
-    max-width: 390px;
-
-    padding: 30px;
-
-    border-radius: 25px;
-
-    background: #121726;
-
-    border: 1px solid #30384f;
-
-    box-shadow:
-        0 30px 80px rgba(0,0,0,.6);
-
-    text-align: center;
-
-    animation: previewIn .3s ease;
-}
-
-@keyframes previewIn {
-
-    from {
-        opacity: 0;
-        transform: translateY(20px) scale(.94);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-
-}
-
-.preview-avatar {
-    width: 90px;
-    height: 90px;
-
-    margin: 0 auto 15px;
-
-    border-radius: 50%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background:
-        linear-gradient(
-            135deg,
-            #5b8cff,
-            #9c5cff
-        );
-
-    font-size: 34px;
-    font-weight: 800;
-}
-
-.preview-name {
-    font-size: 22px;
-    font-weight: 800;
-}
-
-.preview-status {
-    margin-top: 6px;
-
-    color: #55d88a;
-
-    font-size: 13px;
-}
-
-.preview-status.offline {
-    color: #7b849a;
-}
-
-.preview-actions {
-    display: flex;
-
-    gap: 10px;
-
-    margin-top: 25px;
-}
-
-.preview-actions button {
-    flex: 1;
-
-    padding: 12px;
-
-    border-radius: 11px;
-
-    cursor: pointer;
-
-    color: white;
-
-    border: 1px solid #30384f;
-
-    background: #191f31;
-}
-
-.preview-actions .preview-message {
-    background:
-        linear-gradient(
-            135deg,
-            #5b8cff,
-            #795cff
-        );
-
-    border: 0;
-}
-
-/* =========================================
+/* =====================================================
    GLOBAL CHAT
-========================================= */
+===================================================== */
 
 .global-chat {
-    display: none;
-    animation: pageIn .35s ease;
+
+    display:none;
+
+    animation:
+        pageIn .35s ease;
+
 }
 
 .chat-header {
-    display: flex;
 
-    align-items: center;
+    display:flex;
 
-    justify-content: space-between;
+    align-items:center;
 
-    margin-bottom: 25px;
+    justify-content:space-between;
+
+    margin-bottom:25px;
+
 }
 
 .chat-header h1 {
-    margin: 0;
-    font-size: 28px;
+
+    margin:0;
+
+    font-size:28px;
+
 }
 
 .chat-header p {
-    color: #55d88a;
 
-    margin: 7px 0 0;
+    color:#55d88a;
 
-    font-size: 13px;
-}
+    margin:7px 0 0;
 
-.chat-back {
-    border: 1px solid #30384f;
+    font-size:13px;
 
-    background: #151a2a;
-
-    color: white;
-
-    padding: 11px 17px;
-
-    border-radius: 11px;
-
-    cursor: pointer;
 }
 
 .username-box {
-    max-width: 600px;
 
-    margin: 50px auto;
+    max-width:600px;
 
-    padding: 35px;
+    margin:50px auto;
 
-    border-radius: 20px;
+    padding:35px;
 
-    background: rgba(18,23,38,.85);
+    border-radius:20px;
 
-    border: 1px solid #242b3e;
+    background:
+        rgba(18,23,38,.85);
 
-    text-align: center;
-}
+    border:
+        1px solid #242b3e;
 
-.username-box h2 {
-    margin-top: 0;
+    text-align:center;
+
 }
 
 .username-box p {
-    color: #78829a;
 
-    font-size: 14px;
+    color:#78829a;
 
-    margin-bottom: 25px;
 }
 
 .messages {
-    height: 55vh;
 
-    overflow-y: auto;
+    height:55vh;
 
-    padding: 20px;
+    overflow-y:auto;
 
-    border-radius: 18px;
+    padding:20px;
 
-    background: rgba(10,13,23,.75);
+    border-radius:18px;
 
-    border: 1px solid #242b3e;
+    background:
+        rgba(10,13,23,.75);
 
-    margin-bottom: 15px;
+    border:
+        1px solid #242b3e;
+
+    margin-bottom:15px;
+
 }
 
 .message-item {
-    margin-bottom: 15px;
 
-    padding: 12px 15px;
+    margin-bottom:15px;
 
-    border-radius: 13px;
+    padding:12px 15px;
 
-    background: #151b2c;
+    border-radius:13px;
+
+    background:#151b2c;
+
 }
 
 .message-user {
-    color: #7097ff;
 
-    font-size: 12px;
+    color:#7097ff;
 
-    font-weight: 700;
+    font-size:12px;
 
-    margin-bottom: 4px;
+    font-weight:700;
+
+    margin-bottom:4px;
+
 }
 
 .message-text {
-    color: #e8ebf3;
 
-    font-size: 14px;
+    color:#e8ebf3;
 
-    word-break: break-word;
+    font-size:14px;
+
+    word-break:break-word;
+
 }
 
 .chat-input {
-    display: flex;
 
-    gap: 10px;
+    display:flex;
+
+    gap:10px;
+
 }
 
 .chat-input input {
-    flex: 1;
+
+    flex:1;
+
 }
 
 .chat-input .primary {
-    width: auto;
 
-    min-width: 90px;
+    width:auto;
+
+    min-width:90px;
+
 }
 
-/* =========================================
+
+/* =====================================================
    MOBILE
-========================================= */
+===================================================== */
 
 @media(max-width:800px) {
 
     .app {
-        grid-template-columns: 75px 1fr;
+
+        grid-template-columns:
+            75px 1fr;
+
     }
 
     .brand-name,
     .nav-title,
     .nav-btn span,
     .profile {
-        display: none;
+
+        display:none;
+
     }
 
     .brand {
-        justify-content: center;
+
+        justify-content:center;
+
     }
 
     .nav-btn {
-        text-align: center;
+
+        text-align:center;
+
     }
 
     .nav-icon {
-        width: auto;
+
+        width:auto;
+
     }
 
     .main {
-        padding: 22px;
+
+        padding:22px;
+
     }
 
     .auth-box {
-        padding: 30px 22px;
+
+        padding:30px 22px;
+
     }
 
     .chat-input {
-        flex-direction: column;
+
+        flex-direction:column;
+
     }
 
     .chat-input .primary {
-        width: 100%;
+
+        width:100%;
+
     }
 
-    .search-header {
-        align-items: flex-start;
+}
+
+@media(max-width:600px) {
+
+    .stranger-event-box {
+
+        padding:32px 20px;
+
     }
 
-    .search-header h1 {
-        font-size: 24px;
+    .stranger-wallpaper-preview {
+
+        height:150px;
+
     }
 
-    .search-back {
-        padding: 9px 12px;
+    .stranger-buttons {
+
+        flex-direction:column;
+
     }
 
 }
@@ -1514,11 +2027,13 @@ input:focus {
 
 </head>
 
+
 <body>
 
-<!-- =========================================
-     LOADING SCREEN
-========================================= -->
+
+<!-- =====================================================
+     LOADING
+===================================================== -->
 
 <div id="loadingScreen">
 
@@ -1535,7 +2050,10 @@ input:focus {
 
     </div>
 
-    <div class="loading-logo" id="loadingLogo">
+    <div
+        class="loading-logo"
+        id="loadingLogo"
+    >
         C
     </div>
 
@@ -1560,23 +2078,10 @@ input:focus {
 
 </div>
 
-<!-- =========================================
-     FLOATING EMOJIS
-========================================= -->
 
-<div class="floating-emojis">
-
-    <span>💬</span>
-    <span>😊</span>
-    <span>💭</span>
-    <span>😂</span>
-    <span>👋</span>
-
-</div>
-
-<!-- =========================================
-     AUTH SCREEN
-========================================= -->
+<!-- =====================================================
+     AUTH
+===================================================== -->
 
 <div
     class="auth-screen"
@@ -1650,7 +2155,6 @@ input:focus {
                 type="password"
                 id="confirmPassword"
                 placeholder="Enter password again"
-                autocomplete="new-password"
             >
 
         </div>
@@ -1678,9 +2182,10 @@ input:focus {
 
 </div>
 
-<!-- =========================================
+
+<!-- =====================================================
      APP
-========================================= -->
+===================================================== -->
 
 <div
     class="app"
@@ -1705,604 +2210,667 @@ input:focus {
             COMMUNICATION
         </div>
 
-       <button
-    class="nav-btn active"
-    onclick="showHome()"
->
-    <span class="nav-icon">⌂</span>
-    <span>Home</span>
-</button>
+        <button
+            class="nav-btn active"
+            onclick="showHome()"
+        >
+            <span class="nav-icon">⌂</span>
+            <span>Home</span>
+        </button>
 
-<button
-    class="nav-btn"
-    onclick="openUserSearch()"
->
-    <span class="nav-icon">🔎</span>
-    <span>Find Users</span>
-</button>
+        <button
+            class="nav-btn"
+            onclick="openUserSearch()"
+        >
+            <span class="nav-icon">🔎</span>
+            <span>Find Users</span>
+        </button>
 
-<button
-    class="nav-btn"
-    onclick="openGlobalChat()"
->
-    <span class="nav-icon">🌎</span>
-    <span>Global Chat</span>
-</button>
+        <button
+            class="nav-btn"
+            onclick="openGlobalChat()"
+        >
+            <span class="nav-icon">🌎</span>
+            <span>Global Chat</span>
+        </button>
 
-<button
-    class="nav-btn"
-    onclick="openPrivateChats()"
->
-    <span class="nav-icon">💬</span>
-    <span>Private Chats</span>
-</button>
+        <button
+            class="nav-btn"
+            onclick="openPrivateChats()"
+        >
+            <span class="nav-icon">💬</span>
+            <span>Private Chats</span>
+        </button>
 
-<button
-    class="nav-btn"
-    onclick="openMail()"
->
-    <span class="nav-icon">✉</span>
-    <span>Mail</span>
-</button>
+        <button
+            class="nav-btn"
+            onclick="openMail()"
+        >
+            <span class="nav-icon">✉</span>
+            <span>Mail</span>
+        </button>
 
-<button
-    class="nav-btn"
-    onclick="openGroupChat()"
->
-    <span class="nav-icon">👥</span>
-    <span>Group Chats</span>
-</button>
+        <button
+            class="nav-btn"
+            onclick="openGroupChat()"
+        >
+            <span class="nav-icon">👥</span>
+            <span>Group Chats</span>
+        </button>
 
-<!-- GROUP BATTLES -->
-<button
-    class="nav-btn"
-    onclick="window.location.href='GroupBattle.html'"
->
-    <span class="nav-icon">🏆</span>
-    <span>Group Battles</span>
-</button>
+        <button
+            class="nav-btn"
+            onclick="window.location.href='GroupBattle.html'"
+        >
+            <span class="nav-icon">🏆</span>
+            <span>Group Battles</span>
+        </button>
 
-<button
-    class="nav-btn"
-    onclick="openCalls()"
->
-    <span class="nav-icon">📞</span>
-    <span>Calls (Work-In-Progress)</span>
-</button>
+        <button
+            class="nav-btn"
+            onclick="openCalls()"
+        >
+            <span class="nav-icon">📞</span>
+            <span>Calls</span>
+        </button>
 
-<div class="nav-title">
-    ACCOUNT
-</div>
+        <div class="nav-title">
+            ACCOUNT
+        </div>
 
-<button
-    class="nav-btn"
-    onclick="openProfile()"
->
-    <span class="nav-icon">●</span>
-    <span>My Profile</span>
-</button>
+        <button
+            class="nav-btn"
+            onclick="openProfile()"
+        >
+            <span class="nav-icon">●</span>
+            <span>My Profile</span>
+        </button>
 
-<button
-    class="nav-btn"
-    onclick="logout()"
->
-    <span class="nav-icon">↪</span>
-    <span>Log Out</span>
-</button>
+        <button
+            class="nav-btn"
+            onclick="logout()"
+        >
+            <span class="nav-icon">↪</span>
+            <span>Log Out</span>
+        </button>
 
-<div class="profile">
-
-    <div
-        class="profile-name"
-        id="profileName"
-    >
-        User
-    </div>
-
-    <div class="profile-status">
-        ● Online
-    </div>
-
-</div>
-
-</aside>
-
-<main class="main">
-
-    <!-- =========================================
-         HOME
-    ========================================= -->
-
-    <div id="homePage">
-
-        <div class="topbar">
-
-            <div>
-
-                <h1>
-                    Welcome back 👋
-                </h1>
-
-                <p>
-                    What would you like to do?
-                </p>
-
-            </div>
+        <div class="profile">
 
             <div
-                class="avatar"
-                id="avatar"
+                class="profile-name"
+                id="profileName"
             >
-                U
+                User
+            </div>
+
+            <div class="profile-status">
+                ● Online
             </div>
 
         </div>
 
-        <div class="cards">
+    </aside>
 
-            <div
-                class="card"
-                onclick="openUserSearch()"
-            >
-                <div class="card-icon">🔎</div>
 
-                <h2>
-                    Find Users
-                </h2>
+    <main class="main">
 
-                <p>
-                    Search for people on ChatsApp.
-                </p>
 
-            </div>
+        <!-- =================================================
+             HOME
+        ================================================= -->
 
-            <div
-                class="card"
-                onclick="openGlobalChat()"
-            >
-                <div class="card-icon">🌎</div>
+        <div id="homePage">
 
-                <h2>
-                    Global Chat
-                </h2>
+            <div class="topbar">
 
-                <p>
-                    Talk with everyone on ChatsApp.
-                </p>
+                <div>
 
-            </div>
+                    <h1>
+                        Welcome back 👋
+                    </h1>
 
-            <div
-                class="card"
-                onclick="openPrivateChats()"
-            >
-                <div class="card-icon">💬</div>
+                    <p>
+                        What would you like to do?
+                    </p>
 
-                <h2>
-                    Private Chats
-                </h2>
+                </div>
 
-                <p>
-                    Message people using their username.
-                </p>
+                <div
+                    class="avatar"
+                    id="avatar"
+                >
+                    U
+                </div>
 
             </div>
 
-            <div
-                class="card"
-                onclick="openMail()"
-            >
-                <div class="card-icon">✉️</div>
 
-                <h2>
-                    Mail
-                </h2>
+            <div class="cards">
 
-                <p>
-                    Send and receive longer messages.
-                </p>
+
+                <div
+                    class="card"
+                    onclick="openUserSearch()"
+                >
+
+                    <div class="card-icon">
+                        🔎
+                    </div>
+
+                    <h2>
+                        Find Users
+                    </h2>
+
+                    <p>
+                        Search for people on ChatsApp.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="card"
+                    onclick="openGlobalChat()"
+                >
+
+                    <div class="card-icon">
+                        🌎
+                    </div>
+
+                    <h2>
+                        Global Chat
+                    </h2>
+
+                    <p>
+                        Talk with everyone on ChatsApp.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="card"
+                    onclick="openPrivateChats()"
+                >
+
+                    <div class="card-icon">
+                        💬
+                    </div>
+
+                    <h2>
+                        Private Chats
+                    </h2>
+
+                    <p>
+                        Message people using their username.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="card"
+                    onclick="openMail()"
+                >
+
+                    <div class="card-icon">
+                        ✉️
+                    </div>
+
+                    <h2>
+                        Mail
+                    </h2>
+
+                    <p>
+                        Send and receive longer messages.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="card"
+                    onclick="openGroupChat()"
+                >
+
+                    <div class="card-icon">
+                        👥
+                    </div>
+
+                    <h2>
+                        Group Chats
+                    </h2>
+
+                    <p>
+                        Create and chat with multiple people.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="card"
+                    onclick="window.location.href='GroupBattle.html'"
+                >
+
+                    <div class="card-icon">
+                        🏆
+                    </div>
+
+                    <h2>
+                        Group Battles
+                    </h2>
+
+                    <p>
+                        Battle other groups and prove who types fastest.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="card"
+                    onclick="openCalls()"
+                >
+
+                    <div class="card-icon">
+                        📞
+                    </div>
+
+                    <h2>
+                        Calls
+                    </h2>
+
+                    <p>
+                        Call your friends on ChatsApp.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="card"
+                    onclick="openProfile()"
+                >
+
+                    <div class="card-icon">
+                        👤
+                    </div>
+
+                    <h2>
+                        Your Profile
+                    </h2>
+
+                    <p>
+                        Manage your ChatsApp identity.
+                    </p>
+
+                </div>
+
+
+                <!-- =========================================
+                     STRANGER THINGS EVENT
+                ========================================= -->
+
+                <div
+                    class="card stranger-event-card"
+                    onclick="openStrangerThingsEvent()"
+                >
+
+                    <div class="stranger-event-badge">
+                        🔥 LIMITED EVENT
+                    </div>
+
+                    <div class="card-icon">
+                        🩸
+                    </div>
+
+                    <h2>
+                        Stranger Things Event
+                    </h2>
+
+                    <p>
+                        Enter the Upside Down and equip
+                        the insane limited-time wallpaper.
+                        Ends tomorrow!
+                    </p>
+
+                </div>
+
 
             </div>
 
-            <div
-                class="card"
-                onclick="openGroupChat()"
-            >
-                <div class="card-icon">👥</div>
+
+            <div class="welcome">
 
                 <h2>
-                    Group Chats
+                    ChatsApp
                 </h2>
 
                 <p>
-                    Create and chat with multiple people.
-                </p>
-
-            </div>
-
-            <!-- GROUP BATTLES -->
-            <div
-                class="card"
-                onclick="window.location.href='GroupBattle.html'"
-            >
-                <div class="card-icon">🏆</div>
-
-                <h2>
-                    Group Battles
-                </h2>
-
-                <p>
-                    Battle other groups and prove who types fastest.
-                </p>
-
-            </div>
-
-            <div
-                class="card"
-                onclick="openCalls()"
-            >
-                <div class="card-icon">📞</div>
-
-                <h2>
-                    Calls (Work in Progress)
-                </h2>
-
-                <p>
-                    Call your friends on ChatsApp.
-                </p>
-
-            </div>
-
-            <div
-                class="card"
-                onclick="openProfile()"
-            >
-                <div class="card-icon">👤</div>
-
-                <h2>
-                    Your Profile
-                </h2>
-
-                <p>
-                    Manage your ChatsApp identity.
+                    A new place to chat, connect and keep in touch.
                 </p>
 
             </div>
 
         </div>
 
-        <div class="welcome">
 
-            <h2>
-                ChatsApp
-            </h2>
-
-            <p>
-                A new place to chat, connect and keep in touch.
-            </p>
-
-        </div>
-
-    </div>
-
-    <!-- =========================================
-         USER SEARCH
-    ========================================= -->
-
-    <div
-        id="userSearchPage"
-        class="user-search-page"
-    >
-
-        <div class="search-header">
-
-            <div>
-
-                <h1>
-                    🔎 Find Users
-                </h1>
-
-                <p>
-                    Search for people on ChatsApp.
-                </p>
-
-            </div>
-
-            <button
-                class="search-back"
-                onclick="showHome()"
-            >
-                ← Home
-            </button>
-
-        </div>
-
-        <div class="search-box-wrap">
-
-            <div class="search-icon">
-                🔎
-            </div>
-
-            <input
-                id="userSearchInput"
-                type="text"
-                placeholder="Search usernames..."
-                autocomplete="off"
-                maxlength="20"
-            >
-
-            <button
-                id="clearSearchButton"
-                class="clear-search"
-                onclick="clearUserSearch()"
-            >
-                ×
-            </button>
-
-        </div>
+        <!-- =================================================
+             USER SEARCH
+        ================================================= -->
 
         <div
-            id="recentSearches"
-            class="recent-searches"
+            id="userSearchPage"
+            class="user-search-page"
         >
 
-            <div class="recent-top">
+            <div class="search-header">
 
-                <h3>
-                    🕘 Recent searches
-                </h3>
+                <div>
+
+                    <h1>
+                        🔎 Find Users
+                    </h1>
+
+                    <p>
+                        Search for people on ChatsApp.
+                    </p>
+
+                </div>
 
                 <button
-                    class="clear-history"
-                    onclick="clearSearchHistory()"
+                    class="search-back"
+                    onclick="showHome()"
                 >
-                    Clear history
+                    ← Home
+                </button>
+
+            </div>
+
+            <div class="search-box-wrap">
+
+                <div class="search-icon">
+                    🔎
+                </div>
+
+                <input
+                    id="userSearchInput"
+                    type="text"
+                    placeholder="Search usernames..."
+                    autocomplete="off"
+                    maxlength="20"
+                >
+
+                <button
+                    id="clearSearchButton"
+                    class="clear-search"
+                    onclick="clearUserSearch()"
+                >
+                    ×
+                </button>
+
+            </div>
+
+            <div class="search-info">
+
+                <span id="searchResultText">
+                    Start typing to find users
+                </span>
+
+                <span id="searchLoading"></span>
+
+            </div>
+
+            <div
+                id="searchResults"
+                class="search-results"
+            ></div>
+
+            <div
+                id="noResults"
+                class="no-results"
+            >
+
+                <div class="no-results-icon">
+                    🕵️
+                </div>
+
+                <h2>
+                    No users found
+                </h2>
+
+                <p>
+                    Try a different username.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             GLOBAL CHAT
+        ================================================= -->
+
+        <div
+            id="globalChat"
+            class="global-chat"
+        >
+
+            <div class="chat-header">
+
+                <div>
+
+                    <h1>
+                        🌎 Global Chat
+                    </h1>
+
+                    <p>
+                        🟢 Global Chat
+                    </p>
+
+                </div>
+
+                <button
+                    class="chat-back"
+                    onclick="showHome()"
+                >
+                    ← Home
                 </button>
 
             </div>
 
             <div
-                id="recentList"
-                class="recent-list"
-            ></div>
+                id="usernameBox"
+                class="username-box"
+            >
 
-        </div>
+                <h2>
+                    Choose your username
+                </h2>
 
-        <div class="search-info">
-
-            <span id="searchResultText">
-                Start typing to find users
-            </span>
-
-            <span id="searchLoading"></span>
-
-        </div>
-
-        <div
-            id="searchResults"
-            class="search-results"
-        ></div>
-
-        <div
-            id="noResults"
-            class="no-results"
-        >
-
-            <div class="no-results-icon">
-                🕵️
-            </div>
-
-            <h2>
-                No users found
-            </h2>
-
-            <p>
-                Try a different username.
-            </p>
-
-        </div>
-
-    </div>
-
-    <!-- =========================================
-         GLOBAL CHAT
-    ========================================= -->
-
-    <div
-        id="globalChat"
-        class="global-chat"
-    >
-
-        <div class="chat-header">
-
-            <div>
-
-                <h1>
-                    🌎 Global Chat
-                </h1>
-
-                <p id="onlineCount">
-                    🟢 Global Chat
+                <p>
+                    Your main ChatsApp username will be used.
                 </p>
-
-            </div>
-
-            <button
-                class="chat-back"
-                onclick="showHome()"
-            >
-                ← Home
-            </button>
-
-        </div>
-
-        <div
-            id="usernameBox"
-            class="username-box"
-        >
-
-            <h2>
-                Choose your username
-            </h2>
-
-            <p>
-                Your main ChatsApp username will be used.
-            </p>
-
-            <input
-                type="text"
-                id="chatUsername"
-                placeholder="Enter username..."
-                maxlength="20"
-            >
-
-            <button
-                class="primary"
-                onclick="joinGlobalChat()"
-            >
-                Join Global Chat
-            </button>
-
-        </div>
-
-        <div
-            id="chatArea"
-            style="display:none;"
-        >
-
-            <div
-                id="messages"
-                class="messages"
-            ></div>
-
-            <div class="chat-input">
 
                 <input
                     type="text"
-                    id="chatMessage"
-                    placeholder="Type a message..."
-                    maxlength="500"
+                    id="chatUsername"
+                    placeholder="Enter username..."
+                    maxlength="20"
                 >
 
                 <button
                     class="primary"
-                    onclick="sendGlobalMessage()"
+                    onclick="joinGlobalChat()"
                 >
-                    Send
+                    Join Global Chat
                 </button>
+
+            </div>
+
+            <div
+                id="chatArea"
+                style="display:none;"
+            >
+
+                <div
+                    id="messages"
+                    class="messages"
+                ></div>
+
+                <div class="chat-input">
+
+                    <input
+                        type="text"
+                        id="chatMessage"
+                        placeholder="Type a message..."
+                        maxlength="500"
+                    >
+
+                    <button
+                        class="primary"
+                        onclick="sendGlobalMessage()"
+                    >
+                        Send
+                    </button>
+
+                </div>
 
             </div>
 
         </div>
 
-    </div>
 
-</main>
+    </main>
 
 </div>
 
-<!-- =========================================
-     PROFILE PREVIEW
-========================================= -->
+
+<!-- =====================================================
+     STRANGER THINGS EVENT POPUP
+===================================================== -->
 
 <div
-    id="profilePreviewOverlay"
-    class="profile-preview-overlay"
-    onclick="closeProfilePreview(event)"
+    id="strangerEventOverlay"
+    class="stranger-event-overlay"
+    onclick="closeStrangerThingsEvent(event)"
 >
 
     <div
-        class="profile-preview"
+        class="stranger-event-box"
         onclick="event.stopPropagation()"
     >
 
-        <div
-            id="previewAvatar"
-            class="preview-avatar"
-        >
-            U
+        <div class="stranger-title">
+            STRANGER THINGS
         </div>
 
-        <div
-            id="previewName"
-            class="preview-name"
-        >
-            Username
+        <div class="stranger-subtitle">
+            ENTER THE UPSIDE DOWN
         </div>
 
-        <div
-            id="previewStatus"
-            class="preview-status"
-        >
-            ● Online
+        <div class="stranger-countdown">
+            🔥 LIMITED EVENT • ENDS TOMORROW
         </div>
 
-        <div class="preview-actions">
+        <div class="stranger-wallpaper-preview"></div>
+
+        <p
+            style="
+                color:#8f8f98;
+                font-size:13px;
+                line-height:1.6;
+                margin:0 auto 25px;
+                max-width:450px;
+            "
+        >
+            Equip the limited-time Stranger Things
+            wallpaper and transform your ChatsApp
+            into the Upside Down.
+        </p>
+
+        <div class="stranger-buttons">
 
             <button
-                onclick="closeProfilePreview()"
+                class="stranger-equip"
+                id="strangerEquipButton"
+                onclick="equipStrangerThingsWallpaper()"
+            >
+                🩸 EQUIP WALLPAPER
+            </button>
+
+            <button
+                class="stranger-close"
+                onclick="closeStrangerThingsEvent()"
             >
                 Close
             </button>
 
-            <button
-                id="previewMessageButton"
-                class="preview-message"
-            >
-                💬 Message
-            </button>
-
         </div>
 
     </div>
 
 </div>
 
+
 <script>
-/* =========================================
+
+/* =====================================================
    SUPABASE
-========================================= */
+===================================================== */
 
 const SUPABASE_URL =
     "https://kopzrnpporfdwauwlhni.supabase.co";
 
 const SUPABASE_KEY =
     "sb_publishable_bbxmPB71ADnIqe3oPB3MuQ_EWa4n_Ph";
-    
+
 const supabaseClient =
     window.supabase.createClient(
         SUPABASE_URL,
         SUPABASE_KEY
     );
 
-/* =========================================
+
+/* =====================================================
    GLOBAL VARIABLES
-========================================= */
+===================================================== */
 
 let signupMode = false;
-let currentUsername = "";
-let chatChannel = null;
-let searchTimer = null;
-let selectedProfileUsername = "";
 
-/* =========================================
-   LOADING SCREEN
-========================================= */
+let currentUsername = "";
+
+let chatChannel = null;
+
+let searchTimer = null;
+
+
+/* =====================================================
+   LOADING
+===================================================== */
 
 async function startLoadingScreen() {
 
-    const loadingScreen =
-        document.getElementById("loadingScreen");
+    const screen =
+        document.getElementById(
+            "loadingScreen"
+        );
 
-    const loadingStatus =
-        document.getElementById("loadingStatus");
+    const status =
+        document.getElementById(
+            "loadingStatus"
+        );
 
-    const loadingLogo =
-        document.getElementById("loadingLogo");
+    const logo =
+        document.getElementById(
+            "loadingLogo"
+        );
 
     try {
 
-        loadingStatus.innerText =
+        status.innerText =
             "Connecting...";
 
         const {
@@ -2316,58 +2884,64 @@ async function startLoadingScreen() {
         if(error) {
 
             console.warn(
-                "Supabase connection check:",
+                "Supabase:",
                 error
             );
 
         }
 
-        loadingStatus.innerText =
+        status.innerText =
             "Connected ✓";
 
-        loadingStatus.classList.add(
+        status.classList.add(
             "connected"
         );
 
-        loadingLogo.classList.add(
+        logo.classList.add(
             "connected"
         );
 
         await new Promise(
             resolve =>
-                setTimeout(resolve, 700)
+                setTimeout(
+                    resolve,
+                    700
+                )
         );
 
     } catch(error) {
 
-        console.error(
-            "Startup connection error:",
-            error
-        );
+        console.error(error);
 
-        loadingStatus.innerText =
+        status.innerText =
             "Connected ✓";
 
-        loadingStatus.classList.add(
+        status.classList.add(
             "connected"
         );
 
     }
 
-    loadingScreen.classList.add(
+    screen.classList.add(
         "hidden"
     );
 
 }
 
-/* =========================================
-   AUTH MESSAGES
-========================================= */
 
-function showMessage(text, type) {
+/* =====================================================
+   AUTH
+===================================================== */
+
+function showMessage(
+    text,
+    type
+) {
 
     const message =
-        document.getElementById("message");
+        document.getElementById(
+            "message"
+        );
 
     message.innerText =
         text;
@@ -2380,19 +2954,16 @@ function showMessage(text, type) {
 function clearMessage() {
 
     const message =
-        document.getElementById("message");
+        document.getElementById(
+            "message"
+        );
 
-    message.innerText =
-        "";
+    message.innerText = "";
 
     message.className =
         "message";
 
 }
-
-/* =========================================
-   AUTH MODE
-========================================= */
 
 function toggleAuth() {
 
@@ -2402,19 +2973,29 @@ function toggleAuth() {
     clearMessage();
 
     const title =
-        document.getElementById("authTitle");
+        document.getElementById(
+            "authTitle"
+        );
 
     const subtitle =
-        document.getElementById("authSubtitle");
+        document.getElementById(
+            "authSubtitle"
+        );
 
     const button =
-        document.getElementById("mainButton");
+        document.getElementById(
+            "mainButton"
+        );
 
     const switchText =
-        document.getElementById("switchText");
+        document.getElementById(
+            "switchText"
+        );
 
-    const confirmGroup =
-        document.getElementById("confirmGroup");
+    const confirm =
+        document.getElementById(
+            "confirmGroup"
+        );
 
     if(signupMode) {
 
@@ -2430,7 +3011,7 @@ function toggleAuth() {
         switchText.innerText =
             "Already have an account? Log in";
 
-        confirmGroup.style.display =
+        confirm.style.display =
             "block";
 
     } else {
@@ -2447,18 +3028,16 @@ function toggleAuth() {
         switchText.innerText =
             "Don't have an account? Sign up";
 
-        confirmGroup.style.display =
+        confirm.style.display =
             "none";
 
     }
 
 }
 
-/* =========================================
-   USERNAME → EMAIL
-========================================= */
-
-function usernameToEmail(username) {
+function usernameToEmail(
+    username
+) {
 
     return (
         username.toLowerCase() +
@@ -2467,55 +3046,30 @@ function usernameToEmail(username) {
 
 }
 
-/* =========================================
-   AUTH
-========================================= */
 
 async function handleAuth() {
 
     clearMessage();
 
     const username =
-        document.getElementById("username")
-        .value
-        .trim();
+        document.getElementById(
+            "username"
+        ).value.trim();
 
     const password =
-        document.getElementById("password")
-        .value;
+        document.getElementById(
+            "password"
+        ).value;
 
     const confirmPassword =
-        document.getElementById("confirmPassword")
-        .value;
+        document.getElementById(
+            "confirmPassword"
+        ).value;
 
-    if(username === "") {
-
-        showMessage(
-            "Please enter a username.",
-            "error"
-        );
-
-        return;
-
-    }
-
-    if(
-        !/^[a-zA-Z0-9_]{3,20}$/.test(username)
-    ) {
+    if(!/^[a-zA-Z0-9_]{3,20}$/.test(username)) {
 
         showMessage(
             "Username must be 3–20 characters and use only letters, numbers, or underscores.",
-            "error"
-        );
-
-        return;
-
-    }
-
-    if(password === "") {
-
-        showMessage(
-            "Please enter your password.",
             "error"
         );
 
@@ -2534,12 +3088,10 @@ async function handleAuth() {
 
     }
 
-    const internalEmail =
-        usernameToEmail(username);
-
-    /* =====================================
-       SIGN UP
-    ===================================== */
+    const email =
+        usernameToEmail(
+            username
+        );
 
     if(signupMode) {
 
@@ -2567,14 +3119,14 @@ async function handleAuth() {
             .auth
             .signUp({
 
-                email: internalEmail,
+                email,
 
-                password: password,
+                password,
 
                 options: {
 
                     data: {
-                        username: username
+                        username
                     }
 
                 }
@@ -2592,35 +3144,32 @@ async function handleAuth() {
 
         }
 
-        if(data.session && data.user) {
+        currentUsername =
+            username;
 
-            currentUsername =
-                username;
+        await ensureProfile(
+            username
+        );
 
-            await ensureProfile(
-                username
-            );
+        if(data.session) {
 
             showApp(
                 username
             );
 
-            return;
+        } else {
+
+            showMessage(
+                "Account created! You can now log in. 🎉",
+                "success"
+            );
 
         }
-
-        showMessage(
-            "Account created! You can now log in. 🎉",
-            "success"
-        );
 
         return;
 
     }
 
-    /* =====================================
-       LOGIN
-    ===================================== */
 
     showMessage(
         "Logging in...",
@@ -2635,9 +3184,9 @@ async function handleAuth() {
         .auth
         .signInWithPassword({
 
-            email: internalEmail,
+            email,
 
-            password: password
+            password
 
         });
 
@@ -2652,94 +3201,63 @@ async function handleAuth() {
 
     }
 
-    if(data.user) {
+    currentUsername =
+        data.user.user_metadata?.username ||
+        username;
 
-        currentUsername =
-            data.user.user_metadata?.username ||
-            username;
+    await ensureProfile(
+        currentUsername
+    );
 
-        await ensureProfile(
-            currentUsername
-        );
-
-        showApp(
-            currentUsername
-        );
-
-    }
+    showApp(
+        currentUsername
+    );
 
 }
 
-/* =========================================
-   ENSURE PROFILE
-========================================= */
 
-async function ensureProfile(username) {
+/* =====================================================
+   PROFILE
+===================================================== */
 
-    if(!username) {
+async function ensureProfile(
+    username
+) {
 
-        return;
-
-    }
-
-    const {
-        error
-    } =
-        await supabaseClient
+    await supabaseClient
         .from("profiles")
         .upsert(
 
             {
-                username: username,
-                online: true
+                username,
+                online:true
             },
 
             {
-                onConflict: "username"
+                onConflict:
+                    "username"
             }
 
         );
 
-    if(error) {
-
-        console.warn(
-            "Could not update profile:",
-            error
-        );
-
-    }
-
 }
 
-/* =========================================
-   SHOW APP
-========================================= */
 
-function showApp(username) {
-
-    if(!username) {
-
-        console.error(
-            "showApp called without username."
-        );
-
-        return;
-
-    }
+function showApp(
+    username
+) {
 
     currentUsername =
         username;
 
-    const authScreen =
-        document.getElementById("authScreen");
-
-    const app =
-        document.getElementById("app");
-
-    authScreen.style.display =
+    document.getElementById(
+        "authScreen"
+    ).style.display =
         "none";
 
-    app.style.display =
+    document.getElementById(
+        "app"
+    ).style.display =
         "grid";
 
     document.getElementById(
@@ -2756,112 +3274,78 @@ function showApp(username) {
 
     showHome();
 
-    setProfileOnline(true);
+    setProfileOnline(
+        true
+    );
 
 }
 
-/* =========================================
-   ONLINE STATUS
-========================================= */
-
-async function setProfileOnline(isOnline) {
+async function setProfileOnline(
+    online
+) {
 
     if(!currentUsername) {
-
         return;
-
     }
 
-    const {
-        error
-    } =
-        await supabaseClient
+    await supabaseClient
         .from("profiles")
         .update({
-
-            online: isOnline
-
+            online
         })
         .eq(
             "username",
             currentUsername
         );
 
-    if(error) {
-
-        console.warn(
-            "Online status error:",
-            error
-        );
-
-    }
-
 }
 
-/* =========================================
-   SESSION CHECK
-========================================= */
+
+/* =====================================================
+   SESSION
+===================================================== */
 
 async function checkSession() {
 
-    try {
+    const {
+        data
+    } =
+        await supabaseClient
+        .auth
+        .getSession();
 
-        const {
-            data,
-            error
-        } =
-            await supabaseClient
-            .auth
-            .getSession();
+    if(
+        data &&
+        data.session &&
+        data.session.user
+    ) {
 
-        if(error) {
-
-            console.error(
-                "Session check error:",
-                error
-            );
-
-            return;
-
-        }
-
-        if(
-            data &&
-            data.session &&
+        const username =
             data.session.user
-        ) {
+                .user_metadata
+                ?.username ||
+            data.session.user.email
+                .split("@")[0];
 
-            const username =
-                data.session.user.user_metadata?.username ||
-                data.session.user.email.split("@")[0];
+        currentUsername =
+            username;
 
-            currentUsername =
-                username;
+        await ensureProfile(
+            username
+        );
 
-            await ensureProfile(
-                username
-            );
-
-            showApp(
-                username
-            );
-
-        }
-
-    } catch(error) {
-
-        console.error(
-            "Session startup error:",
-            error
+        showApp(
+            username
         );
 
     }
 
 }
 
-/* =========================================
+
+/* =====================================================
    PAGE CONTROL
-========================================= */
+===================================================== */
 
 function hideAllPages() {
 
@@ -2871,12 +3355,12 @@ function hideAllPages() {
         "none";
 
     document.getElementById(
-        "globalChat"
+        "userSearchPage"
     ).style.display =
         "none";
 
     document.getElementById(
-        "userSearchPage"
+        "globalChat"
     ).style.display =
         "none";
 
@@ -2897,43 +3381,176 @@ function showHome() {
 
 }
 
-/* =========================================
-   NAVIGATION
-========================================= */
-
-function setActiveNav(name) {
+function setActiveNav(
+    name
+) {
 
     document
-        .querySelectorAll(".nav-btn")
-        .forEach(button => {
+        .querySelectorAll(
+            ".nav-btn"
+        )
+        .forEach(
+            button => {
 
-            button.classList.remove(
-                "active"
-            );
-
-            const span =
-                button.querySelector(
-                    "span:last-child"
-                );
-
-            if(
-                span &&
-                span.innerText.trim() === name
-            ) {
-
-                button.classList.add(
+                button.classList.remove(
                     "active"
                 );
 
-            }
+                const span =
+                    button.querySelector(
+                        "span:last-child"
+                    );
 
-        });
+                if(
+                    span &&
+                    span.innerText.trim() ===
+                    name
+                ) {
+
+                    button.classList.add(
+                        "active"
+                    );
+
+                }
+
+            }
+        );
 
 }
 
-/* =========================================
+
+/* =====================================================
+   STRANGER THINGS EVENT
+===================================================== */
+
+function openStrangerThingsEvent() {
+
+    const overlay =
+        document.getElementById(
+            "strangerEventOverlay"
+        );
+
+    updateStrangerButton();
+
+    overlay.classList.add(
+        "show"
+    );
+
+}
+
+function closeStrangerThingsEvent(
+    event
+) {
+
+    if(
+        event &&
+        event.target &&
+        event.target.id !==
+        "strangerEventOverlay"
+    ) {
+
+        return;
+
+    }
+
+    document.getElementById(
+        "strangerEventOverlay"
+    ).classList.remove(
+        "show"
+    );
+
+}
+
+
+function equipStrangerThingsWallpaper() {
+
+    document.body.classList.add(
+        "stranger-wallpaper"
+    );
+
+    localStorage.setItem(
+        "chatsapp_stranger_wallpaper",
+        "equipped"
+    );
+
+    updateStrangerButton();
+
+}
+
+
+function unequipStrangerThingsWallpaper() {
+
+    document.body.classList.remove(
+        "stranger-wallpaper"
+    );
+
+    localStorage.removeItem(
+        "chatsapp_stranger_wallpaper"
+    );
+
+    updateStrangerButton();
+
+}
+
+
+function updateStrangerButton() {
+
+    const button =
+        document.getElementById(
+            "strangerEquipButton"
+        );
+
+    if(!button) {
+        return;
+    }
+
+    const equipped =
+        localStorage.getItem(
+            "chatsapp_stranger_wallpaper"
+        ) === "equipped";
+
+    if(equipped) {
+
+        button.innerText =
+            "🩸 UNEQUIP WALLPAPER";
+
+        button.onclick =
+            unequipStrangerThingsWallpaper;
+
+    } else {
+
+        button.innerText =
+            "🩸 EQUIP WALLPAPER";
+
+        button.onclick =
+            equipStrangerThingsWallpaper;
+
+    }
+
+}
+
+
+function loadStrangerWallpaper() {
+
+    const equipped =
+        localStorage.getItem(
+            "chatsapp_stranger_wallpaper"
+        ) === "equipped";
+
+    if(equipped) {
+
+        document.body.classList.add(
+            "stranger-wallpaper"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
    USER SEARCH
-========================================= */
+===================================================== */
 
 function openUserSearch() {
 
@@ -2948,28 +3565,15 @@ function openUserSearch() {
         "Find Users"
     );
 
-    const input =
-        document.getElementById(
-            "userSearchInput"
-        );
-
-    input.focus();
-
-    renderRecentSearches();
-
-    if(input.value.trim()) {
-
-        searchUsers(
-            input.value.trim()
-        );
-
-    }
+    document.getElementById(
+        "userSearchInput"
+    ).focus();
 
 }
 
 document.addEventListener(
     "DOMContentLoaded",
-    function() {
+    () => {
 
         const input =
             document.getElementById(
@@ -2977,31 +3581,26 @@ document.addEventListener(
             );
 
         if(!input) {
-
             return;
-
         }
 
         input.addEventListener(
             "input",
-            function() {
-
-                const query =
-                    input.value.trim();
-
-                const clearButton =
-                    document.getElementById(
-                        "clearSearchButton"
-                    );
-
-                clearButton.style.display =
-                    query
-                    ? "block"
-                    : "none";
+            () => {
 
                 clearTimeout(
                     searchTimer
                 );
+
+                const query =
+                    input.value.trim();
+
+                document.getElementById(
+                    "clearSearchButton"
+                ).style.display =
+                    query
+                    ? "block"
+                    : "none";
 
                 if(!query) {
 
@@ -3011,41 +3610,21 @@ document.addEventListener(
                         "";
 
                     document.getElementById(
-                        "noResults"
-                    ).style.display =
-                        "none";
-
-                    document.getElementById(
                         "searchResultText"
                     ).innerText =
                         "Start typing to find users";
-
-                    renderRecentSearches();
 
                     return;
 
                 }
 
-                document.getElementById(
-                    "recentSearches"
-                ).style.display =
-                    "none";
-
-                document.getElementById(
-                    "searchLoading"
-                ).innerText =
-                    "Searching...";
-
                 searchTimer =
                     setTimeout(
-                        function() {
-
+                        () =>
                             searchUsers(
                                 query
-                            );
-
-                        },
-                        220
+                            ),
+                        250
                     );
 
             }
@@ -3054,16 +3633,14 @@ document.addEventListener(
     }
 );
 
-async function searchUsers(query) {
+
+async function searchUsers(
+    query
+) {
 
     const results =
         document.getElementById(
             "searchResults"
-        );
-
-    const noResults =
-        document.getElementById(
-            "noResults"
         );
 
     const resultText =
@@ -3071,16 +3648,8 @@ async function searchUsers(query) {
             "searchResultText"
         );
 
-    const loading =
-        document.getElementById(
-            "searchLoading"
-        );
-
-    loading.innerText =
+    resultText.innerText =
         "Searching...";
-
-    noResults.style.display =
-        "none";
 
     const {
         data,
@@ -3088,31 +3657,16 @@ async function searchUsers(query) {
     } =
         await supabaseClient
         .from("profiles")
-        .select("username, online")
+        .select(
+            "username, online"
+        )
         .ilike(
             "username",
             "%" + query + "%"
         )
-        .order(
-            "username",
-            {
-                ascending: true
-            }
-        )
         .limit(30);
 
-    loading.innerText =
-        "";
-
     if(error) {
-
-        console.error(
-            "User search error:",
-            error
-        );
-
-        results.innerHTML =
-            "";
 
         resultText.innerText =
             "Could not search users.";
@@ -3121,40 +3675,27 @@ async function searchUsers(query) {
 
     }
 
-    const filtered =
-        (data || [])
-        .filter(
+    results.innerHTML =
+        "";
+
+    const users =
+        (data || []).filter(
             user =>
                 user.username &&
                 user.username.toLowerCase() !==
                 currentUsername.toLowerCase()
         );
 
-    results.innerHTML =
-        "";
-
-    if(filtered.length === 0) {
-
-        resultText.innerText =
-            "No matching users";
-
-        noResults.style.display =
-            "block";
-
-        return;
-
-    }
-
     resultText.innerText =
-        filtered.length +
+        users.length +
         (
-            filtered.length === 1
+            users.length === 1
             ? " user found"
             : " users found"
         );
 
-    filtered.forEach(
-        (user,index) => {
+    users.forEach(
+        user => {
 
             const card =
                 document.createElement(
@@ -3164,46 +3705,34 @@ async function searchUsers(query) {
             card.className =
                 "user-card";
 
-            card.style.animationDelay =
-                (index * 45) + "ms";
-
-            const username =
-                escapeHTML(
-                    user.username
-                );
-
-            const firstLetter =
-                escapeHTML(
-                    user.username
-                    .charAt(0)
-                    .toUpperCase()
-                );
-
-            const online =
-                !!user.online;
-
             card.innerHTML = `
 
                 <div class="user-card-top">
 
                     <div class="user-avatar">
-                        ${firstLetter}
+                        ${escapeHTML(
+                            user.username
+                                .charAt(0)
+                                .toUpperCase()
+                        )}
                     </div>
 
                     <div>
 
                         <div class="user-name">
-                            ${username}
+                            ${escapeHTML(
+                                user.username
+                            )}
                         </div>
 
                         <div class="user-status ${
-                            online
+                            user.online
                             ? "online"
                             : ""
                         }">
 
                             ${
-                                online
+                                user.online
                                 ? "● Online"
                                 : "● Offline"
                             }
@@ -3217,19 +3746,11 @@ async function searchUsers(query) {
                 <div class="user-actions">
 
                     <button
-                        class="user-action"
-                        onclick="previewUser(
-                            '${escapeAttribute(user.username)}',
-                            ${online}
-                        )"
-                    >
-                        👀 Preview
-                    </button>
-
-                    <button
                         class="user-action message-btn"
                         onclick="messageUser(
-                            '${escapeAttribute(user.username)}'
+                            '${escapeAttribute(
+                                user.username
+                            )}'
                         )"
                     >
                         💬 Message
@@ -3246,309 +3767,12 @@ async function searchUsers(query) {
         }
     );
 
-    saveSearch(
-        query
-    );
-
 }
 
-/* =========================================
-   PROFILE PREVIEW
-========================================= */
 
-function previewUser(username, online) {
-
-    selectedProfileUsername =
-        username;
-
-    document.getElementById(
-        "previewAvatar"
-    ).innerText =
-        username
-        .charAt(0)
-        .toUpperCase();
-
-    document.getElementById(
-        "previewName"
-    ).innerText =
-        username;
-
-    const status =
-        document.getElementById(
-            "previewStatus"
-        );
-
-    status.innerText =
-        online
-        ? "● Online"
-        : "● Offline";
-
-    status.className =
-        "preview-status" +
-        (
-            online
-            ? ""
-            : " offline"
-        );
-
-    document.getElementById(
-        "previewMessageButton"
-    ).onclick =
-        function() {
-
-            messageUser(
-                username
-            );
-
-        };
-
-    document.getElementById(
-        "profilePreviewOverlay"
-    ).classList.add(
-        "show"
-    );
-
-}
-
-function closeProfilePreview(event) {
-
-    if(
-        event &&
-        event.target &&
-        event.target.id !==
-        "profilePreviewOverlay"
-    ) {
-
-        return;
-
-    }
-
-    document.getElementById(
-        "profilePreviewOverlay"
-    ).classList.remove(
-        "show"
-    );
-
-}
-
-function messageUser(username) {
-
-    closeProfilePreview();
-
-    localStorage.setItem(
-        "chatsapp_target_user",
-        username
-    );
-
-    window.location.href =
-        "UserSearch.html";
-
-}
-
-/* =========================================
-   SEARCH HISTORY
-========================================= */
-
-function getSearchHistory() {
-
-    try {
-
-        return JSON.parse(
-            localStorage.getItem(
-                "chatsapp_recent_searches"
-            )
-        ) || [];
-
-    } catch {
-
-        return [];
-
-    }
-
-}
-
-function saveSearch(query) {
-
-    if(!query) {
-
-        return;
-
-    }
-
-    const normalized =
-        query.trim();
-
-    if(!normalized) {
-
-        return;
-
-    }
-
-    let history =
-        getSearchHistory();
-
-    history =
-        history.filter(
-            item =>
-                item.toLowerCase() !==
-                normalized.toLowerCase()
-        );
-
-    history.unshift(
-        normalized
-    );
-
-    history =
-        history.slice(0,8);
-
-    localStorage.setItem(
-        "chatsapp_recent_searches",
-        JSON.stringify(history)
-    );
-
-    renderRecentSearches();
-
-}
-
-function renderRecentSearches() {
-
-    const container =
-        document.getElementById(
-            "recentSearches"
-        );
-
-    const list =
-        document.getElementById(
-            "recentList"
-        );
-
-    const history =
-        getSearchHistory();
-
-    if(!history.length) {
-
-        container.style.display =
-            "none";
-
-        return;
-
-    }
-
-    const input =
-        document.getElementById(
-            "userSearchInput"
-        );
-
-    if(
-        input &&
-        input.value.trim()
-    ) {
-
-        container.style.display =
-            "none";
-
-        return;
-
-    }
-
-    container.style.display =
-        "block";
-
-    list.innerHTML =
-        "";
-
-    history.forEach(
-        query => {
-
-            const button =
-                document.createElement(
-                    "button"
-                );
-
-            button.className =
-                "recent-item";
-
-            button.innerText =
-                "🔎 " + query;
-
-            button.onclick =
-                function() {
-
-                    input.value =
-                        query;
-
-                    document.getElementById(
-                        "clearSearchButton"
-                    ).style.display =
-                        "block";
-
-                    searchUsers(
-                        query
-                    );
-
-                    container.style.display =
-                        "none";
-
-                };
-
-            list.appendChild(
-                button
-            );
-
-        }
-    );
-
-}
-
-function clearSearchHistory() {
-
-    localStorage.removeItem(
-        "chatsapp_recent_searches"
-    );
-
-    renderRecentSearches();
-
-}
-
-function clearUserSearch() {
-
-    const input =
-        document.getElementById(
-            "userSearchInput"
-        );
-
-    input.value =
-        "";
-
-    document.getElementById(
-        "clearSearchButton"
-    ).style.display =
-        "none";
-
-    document.getElementById(
-        "searchResults"
-    ).innerHTML =
-        "";
-
-    document.getElementById(
-        "noResults"
-    ).style.display =
-        "none";
-
-    document.getElementById(
-        "searchResultText"
-    ).innerText =
-        "Start typing to find users";
-
-    renderRecentSearches();
-
-    input.focus();
-
-}
-
-/* =========================================
+/* =====================================================
    OTHER PAGES
-========================================= */
+===================================================== */
 
 function openPrivateChats() {
 
@@ -3590,67 +3814,24 @@ function openProfile() {
 
 }
 
-/* =========================================
-   LOGOUT
-========================================= */
+function messageUser(
+    username
+) {
 
-async function logout() {
-
-    await setProfileOnline(
-        false
+    localStorage.setItem(
+        "chatsapp_target_user",
+        username
     );
 
-    await supabaseClient
-        .auth
-        .signOut();
-
-    currentUsername =
-        "";
-
-    if(chatChannel) {
-
-        await supabaseClient
-            .removeChannel(
-                chatChannel
-            );
-
-        chatChannel =
-            null;
-
-    }
-
-    document.getElementById(
-        "app"
-    ).style.display =
-        "none";
-
-    document.getElementById(
-        "authScreen"
-    ).style.display =
-        "flex";
-
-    document.getElementById(
-        "username"
-    ).value =
-        "";
-
-    document.getElementById(
-        "password"
-    ).value =
-        "";
-
-    document.getElementById(
-        "confirmPassword"
-    ).value =
-        "";
-
-    clearMessage();
+    window.location.href =
+        "UserSearch.html";
 
 }
 
-/* =========================================
+
+/* =====================================================
    GLOBAL CHAT
-========================================= */
+===================================================== */
 
 function openGlobalChat() {
 
@@ -3680,35 +3861,20 @@ function openGlobalChat() {
     ).value =
         currentUsername;
 
-    updateOnlineCount();
-
 }
+
 
 async function joinGlobalChat() {
 
     const username =
         document.getElementById(
             "chatUsername"
-        )
-        .value
-        .trim();
+        ).value.trim();
 
-    if(username === "") {
+    if(!username) {
 
         alert(
             "Please enter a username."
-        );
-
-        return;
-
-    }
-
-    if(
-        !/^[a-zA-Z0-9_]{3,20}$/.test(username)
-    ) {
-
-        alert(
-            "Username must be 3–20 characters."
         );
 
         return;
@@ -3732,9 +3898,8 @@ async function joinGlobalChat() {
 
     subscribeToMessages();
 
-    updateOnlineCount();
-
 }
+
 
 async function loadMessages() {
 
@@ -3748,14 +3913,13 @@ async function loadMessages() {
         .order(
             "created_at",
             {
-                ascending: true
+                ascending:true
             }
         );
 
     if(error) {
 
         console.error(
-            "Could not load messages:",
             error
         );
 
@@ -3782,10 +3946,8 @@ async function loadMessages() {
         }
     );
 
-    box.scrollTop =
-        box.scrollHeight;
-
 }
+
 
 function displayMessage(
     username,
@@ -3826,6 +3988,7 @@ function displayMessage(
 
 }
 
+
 async function sendGlobalMessage() {
 
     const input =
@@ -3836,10 +3999,8 @@ async function sendGlobalMessage() {
     const text =
         input.value.trim();
 
-    if(text === "") {
-
+    if(!text) {
         return;
-
     }
 
     const {
@@ -3859,10 +4020,6 @@ async function sendGlobalMessage() {
 
     if(error) {
 
-        console.error(
-            error
-        );
-
         alert(
             "Message could not be sent!\n\n" +
             error.message
@@ -3876,6 +4033,7 @@ async function sendGlobalMessage() {
         "";
 
 }
+
 
 function subscribeToMessages() {
 
@@ -3896,13 +4054,9 @@ function subscribeToMessages() {
         .on(
             "postgres_changes",
             {
-
-                event: "INSERT",
-
-                schema: "public",
-
-                table: "global_messages"
-
+                event:"INSERT",
+                schema:"public",
+                table:"global_messages"
             },
             payload => {
 
@@ -3917,20 +4071,56 @@ function subscribeToMessages() {
 
 }
 
-function updateOnlineCount() {
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+async function logout() {
+
+    await setProfileOnline(
+        false
+    );
+
+    await supabaseClient
+        .auth
+        .signOut();
+
+    currentUsername =
+        "";
+
+    if(chatChannel) {
+
+        await supabaseClient
+            .removeChannel(
+                chatChannel
+            );
+
+        chatChannel =
+            null;
+
+    }
 
     document.getElementById(
-        "onlineCount"
-    ).innerText =
-        "🟢 Global Chat";
+        "app"
+    ).style.display =
+        "none";
+
+    document.getElementById(
+        "authScreen"
+    ).style.display =
+        "flex";
 
 }
 
-/* =========================================
-   SECURITY HELPERS
-========================================= */
 
-function escapeHTML(text) {
+/* =====================================================
+   SECURITY
+===================================================== */
+
+function escapeHTML(
+    text
+) {
 
     const div =
         document.createElement(
@@ -3944,7 +4134,9 @@ function escapeHTML(text) {
 
 }
 
-function escapeAttribute(text) {
+function escapeAttribute(
+    text
+) {
 
     return String(text)
         .replace(
@@ -3958,18 +4150,17 @@ function escapeAttribute(text) {
 
 }
 
-/* =========================================
+
+/* =====================================================
    ENTER KEY
-========================================= */
+===================================================== */
 
 document.addEventListener(
     "keydown",
-    function(event) {
+    event => {
 
         if(event.key !== "Enter") {
-
             return;
-
         }
 
         const active =
@@ -3984,8 +4175,6 @@ document.addEventListener(
             event.preventDefault();
 
             sendGlobalMessage();
-
-            return;
 
         }
 
@@ -4002,19 +4191,18 @@ document.addEventListener(
 
             handleAuth();
 
-            return;
-
         }
 
     }
 );
 
-/* =========================================
+
+/* =====================================================
    ONLINE HEARTBEAT
-========================================= */
+===================================================== */
 
 setInterval(
-    function() {
+    () => {
 
         if(currentUsername) {
 
@@ -4028,26 +4216,15 @@ setInterval(
     30000
 );
 
-window.addEventListener(
-    "beforeunload",
-    function() {
 
-        if(currentUsername) {
-
-            setProfileOnline(
-                false
-            );
-
-        }
-
-    }
-);
-
-/* =========================================
+/* =====================================================
    STARTUP
-========================================= */
+===================================================== */
 
 (async function bootChatsApp() {
+
+    /* LOAD SAVED STRANGER THINGS WALLPAPER FIRST */
+    loadStrangerWallpaper();
 
     await startLoadingScreen();
 
@@ -4056,34 +4233,54 @@ window.addEventListener(
 })();
 
 </script>
-<script>
-    if ("serviceWorker" in navigator) {
 
-        window.addEventListener("load", () => {
+
+<!-- =====================================================
+     SERVICE WORKER
+===================================================== -->
+
+<script>
+
+if(
+    "serviceWorker" in navigator
+) {
+
+    window.addEventListener(
+        "load",
+        () => {
 
             navigator.serviceWorker
-                .register("./service-worker.js")
-                .then(registration => {
+                .register(
+                    "./service-worker.js"
+                )
+                .then(
+                    registration => {
 
-                    console.log(
-                        "ChatsApp service worker registered:",
-                        registration.scope
-                    );
+                        console.log(
+                            "ChatsApp service worker registered:",
+                            registration.scope
+                        );
 
-                })
-                .catch(error => {
+                    }
+                )
+                .catch(
+                    error => {
 
-                    console.error(
-                        "ChatsApp service worker failed:",
-                        error
-                    );
+                        console.error(
+                            "Service worker failed:",
+                            error
+                        );
 
-                });
+                    }
+                );
 
-        });
+        }
+    );
 
-    }
+}
+
 </script>
+
 </body>
 
 </html>
