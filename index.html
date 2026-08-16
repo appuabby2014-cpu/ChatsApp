@@ -1355,6 +1355,204 @@ input:focus {
     min-width:90px;
 }
 
+
+/* =========================================================
+   TEMPORARY NEWS / ANNOUNCEMENT POPUP
+   ADDED ONLY FOR THE CUSTOMIZE PROFILE UPDATE
+========================================================= */
+
+.news-overlay {
+    display:none;
+
+    position:fixed;
+    inset:0;
+
+    z-index:50000;
+
+    background:rgba(0,0,0,.58);
+
+    backdrop-filter:blur(6px);
+
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+}
+
+.news-overlay.show {
+    display:flex;
+}
+
+.news-popup {
+    width:100%;
+    max-width:470px;
+
+    position:relative;
+
+    padding:32px;
+
+    border-radius:24px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(25,31,52,.98),
+            rgba(15,19,34,.98)
+        );
+
+    border:1px solid rgba(112,151,255,.28);
+
+    box-shadow:
+        0 30px 90px rgba(0,0,0,.65),
+        0 0 50px rgba(91,140,255,.12);
+
+    animation:newsPopupIn .35s ease;
+}
+
+@keyframes newsPopupIn {
+
+    from {
+        opacity:0;
+        transform:translateY(20px) scale(.94);
+    }
+
+    to {
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+
+}
+
+.news-close {
+    position:absolute;
+
+    top:14px;
+    right:14px;
+
+    width:34px;
+    height:34px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#20283c;
+
+    color:#9da7bc;
+
+    font-size:21px;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.news-close:hover {
+    background:#303a55;
+
+    color:white;
+
+    transform:rotate(90deg);
+}
+
+.news-icon {
+    width:58px;
+    height:58px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:18px;
+
+    margin-bottom:18px;
+
+    font-size:28px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #5b8cff,
+            #795cff
+        );
+
+    box-shadow:
+        0 10px 30px rgba(91,140,255,.3);
+}
+
+.news-label {
+    color:#7097ff;
+
+    font-size:11px;
+
+    font-weight:800;
+
+    letter-spacing:1.5px;
+
+    text-transform:uppercase;
+
+    margin-bottom:7px;
+}
+
+.news-popup h2 {
+    margin:0;
+
+    font-size:24px;
+}
+
+.news-date {
+    color:#7d879f;
+
+    font-size:12px;
+
+    margin-top:7px;
+}
+
+.news-popup p {
+    color:#aab3c8;
+
+    line-height:1.6;
+
+    font-size:14px;
+
+    margin:20px 0 25px;
+}
+
+.news-ok {
+    width:100%;
+
+    padding:13px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #5b8cff,
+            #795cff
+        );
+
+    color:white;
+
+    font-size:14px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.news-ok:hover {
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 10px 30px rgba(91,140,255,.3);
+}
+
+
 @media(max-width:800px) {
 
     .app {
@@ -2072,6 +2270,67 @@ input:focus {
 
 </div>
 
+
+<!-- =========================================================
+     TEMPORARY NEWS / ANNOUNCEMENT
+========================================================= -->
+
+<div
+    id="newsOverlay"
+    class="news-overlay"
+    onclick="closeNews(event)"
+>
+
+    <div
+        class="news-popup"
+        onclick="event.stopPropagation()"
+    >
+
+        <button
+            class="news-close"
+            onclick="closeNews()"
+            aria-label="Close announcement"
+        >
+            ×
+        </button>
+
+        <div class="news-icon">
+            ✨
+        </div>
+
+        <div class="news-label">
+            NEW UPDATE
+        </div>
+
+        <h2>
+            Customize Profile
+        </h2>
+
+        <div class="news-date">
+            Aiden Thomas • 16/8/26
+        </div>
+
+        <p>
+            We’re excited to announce the new
+            <strong>Customize Profile</strong> update
+            for ChatsApp! 🎨
+            <br><br>
+            You’ll soon be able to personalize your
+            ChatsApp profile and make it your own.
+        </p>
+
+        <button
+            class="news-ok"
+            onclick="closeNews()"
+        >
+            OK, got it! 👍
+        </button>
+
+    </div>
+
+</div>
+
+
 <script>
 
 /* =========================================================
@@ -2741,6 +3000,18 @@ function showApp(username) {
     setProfileOnline(true);
 
     showHome();
+
+    /*
+       TEMPORARY NEWS:
+       Show the Customize Profile announcement
+       after the Welcome Back homepage appears.
+    */
+
+    setTimeout(function() {
+
+        showNews();
+
+    }, 400);
 
 }
 
@@ -3960,6 +4231,53 @@ function updateOnlineCount() {
             "🟢 Global Chat";
 
     }
+
+}
+
+
+/* =========================================================
+   TEMPORARY NEWS / ANNOUNCEMENT
+========================================================= */
+
+function showNews() {
+
+    const overlay =
+        document.getElementById(
+            "newsOverlay"
+        );
+
+    if(!overlay) return;
+
+    overlay.classList.add(
+        "show"
+    );
+
+}
+
+
+function closeNews(event) {
+
+    if(
+        event &&
+        event.target &&
+        event.target.id !==
+        "newsOverlay"
+    ) {
+
+        return;
+
+    }
+
+    const overlay =
+        document.getElementById(
+            "newsOverlay"
+        );
+
+    if(!overlay) return;
+
+    overlay.classList.remove(
+        "show"
+    );
 
 }
 
