@@ -2190,15 +2190,6 @@ input:focus {
 </div>
 
 <script>
-/* =========================================================
-   CHATsAPP SINGLE-JS INITIALIZATION GUARD
-   Prevents duplicate JavaScript initialization, duplicate
-   event listeners, and duplicate Supabase realtime channels.
-========================================================= */
-if (!window.__CHATSAPP_MAIN_LOADED__) {
-    window.__CHATSAPP_MAIN_LOADED__ = true;
-
-
 
 const SUPABASE_URL =
     "https://kopzrnpporfdwauwlhni.supabase.co";
@@ -2218,63 +2209,53 @@ let chatChannel = null;
 let searchTimer = null;
 let selectedProfileUsername = "";
 
-window.addEventListener(
-    "load",
-    function() {
+/* =========================================================
+   LOADING SCREEN — ROBUST STARTUP
+   This runs independently of Supabase so a network/auth
+   problem can never prevent the loading screen from finishing.
+========================================================= */
+(function startLoadingScreen() {
 
-        const loadingScreen =
-            document.getElementById("loadingScreen");
+    const loadingScreen =
+        document.getElementById("loadingScreen");
 
-        const loadingStatus =
-            document.getElementById("loadingStatus");
+    const loadingStatus =
+        document.getElementById("loadingStatus");
 
-        const loadingLogo =
-            document.getElementById("loadingLogo");
+    const loadingLogo =
+        document.getElementById("loadingLogo");
 
-        loadingStatus.innerText =
-            "Connecting...";
+    if (!loadingScreen) return;
 
-        setTimeout(
-            function() {
-
-                loadingStatus.innerText =
-                    "Connecting...";
-
-            },
-            500
-        );
-
-        setTimeout(
-            function() {
-
-                loadingStatus.innerText =
-                    "Connected ✓";
-
-                loadingStatus.classList.add(
-                    "connected"
-                );
-
-                loadingLogo.classList.add(
-                    "connected"
-                );
-
-            },
-            1500
-        );
-
-        setTimeout(
-            function() {
-
-                loadingScreen.classList.add(
-                    "hidden"
-                );
-
-            },
-            2200
-        );
-
+    if (loadingStatus) {
+        loadingStatus.innerText = "Connecting...";
     }
-);
+
+    setTimeout(function() {
+
+        if (loadingStatus) {
+            loadingStatus.innerText = "Connected ✓";
+            loadingStatus.classList.add("connected");
+        }
+
+        if (loadingLogo) {
+            loadingLogo.classList.add("connected");
+        }
+
+    }, 1500);
+
+    setTimeout(function() {
+
+        loadingScreen.classList.add("hidden");
+
+        /* Fully remove it after the fade so it cannot block clicks. */
+        setTimeout(function() {
+            loadingScreen.style.display = "none";
+        }, 850);
+
+    }, 2200);
+
+})();
 
 function showMessage(text,type) {
 
@@ -3492,20 +3473,18 @@ async function sendGlobalMessage() {
 
 }
 
-async function subscribeToMessages() {
+function subscribeToMessages() {
 
     if(chatChannel) {
-        try {
-            await supabaseClient.removeChannel(chatChannel);
-        } catch(error) {
-            console.warn("Could not remove old chat channel:", error);
-        }
-        chatChannel = null;
+
+        supabaseClient
+            .removeChannel(chatChannel);
+
     }
 
     chatChannel =
         supabaseClient
-        .channel("global-chat-room-" + Date.now())
+        .channel("global-chat-room")
         .on(
             "postgres_changes",
             {
@@ -3526,11 +3505,7 @@ async function subscribeToMessages() {
 
             }
         )
-        .subscribe((status) => {
-        if (status === "CHANNEL_ERROR") {
-            console.error("Global chat realtime channel error.");
-        }
-    });
+        .subscribe();
 
 }
 
@@ -3636,10 +3611,6 @@ window.addEventListener(
 
 checkSession();
 
-</script>
-
-</body>
-}
 </script>
 
 </body>
