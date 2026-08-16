@@ -3398,12 +3398,11 @@ body.stranger-wallpaper
 
         </button>
 
-        <button
-            class="nav-btn"
-            onclick="openCalls()"
-        >
+        <!-- =================================================
+             CALLS
+        ================================================= -->
 
-                   <button
+        <button
             class="nav-btn"
             onclick="openCalls()"
         >
@@ -3416,6 +3415,10 @@ body.stranger-wallpaper
 
         </button>
 
+
+        <!-- =================================================
+             NEWSLETTER
+        ================================================= -->
 
         <button
             class="nav-btn"
@@ -3648,6 +3651,30 @@ body.stranger-wallpaper
 
                     <p>
                         Call your friends on ChatsApp.
+                    </p>
+
+                </div>
+
+
+                <!-- =================================================
+                     NEWSLETTER HOMEPAGE BUTTON
+                ================================================= -->
+
+                <div
+                    class="card"
+                    onclick="window.location.href='Newsletter.html'"
+                >
+
+                    <div class="card-icon">
+                        📰
+                    </div>
+
+                    <h2>
+                        Newsletter
+                    </h2>
+
+                    <p>
+                        Read the latest ChatsApp news and updates.
                     </p>
 
                 </div>
@@ -5740,6 +5767,1680 @@ function clearUserSearch() {
     input.focus();
 
 }
+   <!-- =======================================================
+     PART 2 — JAVASCRIPT / FUNCTIONALITY
+======================================================= -->
+
+<script>
+
+/* =========================================================
+   SUPABASE
+========================================================= */
+
+const SUPABASE_URL =
+    "https://kopzrnpporfdwauwlhni.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_bbxmPB71ADnIqe3oPB3MuQ_EWa4n_Ph";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+/* =========================================================
+   GLOBAL VARIABLES
+========================================================= */
+
+let signupMode = false;
+let currentUsername = "";
+let chatChannel = null;
+let searchTimer = null;
+let selectedProfileUsername = "";
+
+
+/* =========================================================
+   STRANGER THINGS EVENT
+========================================================= */
+
+function openStrangerEvent() {
+
+    const overlay =
+        document.getElementById("strangerEventOverlay");
+
+    if (!overlay) return;
+
+    overlay.classList.add("show");
+
+    updateStrangerButton();
+
+}
+
+
+function closeStrangerEvent(event) {
+
+    if (
+        event &&
+        event.target &&
+        event.target.id !== "strangerEventOverlay"
+    ) {
+        return;
+    }
+
+    const overlay =
+        document.getElementById("strangerEventOverlay");
+
+    if (overlay) {
+        overlay.classList.remove("show");
+    }
+
+}
+
+
+function toggleStrangerWallpaper() {
+
+    const enabled =
+        document.body.classList.toggle(
+            "stranger-wallpaper"
+        );
+
+    localStorage.setItem(
+        "chatsapp_stranger_wallpaper",
+        enabled ? "true" : "false"
+    );
+
+    updateStrangerButton();
+
+}
+
+
+function updateStrangerButton() {
+
+    const button =
+        document.getElementById(
+            "equipStrangerButton"
+        );
+
+    if (!button) return;
+
+    const equipped =
+        document.body.classList.contains(
+            "stranger-wallpaper"
+        );
+
+    if (equipped) {
+
+        button.classList.add("equipped");
+
+        button.innerText =
+            "✓ STRANGER THINGS WALLPAPER EQUIPPED";
+
+    } else {
+
+        button.classList.remove("equipped");
+
+        button.innerText =
+            "🔴 EQUIP STRANGER THINGS WALLPAPER";
+
+    }
+
+}
+
+
+function loadStrangerWallpaper() {
+
+    const enabled =
+        localStorage.getItem(
+            "chatsapp_stranger_wallpaper"
+        ) === "true";
+
+    if (enabled) {
+
+        document.body.classList.add(
+            "stranger-wallpaper"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   LOADING SCREEN
+========================================================= */
+
+async function startLoadingScreen() {
+
+    const loadingScreen =
+        document.getElementById("loadingScreen");
+
+    const loadingStatus =
+        document.getElementById("loadingStatus");
+
+    const loadingLogo =
+        document.getElementById("loadingLogo");
+
+    if (!loadingScreen) return;
+
+    try {
+
+        if (loadingStatus) {
+            loadingStatus.innerText =
+                "Connecting...";
+        }
+
+        const {
+            error
+        } =
+            await supabaseClient
+                .from("profiles")
+                .select("username")
+                .limit(1);
+
+        if (error) {
+
+            console.warn(
+                "Supabase connection check:",
+                error
+            );
+
+        }
+
+        if (loadingStatus) {
+
+            loadingStatus.innerText =
+                "Connected ✓";
+
+            loadingStatus.classList.add(
+                "connected"
+            );
+
+        }
+
+        if (loadingLogo) {
+
+            loadingLogo.classList.add(
+                "connected"
+            );
+
+        }
+
+        await new Promise(
+            resolve =>
+                setTimeout(
+                    resolve,
+                    700
+                )
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Startup connection error:",
+            error
+        );
+
+        if (loadingStatus) {
+
+            loadingStatus.innerText =
+                "Connected ✓";
+
+            loadingStatus.classList.add(
+                "connected"
+            );
+
+        }
+
+    }
+
+    loadingScreen.classList.add("hidden");
+
+}
+
+
+/* =========================================================
+   AUTH MESSAGES
+========================================================= */
+
+function showMessage(text, type) {
+
+    const message =
+        document.getElementById("message");
+
+    if (!message) return;
+
+    message.innerText = text;
+
+    message.className =
+        "message " + type;
+
+}
+
+
+function clearMessage() {
+
+    const message =
+        document.getElementById("message");
+
+    if (!message) return;
+
+    message.innerText = "";
+
+    message.className = "message";
+
+}
+
+
+/* =========================================================
+   AUTH MODE
+========================================================= */
+
+function toggleAuth() {
+
+    signupMode = !signupMode;
+
+    clearMessage();
+
+    const title =
+        document.getElementById("authTitle");
+
+    const subtitle =
+        document.getElementById("authSubtitle");
+
+    const button =
+        document.getElementById("mainButton");
+
+    const switchText =
+        document.getElementById("switchText");
+
+    const confirmGroup =
+        document.getElementById("confirmGroup");
+
+    if (
+        !title ||
+        !subtitle ||
+        !button ||
+        !switchText ||
+        !confirmGroup
+    ) {
+        return;
+    }
+
+    if (signupMode) {
+
+        title.innerText =
+            "Create your ChatsApp";
+
+        subtitle.innerText =
+            "Create your account and join the conversation.";
+
+        button.innerText =
+            "Create Account";
+
+        switchText.innerText =
+            "Already have an account? Log in";
+
+        confirmGroup.style.display =
+            "block";
+
+    } else {
+
+        title.innerText =
+            "Welcome to ChatsApp";
+
+        subtitle.innerText =
+            "Your conversations. Your world.";
+
+        button.innerText =
+            "Log In";
+
+        switchText.innerText =
+            "Don't have an account? Sign up";
+
+        confirmGroup.style.display =
+            "none";
+
+    }
+
+}
+
+
+/* =========================================================
+   USERNAME → EMAIL
+========================================================= */
+
+function usernameToEmail(username) {
+
+    return (
+        username.toLowerCase() +
+        "@chatsapp.local"
+    );
+
+}
+
+
+/* =========================================================
+   AUTHENTICATION
+========================================================= */
+
+async function handleAuth() {
+
+    clearMessage();
+
+    const usernameInput =
+        document.getElementById("username");
+
+    const passwordInput =
+        document.getElementById("password");
+
+    const confirmInput =
+        document.getElementById("confirmPassword");
+
+    if (
+        !usernameInput ||
+        !passwordInput ||
+        !confirmInput
+    ) {
+        return;
+    }
+
+    const username =
+        usernameInput.value.trim();
+
+    const password =
+        passwordInput.value;
+
+    const confirmPassword =
+        confirmInput.value;
+
+    if (username === "") {
+
+        showMessage(
+            "Please enter a username.",
+            "error"
+        );
+
+        return;
+
+    }
+
+    if (
+        !/^[a-zA-Z0-9_]{3,20}$/.test(username)
+    ) {
+
+        showMessage(
+            "Username must be 3–20 characters and use only letters, numbers, or underscores.",
+            "error"
+        );
+
+        return;
+
+    }
+
+    if (password === "") {
+
+        showMessage(
+            "Please enter your password.",
+            "error"
+        );
+
+        return;
+
+    }
+
+    if (password.length < 6) {
+
+        showMessage(
+            "Password must be at least 6 characters.",
+            "error"
+        );
+
+        return;
+
+    }
+
+    const internalEmail =
+        usernameToEmail(username);
+
+
+    /* =====================================================
+       SIGN UP
+    ===================================================== */
+
+    if (signupMode) {
+
+        if (
+            password !== confirmPassword
+        ) {
+
+            showMessage(
+                "Passwords do not match.",
+                "error"
+            );
+
+            return;
+
+        }
+
+        showMessage(
+            "Creating your account...",
+            "success"
+        );
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+                .auth
+                .signUp({
+
+                    email:
+                        internalEmail,
+
+                    password:
+                        password,
+
+                    options: {
+
+                        data: {
+                            username:
+                                username
+                        }
+
+                    }
+
+                });
+
+        if (error) {
+
+            showMessage(
+                error.message,
+                "error"
+            );
+
+            return;
+
+        }
+
+        if (
+            data &&
+            data.session &&
+            data.user
+        ) {
+
+            currentUsername =
+                username;
+
+            await ensureProfile(
+                username
+            );
+
+            showApp(
+                username
+            );
+
+            return;
+
+        }
+
+        showMessage(
+            "Account created! You can now log in. 🎉",
+            "success"
+        );
+
+        return;
+
+    }
+
+
+    /* =====================================================
+       LOGIN
+    ===================================================== */
+
+    showMessage(
+        "Logging in...",
+        "success"
+    );
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+            .auth
+            .signInWithPassword({
+
+                email:
+                    internalEmail,
+
+                password:
+                    password
+
+            });
+
+    if (error) {
+
+        showMessage(
+            "Invalid username or password.",
+            "error"
+        );
+
+        return;
+
+    }
+
+    if (data && data.user) {
+
+        currentUsername =
+            data.user
+                .user_metadata
+                ?.username ||
+            username;
+
+        await ensureProfile(
+            currentUsername
+        );
+
+        showApp(
+            currentUsername
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   ENSURE PROFILE
+========================================================= */
+
+async function ensureProfile(username) {
+
+    if (!username) return;
+
+    const {
+        error
+    } =
+        await supabaseClient
+            .from("profiles")
+            .upsert(
+                {
+                    username:
+                        username,
+
+                    online:
+                        true
+                },
+                {
+                    onConflict:
+                        "username"
+                }
+            );
+
+    if (error) {
+
+        console.warn(
+            "Could not update profile:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   SHOW APP
+========================================================= */
+
+function showApp(username) {
+
+    if (!username) {
+
+        console.error(
+            "showApp called without username."
+        );
+
+        return;
+
+    }
+
+    currentUsername =
+        username;
+
+    const authScreen =
+        document.getElementById("authScreen");
+
+    const app =
+        document.getElementById("app");
+
+    const profileName =
+        document.getElementById("profileName");
+
+    const avatar =
+        document.getElementById("avatar");
+
+    if (authScreen) {
+        authScreen.style.display =
+            "none";
+    }
+
+    if (app) {
+        app.style.display =
+            "grid";
+    }
+
+    if (profileName) {
+        profileName.innerText =
+            username;
+    }
+
+    if (avatar) {
+
+        avatar.innerText =
+            username
+                .charAt(0)
+                .toUpperCase();
+
+    }
+
+    showHome();
+
+    setProfileOnline(true);
+
+}
+
+
+/* =========================================================
+   ONLINE STATUS
+========================================================= */
+
+async function setProfileOnline(
+    isOnline
+) {
+
+    if (!currentUsername) return;
+
+    const {
+        error
+    } =
+        await supabaseClient
+            .from("profiles")
+            .update({
+                online:
+                    isOnline
+            })
+            .eq(
+                "username",
+                currentUsername
+            );
+
+    if (error) {
+
+        console.warn(
+            "Online status error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   SESSION CHECK
+========================================================= */
+
+async function checkSession() {
+
+    try {
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+                .auth
+                .getSession();
+
+        if (error) {
+
+            console.error(
+                "Session check error:",
+                error
+            );
+
+            return;
+
+        }
+
+        if (
+            data &&
+            data.session &&
+            data.session.user
+        ) {
+
+            const username =
+                data.session.user
+                    .user_metadata
+                    ?.username ||
+                data.session.user
+                    .email
+                    .split("@")[0];
+
+            currentUsername =
+                username;
+
+            await ensureProfile(
+                username
+            );
+
+            showApp(
+                username
+            );
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Session startup error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   PAGE CONTROL
+========================================================= */
+
+function hideAllPages() {
+
+    const pages = [
+        "homePage",
+        "globalChat",
+        "userSearchPage"
+    ];
+
+    pages.forEach(
+        id => {
+
+            const page =
+                document.getElementById(id);
+
+            if (page) {
+
+                page.style.display =
+                    "none";
+
+            }
+
+        }
+    );
+
+}
+
+
+function showHome() {
+
+    hideAllPages();
+
+    const home =
+        document.getElementById("homePage");
+
+    if (home) {
+
+        home.style.display =
+            "block";
+
+    }
+
+    setActiveNav("Home");
+
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function setActiveNav(name) {
+
+    document
+        .querySelectorAll(".nav-btn")
+        .forEach(
+            button => {
+
+                button.classList.remove(
+                    "active"
+                );
+
+                const spans =
+                    button.querySelectorAll(
+                        "span"
+                    );
+
+                const label =
+                    spans.length
+                        ? spans[spans.length - 1]
+                        : null;
+
+                if (
+                    label &&
+                    label.innerText.trim() === name
+                ) {
+
+                    button.classList.add(
+                        "active"
+                    );
+
+                }
+
+            }
+        );
+
+}
+
+
+/* =========================================================
+   NEWSLETTER
+========================================================= */
+
+/*
+   IMPORTANT:
+   This is the button/page connection.
+
+   Your homepage card should use:
+
+   onclick="openNewsletter()"
+
+   And your sidebar Newsletter button should use:
+
+   onclick="openNewsletter()"
+*/
+
+function openNewsletter() {
+
+    window.location.href =
+        "Newsletter.html";
+
+}
+
+
+/* =========================================================
+   USER SEARCH
+========================================================= */
+
+function openUserSearch() {
+
+    hideAllPages();
+
+    const page =
+        document.getElementById(
+            "userSearchPage"
+        );
+
+    if (page) {
+
+        page.style.display =
+            "block";
+
+    }
+
+    setActiveNav(
+        "Find Users"
+    );
+
+    const input =
+        document.getElementById(
+            "userSearchInput"
+        );
+
+    if (input) {
+
+        input.focus();
+
+        renderRecentSearches();
+
+        if (input.value.trim()) {
+
+            searchUsers(
+                input.value.trim()
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   SEARCH INPUT
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        const input =
+            document.getElementById(
+                "userSearchInput"
+            );
+
+        if (!input) return;
+
+        input.addEventListener(
+            "input",
+            function() {
+
+                const query =
+                    input.value.trim();
+
+                const clearButton =
+                    document.getElementById(
+                        "clearSearchButton"
+                    );
+
+                if (clearButton) {
+
+                    clearButton.style.display =
+                        query
+                            ? "block"
+                            : "none";
+
+                }
+
+                clearTimeout(
+                    searchTimer
+                );
+
+                if (!query) {
+
+                    const results =
+                        document.getElementById(
+                            "searchResults"
+                        );
+
+                    const noResults =
+                        document.getElementById(
+                            "noResults"
+                        );
+
+                    const resultText =
+                        document.getElementById(
+                            "searchResultText"
+                        );
+
+                    const recent =
+                        document.getElementById(
+                            "recentSearches"
+                        );
+
+                    if (results) {
+                        results.innerHTML = "";
+                    }
+
+                    if (noResults) {
+                        noResults.style.display =
+                            "none";
+                    }
+
+                    if (resultText) {
+                        resultText.innerText =
+                            "Start typing to find users";
+                    }
+
+                    if (recent) {
+                        renderRecentSearches();
+                    }
+
+                    return;
+
+                }
+
+                const recent =
+                    document.getElementById(
+                        "recentSearches"
+                    );
+
+                const loading =
+                    document.getElementById(
+                        "searchLoading"
+                    );
+
+                if (recent) {
+                    recent.style.display =
+                        "none";
+                }
+
+                if (loading) {
+                    loading.innerText =
+                        "Searching...";
+                }
+
+                searchTimer =
+                    setTimeout(
+                        function() {
+
+                            searchUsers(
+                                query
+                            );
+
+                        },
+                        220
+                    );
+
+            }
+        );
+
+    }
+);
+
+
+/* =========================================================
+   SEARCH USERS
+========================================================= */
+
+async function searchUsers(query) {
+
+    const results =
+        document.getElementById(
+            "searchResults"
+        );
+
+    const noResults =
+        document.getElementById(
+            "noResults"
+        );
+
+    const resultText =
+        document.getElementById(
+            "searchResultText"
+        );
+
+    const loading =
+        document.getElementById(
+            "searchLoading"
+        );
+
+    if (!results) return;
+
+    if (loading) {
+        loading.innerText =
+            "Searching...";
+    }
+
+    if (noResults) {
+        noResults.style.display =
+            "none";
+    }
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+            .from("profiles")
+            .select(
+                "username, online"
+            )
+            .ilike(
+                "username",
+                "%" + query + "%"
+            )
+            .order(
+                "username",
+                {
+                    ascending:
+                        true
+                }
+            )
+            .limit(30);
+
+    if (loading) {
+        loading.innerText = "";
+    }
+
+    if (error) {
+
+        console.error(
+            "User search error:",
+            error
+        );
+
+        results.innerHTML = "";
+
+        if (resultText) {
+
+            resultText.innerText =
+                "Could not search users.";
+
+        }
+
+        return;
+
+    }
+
+    const filtered =
+        (data || [])
+            .filter(
+                user =>
+                    user.username &&
+                    user.username
+                        .toLowerCase() !==
+                    currentUsername
+                        .toLowerCase()
+            );
+
+    results.innerHTML = "";
+
+    if (filtered.length === 0) {
+
+        if (resultText) {
+
+            resultText.innerText =
+                "No matching users";
+
+        }
+
+        if (noResults) {
+
+            noResults.style.display =
+                "block";
+
+        }
+
+        return;
+
+    }
+
+    if (resultText) {
+
+        resultText.innerText =
+            filtered.length +
+            (
+                filtered.length === 1
+                    ? " user found"
+                    : " users found"
+            );
+
+    }
+
+    filtered.forEach(
+        user => {
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+            card.className =
+                "user-card";
+
+            const username =
+                escapeHTML(
+                    user.username
+                );
+
+            const firstLetter =
+                escapeHTML(
+                    user.username
+                        .charAt(0)
+                        .toUpperCase()
+                );
+
+            const online =
+                !!user.online;
+
+            card.innerHTML = `
+
+                <div class="user-card-top">
+
+                    <div class="user-avatar">
+                        ${firstLetter}
+                    </div>
+
+                    <div>
+
+                        <div class="user-name">
+                            ${username}
+                        </div>
+
+                        <div class="user-status ${
+                            online
+                                ? "online"
+                                : ""
+                        }">
+
+                            ${
+                                online
+                                    ? "● Online"
+                                    : "● Offline"
+                            }
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="user-actions">
+
+                    <button
+                        class="user-action"
+                        onclick="previewUser(
+                            '${escapeAttribute(
+                                user.username
+                            )}',
+                            ${online}
+                        )"
+                    >
+                        👀 Preview
+                    </button>
+
+                    <button
+                        class="user-action message-btn"
+                        onclick="messageUser(
+                            '${escapeAttribute(
+                                user.username
+                            )}'
+                        )"
+                    >
+                        💬 Message
+                    </button>
+
+                </div>
+
+            `;
+
+            results.appendChild(card);
+
+        }
+    );
+
+    saveSearch(query);
+
+}
+
+
+/* =========================================================
+   PROFILE PREVIEW
+========================================================= */
+
+function previewUser(
+    username,
+    online
+) {
+
+    selectedProfileUsername =
+        username;
+
+    const avatar =
+        document.getElementById(
+            "previewAvatar"
+        );
+
+    const name =
+        document.getElementById(
+            "previewName"
+        );
+
+    const status =
+        document.getElementById(
+            "previewStatus"
+        );
+
+    const messageButton =
+        document.getElementById(
+            "previewMessageButton"
+        );
+
+    const overlay =
+        document.getElementById(
+            "profilePreviewOverlay"
+        );
+
+    if (avatar) {
+
+        avatar.innerText =
+            username
+                .charAt(0)
+                .toUpperCase();
+
+    }
+
+    if (name) {
+
+        name.innerText =
+            username;
+
+    }
+
+    if (status) {
+
+        status.innerText =
+            online
+                ? "● Online"
+                : "● Offline";
+
+        status.className =
+            "preview-status" +
+            (
+                online
+                    ? ""
+                    : " offline"
+            );
+
+    }
+
+    if (messageButton) {
+
+        messageButton.onclick =
+            function() {
+
+                messageUser(
+                    username
+                );
+
+            };
+
+    }
+
+    if (overlay) {
+
+        overlay.classList.add(
+            "show"
+        );
+
+    }
+
+}
+
+
+function closeProfilePreview(event) {
+
+    if (
+        event &&
+        event.target &&
+        event.target.id !==
+            "profilePreviewOverlay"
+    ) {
+        return;
+    }
+
+    const overlay =
+        document.getElementById(
+            "profilePreviewOverlay"
+        );
+
+    if (overlay) {
+
+        overlay.classList.remove(
+            "show"
+        );
+
+    }
+
+}
+
+
+function messageUser(username) {
+
+    closeProfilePreview();
+
+    localStorage.setItem(
+        "chatsapp_target_user",
+        username
+    );
+
+    window.location.href =
+        "UserSearch.html";
+
+}
+
+
+/* =========================================================
+   SEARCH HISTORY
+========================================================= */
+
+function getSearchHistory() {
+
+    try {
+
+        return JSON.parse(
+            localStorage.getItem(
+                "chatsapp_recent_searches"
+            )
+        ) || [];
+
+    } catch {
+
+        return [];
+
+    }
+
+}
+
+
+function saveSearch(query) {
+
+    if (!query) return;
+
+    const normalized =
+        query.trim();
+
+    if (!normalized) return;
+
+    let history =
+        getSearchHistory();
+
+    history =
+        history.filter(
+            item =>
+                item.toLowerCase() !==
+                normalized.toLowerCase()
+        );
+
+    history.unshift(
+        normalized
+    );
+
+    history =
+        history.slice(
+            0,
+            8
+        );
+
+    localStorage.setItem(
+        "chatsapp_recent_searches",
+        JSON.stringify(history)
+    );
+
+    renderRecentSearches();
+
+}
+
+
+function renderRecentSearches() {
+
+    const container =
+        document.getElementById(
+            "recentSearches"
+        );
+
+    const list =
+        document.getElementById(
+            "recentList"
+        );
+
+    if (!container || !list) return;
+
+    const history =
+        getSearchHistory();
+
+    if (!history.length) {
+
+        container.style.display =
+            "none";
+
+        return;
+
+    }
+
+    const input =
+        document.getElementById(
+            "userSearchInput"
+        );
+
+    if (
+        input &&
+        input.value.trim()
+    ) {
+
+        container.style.display =
+            "none";
+
+        return;
+
+    }
+
+    container.style.display =
+        "block";
+
+    list.innerHTML = "";
+
+    history.forEach(
+        query => {
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+            button.className =
+                "recent-item";
+
+            button.innerText =
+                "🔎 " + query;
+
+            button.onclick =
+                function() {
+
+                    if (input) {
+
+                        input.value =
+                            query;
+
+                    }
+
+                    const clearButton =
+                        document.getElementById(
+                            "clearSearchButton"
+                        );
+
+                    if (clearButton) {
+
+                        clearButton.style.display =
+                            "block";
+
+                    }
+
+                    searchUsers(
+                        query
+                    );
+
+                    container.style.display =
+                        "none";
+
+                };
+
+            list.appendChild(
+                button
+            );
+
+        }
+    );
+
+}
+
+
+function clearSearchHistory() {
+
+    localStorage.removeItem(
+        "chatsapp_recent_searches"
+    );
+
+    renderRecentSearches();
+
+}
+
+
+function clearUserSearch() {
+
+    const input =
+        document.getElementById(
+            "userSearchInput"
+        );
+
+    if (!input) return;
+
+    input.value = "";
+
+    const clearButton =
+        document.getElementById(
+            "clearSearchButton"
+        );
+
+    if (clearButton) {
+
+        clearButton.style.display =
+            "none";
+
+    }
+
+    const results =
+        document.getElementById(
+            "searchResults"
+        );
+
+    const noResults =
+        document.getElementById(
+            "noResults"
+        );
+
+    const resultText =
+        document.getElementById(
+            "searchResultText"
+        );
+
+    if (results) {
+        results.innerHTML = "";
+    }
+
+    if (noResults) {
+        noResults.style.display =
+            "none";
+    }
+
+    if (resultText) {
+
+        resultText.innerText =
+            "Start typing to find users";
+
+    }
+
+    renderRecentSearches();
+
+    input.focus();
+
+}
 
 
 /* =========================================================
@@ -5797,53 +7498,65 @@ function openProfile() {
 
 async function logout() {
 
-    await setProfileOnline(
-        false
-    );
+    await setProfileOnline(false);
 
     await supabaseClient
         .auth
         .signOut();
 
-    currentUsername =
-        "";
+    currentUsername = "";
 
-    if(chatChannel) {
+    if (chatChannel) {
 
         await supabaseClient
             .removeChannel(
                 chatChannel
             );
 
-        chatChannel =
-            null;
+        chatChannel = null;
 
     }
 
-    document.getElementById(
-        "app"
-    ).style.display =
-        "none";
+    const app =
+        document.getElementById("app");
 
-    document.getElementById(
-        "authScreen"
-    ).style.display =
-        "flex";
+    const authScreen =
+        document.getElementById(
+            "authScreen"
+        );
 
-    document.getElementById(
-        "username"
-    ).value =
-        "";
+    if (app) {
 
-    document.getElementById(
-        "password"
-    ).value =
-        "";
+        app.style.display =
+            "none";
 
-    document.getElementById(
-        "confirmPassword"
-    ).value =
-        "";
+    }
+
+    if (authScreen) {
+
+        authScreen.style.display =
+            "flex";
+
+    }
+
+    const username =
+        document.getElementById(
+            "username"
+        );
+
+    const password =
+        document.getElementById(
+            "password"
+        );
+
+    const confirm =
+        document.getElementById(
+            "confirmPassword"
+        );
+
+    if (username) username.value = "";
+    if (password) password.value = "";
+    if (confirm) confirm.value = "";
 
     clearMessage();
 
@@ -5858,29 +7571,53 @@ function openGlobalChat() {
 
     hideAllPages();
 
-    document.getElementById(
-        "globalChat"
-    ).style.display =
-        "block";
+    const chat =
+        document.getElementById(
+            "globalChat"
+        );
+
+    if (chat) {
+
+        chat.style.display =
+            "block";
+
+    }
 
     setActiveNav(
         "Global Chat"
     );
 
-    document.getElementById(
-        "usernameBox"
-    ).style.display =
-        "block";
+    const usernameBox =
+        document.getElementById(
+            "usernameBox"
+        );
 
-    document.getElementById(
-        "chatArea"
-    ).style.display =
-        "none";
+    const chatArea =
+        document.getElementById(
+            "chatArea"
+        );
 
-    document.getElementById(
-        "chatUsername"
-    ).value =
-        currentUsername;
+    const chatUsername =
+        document.getElementById(
+            "chatUsername"
+        );
+
+    if (usernameBox) {
+        usernameBox.style.display =
+            "block";
+    }
+
+    if (chatArea) {
+        chatArea.style.display =
+            "none";
+    }
+
+    if (chatUsername) {
+
+        chatUsername.value =
+            currentUsername;
+
+    }
 
     updateOnlineCount();
 
@@ -5889,14 +7626,17 @@ function openGlobalChat() {
 
 async function joinGlobalChat() {
 
-    const username =
+    const input =
         document.getElementById(
             "chatUsername"
-        )
-        .value
-        .trim();
+        );
 
-    if(username === "") {
+    if (!input) return;
+
+    const username =
+        input.value.trim();
+
+    if (username === "") {
 
         alert(
             "Please enter a username."
@@ -5906,7 +7646,7 @@ async function joinGlobalChat() {
 
     }
 
-    if(
+    if (
         !/^[a-zA-Z0-9_]{3,20}$/.test(
             username
         )
@@ -5923,15 +7663,29 @@ async function joinGlobalChat() {
     currentUsername =
         username;
 
-    document.getElementById(
-        "usernameBox"
-    ).style.display =
-        "none";
+    const usernameBox =
+        document.getElementById(
+            "usernameBox"
+        );
 
-    document.getElementById(
-        "chatArea"
-    ).style.display =
-        "block";
+    const chatArea =
+        document.getElementById(
+            "chatArea"
+        );
+
+    if (usernameBox) {
+
+        usernameBox.style.display =
+            "none";
+
+    }
+
+    if (chatArea) {
+
+        chatArea.style.display =
+            "block";
+
+    }
 
     await loadMessages();
 
@@ -5954,11 +7708,12 @@ async function loadMessages() {
             .order(
                 "created_at",
                 {
-                    ascending:true
+                    ascending:
+                        true
                 }
             );
 
-    if(error) {
+    if (error) {
 
         console.error(
             "Could not load messages:",
@@ -5974,8 +7729,9 @@ async function loadMessages() {
             "messages"
         );
 
-    box.innerHTML =
-        "";
+    if (!box) return;
+
+    box.innerHTML = "";
 
     (data || []).forEach(
         message => {
@@ -6003,6 +7759,8 @@ function displayMessage(
         document.getElementById(
             "messages"
         );
+
+    if (!box) return;
 
     const item =
         document.createElement(
@@ -6041,11 +7799,21 @@ async function sendGlobalMessage() {
             "chatMessage"
         );
 
+    if (!input) return;
+
     const text =
         input.value.trim();
 
-    if(text === "") {
+    if (text === "") return;
+
+    if (!currentUsername) {
+
+        alert(
+            "Please join Global Chat first."
+        );
+
         return;
+
     }
 
     const {
@@ -6063,9 +7831,10 @@ async function sendGlobalMessage() {
 
             });
 
-    if(error) {
+    if (error) {
 
         console.error(
+            "Global message error:",
             error
         );
 
@@ -6078,15 +7847,14 @@ async function sendGlobalMessage() {
 
     }
 
-    input.value =
-        "";
+    input.value = "";
 
 }
 
 
 function subscribeToMessages() {
 
-    if(chatChannel) {
+    if (chatChannel) {
 
         supabaseClient
             .removeChannel(
@@ -6130,16 +7898,23 @@ function subscribeToMessages() {
 
 function updateOnlineCount() {
 
-    document.getElementById(
-        "onlineCount"
-    ).innerText =
-        "🟢 Global Chat";
+    const onlineCount =
+        document.getElementById(
+            "onlineCount"
+        );
+
+    if (onlineCount) {
+
+        onlineCount.innerText =
+            "🟢 Global Chat";
+
+    }
 
 }
 
 
 /* =========================================================
-   SECURITY
+   SECURITY HELPERS
 ========================================================= */
 
 function escapeHTML(text) {
@@ -6180,17 +7955,31 @@ document.addEventListener(
     "keydown",
     function(event) {
 
-        if(event.key !== "Enter") {
+        if (
+            event.key === "Escape"
+        ) {
+
+            closeStrangerEvent();
+
+            closeProfilePreview();
+
+            return;
+
+        }
+
+        if (
+            event.key !== "Enter"
+        ) {
             return;
         }
 
         const active =
             document.activeElement;
 
-        if(
+        if (
             active &&
             active.id ===
-            "chatMessage"
+                "chatMessage"
         ) {
 
             event.preventDefault();
@@ -6201,17 +7990,12 @@ document.addEventListener(
 
         }
 
-        if(
+        if (
             active &&
             (
-                active.id ===
-                "username" ||
-
-                active.id ===
-                "password" ||
-
-                active.id ===
-                "confirmPassword"
+                active.id === "username" ||
+                active.id === "password" ||
+                active.id === "confirmPassword"
             )
         ) {
 
@@ -6220,14 +8004,6 @@ document.addEventListener(
             handleAuth();
 
             return;
-
-        }
-
-        if(
-            event.key === "Escape"
-        ) {
-
-            closeStrangerEvent();
 
         }
 
@@ -6242,11 +8018,9 @@ document.addEventListener(
 setInterval(
     function() {
 
-        if(currentUsername) {
+        if (currentUsername) {
 
-            setProfileOnline(
-                true
-            );
+            setProfileOnline(true);
 
         }
 
@@ -6259,11 +8033,9 @@ window.addEventListener(
     "beforeunload",
     function() {
 
-        if(currentUsername) {
+        if (currentUsername) {
 
-            setProfileOnline(
-                false
-            );
+            setProfileOnline(false);
 
         }
 
@@ -6290,11 +8062,11 @@ window.addEventListener(
 
 <script>
 
-/* =========================================================
+/* =======================================================
    SERVICE WORKER
-========================================================= */
+======================================================= */
 
-if(
+if (
     "serviceWorker" in navigator
 ) {
 
@@ -6335,5 +8107,4 @@ if(
 </script>
 
 </body>
-
-</html>
+</html> 
