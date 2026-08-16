@@ -1705,473 +1705,499 @@ input:focus {
             COMMUNICATION
         </div>
 
-        <button
-            class="nav-btn active"
-            onclick="showHome()"
-        >
-            <span class="nav-icon">⌂</span>
-            <span>Home</span>
-        </button>
+       <button
+    class="nav-btn active"
+    onclick="showHome()"
+>
+    <span class="nav-icon">⌂</span>
+    <span>Home</span>
+</button>
 
-        <button
-            class="nav-btn"
-            onclick="openUserSearch()"
-        >
-            <span class="nav-icon">🔎</span>
-            <span>Find Users</span>
-        </button>
+<button
+    class="nav-btn"
+    onclick="openUserSearch()"
+>
+    <span class="nav-icon">🔎</span>
+    <span>Find Users</span>
+</button>
 
-        <button
-            class="nav-btn"
-            onclick="openGlobalChat()"
-        >
-            <span class="nav-icon">🌎</span>
-            <span>Global Chat</span>
-        </button>
+<button
+    class="nav-btn"
+    onclick="openGlobalChat()"
+>
+    <span class="nav-icon">🌎</span>
+    <span>Global Chat</span>
+</button>
 
-        <button
-            class="nav-btn"
-            onclick="openPrivateChats()"
-        >
-            <span class="nav-icon">💬</span>
-            <span>Private Chats</span>
-        </button>
+<button
+    class="nav-btn"
+    onclick="openPrivateChats()"
+>
+    <span class="nav-icon">💬</span>
+    <span>Private Chats</span>
+</button>
 
-        <button
-            class="nav-btn"
-            onclick="openMail()"
-        >
-            <span class="nav-icon">✉</span>
-            <span>Mail</span>
-        </button>
+<button
+    class="nav-btn"
+    onclick="openMail()"
+>
+    <span class="nav-icon">✉</span>
+    <span>Mail</span>
+</button>
 
-        <button
-            class="nav-btn"
-            onclick="openGroupChat()"
-        >
-            <span class="nav-icon">👥</span>
-            <span>Group Chats</span>
-        </button>
+<button
+    class="nav-btn"
+    onclick="openGroupChat()"
+>
+    <span class="nav-icon">👥</span>
+    <span>Group Chats</span>
+</button>
 
-        <button
-            class="nav-btn"
-            onclick="openCalls()"
-        >
-            <span class="nav-icon">📞</span>
-            <span>Calls (Work-In-Progress)</span>
-        </button>
+<!-- GROUP BATTLES -->
+<button
+    class="nav-btn"
+    onclick="window.location.href='GroupBattle.html'"
+>
+    <span class="nav-icon">🏆</span>
+    <span>Group Battles</span>
+</button>
 
-        <div class="nav-title">
-            ACCOUNT
-        </div>
+<button
+    class="nav-btn"
+    onclick="openCalls()"
+>
+    <span class="nav-icon">📞</span>
+    <span>Calls (Work-In-Progress)</span>
+</button>
 
-        <button
-            class="nav-btn"
-            onclick="openProfile()"
-        >
-            <span class="nav-icon">●</span>
-            <span>My Profile</span>
-        </button>
+<div class="nav-title">
+    ACCOUNT
+</div>
 
-        <button
-            class="nav-btn"
-            onclick="logout()"
-        >
-            <span class="nav-icon">↪</span>
-            <span>Log Out</span>
-        </button>
+<button
+    class="nav-btn"
+    onclick="openProfile()"
+>
+    <span class="nav-icon">●</span>
+    <span>My Profile</span>
+</button>
 
-        <div class="profile">
+<button
+    class="nav-btn"
+    onclick="logout()"
+>
+    <span class="nav-icon">↪</span>
+    <span>Log Out</span>
+</button>
+
+<div class="profile">
+
+    <div
+        class="profile-name"
+        id="profileName"
+    >
+        User
+    </div>
+
+    <div class="profile-status">
+        ● Online
+    </div>
+
+</div>
+
+</aside>
+
+<main class="main">
+
+    <!-- =========================================
+         HOME
+    ========================================= -->
+
+    <div id="homePage">
+
+        <div class="topbar">
+
+            <div>
+
+                <h1>
+                    Welcome back 👋
+                </h1>
+
+                <p>
+                    What would you like to do?
+                </p>
+
+            </div>
 
             <div
-                class="profile-name"
-                id="profileName"
+                class="avatar"
+                id="avatar"
             >
-                User
-            </div>
-
-            <div class="profile-status">
-                ● Online
+                U
             </div>
 
         </div>
 
-    </aside>
+        <div class="cards">
 
-    <main class="main">
-
-        <!-- =========================================
-             HOME
-        ========================================= -->
-
-        <div id="homePage">
-
-            <div class="topbar">
-
-                <div>
-
-                    <h1>
-                        Welcome back 👋
-                    </h1>
-
-                    <p>
-                        What would you like to do?
-                    </p>
-
-                </div>
-
-                <div
-                    class="avatar"
-                    id="avatar"
-                >
-                    U
-                </div>
-
-            </div>
-
-            <div class="cards">
-
-                <div
-                    class="card"
-                    onclick="openUserSearch()"
-                >
-                    <div class="card-icon">🔎</div>
-
-                    <h2>
-                        Find Users
-                    </h2>
-
-                    <p>
-                        Search for people on ChatsApp.
-                    </p>
-
-                </div>
-
-                <div
-                    class="card"
-                    onclick="openGlobalChat()"
-                >
-                    <div class="card-icon">🌎</div>
-
-                    <h2>
-                        Global Chat
-                    </h2>
-
-                    <p>
-                        Talk with everyone on ChatsApp.
-                    </p>
-
-                </div>
-
-                <div
-                    class="card"
-                    onclick="openPrivateChats()"
-                >
-                    <div class="card-icon">💬</div>
-
-                    <h2>
-                        Private Chats
-                    </h2>
-
-                    <p>
-                        Message people using their username.
-                    </p>
-
-                </div>
-
-                <div
-                    class="card"
-                    onclick="openMail()"
-                >
-                    <div class="card-icon">✉️</div>
-
-                    <h2>
-                        Mail
-                    </h2>
-
-                    <p>
-                        Send and receive longer messages.
-                    </p>
-
-                </div>
-
-                <div
-                    class="card"
-                    onclick="openGroupChat()"
-                >
-                    <div class="card-icon">👥</div>
-
-                    <h2>
-                        Group Chats
-                    </h2>
-
-                    <p>
-                        Create and chat with multiple people.
-                    </p>
-
-                </div>
-
-                <div
-                    class="card"
-                    onclick="openCalls()"
-                >
-                    <div class="card-icon">📞</div>
-
-                    <h2>
-                        Calls (Work in Progress)
-                    </h2>
-
-                    <p>
-                        Call your friends on ChatsApp.
-                    </p>
-
-                </div>
-
-                <div
-                    class="card"
-                    onclick="openProfile()"
-                >
-                    <div class="card-icon">👤</div>
-
-                    <h2>
-                        Your Profile
-                    </h2>
-
-                    <p>
-                        Manage your ChatsApp identity.
-                    </p>
-
-                </div>
-
-            </div>
-
-            <div class="welcome">
+            <div
+                class="card"
+                onclick="openUserSearch()"
+            >
+                <div class="card-icon">🔎</div>
 
                 <h2>
-                    ChatsApp
+                    Find Users
                 </h2>
 
                 <p>
-                    A new place to chat, connect and keep in touch.
+                    Search for people on ChatsApp.
+                </p>
+
+            </div>
+
+            <div
+                class="card"
+                onclick="openGlobalChat()"
+            >
+                <div class="card-icon">🌎</div>
+
+                <h2>
+                    Global Chat
+                </h2>
+
+                <p>
+                    Talk with everyone on ChatsApp.
+                </p>
+
+            </div>
+
+            <div
+                class="card"
+                onclick="openPrivateChats()"
+            >
+                <div class="card-icon">💬</div>
+
+                <h2>
+                    Private Chats
+                </h2>
+
+                <p>
+                    Message people using their username.
+                </p>
+
+            </div>
+
+            <div
+                class="card"
+                onclick="openMail()"
+            >
+                <div class="card-icon">✉️</div>
+
+                <h2>
+                    Mail
+                </h2>
+
+                <p>
+                    Send and receive longer messages.
+                </p>
+
+            </div>
+
+            <div
+                class="card"
+                onclick="openGroupChat()"
+            >
+                <div class="card-icon">👥</div>
+
+                <h2>
+                    Group Chats
+                </h2>
+
+                <p>
+                    Create and chat with multiple people.
+                </p>
+
+            </div>
+
+            <!-- GROUP BATTLES -->
+            <div
+                class="card"
+                onclick="window.location.href='GroupBattle.html'"
+            >
+                <div class="card-icon">🏆</div>
+
+                <h2>
+                    Group Battles
+                </h2>
+
+                <p>
+                    Battle other groups and prove who types fastest.
+                </p>
+
+            </div>
+
+            <div
+                class="card"
+                onclick="openCalls()"
+            >
+                <div class="card-icon">📞</div>
+
+                <h2>
+                    Calls (Work in Progress)
+                </h2>
+
+                <p>
+                    Call your friends on ChatsApp.
+                </p>
+
+            </div>
+
+            <div
+                class="card"
+                onclick="openProfile()"
+            >
+                <div class="card-icon">👤</div>
+
+                <h2>
+                    Your Profile
+                </h2>
+
+                <p>
+                    Manage your ChatsApp identity.
                 </p>
 
             </div>
 
         </div>
 
-        <!-- =========================================
-             USER SEARCH
-        ========================================= -->
+        <div class="welcome">
 
-        <div
-            id="userSearchPage"
-            class="user-search-page"
-        >
+            <h2>
+                ChatsApp
+            </h2>
 
-            <div class="search-header">
+            <p>
+                A new place to chat, connect and keep in touch.
+            </p>
 
-                <div>
+        </div>
 
-                    <h1>
-                        🔎 Find Users
-                    </h1>
+    </div>
 
-                    <p>
-                        Search for people on ChatsApp.
-                    </p>
+    <!-- =========================================
+         USER SEARCH
+    ========================================= -->
 
-                </div>
+    <div
+        id="userSearchPage"
+        class="user-search-page"
+    >
 
-                <button
-                    class="search-back"
-                    onclick="showHome()"
-                >
-                    ← Home
-                </button>
+        <div class="search-header">
 
-            </div>
+            <div>
 
-            <div class="search-box-wrap">
+                <h1>
+                    🔎 Find Users
+                </h1>
 
-                <div class="search-icon">
-                    🔎
-                </div>
-
-                <input
-                    id="userSearchInput"
-                    type="text"
-                    placeholder="Search usernames..."
-                    autocomplete="off"
-                    maxlength="20"
-                >
-
-                <button
-                    id="clearSearchButton"
-                    class="clear-search"
-                    onclick="clearUserSearch()"
-                >
-                    ×
-                </button>
+                <p>
+                    Search for people on ChatsApp.
+                </p>
 
             </div>
 
-            <div
-                id="recentSearches"
-                class="recent-searches"
+            <button
+                class="search-back"
+                onclick="showHome()"
+            >
+                ← Home
+            </button>
+
+        </div>
+
+        <div class="search-box-wrap">
+
+            <div class="search-icon">
+                🔎
+            </div>
+
+            <input
+                id="userSearchInput"
+                type="text"
+                placeholder="Search usernames..."
+                autocomplete="off"
+                maxlength="20"
             >
 
-                <div class="recent-top">
+            <button
+                id="clearSearchButton"
+                class="clear-search"
+                onclick="clearUserSearch()"
+            >
+                ×
+            </button>
 
-                    <h3>
-                        🕘 Recent searches
-                    </h3>
+        </div>
 
-                    <button
-                        class="clear-history"
-                        onclick="clearSearchHistory()"
-                    >
-                        Clear history
-                    </button>
+        <div
+            id="recentSearches"
+            class="recent-searches"
+        >
 
-                </div>
+            <div class="recent-top">
 
-                <div
-                    id="recentList"
-                    class="recent-list"
-                ></div>
+                <h3>
+                    🕘 Recent searches
+                </h3>
 
-            </div>
-
-            <div class="search-info">
-
-                <span id="searchResultText">
-                    Start typing to find users
-                </span>
-
-                <span id="searchLoading"></span>
+                <button
+                    class="clear-history"
+                    onclick="clearSearchHistory()"
+                >
+                    Clear history
+                </button>
 
             </div>
 
             <div
-                id="searchResults"
-                class="search-results"
+                id="recentList"
+                class="recent-list"
             ></div>
 
-            <div
-                id="noResults"
-                class="no-results"
-            >
+        </div>
 
-                <div class="no-results-icon">
-                    🕵️
-                </div>
+        <div class="search-info">
 
-                <h2>
-                    No users found
-                </h2>
+            <span id="searchResultText">
+                Start typing to find users
+            </span>
 
-                <p>
-                    Try a different username.
-                </p>
-
-            </div>
+            <span id="searchLoading"></span>
 
         </div>
 
-        <!-- =========================================
-             GLOBAL CHAT
-        ========================================= -->
+        <div
+            id="searchResults"
+            class="search-results"
+        ></div>
 
         <div
-            id="globalChat"
-            class="global-chat"
+            id="noResults"
+            class="no-results"
         >
 
-            <div class="chat-header">
+            <div class="no-results-icon">
+                🕵️
+            </div>
 
-                <div>
+            <h2>
+                No users found
+            </h2>
 
-                    <h1>
-                        🌎 Global Chat
-                    </h1>
+            <p>
+                Try a different username.
+            </p>
 
-                    <p id="onlineCount">
-                        🟢 Global Chat
-                    </p>
+        </div>
 
-                </div>
+    </div>
 
-                <button
-                    class="chat-back"
-                    onclick="showHome()"
-                >
-                    ← Home
-                </button>
+    <!-- =========================================
+         GLOBAL CHAT
+    ========================================= -->
+
+    <div
+        id="globalChat"
+        class="global-chat"
+    >
+
+        <div class="chat-header">
+
+            <div>
+
+                <h1>
+                    🌎 Global Chat
+                </h1>
+
+                <p id="onlineCount">
+                    🟢 Global Chat
+                </p>
 
             </div>
 
-            <div
-                id="usernameBox"
-                class="username-box"
+            <button
+                class="chat-back"
+                onclick="showHome()"
+            >
+                ← Home
+            </button>
+
+        </div>
+
+        <div
+            id="usernameBox"
+            class="username-box"
+        >
+
+            <h2>
+                Choose your username
+            </h2>
+
+            <p>
+                Your main ChatsApp username will be used.
+            </p>
+
+            <input
+                type="text"
+                id="chatUsername"
+                placeholder="Enter username..."
+                maxlength="20"
             >
 
-                <h2>
-                    Choose your username
-                </h2>
+            <button
+                class="primary"
+                onclick="joinGlobalChat()"
+            >
+                Join Global Chat
+            </button>
 
-                <p>
-                    Your main ChatsApp username will be used.
-                </p>
+        </div>
+
+        <div
+            id="chatArea"
+            style="display:none;"
+        >
+
+            <div
+                id="messages"
+                class="messages"
+            ></div>
+
+            <div class="chat-input">
 
                 <input
                     type="text"
-                    id="chatUsername"
-                    placeholder="Enter username..."
-                    maxlength="20"
+                    id="chatMessage"
+                    placeholder="Type a message..."
+                    maxlength="500"
                 >
 
                 <button
                     class="primary"
-                    onclick="joinGlobalChat()"
+                    onclick="sendGlobalMessage()"
                 >
-                    Join Global Chat
+                    Send
                 </button>
-
-            </div>
-
-            <div
-                id="chatArea"
-                style="display:none;"
-            >
-
-                <div
-                    id="messages"
-                    class="messages"
-                ></div>
-
-                <div class="chat-input">
-
-                    <input
-                        type="text"
-                        id="chatMessage"
-                        placeholder="Type a message..."
-                        maxlength="500"
-                    >
-
-                    <button
-                        class="primary"
-                        onclick="sendGlobalMessage()"
-                    >
-                        Send
-                    </button>
-
-                </div>
 
             </div>
 
         </div>
 
-    </main>
+    </div>
+
+</main>
 
 </div>
 
@@ -2233,7 +2259,6 @@ input:focus {
 </div>
 
 <script>
-
 /* =========================================
    SUPABASE
 ========================================= */
