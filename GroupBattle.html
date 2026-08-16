@@ -1,0 +1,2630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Group Battles — ChatsApp</title>
+
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Inter, Arial, Helvetica, sans-serif;
+    background:
+        radial-gradient(circle at 15% 10%, rgba(139,92,246,.22), transparent 30%),
+        radial-gradient(circle at 85% 40%, rgba(168,85,247,.14), transparent 30%),
+        #07040f;
+    color: white;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+
+/* =========================
+   BACKGROUND
+========================= */
+
+.background {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    animation: floatOrb 8s ease-in-out infinite;
+}
+
+.orb.one {
+    width: 350px;
+    height: 350px;
+    background: #7c3aed;
+    top: -120px;
+    left: -100px;
+    opacity: .22;
+}
+
+.orb.two {
+    width: 300px;
+    height: 300px;
+    background: #a855f7;
+    right: -100px;
+    top: 45%;
+    opacity: .16;
+    animation-delay: 2s;
+}
+
+.orb.three {
+    width: 250px;
+    height: 250px;
+    background: #4f46e5;
+    bottom: -100px;
+    left: 35%;
+    opacity: .15;
+    animation-delay: 4s;
+}
+
+@keyframes floatOrb {
+    0%,100% {
+        transform: translate(0,0);
+    }
+
+    50% {
+        transform: translate(30px,-35px);
+    }
+}
+
+
+/* =========================
+   NAVBAR
+========================= */
+
+nav {
+    position: sticky;
+    top: 0;
+    height: 72px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 6%;
+
+    background: rgba(7,4,15,.72);
+    backdrop-filter: blur(25px);
+
+    border-bottom: 1px solid rgba(255,255,255,.07);
+
+    z-index: 100;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    font-size: 20px;
+    font-weight: 850;
+}
+
+.logo {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 13px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 25px;
+    font-weight: 900;
+
+    background:
+        linear-gradient(
+            135deg,
+            #c084fc,
+            #7c3aed 55%,
+            #4c1d95
+        );
+
+    box-shadow:
+        0 10px 35px rgba(124,58,237,.5),
+        inset 0 2px 5px rgba(255,255,255,.35);
+}
+
+.back {
+    color: #b9b1c8;
+    text-decoration: none;
+    font-size: 14px;
+    transition: .25s;
+}
+
+.back:hover {
+    color: white;
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    text-align: center;
+    padding: 90px 20px 55px;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 9px 16px;
+
+    border-radius: 999px;
+
+    background: rgba(139,92,246,.12);
+    border: 1px solid rgba(167,139,250,.28);
+
+    color: #c4b5fd;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    box-shadow: 0 0 30px rgba(124,58,237,.12);
+}
+
+.hero h1 {
+    margin-top: 25px;
+
+    font-size: clamp(50px, 8vw, 92px);
+
+    line-height: .95;
+
+    background:
+        linear-gradient(
+            100deg,
+            #ffffff,
+            #ddd6fe,
+            #a78bfa,
+            #ffffff
+        );
+
+    background-size: 250%;
+
+    -webkit-background-clip: text;
+    color: transparent;
+
+    animation: gradientMove 5s linear infinite;
+}
+
+@keyframes gradientMove {
+    0% {
+        background-position: 0%;
+    }
+
+    50% {
+        background-position: 100%;
+    }
+
+    100% {
+        background-position: 0%;
+    }
+}
+
+.hero p {
+    max-width: 650px;
+    margin: 25px auto 0;
+
+    color: #a9a0b5;
+
+    font-size: 19px;
+    line-height: 1.7;
+}
+
+
+/* =========================
+   PLAYER
+========================= */
+
+.player-card {
+    width: min(1050px,92%);
+    margin: 0 auto 25px;
+
+    padding: 18px 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.07),
+            rgba(255,255,255,.025)
+        );
+
+    border: 1px solid rgba(255,255,255,.09);
+}
+
+.player-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.player-avatar {
+    width: 43px;
+    height: 43px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #8b5cf6,
+            #4c1d95
+        );
+
+    font-weight: 900;
+}
+
+.player-name {
+    font-weight: 800;
+}
+
+.player-label {
+    color: #817788;
+    font-size: 12px;
+    margin-top: 3px;
+}
+
+.connection {
+    color: #86efac;
+    font-size: 12px;
+}
+
+
+/* =========================
+   COUNTDOWN
+========================= */
+
+.countdown-card {
+    width: min(900px, 92%);
+
+    margin: 25px auto 45px;
+
+    padding: 25px;
+
+    border-radius: 25px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.07),
+            rgba(255,255,255,.025)
+        );
+
+    border: 1px solid rgba(255,255,255,.09);
+
+    box-shadow:
+        0 30px 90px rgba(0,0,0,.35),
+        0 0 70px rgba(124,58,237,.08);
+}
+
+.countdown-title {
+    color: #938a9f;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+.countdown {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+
+    margin-top: 15px;
+}
+
+.time-box {
+    min-width: 85px;
+    padding: 15px;
+
+    border-radius: 16px;
+
+    background: rgba(255,255,255,.05);
+
+    text-align: center;
+}
+
+.time-box strong {
+    display: block;
+    font-size: 30px;
+}
+
+.time-box span {
+    color: #83798d;
+    font-size: 11px;
+}
+
+
+/* =========================
+   ROUND TRACKER
+========================= */
+
+.rounds {
+    width: min(1050px, 92%);
+    margin: auto;
+
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+
+    gap: 12px;
+}
+
+.round {
+    padding: 18px;
+
+    border-radius: 18px;
+
+    background: rgba(255,255,255,.035);
+
+    border: 1px solid rgba(255,255,255,.07);
+
+    text-align: center;
+
+    transition: .3s;
+}
+
+.round.active {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(139,92,246,.25),
+            rgba(76,29,149,.12)
+        );
+
+    border-color: rgba(167,139,250,.55);
+
+    box-shadow:
+        0 0 35px rgba(124,58,237,.15);
+}
+
+.round.completed {
+    border-color: rgba(34,197,94,.35);
+    background: rgba(34,197,94,.08);
+}
+
+.round-number {
+    font-size: 12px;
+    color: #8f849b;
+}
+
+.round-name {
+    margin-top: 5px;
+    font-weight: 800;
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+.main {
+    width: min(1050px, 92%);
+    margin: 55px auto 100px;
+}
+
+.panel {
+    padding: 35px;
+
+    border-radius: 28px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.07),
+            rgba(255,255,255,.025)
+        );
+
+    border: 1px solid rgba(255,255,255,.09);
+
+    box-shadow:
+        0 35px 100px rgba(0,0,0,.35);
+}
+
+.panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 30px;
+}
+
+.panel-header h2 {
+    font-size: 28px;
+}
+
+.status {
+    padding: 7px 12px;
+
+    border-radius: 999px;
+
+    background: rgba(34,197,94,.1);
+
+    border: 1px solid rgba(34,197,94,.25);
+
+    color: #86efac;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+/* =========================
+   DIFFICULTY
+========================= */
+
+.difficulty {
+    display: inline-flex;
+    padding: 7px 12px;
+    margin-bottom: 15px;
+
+    border-radius: 999px;
+
+    background: rgba(139,92,246,.12);
+    color: #c4b5fd;
+
+    border: 1px solid rgba(167,139,250,.2);
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+
+/* =========================
+   TYPING
+========================= */
+
+.passage {
+    padding: 25px;
+
+    border-radius: 20px;
+
+    background: #0d0915;
+
+    border: 1px solid rgba(255,255,255,.07);
+
+    color: #bdb4c8;
+
+    font-size: 20px;
+
+    line-height: 1.9;
+
+    margin-bottom: 22px;
+
+    user-select: none;
+}
+
+.word {
+    transition: .1s;
+}
+
+.word.correct {
+    color: #86efac;
+}
+
+.word.incorrect {
+    color: #f87171;
+    text-decoration: underline;
+}
+
+.word.current {
+    color: white;
+
+    background: rgba(139,92,246,.25);
+
+    border-radius: 5px;
+
+    padding: 2px 3px;
+}
+
+textarea {
+    width: 100%;
+
+    min-height: 155px;
+
+    resize: vertical;
+
+    padding: 20px;
+
+    border-radius: 18px;
+
+    background: #0a0710;
+
+    border: 1px solid rgba(255,255,255,.1);
+
+    color: white;
+
+    font-size: 18px;
+
+    line-height: 1.6;
+
+    outline: none;
+
+    transition: .25s;
+}
+
+textarea:focus {
+    border-color: #8b5cf6;
+
+    box-shadow:
+        0 0 30px rgba(124,58,237,.15);
+}
+
+textarea:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+
+/* =========================
+   STATS
+========================= */
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+
+    gap: 15px;
+
+    margin-top: 20px;
+}
+
+.stat {
+    padding: 20px;
+
+    border-radius: 18px;
+
+    background: rgba(255,255,255,.04);
+
+    text-align: center;
+}
+
+.stat strong {
+    display: block;
+
+    font-size: 32px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff,
+            #a78bfa
+        );
+
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.stat span {
+    color: #817788;
+    font-size: 12px;
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+.start-button {
+    width: 100%;
+
+    margin-top: 25px;
+
+    padding: 17px;
+
+    border: none;
+
+    border-radius: 16px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #8b5cf6,
+            #6d28d9
+        );
+
+    color: white;
+
+    font-size: 16px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition: .3s;
+
+    box-shadow:
+        0 15px 40px rgba(124,58,237,.25);
+}
+
+.start-button:hover:not(:disabled) {
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 20px 55px rgba(124,58,237,.4);
+}
+
+.start-button:disabled {
+    opacity: .65;
+    cursor: not-allowed;
+}
+
+
+/* =========================
+   LEADERBOARD
+========================= */
+
+.leaderboard {
+    margin-top: 30px;
+}
+
+.leaderboard-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 15px;
+}
+
+.live {
+    color: #86efac;
+    font-size: 11px;
+}
+
+.player-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 16px 18px;
+
+    margin-bottom: 10px;
+
+    border-radius: 15px;
+
+    background: rgba(255,255,255,.035);
+
+    border: 1px solid rgba(255,255,255,.05);
+
+    transition: .25s;
+}
+
+.player-row.me {
+    border-color: rgba(167,139,250,.45);
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(139,92,246,.13),
+            rgba(255,255,255,.035)
+        );
+}
+
+.player-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.rank {
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 9px;
+
+    background: rgba(139,92,246,.15);
+
+    color: #c4b5fd;
+
+    font-weight: 800;
+}
+
+.wpm {
+    font-weight: 800;
+    color: #c4b5fd;
+}
+
+.empty-board {
+    padding: 25px;
+    text-align: center;
+    color: #817788;
+}
+
+
+/* =========================
+   RESULT
+========================= */
+
+.result {
+    display: none;
+
+    margin-top: 30px;
+
+    padding: 35px;
+
+    border-radius: 25px;
+
+    text-align: center;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(124,58,237,.22),
+            transparent 65%
+        );
+
+    border: 1px solid rgba(167,139,250,.2);
+}
+
+.result.show {
+    display: block;
+    animation: resultIn .6s ease;
+}
+
+@keyframes resultIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.result-icon {
+    font-size: 65px;
+}
+
+.result h2 {
+    margin-top: 10px;
+    font-size: 38px;
+}
+
+.result p {
+    color: #a9a0b5;
+    margin-top: 10px;
+    line-height: 1.6;
+}
+
+.qualify {
+    color: #86efac !important;
+}
+
+.not-qualify {
+    color: #f87171 !important;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    text-align: center;
+
+    padding: 35px;
+
+    color: #62596d;
+
+    border-top:
+        1px solid rgba(255,255,255,.06);
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:700px) {
+
+    nav {
+        padding: 0 5%;
+    }
+
+    .hero {
+        padding-top: 65px;
+    }
+
+    .rounds {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .countdown {
+        flex-wrap: wrap;
+    }
+
+    .time-box {
+        min-width: 70px;
+    }
+
+    .panel {
+        padding: 22px;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .player-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .connection {
+        align-self: flex-start;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="background">
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+    <div class="orb three"></div>
+</div>
+
+
+<nav>
+
+    <div class="brand">
+        <div class="logo">C</div>
+        ChatsApp
+    </div>
+
+    <a href="index.html" class="back">
+        ← Back to ChatsApp
+    </a>
+
+</nav>
+
+
+<section class="hero">
+
+    <div class="badge">
+        🔥 EVERY MONDAY
+    </div>
+
+    <h1>
+        Group Battles
+    </h1>
+
+    <p>
+        One group. One challenge.
+        Hundreds of competitors.
+        Only one champion. 🏆
+    </p>
+
+</section>
+
+
+<!-- PLAYER -->
+
+<div class="player-card">
+
+    <div class="player-info">
+
+        <div class="player-avatar" id="playerAvatar">
+            ?
+        </div>
+
+        <div>
+
+            <div class="player-name" id="playerName">
+                Loading player...
+            </div>
+
+            <div class="player-label">
+                Your ChatsApp battle account
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="connection" id="connectionStatus">
+        ● Connecting...
+    </div>
+
+</div>
+
+
+<!-- COUNTDOWN -->
+
+<div class="countdown-card">
+
+    <div class="countdown-title">
+        Next Group Battle
+    </div>
+
+    <div class="countdown">
+
+        <div class="time-box">
+            <strong id="days">00</strong>
+            <span>DAYS</span>
+        </div>
+
+        <div class="time-box">
+            <strong id="hours">00</strong>
+            <span>HOURS</span>
+        </div>
+
+        <div class="time-box">
+            <strong id="minutes">00</strong>
+            <span>MINUTES</span>
+        </div>
+
+        <div class="time-box">
+            <strong id="seconds">00</strong>
+            <span>SECONDS</span>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ROUNDS -->
+
+<div class="rounds">
+
+    <div class="round active" id="roundCard1">
+        <div class="round-number">ROUND 1</div>
+        <div class="round-name">Qualifier ⚡</div>
+    </div>
+
+    <div class="round" id="roundCard2">
+        <div class="round-number">ROUND 2</div>
+        <div class="round-name">Speed 🔥</div>
+    </div>
+
+    <div class="round" id="roundCard3">
+        <div class="round-number">ROUND 3</div>
+        <div class="round-name">Elite 👑</div>
+    </div>
+
+    <div class="round" id="roundCard4">
+        <div class="round-number">FINAL</div>
+        <div class="round-name">Group VS Group 🏆</div>
+    </div>
+
+</div>
+
+
+<main class="main">
+
+    <div class="panel">
+
+        <div class="panel-header">
+
+            <h2 id="roundTitle">
+                Round 1 — Qualifier
+            </h2>
+
+            <div class="status" id="status">
+                ● READY
+            </div>
+
+        </div>
+
+
+        <div class="difficulty" id="difficulty">
+            ⚡ Easy
+        </div>
+
+
+        <div class="passage" id="passage"></div>
+
+
+        <textarea
+            id="typingInput"
+            placeholder="Click START ROUND, then type the words here..."
+            disabled></textarea>
+
+
+        <div class="stats">
+
+            <div class="stat">
+                <strong id="wpm">0</strong>
+                <span>WPM</span>
+            </div>
+
+            <div class="stat">
+                <strong id="accuracy">100%</strong>
+                <span>ACCURACY</span>
+            </div>
+
+            <div class="stat">
+                <strong id="timer">60</strong>
+                <span>SECONDS</span>
+            </div>
+
+        </div>
+
+
+        <button
+            class="start-button"
+            id="startButton">
+
+            ⚡ START ROUND
+
+        </button>
+
+
+        <!-- LIVE LEADERBOARD -->
+
+        <div class="leaderboard">
+
+            <div class="leaderboard-header">
+
+                <h3>
+                    🏆 Live Leaderboard
+                </h3>
+
+                <span class="live">
+                    ● LIVE
+                </span>
+
+            </div>
+
+            <div id="leaderboardList">
+
+                <div class="empty-board">
+                    Waiting for battlers...
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- RESULT -->
+
+        <div class="result" id="result">
+
+            <div class="result-icon" id="resultIcon">
+                🏆
+            </div>
+
+            <h2 id="resultTitle">
+                Round Complete
+            </h2>
+
+            <p id="resultText">
+                Your result will appear here.
+            </p>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<footer>
+
+    ChatsApp · Group Battles
+    <br>
+    Every Monday. One Champion.
+
+</footer>
+
+
+<script>
+
+/* =========================================================
+   SUPABASE CONFIG
+   =========================================================
+
+   PUT YOUR EXISTING CHATAPP SUPABASE VALUES HERE.
+
+   IMPORTANT:
+   Use the PUBLIC ANON KEY.
+   NEVER put the service_role key in this file.
+========================================================= */
+
+const SUPABASE_URL =
+    "PASTE_YOUR_SUPABASE_URL_HERE";
+
+const SUPABASE_ANON_KEY =
+    "PASTE_YOUR_SUPABASE_ANON_KEY_HERE";
+
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+
+
+/* =========================================================
+   BATTLE DATA
+========================================================= */
+
+const passages = {
+
+    1: [
+        "ChatsApp brings friends groups and conversations together in one place. Stay connected with the people you care about and challenge your friends to discover who can type the fastest.",
+        "Every great team starts with communication. Work together, stay focused and keep moving forward while you compete against other groups in the ultimate typing challenge.",
+        "The fastest typists are not always the people who type the hardest. They stay calm, watch the words carefully and keep a steady rhythm from the beginning until the timer reaches zero."
+    ],
+
+    2: [
+        "Technology connects people across the world in seconds. Great communication depends on speed accuracy patience and teamwork. A strong competitor knows when to move quickly and when to slow down to avoid mistakes.",
+        "The battle becomes harder when every second matters. Keep your eyes on the next word instead of looking back at mistakes. Stay focused maintain your rhythm and let your fingers follow the words naturally.",
+        "A championship typing performance requires concentration consistency and confidence. Every correct word moves your team closer to victory while every mistake costs valuable time during the competition."
+    ],
+
+    3: [
+        "Champions are created through practice patience precision and determination. When the pressure increases the strongest competitors remain focused on the words ahead and refuse to let a single mistake destroy their rhythm.",
+        "In a serious typing competition every character matters. Accuracy protects your score while speed pushes your performance higher. The perfect balance between these two skills separates excellent competitors from ordinary players.",
+        "The final challenge demands complete concentration. Read ahead type accurately control your rhythm and trust your practice. The clock continues moving whether you are ready or not so every second must be used wisely."
+    ],
+
+    4: [
+        "Only the strongest groups reach the final battle. Every competitor must prove that speed accuracy discipline and teamwork can survive under pressure. One group will rise above the others and claim the championship.",
+        "The final battle is where preparation becomes performance. Years of practice cannot replace concentration in the moment. Watch every word maintain perfect rhythm and keep typing until the final second disappears.",
+        "Two groups enter the final challenge with one goal. They must type faster and more accurately than their opponents while the clock counts down. When the final second ends only the strongest team remains."
+    ]
+
+};
+
+
+/* =========================================================
+   ROUND SETTINGS
+========================================================= */
+
+const roundSettings = {
+
+    1: {
+        time: 60,
+        qualify: 20,
+        difficulty: "⚡ Easy",
+        name: "Qualifier"
+    },
+
+    2: {
+        time: 60,
+        qualify: 35,
+        difficulty: "🔥 Hard",
+        name: "Speed"
+    },
+
+    3: {
+        time: 60,
+        qualify: 50,
+        difficulty: "👑 Elite",
+        name: "Elite"
+    },
+
+    4: {
+        time: 60,
+        qualify: 60,
+        difficulty: "🏆 Final",
+        name: "Group VS Group"
+    }
+
+};
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let currentRound = 1;
+
+let currentPassage = "";
+
+let currentWords = [];
+
+let timerInterval = null;
+
+let running = false;
+
+let remainingSeconds = 60;
+
+let startTime = null;
+
+let currentUser = null;
+
+let currentUsername = "Player";
+
+let channel = null;
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const input =
+    document.getElementById("typingInput");
+
+const startButton =
+    document.getElementById("startButton");
+
+const passageElement =
+    document.getElementById("passage");
+
+const wpmElement =
+    document.getElementById("wpm");
+
+const accuracyElement =
+    document.getElementById("accuracy");
+
+const timerElement =
+    document.getElementById("timer");
+
+const playerNameElement =
+    document.getElementById("playerName");
+
+const playerAvatarElement =
+    document.getElementById("playerAvatar");
+
+const connectionStatus =
+    document.getElementById("connectionStatus");
+
+const leaderboardList =
+    document.getElementById("leaderboardList");
+
+const resultElement =
+    document.getElementById("result");
+
+const resultIcon =
+    document.getElementById("resultIcon");
+
+const resultTitle =
+    document.getElementById("resultTitle");
+
+const resultText =
+    document.getElementById("resultText");
+
+const roundTitle =
+    document.getElementById("roundTitle");
+
+const difficultyElement =
+    document.getElementById("difficulty");
+
+const statusElement =
+    document.getElementById("status");
+
+
+/* =========================================================
+   RANDOM PASSAGE
+========================================================= */
+
+function choosePassage() {
+
+    const list =
+        passages[currentRound];
+
+    const randomIndex =
+        Math.floor(
+            Math.random() * list.length
+        );
+
+    return list[randomIndex];
+
+}
+
+
+/* =========================================================
+   RENDER PASSAGE WORDS
+========================================================= */
+
+function renderPassage() {
+
+    currentPassage =
+        choosePassage();
+
+    currentWords =
+        currentPassage.split(/\s+/);
+
+    passageElement.innerHTML =
+        currentWords.map(
+            (word,index) => {
+
+                return `
+                    <span
+                        class="word ${index === 0 ? "current" : ""}"
+                        data-index="${index}">
+                        ${escapeHTML(word)}
+                    </span>
+                `;
+
+            }
+        ).join(" ");
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(text) {
+
+    return text
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================================
+   LOGIN / USERNAME
+========================================================= */
+
+async function loadCurrentUser() {
+
+    try {
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+            .auth
+            .getSession();
+
+        if (error) {
+            throw error;
+        }
+
+        if (!data.session) {
+
+            currentUsername =
+                "Guest";
+
+            playerNameElement.textContent =
+                "Guest";
+
+            playerAvatarElement.textContent =
+                "?";
+
+            connectionStatus.textContent =
+                "● Not signed in";
+
+            connectionStatus.style.color =
+                "#fbbf24";
+
+            startButton.disabled = true;
+
+            startButton.textContent =
+                "🔐 SIGN IN TO BATTLE";
+
+            return;
+
+        }
+
+        currentUser =
+            data.session.user;
+
+        currentUsername =
+            getUsername(
+                currentUser
+            );
+
+        playerNameElement.textContent =
+            currentUsername;
+
+        playerAvatarElement.textContent =
+            currentUsername
+                .charAt(0)
+                .toUpperCase();
+
+        connectionStatus.textContent =
+            "● Connected";
+
+        connectionStatus.style.color =
+            "#86efac";
+
+        startButton.disabled =
+            false;
+
+    }
+
+    catch(error) {
+
+        console.error(
+            "Could not load user:",
+            error
+        );
+
+        connectionStatus.textContent =
+            "● Connection error";
+
+        connectionStatus.style.color =
+            "#f87171";
+
+    }
+
+}
+
+
+/* =========================================================
+   GET USERNAME
+========================================================= */
+
+function getUsername(user) {
+
+    const metadata =
+        user.user_metadata || {};
+
+    return (
+        metadata.username ||
+        metadata.user_name ||
+        metadata.display_name ||
+        metadata.full_name ||
+        metadata.name ||
+        user.email?.split("@")[0] ||
+        "Player"
+    );
+
+}
+
+
+/* =========================================================
+   COUNTDOWN
+========================================================= */
+
+function getNextMonday() {
+
+    const now =
+        new Date();
+
+    const next =
+        new Date(now);
+
+    const day =
+        now.getDay();
+
+    let daysUntil =
+        (8 - day) % 7;
+
+    if (daysUntil === 0) {
+        daysUntil = 7;
+    }
+
+    next.setDate(
+        now.getDate() + daysUntil
+    );
+
+    next.setHours(
+        18,
+        0,
+        0,
+        0
+    );
+
+    return next;
+
+}
+
+
+function updateCountdown() {
+
+    const target =
+        getNextMonday();
+
+    const now =
+        new Date();
+
+    const difference =
+        target - now;
+
+    const seconds =
+        Math.max(
+            0,
+            Math.floor(
+                difference / 1000
+            )
+        );
+
+    document.getElementById("days")
+        .textContent =
+        String(
+            Math.floor(
+                seconds / 86400
+            )
+        ).padStart(2,"0");
+
+    document.getElementById("hours")
+        .textContent =
+        String(
+            Math.floor(
+                seconds % 86400 / 3600
+            )
+        ).padStart(2,"0");
+
+    document.getElementById("minutes")
+        .textContent =
+        String(
+            Math.floor(
+                seconds % 3600 / 60
+            )
+        ).padStart(2,"0");
+
+    document.getElementById("seconds")
+        .textContent =
+        String(
+            seconds % 60
+        ).padStart(2,"0");
+
+}
+
+setInterval(
+    updateCountdown,
+    1000
+);
+
+updateCountdown();
+
+
+/* =========================================================
+   ROUND UI
+========================================================= */
+
+function updateRoundUI() {
+
+    const settings =
+        roundSettings[currentRound];
+
+    roundTitle.textContent =
+        `Round ${currentRound} — ${settings.name}`;
+
+    difficultyElement.textContent =
+        settings.difficulty;
+
+    timerElement.textContent =
+        settings.time;
+
+    document
+        .querySelectorAll(".round")
+        .forEach(
+            card => {
+
+                card.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+    const activeCard =
+        document.getElementById(
+            `roundCard${currentRound}`
+        );
+
+    if (activeCard) {
+
+        activeCard.classList.add(
+            "active"
+        );
+
+    }
+
+    renderPassage();
+
+}
+
+
+/* =========================================================
+   START ROUND
+========================================================= */
+
+startButton.addEventListener(
+    "click",
+    startRound
+);
+
+
+function startRound() {
+
+    if (!currentUser) {
+
+        alert(
+            "Please sign in to ChatsApp first! 🔐"
+        );
+
+        return;
+
+    }
+
+    if (running) {
+        return;
+    }
+
+    const settings =
+        roundSettings[currentRound];
+
+    renderPassage();
+
+    input.value = "";
+
+    input.disabled = false;
+
+    input.focus();
+
+    remainingSeconds =
+        settings.time;
+
+    timerElement.textContent =
+        remainingSeconds;
+
+    wpmElement.textContent =
+        "0";
+
+    accuracyElement.textContent =
+        "100%";
+
+    startTime =
+        Date.now();
+
+    running = true;
+
+    resultElement.classList.remove(
+        "show"
+    );
+
+    statusElement.textContent =
+        "● TYPING";
+
+    statusElement.style.color =
+        "#c4b5fd";
+
+    startButton.disabled =
+        true;
+
+    startButton.textContent =
+        "⌨️ TYPING...";
+
+    clearInterval(
+        timerInterval
+    );
+
+    timerInterval =
+        setInterval(
+            tick,
+            1000
+        );
+
+}
+
+
+/* =========================================================
+   TIMER
+========================================================= */
+
+function tick() {
+
+    if (!running) {
+        return;
+    }
+
+    remainingSeconds--;
+
+    timerElement.textContent =
+        Math.max(
+            0,
+            remainingSeconds
+        );
+
+    updateStats();
+
+    if (remainingSeconds <= 0) {
+
+        finishRound();
+
+    }
+
+}
+
+
+/* =========================================================
+   TYPING INPUT
+========================================================= */
+
+input.addEventListener(
+    "input",
+    updateStats
+);
+
+
+function updateStats() {
+
+    if (!running) {
+        return;
+    }
+
+    const typed =
+        input.value;
+
+    const elapsed =
+        Math.max(
+            1,
+            (Date.now() -
+            startTime) / 1000
+        );
+
+    const words =
+        typed
+            .trim()
+            .split(/\s+/)
+            .filter(Boolean);
+
+    const wordCount =
+        words.length;
+
+    const wpm =
+        Math.round(
+            wordCount /
+            (elapsed / 60)
+        );
+
+    wpmElement.textContent =
+        Number.isFinite(wpm)
+            ? wpm
+            : 0;
+
+
+    /* =========================
+       ACCURACY
+    ========================= */
+
+    let correctCharacters =
+        0;
+
+    const compareLength =
+        Math.min(
+            typed.length,
+            currentPassage.length
+        );
+
+    for (
+        let i = 0;
+        i < compareLength;
+        i++
+    ) {
+
+        if (
+            typed[i] ===
+            currentPassage[i]
+        ) {
+
+            correctCharacters++;
+
+        }
+
+    }
+
+    const accuracy =
+        typed.length === 0
+            ? 100
+            : Math.round(
+                correctCharacters /
+                typed.length *
+                100
+            );
+
+    accuracyElement.textContent =
+        accuracy + "%";
+
+
+    updateWordHighlight(
+        words
+    );
+
+}
+
+
+/* =========================================================
+   WORD HIGHLIGHT
+========================================================= */
+
+function updateWordHighlight(
+    typedWords
+) {
+
+    const wordElements =
+        passageElement
+            .querySelectorAll(
+                ".word"
+            );
+
+    wordElements.forEach(
+        (element,index) => {
+
+            element.classList.remove(
+                "correct",
+                "incorrect",
+                "current"
+            );
+
+            if (
+                index <
+                typedWords.length
+            ) {
+
+                if (
+                    typedWords[index] ===
+                    currentWords[index]
+                ) {
+
+                    element.classList.add(
+                        "correct"
+                    );
+
+                }
+                else {
+
+                    element.classList.add(
+                        "incorrect"
+                    );
+
+                }
+
+            }
+
+        }
+    );
+
+
+    const nextIndex =
+        typedWords.length;
+
+    if (
+        wordElements[nextIndex]
+    ) {
+
+        wordElements[nextIndex]
+            .classList
+            .add("current");
+
+    }
+
+}
+
+
+/* =========================================================
+   FINISH ROUND
+========================================================= */
+
+async function finishRound() {
+
+    if (!running) {
+        return;
+    }
+
+    running = false;
+
+    clearInterval(
+        timerInterval
+    );
+
+    input.disabled = true;
+
+    /*
+       IMPORTANT:
+       We calculate the FINAL score
+       only after the timer finishes.
+    */
+
+    const typed =
+        input.value;
+
+    const finalWPM =
+        calculateFinalWPM();
+
+    const finalAccuracy =
+        calculateAccuracy(
+            typed
+        );
+
+    wpmElement.textContent =
+        finalWPM;
+
+    accuracyElement.textContent =
+        finalAccuracy + "%";
+
+    const qualifyAt =
+        roundSettings[
+            currentRound
+        ].qualify;
+
+    const qualified =
+        finalWPM >= qualifyAt;
+
+    statusElement.textContent =
+        qualified
+            ? "● QUALIFIED"
+            : "● ELIMINATED";
+
+    statusElement.style.color =
+        qualified
+            ? "#86efac"
+            : "#f87171";
+
+    await saveScore(
+        finalWPM,
+        finalAccuracy,
+        qualified
+    );
+
+    showResult(
+        finalWPM,
+        finalAccuracy,
+        qualified
+    );
+
+}
+
+
+/* =========================================================
+   FINAL WPM
+========================================================= */
+
+function calculateFinalWPM() {
+
+    const typed =
+        input.value.trim();
+
+    if (!typed) {
+        return 0;
+    }
+
+    const words =
+        typed
+            .split(/\s+/)
+            .filter(Boolean)
+            .length;
+
+    /*
+       Every round lasts exactly 60 seconds.
+       Therefore WPM is based on the full round.
+    */
+
+    return Math.round(
+        words /
+        (roundSettings[currentRound].time / 60)
+    );
+
+}
+
+
+/* =========================================================
+   FINAL ACCURACY
+========================================================= */
+
+function calculateAccuracy(
+    typed
+) {
+
+    if (!typed.length) {
+        return 100;
+    }
+
+    let correct =
+        0;
+
+    const length =
+        Math.min(
+            typed.length,
+            currentPassage.length
+        );
+
+    for (
+        let i = 0;
+        i < length;
+        i++
+    ) {
+
+        if (
+            typed[i] ===
+            currentPassage[i]
+        ) {
+
+            correct++;
+
+        }
+
+    }
+
+    return Math.round(
+        correct /
+        typed.length *
+        100
+    );
+
+}
+
+
+/* =========================================================
+   SHOW RESULT
+========================================================= */
+
+function showResult(
+    wpm,
+    accuracy,
+    qualified
+) {
+
+    resultElement.classList.add(
+        "show"
+    );
+
+    if (qualified) {
+
+        resultIcon.textContent =
+            "🔥";
+
+        resultTitle.textContent =
+            `ROUND ${currentRound} CLEARED!`;
+
+        resultText.innerHTML =
+            `<strong class="qualify">
+                ${wpm} WPM
+            </strong>
+            · ${accuracy}% accuracy
+            <br><br>
+            You beat the
+            ${roundSettings[currentRound].qualify}
+            WPM requirement!`;
+
+        startButton.textContent =
+            currentRound < 3
+                ? "🔥 START NEXT ROUND"
+                : "🏆 YOU REACHED THE FINAL";
+
+        if (
+            currentRound < 3
+        ) {
+
+            startButton.disabled =
+                false;
+
+            currentRound++;
+
+            markPreviousRound();
+
+            updateRoundUI();
+
+        }
+        else {
+
+            startButton.disabled =
+                true;
+
+            startButton.textContent =
+                "🏆 FINAL REACHED";
+
+        }
+
+    }
+    else {
+
+        resultIcon.textContent =
+            "❌";
+
+        resultTitle.textContent =
+            "NOT QUALIFIED";
+
+        resultText.innerHTML =
+            `<strong class="not-qualify">
+                ${wpm} WPM
+            </strong>
+            · ${accuracy}% accuracy
+            <br><br>
+            You needed at least
+            ${roundSettings[currentRound].qualify}
+            WPM for this round.`;
+
+        startButton.textContent =
+            "🔄 TRY AGAIN";
+
+        startButton.disabled =
+            false;
+
+    }
+
+}
+
+
+/* =========================================================
+   MARK ROUND COMPLETE
+========================================================= */
+
+function markPreviousRound() {
+
+    const previous =
+        document.getElementById(
+            `roundCard${currentRound - 1}`
+        );
+
+    if (previous) {
+
+        previous.classList.remove(
+            "active"
+        );
+
+        previous.classList.add(
+            "completed"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   SAVE SCORE
+========================================================= */
+
+async function saveScore(
+    wpm,
+    accuracy,
+    qualified
+) {
+
+    if (!currentUser) {
+        return;
+    }
+
+    try {
+
+        const battleDate =
+            new Date()
+                .toISOString()
+                .slice(0,10);
+
+        const {
+            error
+        } =
+        await supabaseClient
+            .from(
+                "group_battle_scores"
+            )
+            .upsert(
+                {
+                    user_id:
+                        currentUser.id,
+
+                    username:
+                        currentUsername,
+
+                    group_name:
+                        "ChatsApp",
+
+                    round:
+                        currentRound,
+
+                    wpm:
+                        wpm,
+
+                    accuracy:
+                        accuracy,
+
+                    qualified:
+                        qualified,
+
+                    battle_date:
+                        battleDate,
+
+                    updated_at:
+                        new Date()
+                            .toISOString()
+                },
+                {
+                    onConflict:
+                        "user_id,round,battle_date"
+                }
+            );
+
+        /*
+           If your table doesn't have a unique
+           constraint for the upsert combination,
+           fall back to a normal insert.
+        */
+
+        if (error) {
+
+            console.warn(
+                "Upsert failed:",
+                error
+            );
+
+            const {
+                error:
+                insertError
+            } =
+            await supabaseClient
+                .from(
+                    "group_battle_scores"
+                )
+                .insert(
+                    {
+                        user_id:
+                            currentUser.id,
+
+                        username:
+                            currentUsername,
+
+                        group_name:
+                            "ChatsApp",
+
+                        round:
+                            currentRound,
+
+                        wpm:
+                            wpm,
+
+                        accuracy:
+                            accuracy,
+
+                        qualified:
+                            qualified,
+
+                        battle_date:
+                            battleDate
+                    }
+                );
+
+            if (insertError) {
+
+                console.error(
+                    "Could not save score:",
+                    insertError
+                );
+
+            }
+
+        }
+
+        await loadLeaderboard();
+
+    }
+    catch(error) {
+
+        console.error(
+            "Score save error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   LEADERBOARD
+========================================================= */
+
+async function loadLeaderboard() {
+
+    try {
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+            .from(
+                "group_battle_scores"
+            )
+            .select(
+                "username,wpm,accuracy,user_id,round,battle_date"
+            )
+            .eq(
+                "round",
+                currentRound
+            )
+            .order(
+                "wpm",
+                {
+                    ascending: false
+                }
+            )
+            .limit(50);
+
+        if (error) {
+            throw error;
+        }
+
+        renderLeaderboard(
+            data || []
+        );
+
+    }
+    catch(error) {
+
+        console.error(
+            "Leaderboard error:",
+            error
+        );
+
+        leaderboardList.innerHTML =
+            `
+            <div class="empty-board">
+                Leaderboard unavailable right now.
+            </div>
+            `;
+
+    }
+
+}
+
+
+/* =========================================================
+   RENDER LEADERBOARD
+========================================================= */
+
+function renderLeaderboard(
+    players
+) {
+
+    if (!players.length) {
+
+        leaderboardList.innerHTML =
+            `
+            <div class="empty-board">
+                No scores yet. Be the first battler! 🔥
+            </div>
+            `;
+
+        return;
+
+    }
+
+    leaderboardList.innerHTML =
+        players
+            .map(
+                (player,index) => {
+
+                    const isMe =
+                        currentUser &&
+                        player.user_id ===
+                        currentUser.id;
+
+                    return `
+                        <div class="player-row ${isMe ? "me" : ""}">
+
+                            <div class="player-left">
+
+                                <div class="rank">
+                                    ${index + 1}
+                                </div>
+
+                                <span>
+                                    ${escapeHTML(
+                                        player.username
+                                    )}
+                                    ${isMe ? " 👤" : ""}
+                                </span>
+
+                            </div>
+
+                            <span class="wpm">
+                                ${player.wpm} WPM
+                            </span>
+
+                        </div>
+                    `;
+
+                }
+            )
+            .join("");
+
+}
+
+
+/* =========================================================
+   REALTIME
+========================================================= */
+
+function subscribeToLeaderboard() {
+
+    channel =
+        supabaseClient
+            .channel(
+                "group-battle-live"
+            )
+            .on(
+                "postgres_changes",
+                {
+                    event: "*",
+                    schema: "public",
+                    table:
+                        "group_battle_scores"
+                },
+                () => {
+
+                    loadLeaderboard();
+
+                }
+            )
+            .subscribe(
+                status => {
+
+                    console.log(
+                        "Realtime:",
+                        status
+                    );
+
+                }
+            );
+
+}
+
+
+/* =========================================================
+   AUTH STATE
+========================================================= */
+
+supabaseClient
+    .auth
+    .onAuthStateChange(
+        async (
+            event,
+            session
+        ) => {
+
+            currentUser =
+                session
+                    ? session.user
+                    : null;
+
+            if (currentUser) {
+
+                currentUsername =
+                    getUsername(
+                        currentUser
+                    );
+
+                playerNameElement
+                    .textContent =
+                    currentUsername;
+
+                playerAvatarElement
+                    .textContent =
+                    currentUsername
+                        .charAt(0)
+                        .toUpperCase();
+
+                connectionStatus
+                    .textContent =
+                    "● Connected";
+
+                connectionStatus.style.color =
+                    "#86efac";
+
+                startButton.disabled =
+                    false;
+
+                await loadLeaderboard();
+
+            }
+            else {
+
+                playerNameElement
+                    .textContent =
+                    "Guest";
+
+                playerAvatarElement
+                    .textContent =
+                    "?";
+
+                connectionStatus
+                    .textContent =
+                    "● Not signed in";
+
+                connectionStatus.style.color =
+                    "#fbbf24";
+
+                startButton.disabled =
+                    true;
+
+            }
+
+        }
+    );
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+async function initialize() {
+
+    updateRoundUI();
+
+    await loadCurrentUser();
+
+    await loadLeaderboard();
+
+    subscribeToLeaderboard();
+
+}
+
+initialize();
+
+
+/* =========================================================
+   CLEANUP
+========================================================= */
+
+window.addEventListener(
+    "beforeunload",
+    () => {
+
+        if (timerInterval) {
+
+            clearInterval(
+                timerInterval
+            );
+
+        }
+
+        if (channel) {
+
+            supabaseClient
+                .removeChannel(
+                    channel
+                );
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
